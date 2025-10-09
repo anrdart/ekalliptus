@@ -1,5 +1,7 @@
-import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { ArrowLeft, Compass, ArrowRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const NotFound = () => {
   const location = useLocation();
@@ -9,15 +11,42 @@ const NotFound = () => {
   }, [location.pathname]);
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">404</h1>
-        <p className="mb-4 text-xl text-gray-600">Oops! Page not found</p>
-        <a href="/" className="text-blue-500 underline hover:text-blue-700">
-          Return to Home
-        </a>
+    <section className="relative flex min-h-[calc(100vh-8rem)] items-center justify-center px-4">
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,#161932_0%,transparent_65%)]" />
+      <div className="pointer-events-none absolute inset-x-0 top-20 h-px bg-gradient-to-r from-transparent via-white/15 to-transparent" />
+      <div className="pointer-events-none absolute inset-x-0 bottom-20 h-px bg-gradient-to-r from-transparent via-sky-400/20 to-transparent" />
+
+      <div className="glass-panel neon-border relative z-10 flex max-w-xl flex-col items-center gap-6 rounded-3xl border-white/10 px-10 py-14 text-center text-white shadow-elegant">
+        <div className="flex items-center gap-3 text-sm uppercase tracking-[0.4em] text-white/50">
+          <Compass className="h-4 w-4" />
+          <span>Halaman tidak ditemukan</span>
+        </div>
+        <h1 className="text-6xl font-semibold text-white">404</h1>
+        <p className="text-base leading-relaxed text-white/70">
+          Maaf, destinasi digital yang Anda tuju belum tersedia. Mari kembali ke halaman utama dan temukan pengalaman yang sudah kami siapkan.
+        </p>
+
+        <div className="mt-4 flex flex-col gap-3 sm:flex-row">
+          <Button variant="hero" size="lg" className="w-full rounded-full px-8 py-5 text-sm font-semibold uppercase tracking-wide" asChild>
+            <Link to="/">
+              <ArrowLeft className="h-4 w-4" />
+              Kembali ke Beranda
+            </Link>
+          </Button>
+          <Button
+            variant="outline"
+            size="lg"
+            className="w-full rounded-full border-white/15 bg-white/5 px-8 py-5 text-sm font-semibold text-white/80 hover:border-white/30 hover:bg-white/10"
+            asChild
+          >
+            <Link to="/order">
+              Lihat Layanan
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </Button>
+        </div>
       </div>
-    </div>
+    </section>
   );
 };
 

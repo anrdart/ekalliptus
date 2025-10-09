@@ -10,33 +10,38 @@ interface ServiceCardProps {
 
 export const ServiceCard = ({ icon: Icon, title, description, features }: ServiceCardProps) => {
   return (
-    <Card className="group relative overflow-hidden p-6 bg-card-gradient border border-border/50 transform-gpu will-change-transform transition-transform duration-300 ease-smooth hover:-translate-y-1.5 hover:scale-[1.02] hover:shadow-card">
-      <div className="absolute inset-0 opacity-0 transition-opacity duration-300 ease-smooth group-hover:opacity-100 bg-gradient-to-br from-primary/10 via-transparent to-accent/10" />
-      <div className="relative flex flex-col items-center text-center space-y-4">
-        <div className="p-4 rounded-full bg-primary-gradient shadow-elegant transform-gpu will-change-transform transition-transform duration-300 ease-smooth group-hover:shadow-glow group-hover:-translate-y-1">
-          <Icon className="h-8 w-8 text-primary-foreground transform-gpu will-change-transform transition-transform duration-300 ease-smooth group-hover:scale-110" />
+    <Card className="group relative overflow-hidden p-8 text-left transition duration-500 hover:-translate-y-1.5">
+      <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100">
+        <div className="absolute inset-0 bg-gradient-to-br from-sky-500/20 via-transparent to-emerald-400/20 blur-3xl" />
+      </div>
+
+      <div className="relative flex flex-col gap-6">
+        <div className="inline-flex w-max items-center gap-3 rounded-full border border-white/10 bg-white/10 px-5 py-3">
+          <div className="rounded-full bg-primary-gradient p-3 text-white shadow-glow transition duration-500 group-hover:scale-110">
+            <Icon className="h-5 w-5" />
+          </div>
+          <span className="text-xs uppercase tracking-[0.4em] text-white/60">Specialized</span>
         </div>
 
-        <h3 className="text-xl font-bold text-foreground transition-colors duration-500 ease-smooth group-hover:text-primary">
+        <h3 className="text-2xl font-semibold text-white transition-colors duration-500 group-hover:text-sky-200">
           {title}
         </h3>
 
-        <p className="text-muted-foreground leading-relaxed transition-colors duration-500 ease-smooth group-hover:text-foreground/90">
+        <p className="text-base leading-relaxed text-white/65 transition-colors duration-500 group-hover:text-white/80">
           {description}
         </p>
 
-        <ul className="space-y-2 w-full">
+        <ul className="mt-2 flex flex-col gap-3 text-sm text-white/70">
           {features.map((feature, index) => (
             <li
               key={index}
-              className="flex items-center justify-center space-x-2 text-sm text-muted-foreground transition-colors duration-500 ease-smooth group-hover:text-foreground"
+              className="flex items-center gap-3 rounded-full border border-white/5 bg-white/5 px-4 py-2 transition group-hover:border-white/15 group-hover:bg-white/8 group-hover:text-white"
             >
-              <div className="w-1.5 h-1.5 rounded-full bg-accent transform-gpu will-change-transform transition-transform duration-300 ease-smooth group-hover:scale-125" />
+              <div className="h-1.5 w-1.5 rounded-full bg-gradient-to-r from-sky-400 to-emerald-300 transition group-hover:scale-125" />
               <span>{feature}</span>
             </li>
           ))}
         </ul>
-
       </div>
     </Card>
   );
