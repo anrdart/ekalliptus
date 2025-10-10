@@ -583,99 +583,95 @@ const combineOrDash = (...values: (string | undefined)[]) => {
   return combined.length > 0 ? combined : "-";
 };
 
-const deriveSubmissionSummary = (serviceKey: ServiceKey | undefined, details?: ServiceDetails[ServiceKey]): SubmissionSummary => {
+const submissionMappers: { [K in ServiceKey]: (details: ServiceDetails[K]) => SubmissionSummary } = {
+  websiteDevelopment: (details) => ({
+    perusahaan: trimOrDash(details.namaBisnisBrand),
+    jabatan: trimOrDash(details.kontakDapatDihubungi),
+    website: trimOrDash(details.domainDiinginkan),
+    scope: combineOrDash(details.jenisBisnis, details.fiturKhusus),
+    anggaran: trimOrDash(details.budgetEstimasiWaktu),
+    timeline: "-",
+    deadline: "-",
+    zonaWaktu: "-",
+    tujuan: trimOrDash(details.tujuanWebsite),
+    referensi: trimOrDash(details.catatanTambahan),
+    deskripsi: combineOrDash(details.preferensiDesainWarna, details.fiturKhusus),
+  }),
+  wordpressDevelopment: (details) => ({
+    perusahaan: trimOrDash(details.namaBrandSitus),
+    jabatan: trimOrDash(details.akunAdmin),
+    website: trimOrDash(details.jenisWebsite),
+    scope: combineOrDash(details.pilihanTema, details.kontenAwal),
+    anggaran: trimOrDash(details.budgetDeadline),
+    timeline: trimOrDash(details.budgetDeadline),
+    deadline: trimOrDash(details.budgetDeadline),
+    zonaWaktu: "-",
+    tujuan: trimOrDash(details.kebutuhanPlugin),
+    referensi: trimOrDash(details.catatanTambahan),
+    deskripsi: combineOrDash(details.pilihanTema, details.kontenAwal),
+  }),
+  berduPlatform: (details) => ({
+    perusahaan: trimOrDash(details.namaBisnis),
+    jabatan: trimOrDash(details.kontakPic),
+    website: trimOrDash(details.jenisUsaha),
+    scope: combineOrDash(details.kebutuhanFiturDashboard, details.preferensiIntegrasi),
+    anggaran: "-",
+    timeline: "-",
+    deadline: "-",
+    zonaWaktu: "-",
+    tujuan: trimOrDash(details.kebutuhanFiturDashboard),
+    referensi: trimOrDash(details.catatanTambahan),
+    deskripsi: combineOrDash(details.jenisDataAnalytics, details.preferensiIntegrasi),
+  }),
+  mobileAppDevelopment: (details) => ({
+    perusahaan: trimOrDash(details.namaAplikasi),
+    jabatan: trimOrDash(details.kontak),
+    website: trimOrDash(details.platformTarget),
+    scope: combineOrDash(details.fiturUtama, details.integrasiLayanan),
+    anggaran: "-",
+    timeline: "-",
+    deadline: "-",
+    zonaWaktu: "-",
+    tujuan: trimOrDash(details.tujuanAplikasi),
+    referensi: trimOrDash(details.catatanTambahan),
+    deskripsi: combineOrDash(details.mockupDesain, details.integrasiLayanan, details.estimasiJumlahPengguna),
+  }),
+  serviceHpLaptop: (details) => ({
+    perusahaan: trimOrDash(details.jenisPerangkat),
+    jabatan: trimOrDash(details.kontak),
+    website: "-",
+    scope: combineOrDash(details.pilihanLayanan),
+    anggaran: "-",
+    timeline: "-",
+    deadline: "-",
+    zonaWaktu: "-",
+    tujuan: trimOrDash(details.masalahUtama),
+    referensi: trimOrDash(details.catatanTambahan),
+    deskripsi: combineOrDash(details.informasiGaransi, details.lokasiLayanan),
+  }),
+  photoVideoEditing: (details) => ({
+    perusahaan: trimOrDash(details.namaProyek),
+    jabatan: trimOrDash(details.kontak),
+    website: trimOrDash(details.jenisEditing),
+    scope: combineOrDash(details.jenisEditing, details.kebutuhanSpesifik),
+    anggaran: "-",
+    timeline: "-",
+    deadline: trimOrDash(details.deadline),
+    zonaWaktu: "-",
+    tujuan: trimOrDash(details.kebutuhanSpesifik),
+    referensi: trimOrDash(details.catatanTambahan),
+    deskripsi: combineOrDash(details.resolusiFormatOutput, details.jumlahFile),
+  }),
+};
+
+const deriveSubmissionSummary = <K extends ServiceKey>(
+  serviceKey: K | undefined,
+  details?: ServiceDetails[K],
+): SubmissionSummary => {
   if (!serviceKey || !details) {
     return emptySubmissionSummary;
   }
-
-  switch (serviceKey) {
-    case "websiteDevelopment":
-      return {
-        perusahaan: trimOrDash(details.namaBisnisBrand),
-        jabatan: trimOrDash(details.kontakDapatDihubungi),
-        website: trimOrDash(details.domainDiinginkan),
-        scope: combineOrDash(details.jenisBisnis, details.fiturKhusus),
-        anggaran: trimOrDash(details.budgetEstimasiWaktu),
-        timeline: "-",
-        deadline: "-",
-        zonaWaktu: "-",
-        tujuan: trimOrDash(details.tujuanWebsite),
-        referensi: trimOrDash(details.catatanTambahan),
-        deskripsi: combineOrDash(details.preferensiDesainWarna, details.fiturKhusus),
-      };
-    case "wordpressDevelopment":
-      return {
-        perusahaan: trimOrDash(details.namaBrandSitus),
-        jabatan: trimOrDash(details.akunAdmin),
-        website: trimOrDash(details.jenisWebsite),
-        scope: combineOrDash(details.pilihanTema, details.kontenAwal),
-        anggaran: trimOrDash(details.budgetDeadline),
-        timeline: trimOrDash(details.budgetDeadline),
-        deadline: trimOrDash(details.budgetDeadline),
-        zonaWaktu: "-",
-        tujuan: trimOrDash(details.kebutuhanPlugin),
-        referensi: trimOrDash(details.catatanTambahan),
-        deskripsi: combineOrDash(details.pilihanTema, details.kontenAwal),
-      };
-    case "berduPlatform":
-      return {
-        perusahaan: trimOrDash(details.namaBisnis),
-        jabatan: trimOrDash(details.kontakPic),
-        website: trimOrDash(details.jenisUsaha),
-        scope: combineOrDash(details.kebutuhanFiturDashboard, details.preferensiIntegrasi),
-        anggaran: "-",
-        timeline: "-",
-        deadline: "-",
-        zonaWaktu: "-",
-        tujuan: trimOrDash(details.kebutuhanFiturDashboard),
-        referensi: trimOrDash(details.catatanTambahan),
-        deskripsi: combineOrDash(details.jenisDataAnalytics, details.preferensiIntegrasi),
-      };
-    case "mobileAppDevelopment":
-      return {
-        perusahaan: trimOrDash(details.namaAplikasi),
-        jabatan: trimOrDash(details.kontak),
-        website: trimOrDash(details.platformTarget),
-        scope: combineOrDash(details.fiturUtama, details.integrasiLayanan),
-        anggaran: "-",
-        timeline: "-",
-        deadline: "-",
-        zonaWaktu: "-",
-        tujuan: trimOrDash(details.tujuanAplikasi),
-        referensi: trimOrDash(details.catatanTambahan),
-        deskripsi: combineOrDash(details.mockupDesain, details.integrasiLayanan, details.estimasiJumlahPengguna),
-      };
-    case "serviceHpLaptop":
-      return {
-        perusahaan: trimOrDash(details.jenisPerangkat),
-        jabatan: trimOrDash(details.kontak),
-        website: "-",
-        scope: combineOrDash(details.pilihanLayanan),
-        anggaran: "-",
-        timeline: "-",
-        deadline: "-",
-        zonaWaktu: "-",
-        tujuan: trimOrDash(details.masalahUtama),
-        referensi: trimOrDash(details.catatanTambahan),
-        deskripsi: combineOrDash(details.informasiGaransi, details.lokasiLayanan),
-      };
-    case "photoVideoEditing":
-      return {
-        perusahaan: trimOrDash(details.namaProyek),
-        jabatan: trimOrDash(details.kontak),
-        website: trimOrDash(details.jenisEditing),
-        scope: combineOrDash(details.jenisEditing, details.kebutuhanSpesifik),
-        anggaran: "-",
-        timeline: "-",
-        deadline: trimOrDash(details.deadline),
-        zonaWaktu: "-",
-        tujuan: trimOrDash(details.kebutuhanSpesifik),
-        referensi: trimOrDash(details.catatanTambahan),
-        deskripsi: combineOrDash(details.resolusiFormatOutput, details.jumlahFile),
-      };
-    default:
-      return emptySubmissionSummary;
-  }
+  return submissionMappers[serviceKey](details);
 };
 
 const Order = () => {
@@ -732,7 +728,19 @@ const Order = () => {
     });
 
     if (!response.ok) {
-      throw new Error("SheetDB API tidak merespons dengan benar");
+      let errorMessage = "SheetDB API tidak merespons dengan benar";
+      try {
+        const errorBody = await response.json();
+        if (errorBody?.error) {
+          errorMessage = `SheetDB: ${errorBody.error}`;
+        }
+      } catch {
+        const fallbackText = await response.text();
+        if (fallbackText) {
+          errorMessage = `SheetDB: ${fallbackText}`;
+        }
+      }
+      throw new Error(errorMessage);
     }
   };
 
@@ -778,7 +786,19 @@ const Order = () => {
     });
 
     if (!response.ok) {
-      throw new Error("Gagal mengirim notifikasi email");
+      let errorMessage = "Gagal mengirim notifikasi email";
+      try {
+        const errorBody = await response.json();
+        if (errorBody?.error) {
+          errorMessage = `EmailJS: ${errorBody.error}`;
+        }
+      } catch {
+        const fallbackText = await response.text();
+        if (fallbackText) {
+          errorMessage = `EmailJS: ${fallbackText}`;
+        }
+      }
+      throw new Error(errorMessage);
     }
 
     return true;
