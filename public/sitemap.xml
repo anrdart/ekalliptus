@@ -6,7 +6,7 @@
 
   <!-- Homepage -->
   <url>
-    <loc>https://ekalliptus.my.id/</loc>
+    <loc>https://itsme.ekalliptus.id/</loc>
     <lastmod>2025-10-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
@@ -14,7 +14,7 @@
 
   <!-- Services Section -->
   <url>
-    <loc>https://ekalliptus.my.id/#services</loc>
+    <loc>https://itsme.ekalliptus.id/#services</loc>
     <lastmod>2025-10-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -22,7 +22,7 @@
 
   <!-- Order Page -->
   <url>
-    <loc>https://ekalliptus.my.id/order</loc>
+    <loc>https://itsme.ekalliptus.id/order</loc>
     <lastmod>2025-10-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>

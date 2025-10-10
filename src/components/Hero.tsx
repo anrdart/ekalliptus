@@ -62,7 +62,7 @@ export const Hero = () => {
               className="cursor-interactive rounded-full border-white/15 bg-white/5 px-6 py-6 text-base font-semibold text-white/80 transition hover:border-white/30 hover:bg-white/10"
               asChild
             >
-              <a href="https://ekalliptus.my.id/" target="_blank" rel="noopener noreferrer">
+              <a href="https://itsme.ekalliptus.id/" target="_blank" rel="noopener noreferrer">
                 <Play className="mr-2 h-4 w-4" />
                 PROFIL KAMI
               </a>

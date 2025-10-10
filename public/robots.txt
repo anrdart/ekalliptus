@@ -6,7 +6,7 @@ Disallow: /*.json$
 Disallow: /*.md$
 
 # Sitemap location
-Sitemap: https://ekalliptus.my.id/sitemap.xml
+Sitemap: https://itsme.ekalliptus.id/sitemap.xml
 
 # Crawl delay for all bots
 Crawl-delay: 1
