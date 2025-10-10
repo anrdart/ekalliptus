@@ -26,7 +26,7 @@ export const Hero = () => {
 
       <div ref={ref} className="relative z-10 mx-auto flex w-full max-w-6xl flex-col items-center gap-12 py-24 lg:flex-row lg:items-start lg:gap-16">
         <div className={cn("w-full max-w-2xl text-center lg:text-left", base, show)} style={{ transitionDelay: "120ms" }}>
-          <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-5 py-2 text-xs uppercase tracking-[0.35em] text-white/70 shadow-lg shadow-sky-500/10">
+          <div className="inline-flex items-center gap-2 rounded-full bg-white/10 px-5 py-2 text-xs uppercase tracking-[0.35em] text-white/70 shadow-lg shadow-sky-500/10">
             <Sparkles className="h-4 w-4" />
             <span>Solusi Digital</span>
           </div>
@@ -43,7 +43,7 @@ export const Hero = () => {
 
           <p className="mt-4 text-sm font-medium uppercase tracking-[0.4em] text-white/50">
             Fokus kami saat ini:
-            <span className="ml-3 rounded-full border border-white/10 bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-white">
+            <span className="ml-3 rounded-full bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-white">
               {typed || "UI/UX Design Futuristik"}
             </span>
           </p>
@@ -71,13 +71,13 @@ export const Hero = () => {
         </div>
 
         <div className="w-full max-w-sm lg:max-w-md">
-          <div className={cn("glass-panel neon-border rounded-3xl border-white/10 p-8 text-white shadow-elegant", base, show)} style={{ transitionDelay: "260ms" }}>
+          <div className={cn("glass-panel neon-border rounded-3xl p-8 text-white shadow-elegant", base, show)} style={{ transitionDelay: "260ms" }}>
             <div className="flex items-start justify-between">
               <div>
                 <p className="text-xs uppercase tracking-[0.4em] text-white/50">Wawasan</p>
                 <h2 className="mt-2 text-3xl font-semibold text-white">Perjalanan Pelanggan</h2>
               </div>
-              <div className="rounded-2xl border border-white/10 bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-white/70">Aktif</div>
+              <div className="rounded-2xl bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-white/70">Aktif</div>
             </div>
 
             <p className="mt-6 text-sm leading-relaxed text-white/70">
@@ -85,19 +85,19 @@ export const Hero = () => {
             </p>
 
             <div className="mt-8 grid grid-cols-2 gap-4 text-white">
-              <div className="rounded-2xl border border-white/10 bg-white/5 p-4 text-center">
+              <div className="rounded-2xl bg-white/5 p-4 text-center">
                 <div className="text-3xl font-bold">+120</div>
                 <div className="mt-2 text-xs uppercase tracking-[0.35em] text-white/50">Pengalaman</div>
               </div>
-              <div className="rounded-2xl border border-white/10 bg-white/5 p-4 text-center">
+              <div className="rounded-2xl bg-white/5 p-4 text-center">
                 <div className="text-3xl font-bold">4.9★</div>
                 <div className="mt-2 text-xs uppercase tracking-[0.35em] text-white/50">Skor Klien</div>
               </div>
-              <div className="rounded-2xl border border-white/10 bg-white/5 p-4 text-center">
+              <div className="rounded-2xl bg-white/5 p-4 text-center">
                 <div className="text-3xl font-bold">3D</div>
                 <div className="mt-2 text-xs uppercase tracking-[0.35em] text-white/50">Interaktif</div>
               </div>
-              <div className="rounded-2xl border border-white/10 bg-white/5 p-4 text-center">
+              <div className="rounded-2xl bg-white/5 p-4 text-center">
                 <div className="text-3xl font-bold">24/7</div>
                 <div className="mt-2 text-xs uppercase tracking-[0.35em] text-white/50">Dukungan</div>
               </div>

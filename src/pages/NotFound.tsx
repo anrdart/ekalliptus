@@ -12,11 +12,8 @@ const NotFound = () => {
 
   return (
     <section className="relative flex min-h-[calc(100vh-8rem)] items-center justify-center px-4">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,#161932_0%,transparent_65%)]" />
-      <div className="pointer-events-none absolute inset-x-0 top-20 h-px bg-gradient-to-r from-transparent via-white/15 to-transparent" />
-      <div className="pointer-events-none absolute inset-x-0 bottom-20 h-px bg-gradient-to-r from-transparent via-sky-400/20 to-transparent" />
 
-      <div className="glass-panel neon-border relative z-10 flex max-w-xl flex-col items-center gap-6 rounded-3xl border-white/10 px-10 py-14 text-center text-white shadow-elegant">
+      <div className="glass-panel neon-border relative z-10 flex max-w-xl flex-col items-center gap-6 rounded-3xl px-10 py-14 text-center text-white shadow-elegant">
         <div className="flex items-center gap-3 text-sm uppercase tracking-[0.4em] text-white/50">
           <Compass className="h-4 w-4" />
           <span>Halaman tidak ditemukan</span>

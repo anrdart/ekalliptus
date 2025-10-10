@@ -6,7 +6,6 @@ import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
-import { Checkbox } from "@/components/ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useToast } from "@/hooks/use-toast";
 import { useInView } from "@/hooks/use-in-view";
@@ -16,101 +15,504 @@ import { cn } from "@/lib/utils";
 const SHEET_API_URL = "https://sheetdb.io/api/v1/4br025yd4lsm5";
 const EMAILJS_API_URL = "https://api.emailjs.com/api/v1.0/email/send";
 
+const layananOptions = [
+  "Website Development",
+  "WordPress Development",
+  "Berdu Platform",
+  "Mobile App Development",
+  "Service HP & Laptop",
+  "Photo & Video Editing",
+] as const;
+
+const layananKeyMap = {
+  "Website Development": "websiteDevelopment",
+  "WordPress Development": "wordpressDevelopment",
+  "Berdu Platform": "berduPlatform",
+  "Mobile App Development": "mobileAppDevelopment",
+  "Service HP & Laptop": "serviceHpLaptop",
+  "Photo & Video Editing": "photoVideoEditing",
+} as const;
+
+type LayananOption = (typeof layananOptions)[number];
+type ServiceKey = (typeof layananKeyMap)[LayananOption];
+
+type ServiceDetails = {
+  websiteDevelopment: {
+    namaBisnisBrand: string;
+    jenisBisnis: string;
+    tujuanWebsite: string;
+    preferensiDesainWarna: string;
+    domainDiinginkan: string;
+    fiturKhusus: string;
+    budgetEstimasiWaktu: string;
+    kontakDapatDihubungi: string;
+    catatanTambahan: string;
+  };
+  wordpressDevelopment: {
+    namaBrandSitus: string;
+    jenisWebsite: string;
+    pilihanTema: string;
+    kebutuhanPlugin: string;
+    kontenAwal: string;
+    akunAdmin: string;
+    budgetDeadline: string;
+    catatanTambahan: string;
+  };
+  berduPlatform: {
+    namaBisnis: string;
+    jenisUsaha: string;
+    jumlahUserKelola: string;
+    kebutuhanFiturDashboard: string;
+    jenisDataAnalytics: string;
+    preferensiIntegrasi: string;
+    kontakPic: string;
+    catatanTambahan: string;
+  };
+  mobileAppDevelopment: {
+    namaAplikasi: string;
+    platformTarget: string;
+    tujuanAplikasi: string;
+    fiturUtama: string;
+    mockupDesain: string;
+    integrasiLayanan: string;
+    estimasiJumlahPengguna: string;
+    kontak: string;
+    catatanTambahan: string;
+  };
+  serviceHpLaptop: {
+    namaLengkap: string;
+    jenisPerangkat: string;
+    masalahUtama: string;
+    informasiGaransi: string;
+    pilihanLayanan: string;
+    lokasiLayanan: string;
+    kontak: string;
+    catatanTambahan: string;
+  };
+  photoVideoEditing: {
+    namaProyek: string;
+    jenisEditing: string;
+    jumlahFile: string;
+    kebutuhanSpesifik: string;
+    resolusiFormatOutput: string;
+    deadline: string;
+    kontak: string;
+    catatanTambahan: string;
+  };
+};
+
+type ServiceFieldPath = {
+  [K in ServiceKey]: `layananDetails.${K}.${keyof ServiceDetails[K] & string}`;
+}[ServiceKey];
+
+const toServiceKey = (layanan: string): ServiceKey | undefined =>
+  (layananKeyMap as Record<string, ServiceKey | undefined>)[layanan];
+
+type ServiceFieldConfig<K extends ServiceKey> = {
+  name: keyof ServiceDetails[K];
+  label: string;
+  placeholder?: string;
+  description?: string;
+  required?: boolean;
+  textarea?: boolean;
+};
+
+const serviceFieldConfigs: { [K in ServiceKey]: ServiceFieldConfig<K>[] } = {
+  websiteDevelopment: [
+    {
+      name: "namaBisnisBrand",
+      label: "Nama bisnis/brand",
+      placeholder: "Contoh: Ekalliptus Studio",
+    },
+    {
+      name: "jenisBisnis",
+      label: "Jenis bisnis",
+      placeholder: "Contoh: Agency kreatif, UMKM kuliner, SaaS, dll",
+    },
+    {
+      name: "tujuanWebsite",
+      label: "Tujuan website",
+      placeholder: "Informasi perusahaan, e-commerce, company profile, platform reservasi, dll",
+      textarea: true,
+    },
+    {
+      name: "preferensiDesainWarna",
+      label: "Preferensi desain/warna",
+      placeholder: "Sebutkan gaya visual atau palet warna yang diinginkan",
+      textarea: true,
+      required: false,
+    },
+    {
+      name: "domainDiinginkan",
+      label: "Domain yang diinginkan",
+      placeholder: "Contoh: ekalliptus.id",
+      required: false,
+    },
+    {
+      name: "fiturKhusus",
+      label: "Fitur khusus",
+      placeholder: "Blog, galeri, form kontak, booking, multi bahasa, dsb",
+      textarea: true,
+      required: false,
+    },
+    {
+      name: "budgetEstimasiWaktu",
+      label: "Budget/estimasi waktu",
+      placeholder: "Perkirakan budget & target waktu penyelesaian",
+    },
+    {
+      name: "kontakDapatDihubungi",
+      label: "Kontak yang dapat dihubungi",
+      placeholder: "Nama & nomor/akun yang nyaman dihubungi",
+    },
+    {
+      name: "catatanTambahan",
+      label: "Catatan tambahan / referensi (opsional)",
+      placeholder: "Tambahkan link referensi, moodboard, atau catatan khusus lainnya.",
+      textarea: true,
+      required: false,
+    },
+  ],
+  wordpressDevelopment: [
+    {
+      name: "namaBrandSitus",
+      label: "Nama/brand situs",
+      placeholder: "Contoh: Ekalliptus Blog",
+    },
+    {
+      name: "jenisWebsite",
+      label: "Jenis website",
+      placeholder: "Blog, toko online, edukasi, portfolio, katalog produk, dll",
+    },
+    {
+      name: "pilihanTema",
+      label: "Pilihan tema",
+      placeholder: "Custom design atau rekomendasi tema yang disukai",
+      textarea: true,
+    },
+    {
+      name: "kebutuhanPlugin",
+      label: "Kebutuhan plugin",
+      placeholder: "E-commerce, SEO, membership, LMS, automasi, dsb",
+      textarea: true,
+    },
+    {
+      name: "kontenAwal",
+      label: "Konten awal",
+      placeholder: "Artikel, kategori produk, data produk, asset visual, dsb",
+      textarea: true,
+      required: false,
+    },
+    {
+      name: "akunAdmin",
+      label: "Akun admin",
+      placeholder: "Informasi akun admin yang dibutuhkan atau struktur akses",
+      textarea: true,
+    },
+    {
+      name: "budgetDeadline",
+      label: "Budget & deadline",
+      placeholder: "Estimasikan budget dan target live",
+    },
+    {
+      name: "catatanTambahan",
+      label: "Catatan tambahan / referensi (opsional)",
+      placeholder: "Cantumkan akses staging, asset branding, atau kebutuhan khusus lainnya.",
+      textarea: true,
+      required: false,
+    },
+  ],
+  berduPlatform: [
+    {
+      name: "namaBisnis",
+      label: "Nama bisnis",
+      placeholder: "Contoh: Ekalliptus Ventures",
+    },
+    {
+      name: "jenisUsaha",
+      label: "Jenis usaha",
+      placeholder: "Retail, layanan, distribusi, reseller, dsb",
+    },
+    {
+      name: "jumlahUserKelola",
+      label: "Jumlah user yang akan dikelola",
+      placeholder: "Berapa banyak admin/agen/operator yang akan menggunakan sistem",
+    },
+    {
+      name: "kebutuhanFiturDashboard",
+      label: "Kebutuhan fitur dashboard admin",
+      placeholder: "Contoh: manajemen order, stok, user role, laporan, dsb",
+      textarea: true,
+    },
+    {
+      name: "jenisDataAnalytics",
+      label: "Jenis data bisnis/analytics yang diinginkan",
+      placeholder: "Sebutkan KPI utama, laporan atau analitik yang perlu tersedia",
+      textarea: true,
+      required: false,
+    },
+    {
+      name: "preferensiIntegrasi",
+      label: "Preferensi integrasi",
+      placeholder: "Integrasi ke penyimpanan cloud, marketplace, payment gateway, dll",
+      textarea: true,
+      required: false,
+    },
+    {
+      name: "kontakPic",
+      label: "Kontak PIC",
+      placeholder: "Nama penanggung jawab & kontaknya",
+    },
+    {
+      name: "catatanTambahan",
+      label: "Catatan tambahan (opsional)",
+      placeholder: "Tambahkan SOP, integrasi prioritas, atau catatan implementasi lainnya.",
+      textarea: true,
+      required: false,
+    },
+  ],
+  mobileAppDevelopment: [
+    {
+      name: "namaAplikasi",
+      label: "Nama aplikasi",
+      placeholder: "Contoh: Ekalliptus Mobile",
+    },
+    {
+      name: "platformTarget",
+      label: "Platform target",
+      placeholder: "Android, iOS, atau keduanya",
+    },
+    {
+      name: "tujuanAplikasi",
+      label: "Tujuan aplikasi",
+      placeholder: "Bisnis, edukasi, komunitas, internal tools, dsb",
+      textarea: true,
+    },
+    {
+      name: "fiturUtama",
+      label: "Fitur utama yang diinginkan",
+      placeholder: "Minimal 3 fitur inti yang harus tersedia",
+      textarea: true,
+    },
+    {
+      name: "mockupDesain",
+      label: "Mockup/desain awal (opsional)",
+      placeholder: "Cantumkan link figma, gambar, atau catatan desain jika ada",
+      textarea: true,
+      required: false,
+    },
+    {
+      name: "integrasiLayanan",
+      label: "Integrasi dengan layanan lain atau API",
+      placeholder: "Contoh: payment gateway, CRM, sistem internal, dsb",
+      textarea: true,
+      required: false,
+    },
+    {
+      name: "estimasiJumlahPengguna",
+      label: "Estimasi jumlah pengguna",
+      placeholder: "Perkirakan jumlah user aktif dalam 3-6 bulan pertama",
+    },
+    {
+      name: "kontak",
+      label: "Kontak",
+      placeholder: "Nama & nomor/email PIC proyek",
+    },
+    {
+      name: "catatanTambahan",
+      label: "Catatan tambahan (opsional)",
+      placeholder: "Lampirkan referensi desain, repo existing, atau catatan scope lainnya.",
+      textarea: true,
+      required: false,
+    },
+  ],
+  serviceHpLaptop: [
+    {
+      name: "namaLengkap",
+      label: "Nama lengkap",
+      placeholder: "Contoh: Budi Santoso",
+    },
+    {
+      name: "jenisPerangkat",
+      label: "Jenis perangkat",
+      placeholder: "HP/Laptop, merk, dan tipe",
+    },
+    {
+      name: "masalahUtama",
+      label: "Masalah/kendala utama",
+      placeholder: "Contoh: layar blank, baterai drop, install ulang OS, dsb",
+      textarea: true,
+    },
+    {
+      name: "informasiGaransi",
+      label: "Informasi garansi/suku cadang",
+      placeholder: "Masih bergaransi, ingin pakai sparepart original/opsi lain",
+      textarea: true,
+      required: false,
+    },
+    {
+      name: "pilihanLayanan",
+      label: "Pilihan layanan",
+      placeholder: "Hardware, software, upgrade, konsultasi, dsb",
+    },
+    {
+      name: "lokasiLayanan",
+      label: "Lokasi/area layanan",
+      placeholder: "Contoh: Jakarta Timur, Bekasi, on-site/antar jemput",
+    },
+    {
+      name: "kontak",
+      label: "Kontak yang bisa dihubungi",
+      placeholder: "Nomor telepon/WhatsApp alternatif",
+    },
+    {
+      name: "catatanTambahan",
+      label: "Catatan tambahan (opsional)",
+      placeholder: "Tuliskan catatan servis lain, riwayat perbaikan, atau permintaan khusus.",
+      textarea: true,
+      required: false,
+    },
+  ],
+  photoVideoEditing: [
+    {
+      name: "namaProyek",
+      label: "Nama proyek",
+      placeholder: "Contoh: Campaign Ramadan 2024",
+    },
+    {
+      name: "jenisEditing",
+      label: "Jenis editing",
+      placeholder: "Foto, video, reels, long-form, dokumentasi, dsb",
+    },
+    {
+      name: "jumlahFile",
+      label: "Jumlah file yang akan diedit",
+      placeholder: "Sebutkan jumlah file dan durasi/ukuran bila relevan",
+    },
+    {
+      name: "kebutuhanSpesifik",
+      label: "Kebutuhan spesifik",
+      placeholder: "Color grading, motion graphic, audio mixing, subtitle, dsb",
+      textarea: true,
+    },
+    {
+      name: "resolusiFormatOutput",
+      label: "Resolusi/format output",
+      placeholder: "Contoh: 4K, MP4, JPG, PNG, rasio tertentu",
+    },
+    {
+      name: "deadline",
+      label: "Deadline",
+      placeholder: "Sebutkan target tanggal atau rentang waktu",
+    },
+    {
+      name: "kontak",
+      label: "Kontak",
+      placeholder: "PIC proyek yang dapat dihubungi",
+    },
+    {
+      name: "catatanTambahan",
+      label: "Catatan tambahan / referensi (opsional)",
+      placeholder: "Tambahkan link folder asset, moodboard, atau catatan revisi.",
+      textarea: true,
+      required: false,
+    },
+  ],
+};
+
+const emptyServiceDetails: ServiceDetails = {
+  websiteDevelopment: {
+    namaBisnisBrand: "",
+    jenisBisnis: "",
+    tujuanWebsite: "",
+    preferensiDesainWarna: "",
+    domainDiinginkan: "",
+    fiturKhusus: "",
+    budgetEstimasiWaktu: "",
+    kontakDapatDihubungi: "",
+    catatanTambahan: "",
+  },
+  wordpressDevelopment: {
+    namaBrandSitus: "",
+    jenisWebsite: "",
+    pilihanTema: "",
+    kebutuhanPlugin: "",
+    kontenAwal: "",
+    akunAdmin: "",
+    budgetDeadline: "",
+    catatanTambahan: "",
+  },
+  berduPlatform: {
+    namaBisnis: "",
+    jenisUsaha: "",
+    jumlahUserKelola: "",
+    kebutuhanFiturDashboard: "",
+    jenisDataAnalytics: "",
+    preferensiIntegrasi: "",
+    kontakPic: "",
+    catatanTambahan: "",
+  },
+  mobileAppDevelopment: {
+    namaAplikasi: "",
+    platformTarget: "",
+    tujuanAplikasi: "",
+    fiturUtama: "",
+    mockupDesain: "",
+    integrasiLayanan: "",
+    estimasiJumlahPengguna: "",
+    kontak: "",
+    catatanTambahan: "",
+  },
+  serviceHpLaptop: {
+    namaLengkap: "",
+    jenisPerangkat: "",
+    masalahUtama: "",
+    informasiGaransi: "",
+    pilihanLayanan: "",
+    lokasiLayanan: "",
+    kontak: "",
+    catatanTambahan: "",
+  },
+  photoVideoEditing: {
+    namaProyek: "",
+    jenisEditing: "",
+    jumlahFile: "",
+    kebutuhanSpesifik: "",
+    resolusiFormatOutput: "",
+    deadline: "",
+    kontak: "",
+    catatanTambahan: "",
+  },
+};
+
+const createEmptyServiceDetails = (): ServiceDetails =>
+  JSON.parse(JSON.stringify(emptyServiceDetails)) as ServiceDetails;
+
 type OrderFormValues = {
   nama: string;
   email: string;
   whatsapp: string;
-  perusahaan: string;
-  jabatan: string;
-  website: string;
   layanan: string;
-  scope: string[];
-  anggaran: string;
-  timeline: string;
-  deadline: string;
   preferensiKontak: "whatsapp" | "email" | "meeting";
-  zonaWaktu: string;
-  tujuan: string;
-  referensi: string;
-  deskripsi: string;
   lampiran?: FileList;
+  layananDetails: ServiceDetails;
 };
 
-const layananOptions = [
-  "Website Corporate",
-  "Landing Page",
-  "E-Commerce / Catalog",
-  "Web App / Dashboard",
-  "Mobile App (Flutter/React Native)",
-  "Maintenance & Optimization",
-  "Branding & UI Kit",
-];
+const getDefaultFormValues = (): OrderFormValues => ({
+  nama: "",
+  email: "",
+  whatsapp: "",
+  layanan: "",
+  preferensiKontak: "whatsapp",
+  lampiran: undefined,
+  layananDetails: createEmptyServiceDetails(),
+});
 
-const scopeOptions = [
-  {
-    value: "ux_research",
-    label: "UX Research",
-    description: "Audit, persona, customer journey, dan analisis kompetitor.",
-  },
-  {
-    value: "ui_design",
-    label: "UI Design",
-    description: "Wireframe, high fidelity design, dan prototyping interaktif.",
-  },
-  {
-    value: "web_development",
-    label: "Web Development",
-    description: "Implementasi front-end & back-end sesuai desain.",
-  },
-  {
-    value: "content_copy",
-    label: "Copywriting & Content",
-    description: "Penulisan konten, struktur informasi, dan microcopy.",
-  },
-  {
-    value: "branding_assets",
-    label: "Brand Assets",
-    description: "Logo, guideline visual, dan asset grafis pendukung.",
-  },
-  {
-    value: "seo_performance",
-    label: "SEO & Performance",
-    description: "Optimasi kecepatan, aksesibilitas, dan visibilitas SEO.",
-  },
-];
-
-const budgetOptions = [
-  "< Rp 10.000.000",
-  "Rp 10.000.000 - Rp 20.000.000",
-  "Rp 20.000.000 - Rp 35.000.000",
-  "Rp 35.000.000 - Rp 50.000.000",
-  "> Rp 50.000.000",
-  "Belum Menentukan",
-];
-
-const timelineOptions = [
-  "Sesegera mungkin (1-2 minggu)",
-  "Kurang dari 1 bulan",
-  "1 - 2 bulan",
-  "3 - 6 bulan",
-  "Fleksibel / Diskusikan",
-];
 
 const contactPreferences = [
   { value: "whatsapp", label: "WhatsApp", helper: "Kami hubungi via nomor WhatsApp Anda." },
   { value: "email", label: "Email", helper: "Kirim update dan proposal melalui email." },
   { value: "meeting", label: "Meeting Online", helper: "Jadwalkan sesi meeting melalui Zoom/Meet." },
-];
-
-const timezoneOptions = [
-  "WIB (GMT+7)",
-  "WITA (GMT+8)",
-  "WIT (GMT+9)",
-  "GMT+7 (Bangkok / Jakarta)",
-  "GMT+8 (Singapore)",
-  "GMT+9 (Tokyo)",
-  "GMT+10 (Sydney)",
-  "Lainnya",
 ];
 
 const whatsappNumberEkal = "6281999900306";
@@ -130,8 +532,151 @@ function normalizeWhatsapp(input: string) {
   return digits || whatsappNumberEkal;
 }
 
-const summarizeScope = (scope: string[]) =>
-  scope.length > 0 ? scope.map((item) => scopeOptions.find((opt) => opt.value === item)?.label ?? item).join(", ") : "-";
+const summarizeServiceDetails = (serviceKey: ServiceKey, details?: Partial<ServiceDetails[ServiceKey]>) =>
+  serviceFieldConfigs[serviceKey]
+    .map((fieldConfig) => {
+      const rawValue = details?.[fieldConfig.name] ?? "";
+      const value = typeof rawValue === "string" ? rawValue.trim() : "";
+      return `${fieldConfig.label}: ${value.length > 0 ? value : "-"}`;
+    })
+    .join("\n");
+
+type SubmissionSummary = {
+  perusahaan: string;
+  jabatan: string;
+  website: string;
+  scope: string;
+  anggaran: string;
+  timeline: string;
+  deadline: string;
+  zonaWaktu: string;
+  tujuan: string;
+  referensi: string;
+  deskripsi: string;
+};
+
+const emptySubmissionSummary: SubmissionSummary = {
+  perusahaan: "-",
+  jabatan: "-",
+  website: "-",
+  scope: "-",
+  anggaran: "-",
+  timeline: "-",
+  deadline: "-",
+  zonaWaktu: "-",
+  tujuan: "-",
+  referensi: "-",
+  deskripsi: "-",
+};
+
+const trimOrDash = (value?: string) => {
+  if (!value) return "-";
+  const trimmed = value.trim();
+  return trimmed.length > 0 ? trimmed : "-";
+};
+
+const combineOrDash = (...values: (string | undefined)[]) => {
+  const combined = values
+    .map((value) => trimOrDash(value))
+    .filter((value) => value !== "-")
+    .join(" | ");
+  return combined.length > 0 ? combined : "-";
+};
+
+const deriveSubmissionSummary = (serviceKey: ServiceKey | undefined, details?: ServiceDetails[ServiceKey]): SubmissionSummary => {
+  if (!serviceKey || !details) {
+    return emptySubmissionSummary;
+  }
+
+  switch (serviceKey) {
+    case "websiteDevelopment":
+      return {
+        perusahaan: trimOrDash(details.namaBisnisBrand),
+        jabatan: trimOrDash(details.kontakDapatDihubungi),
+        website: trimOrDash(details.domainDiinginkan),
+        scope: combineOrDash(details.jenisBisnis, details.fiturKhusus),
+        anggaran: trimOrDash(details.budgetEstimasiWaktu),
+        timeline: "-",
+        deadline: "-",
+        zonaWaktu: "-",
+        tujuan: trimOrDash(details.tujuanWebsite),
+        referensi: trimOrDash(details.catatanTambahan),
+        deskripsi: combineOrDash(details.preferensiDesainWarna, details.fiturKhusus),
+      };
+    case "wordpressDevelopment":
+      return {
+        perusahaan: trimOrDash(details.namaBrandSitus),
+        jabatan: trimOrDash(details.akunAdmin),
+        website: trimOrDash(details.jenisWebsite),
+        scope: combineOrDash(details.pilihanTema, details.kontenAwal),
+        anggaran: trimOrDash(details.budgetDeadline),
+        timeline: trimOrDash(details.budgetDeadline),
+        deadline: trimOrDash(details.budgetDeadline),
+        zonaWaktu: "-",
+        tujuan: trimOrDash(details.kebutuhanPlugin),
+        referensi: trimOrDash(details.catatanTambahan),
+        deskripsi: combineOrDash(details.pilihanTema, details.kontenAwal),
+      };
+    case "berduPlatform":
+      return {
+        perusahaan: trimOrDash(details.namaBisnis),
+        jabatan: trimOrDash(details.kontakPic),
+        website: trimOrDash(details.jenisUsaha),
+        scope: combineOrDash(details.kebutuhanFiturDashboard, details.preferensiIntegrasi),
+        anggaran: "-",
+        timeline: "-",
+        deadline: "-",
+        zonaWaktu: "-",
+        tujuan: trimOrDash(details.kebutuhanFiturDashboard),
+        referensi: trimOrDash(details.catatanTambahan),
+        deskripsi: combineOrDash(details.jenisDataAnalytics, details.preferensiIntegrasi),
+      };
+    case "mobileAppDevelopment":
+      return {
+        perusahaan: trimOrDash(details.namaAplikasi),
+        jabatan: trimOrDash(details.kontak),
+        website: trimOrDash(details.platformTarget),
+        scope: combineOrDash(details.fiturUtama, details.integrasiLayanan),
+        anggaran: "-",
+        timeline: "-",
+        deadline: "-",
+        zonaWaktu: "-",
+        tujuan: trimOrDash(details.tujuanAplikasi),
+        referensi: trimOrDash(details.catatanTambahan),
+        deskripsi: combineOrDash(details.mockupDesain, details.integrasiLayanan, details.estimasiJumlahPengguna),
+      };
+    case "serviceHpLaptop":
+      return {
+        perusahaan: trimOrDash(details.jenisPerangkat),
+        jabatan: trimOrDash(details.kontak),
+        website: "-",
+        scope: combineOrDash(details.pilihanLayanan),
+        anggaran: "-",
+        timeline: "-",
+        deadline: "-",
+        zonaWaktu: "-",
+        tujuan: trimOrDash(details.masalahUtama),
+        referensi: trimOrDash(details.catatanTambahan),
+        deskripsi: combineOrDash(details.informasiGaransi, details.lokasiLayanan),
+      };
+    case "photoVideoEditing":
+      return {
+        perusahaan: trimOrDash(details.namaProyek),
+        jabatan: trimOrDash(details.kontak),
+        website: trimOrDash(details.jenisEditing),
+        scope: combineOrDash(details.jenisEditing, details.kebutuhanSpesifik),
+        anggaran: "-",
+        timeline: "-",
+        deadline: trimOrDash(details.deadline),
+        zonaWaktu: "-",
+        tujuan: trimOrDash(details.kebutuhanSpesifik),
+        referensi: trimOrDash(details.catatanTambahan),
+        deskripsi: combineOrDash(details.resolusiFormatOutput, details.jumlahFile),
+      };
+    default:
+      return emptySubmissionSummary;
+  }
+};
 
 const Order = () => {
   const { toast } = useToast();
@@ -140,50 +685,42 @@ const Order = () => {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const form = useForm<OrderFormValues>({
-    defaultValues: {
-      nama: "",
-      email: "",
-      whatsapp: "",
-      perusahaan: "",
-      jabatan: "",
-      website: "",
-      layanan: "",
-      scope: [],
-      anggaran: "",
-      timeline: "",
-      deadline: "",
-      preferensiKontak: "whatsapp",
-      zonaWaktu: "WIB (GMT+7)",
-      tujuan: "",
-      referensi: "",
-      deskripsi: "",
-      lampiran: undefined,
-    },
+    defaultValues: getDefaultFormValues(),
     mode: "onSubmit",
+    shouldUnregister: true,
   });
+
+  const selectedLayanan = form.watch("layanan");
+  const selectedServiceKey = selectedLayanan ? toServiceKey(selectedLayanan) : undefined;
+  const serviceSpecificFields = selectedServiceKey ? serviceFieldConfigs[selectedServiceKey] : [];
 
   const { ref, inView } = useInView<HTMLDivElement>({ threshold: 0.15 });
   const fadeClass = useMemo(() => (inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"), [inView]);
 
   const handleSheetSubmission = async (values: OrderFormValues) => {
+    const serviceKey = toServiceKey(values.layanan ?? "");
+    const layananDetail = serviceKey ? summarizeServiceDetails(serviceKey, values.layananDetails[serviceKey]) : "-";
+    const submissionSummary = deriveSubmissionSummary(serviceKey, serviceKey ? values.layananDetails[serviceKey] : undefined);
+
     const record = {
       timestamp: new Date().toISOString(),
       nama: values.nama,
       email: values.email,
       whatsapp: normalizeWhatsapp(values.whatsapp),
-      perusahaan: values.perusahaan || "-",
-      jabatan: values.jabatan || "-",
-      website: values.website || "-",
+      perusahaan: submissionSummary.perusahaan,
+      jabatan: submissionSummary.jabatan,
+      website: submissionSummary.website,
       layanan: values.layanan,
-      scope: summarizeScope(values.scope),
-      anggaran: values.anggaran,
-      timeline: values.timeline,
-      deadline: values.deadline,
+      scope: submissionSummary.scope,
+      anggaran: submissionSummary.anggaran,
+      timeline: submissionSummary.timeline,
+      deadline: submissionSummary.deadline,
       preferensi_kontak: values.preferensiKontak,
-      zona_waktu: values.zonaWaktu,
-      tujuan: values.tujuan,
-      referensi: values.referensi || "-",
-      deskripsi: values.deskripsi,
+      zona_waktu: submissionSummary.zonaWaktu,
+      tujuan: submissionSummary.tujuan,
+      referensi: submissionSummary.referensi,
+      deskripsi: submissionSummary.deskripsi,
+      detail_layanan: layananDetail,
       lampiran: values.lampiran && values.lampiran.length > 0 ? values.lampiran[0].name : "-",
       status: "Baru",
     };
@@ -204,6 +741,10 @@ const Order = () => {
       return false;
     }
 
+    const serviceKey = toServiceKey(values.layanan ?? "");
+    const layananDetail = serviceKey ? summarizeServiceDetails(serviceKey, values.layananDetails[serviceKey]) : "-";
+    const submissionSummary = deriveSubmissionSummary(serviceKey, serviceKey ? values.layananDetails[serviceKey] : undefined);
+
     const response = await fetch(EMAILJS_API_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -217,19 +758,20 @@ const Order = () => {
           nama: values.nama,
           email: values.email,
           whatsapp: normalizeWhatsapp(values.whatsapp),
-          perusahaan: values.perusahaan || "-",
-          jabatan: values.jabatan || "-",
-          website: values.website || "-",
+          perusahaan: submissionSummary.perusahaan,
+          jabatan: submissionSummary.jabatan,
+          website: submissionSummary.website,
           layanan: values.layanan,
-          scope: summarizeScope(values.scope),
-          anggaran: values.anggaran,
-          timeline: values.timeline,
-          deadline: values.deadline,
+          scope: submissionSummary.scope,
+          anggaran: submissionSummary.anggaran,
+          timeline: submissionSummary.timeline,
+          deadline: submissionSummary.deadline,
           preferensiKontak: values.preferensiKontak,
-          zonaWaktu: values.zonaWaktu,
-          tujuan: values.tujuan,
-          referensi: values.referensi || "-",
-          deskripsi: values.deskripsi,
+          zonaWaktu: submissionSummary.zonaWaktu,
+          tujuan: submissionSummary.tujuan,
+          referensi: submissionSummary.referensi,
+          deskripsi: submissionSummary.deskripsi,
+          detail_layanan: layananDetail,
           lampiran: values.lampiran && values.lampiran.length > 0 ? values.lampiran[0].name : "-",
         },
       }),
@@ -261,7 +803,7 @@ const Order = () => {
             : "Data tersimpan, tetapi notifikasi email gagal dikirim.";
       }
 
-      form.reset();
+      form.reset(getDefaultFormValues());
       setAttachmentMeta(null);
       toast({
         title: "Order berhasil dikirim",
@@ -287,13 +829,6 @@ const Order = () => {
 
   return (
     <section className="content-vis relative px-4 py-24">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(135%_180%_at_50%_-45%,rgba(91,112,255,0.75)_0%,rgba(16,21,45,0.94)_60%,rgba(5,7,19,0.98)_78%,rgba(3,4,11,1)_100%)]" />
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(140%_140%_at_52%_125%,rgba(12,16,36,0.85)_10%,rgba(9,13,27,0.82)_46%,transparent_85%)]" />
-      <div className="pointer-events-none absolute inset-x-0 top-[-14rem] h-[40rem] bg-[radial-gradient(90%_58%_at_50%_-18%,rgba(99,102,241,0.52)_0%,rgba(99,102,241,0)_76%)]" />
-      <div className="pointer-events-none absolute inset-x-0 bottom-[-12rem] h-[44rem] bg-[radial-gradient(88%_60%_at_50%_118%,rgba(6,182,212,0.4)_0%,rgba(6,182,212,0)_74%)]" />
-      <div className="pointer-events-none absolute left-[12%] top-[18%] h-48 w-48 rounded-full bg-[radial-gradient(circle,rgba(120,134,255,0.35)_0%,rgba(120,134,255,0)_70%)] blur-[80px]" />
-      <div className="pointer-events-none absolute right-[16%] top-[22%] h-40 w-40 rounded-full bg-[radial-gradient(circle,rgba(6,182,212,0.28)_0%,rgba(6,182,212,0)_65%)] blur-[70px]" />
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/12 to-transparent" />
 
       <div className="relative z-10 mx-auto max-w-5xl">
         <div className={`mb-14 text-center transition-all duration-700 ease-smooth ${fadeClass}`} ref={ref}>
@@ -377,47 +912,6 @@ const Order = () => {
                     )}
                   />
 
-                  <FormField
-                    control={form.control}
-                    name="perusahaan"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Perusahaan / Brand</FormLabel>
-                        <FormControl>
-                          <Input placeholder="Jika pribadi, kosongkan saja" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-
-                  <FormField
-                    control={form.control}
-                    name="jabatan"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Jabatan / Peran</FormLabel>
-                        <FormControl>
-                          <Input placeholder="Contoh: Founder, Marketing Manager, UI Lead" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-
-                  <FormField
-                    control={form.control}
-                    name="website"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Website / Platform Saat Ini</FormLabel>
-                        <FormControl>
-                          <Input placeholder="Contoh: https://brandanda.com" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
                 </section>
 
                 <section className="space-y-6">
@@ -427,7 +921,7 @@ const Order = () => {
                     rules={{ required: "Pilih jenis layanan" }}
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Jenis Layanan Utama</FormLabel>
+                        <FormLabel>Layanan Utama</FormLabel>
                         <FormControl>
                           <Select value={field.value} onValueChange={field.onChange}>
                             <SelectTrigger>
@@ -447,146 +941,70 @@ const Order = () => {
                     )}
                   />
 
-                  <FormField
-                    control={form.control}
-                    name="scope"
-                    rules={{
-                      validate: (value) => value.length > 0 || "Pilih minimal satu lingkup pekerjaan",
-                    }}
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Lingkup Pekerjaan</FormLabel>
-                        <div className="grid gap-3 md:grid-cols-2">
-                          {scopeOptions.map((option) => {
-                            const checked = field.value?.includes(option.value) ?? false;
-                            return (
-                              <Label
-                                key={option.value}
-                                className={cn(
-                                  "cursor-pointer rounded-2xl border border-white/10 bg-white/5 px-4 py-4 transition hover:border-white/20 hover:bg-white/10",
-                                  checked ? "border-sky-400/50 bg-white/10" : "",
-                                )}
-                              >
-                                <div className="flex items-start gap-3">
-                                  <Checkbox
-                                    checked={checked}
-                                    onCheckedChange={(isChecked) => {
-                                      if (isChecked === true) {
-                                        field.onChange([...(field.value ?? []), option.value]);
-                                      } else {
-                                        field.onChange((field.value ?? []).filter((item) => item !== option.value));
-                                      }
-                                    }}
-                                  />
-                                  <div>
-                                    <p className="text-sm font-semibold text-white">{option.label}</p>
-                                    <p className="text-xs text-white/60">{option.description}</p>
+                  <div className="rounded-2xl border border-white/10 bg-white/5 p-6 shadow-inner">
+                    <div className="flex flex-col gap-2 pb-4 text-white">
+                      <h3 className="text-lg font-semibold">Detail Layanan</h3>
+                      <p className="text-sm text-white/60">
+                        Isi kebutuhan spesifik sesuai layanan agar tim kami dapat meninjau dengan cepat dan akurat.
+                      </p>
+                    </div>
+
+                    {selectedServiceKey && serviceSpecificFields.length > 0 ? (
+                      <div className="grid grid-cols-1 gap-5">
+                        {serviceSpecificFields.map((serviceField) => {
+                          const fieldPath = `layananDetails.${selectedServiceKey}.${String(serviceField.name)}` as ServiceFieldPath;
+                          const isRequired = serviceField.required !== false;
+                          return (
+                            <FormField
+                              key={fieldPath}
+                              control={form.control}
+                              name={fieldPath}
+                              rules={
+                                isRequired
+                                  ? {
+                                      required: `${serviceField.label} wajib diisi`,
+                                    }
+                                  : undefined
+                              }
+                              render={({ field }) => (
+                                <FormItem>
+                                  <div className="flex items-center justify-between gap-2">
+                                    <FormLabel className="text-sm font-semibold text-white">
+                                      {serviceField.label}
+                                    </FormLabel>
+                                    {!isRequired && (
+                                      <span className="text-xs uppercase tracking-[0.3em] text-white/40">Opsional</span>
+                                    )}
                                   </div>
-                                </div>
-                              </Label>
-                            );
-                          })}
-                        </div>
-                        <FormMessage />
-                      </FormItem>
+                                  <FormControl>
+                                    {serviceField.textarea ? (
+                                      <Textarea
+                                        rows={3}
+                                        placeholder={serviceField.placeholder}
+                                        {...field}
+                                      />
+                                    ) : (
+                                      <Input placeholder={serviceField.placeholder} {...field} />
+                                    )}
+                                  </FormControl>
+                                  {serviceField.description ? (
+                                    <p className="text-xs text-white/50">{serviceField.description}</p>
+                                  ) : null}
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                          );
+                        })}
+                      </div>
+                    ) : (
+                      <div className="rounded-xl border border-dashed border-white/15 bg-white/0 p-6 text-sm text-white/55">
+                        Pilih layanan terlebih dahulu untuk menampilkan form rinci sesuai kebutuhan proyek Anda.
+                      </div>
                     )}
-                  />
+                  </div>
+
                 </section>
-
-                <section className="grid grid-cols-1 gap-6 md:grid-cols-2">
-                  <FormField
-                    control={form.control}
-                    name="anggaran"
-                    rules={{ required: "Pilih rentang anggaran" }}
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Rentang Anggaran</FormLabel>
-                        <FormControl>
-                          <Select value={field.value} onValueChange={field.onChange}>
-                            <SelectTrigger>
-                              <SelectValue placeholder="Perkirakan rentang anggaran" />
-                            </SelectTrigger>
-                            <SelectContent>
-                              {budgetOptions.map((opt) => (
-                                <SelectItem key={opt} value={opt}>
-                                  {opt}
-                                </SelectItem>
-                              ))}
-                            </SelectContent>
-                          </Select>
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-
-                  <FormField
-                    control={form.control}
-                    name="timeline"
-                    rules={{ required: "Pilih estimasi timeline" }}
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Estimasi Timeline</FormLabel>
-                        <FormControl>
-                          <Select value={field.value} onValueChange={field.onChange}>
-                            <SelectTrigger>
-                              <SelectValue placeholder="Kapan proyek hendak dimulai?" />
-                            </SelectTrigger>
-                            <SelectContent>
-                              {timelineOptions.map((opt) => (
-                                <SelectItem key={opt} value={opt}>
-                                  {opt}
-                                </SelectItem>
-                              ))}
-                            </SelectContent>
-                          </Select>
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-
-                  <FormField
-                    control={form.control}
-                    name="deadline"
-                    rules={{ required: "Tanggal target peluncuran wajib diisi" }}
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Target Peluncuran</FormLabel>
-                        <FormControl>
-                          <Input type="date" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-
-                  <FormField
-                    control={form.control}
-                    name="zonaWaktu"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Zona Waktu</FormLabel>
-                        <FormControl>
-                          <Select value={field.value} onValueChange={field.onChange}>
-                            <SelectTrigger>
-                              <SelectValue placeholder="Pilih zona waktu Anda" />
-                            </SelectTrigger>
-                            <SelectContent>
-                              {timezoneOptions.map((opt) => (
-                                <SelectItem key={opt} value={opt}>
-                                  {opt}
-                                </SelectItem>
-                              ))}
-                            </SelectContent>
-                          </Select>
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </section>
-
                 <section className="grid grid-cols-1 gap-6">
                   <FormField
                     control={form.control}
@@ -594,11 +1012,7 @@ const Order = () => {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Preferensi Komunikasi</FormLabel>
-                        <RadioGroup
-                          value={field.value}
-                          onValueChange={field.onChange}
-                          className="grid gap-3 md:grid-cols-3"
-                        >
+                        <RadioGroup value={field.value} onValueChange={field.onChange} className="grid gap-3 md:grid-cols-3">
                           {contactPreferences.map((option) => (
                             <Label
                               key={option.value}
@@ -622,58 +1036,6 @@ const Order = () => {
                 </section>
 
                 <section className="grid grid-cols-1 gap-6">
-                  <FormField
-                    control={form.control}
-                    name="tujuan"
-                    rules={{ required: "Tujuan proyek wajib diisi" }}
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Tujuan Utama Proyek</FormLabel>
-                        <FormControl>
-                          <Textarea rows={3} placeholder="Misal: meningkatkan konversi, memperbaiki brand perception, dsb." {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-
-                  <FormField
-                    control={form.control}
-                    name="deskripsi"
-                    rules={{ required: "Deskripsi kebutuhan wajib diisi" }}
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Detail Kebutuhan</FormLabel>
-                        <FormControl>
-                          <Textarea
-                            rows={5}
-                            placeholder="Ceritakan scope detail, referensi kompetitor, integrasi yang dibutuhkan, atau flow pengguna yang ingin ditingkatkan."
-                            {...field}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-
-                  <FormField
-                    control={form.control}
-                    name="referensi"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Referensi / Moodboard (opsional)</FormLabel>
-                        <FormControl>
-                          <Textarea
-                            rows={3}
-                            placeholder="Cantumkan link dribbble, behance, website favorit, atau catatan tambahan lainnya."
-                            {...field}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-
                   <FormField
                     control={form.control}
                     name="lampiran"
@@ -709,7 +1071,9 @@ const Order = () => {
                                 const files = e.target.files as FileList;
                                 field.onChange(files);
                                 const file = files && files.length > 0 ? files[0] : null;
-                                setAttachmentMeta(file ? { name: file.name, size: Math.max(1, Math.round(file.size / 1024)) } : null);
+                                setAttachmentMeta(
+                                  file ? { name: file.name, size: Math.max(1, Math.round(file.size / 1024)) } : null,
+                                );
                               }}
                             />
                           </div>
@@ -748,7 +1112,7 @@ const Order = () => {
                     variant="outline"
                     className="w-full rounded-full border-white/15 bg-white/5 px-6 py-6 text-sm font-semibold text-white/80 hover:border-white/30 hover:bg-white/10 sm:w-auto"
                     onClick={() => {
-                      form.reset();
+                      form.reset(getDefaultFormValues());
                       setAttachmentMeta(null);
                     }}
                     disabled={isSubmitting}

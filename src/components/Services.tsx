@@ -55,12 +55,10 @@ export const Services = () => {
 
   return (
     <section id="services" className="relative content-vis px-4 py-24">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,#1d1b3f_0%,transparent_55%)]" />
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent opacity-40" />
 
       <div ref={ref} className="relative z-10 mx-auto max-w-6xl">
         <div className="flex flex-col items-center gap-6 text-center">
-          <div className={`inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/10 px-5 py-2 text-[0.65rem] font-semibold uppercase tracking-[0.6em] text-white/60 ${base} ${show}`} style={{ transitionDelay: "80ms" }}>
+          <div className={`inline-flex items-center gap-2 rounded-full bg-white/10 px-5 py-2 text-[0.65rem] font-semibold uppercase tracking-[0.6em] text-white/60 ${base} ${show}`} style={{ transitionDelay: "80ms" }}>
             <span>Layanan Utama</span>
           </div>
           <h2 className={`text-4xl font-semibold text-white md:text-5xl ${base} ${show}`} style={{ transitionDelay: "150ms" }}>

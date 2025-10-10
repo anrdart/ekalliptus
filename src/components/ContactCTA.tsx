@@ -22,14 +22,10 @@ export const ContactCTA = () => {
 
   return (
     <section id="contact" className="content-vis relative px-4 py-24">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom,#1f2544_0%,transparent_55%)] pointer-events-none" />
-      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-40 pointer-events-none" />
-      <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-sky-400/20 to-transparent opacity-40 pointer-events-none" />
-
 
       <div className="relative z-10 mx-auto max-w-4xl">
         <Card
-          className={`glass-panel neon-border rounded-[2.5rem] border-white/10 p-12 shadow-elegant ${base} ${show}`}
+          className={`glass-panel neon-border rounded-[2.5rem] p-12 shadow-elegant ${base} ${show}`}
           style={{ transitionDelay: "100ms" }}
         >
           <div ref={ref} className="text-center">
