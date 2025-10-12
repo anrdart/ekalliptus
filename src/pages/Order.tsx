@@ -851,19 +851,19 @@ const Order = () => {
   return (
     <>
       <Helmet>
-        <title>Order Layanan - ekalliptus | Mulai Proyek Digital Anda</title>
-        <meta name="description" content="Form order layanan ekalliptus untuk website development, WordPress, mobile app, service HP laptop, dan editing foto video. Isi detail proyek Anda dan dapatkan proposal dalam 24 jam." />
-        <meta name="keywords" content="order website development, form WordPress custom, pesan mobile app, service HP laptop online, editing foto video, konsultasi digital agency" />
+        <title>Order Layanan - ekalliptus | Website Development, WordPress, Mobile App</title>
+        <meta name="description" content="Form order layanan ekalliptus untuk website development Indonesia, WordPress custom Jakarta, mobile app development, service HP laptop, dan editing foto video profesional. Dapatkan proposal dalam 24 jam." />
+        <meta name="keywords" content="order website development, form WordPress custom, pesan mobile app, service HP laptop online, editing foto video, konsultasi digital agency, jasa website Indonesia" />
         <link rel="canonical" href="https://ekalliptus.my.id/order" />
-        <meta property="og:title" content="Order Layanan - ekalliptus" />
-        <meta property="og:description" content="Mulai proyek digital Anda dengan ekalliptus. Isi form order untuk website, WordPress, mobile app, atau layanan multimedia." />
+        <meta property="og:title" content="Order Layanan - ekalliptus | Website & Mobile App Development" />
+        <meta property="og:description" content="Mulai proyek digital Anda dengan ekalliptus. Form order untuk website development Indonesia, WordPress custom, mobile app, dan layanan multimedia profesional." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://ekalliptus.my.id/order" />
-        <meta property="og:image" content="https://ekalliptus.my.id/og-order.jpg" />
+        <meta property="og:image" content="/assets/hero-bg.jpg" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Order Layanan - ekalliptus" />
-        <meta name="twitter:description" content="Form order layanan digital profesional untuk transformasi bisnis Anda" />
-        <meta name="twitter:image" content="https://ekalliptus.my.id/og-order.jpg" />
+        <meta name="twitter:description" content="Form order website development Indonesia, WordPress custom Jakarta, mobile app development, dan layanan digital profesional" />
+        <meta name="twitter:image" content="/assets/hero-bg.jpg" />
       </Helmet>
       <section className="content-vis relative px-4 py-24">
 
@@ -873,10 +873,13 @@ const Order = () => {
               Formulir Order
             </div>
             <h1 className="mt-6 bg-gradient-to-r from-sky-400 via-indigo-300 to-emerald-300 bg-clip-text text-4xl font-semibold uppercase tracking-[0.4em] text-transparent md:text-5xl">
-              Mulai Kolaborasi
+              Order Layanan Digital
             </h1>
             <p className="mt-6 text-base leading-relaxed text-white/70 md:text-lg">
-              Ceritakan kebutuhan proyek Anda secara detail. Data akan otomatis masuk ke dashboard internal kami dan notifikasi email akan dikirim ke tim ekalliptus.
+              Ceritakan kebutuhan proyek website development Indonesia, WordPress custom Jakarta, mobile app development, atau layanan digital lainnya secara detail. Data akan otomatis masuk ke dashboard internal kami dan notifikasi email akan dikirim ke tim ekalliptus untuk memberikan proposal dalam 24 jam.
+            </p>
+            <p className="mt-4 text-sm leading-relaxed text-white/60">
+              Kami melayani berbagai kebutuhan digital: jasa pembuatan website Indonesia, WordPress custom Jakarta, mobile app development untuk Android dan iOS, service HP laptop profesional, serta editing foto video berkualitas tinggi. Pilih layanan yang sesuai dan isi form di bawah ini.
             </p>
           </div>
 
@@ -884,7 +887,7 @@ const Order = () => {
             <CardHeader className="space-y-3 px-0 pb-8">
               <CardTitle className="text-3xl font-semibold text-white">Detail Proyek</CardTitle>
               <CardDescription className="text-base text-white/65">
-                Informasi yang Anda berikan membantu kami menyiapkan solusi paling relevan serta estimasi yang presisi.
+                Informasi yang Anda berikan membantu kami menyiapkan solusi paling relevan serta estimasi yang presisi untuk website development Indonesia, WordPress custom Jakarta, mobile app development, atau layanan digital lainnya.
               </CardDescription>
             </CardHeader>
 
@@ -982,7 +985,7 @@ const Order = () => {
                       <div className="flex flex-col gap-2 pb-4 text-white">
                         <h3 className="text-lg font-semibold">Detail Layanan</h3>
                         <p className="text-sm text-white/60">
-                          Isi kebutuhan spesifik sesuai layanan agar tim kami dapat meninjau dengan cepat dan akurat.
+                          Isi kebutuhan spesifik sesuai layanan website development Indonesia, WordPress custom Jakarta, mobile app development, service HP laptop, atau editing foto video agar tim kami dapat meninjau dengan cepat dan akurat.
                         </p>
                       </div>
 
@@ -1036,7 +1039,7 @@ const Order = () => {
                         </div>
                       ) : (
                         <div className="rounded-xl border border-dashed border-white/15 bg-white/0 p-6 text-sm text-white/55">
-                          Pilih layanan terlebih dahulu untuk menampilkan form rinci sesuai kebutuhan proyek Anda.
+                          Pilih layanan website development Indonesia, WordPress custom Jakarta, mobile app development, service HP laptop, atau editing foto video terlebih dahulu untuk menampilkan form rinci sesuai kebutuhan proyek Anda.
                         </div>
                       )}
                     </div>
@@ -1127,11 +1130,10 @@ const Order = () => {
                       <div className="h-px flex-1 bg-white/15" />
                     </div>
                     <p>
-                      Dokumen langsung tersinkron ke Sheet internal ekalliptus. Jika ingin mengirim lampiran tambahan (wireframe,
-                      requirement, dsb), balas email konfirmasi yang Anda terima setelah pengiriman formulir ini.
+                      Dokumen langsung tersinkron ke Sheet internal ekalliptus untuk website development Indonesia, WordPress custom Jakarta, mobile app development, service HP laptop, dan editing foto video. Jika ingin mengirim lampiran tambahan (wireframe, requirement, dsb), balas email konfirmasi yang Anda terima setelah pengiriman formulir ini.
                     </p>
                     <p className="text-xs text-white/50">
-                      Kami menjaga kerahasiaan data Anda dan hanya menggunakan informasi ini untuk keperluan komunikasi proyek.
+                      Kami menjaga kerahasiaan data Anda dan hanya menggunakan informasi ini untuk keperluan komunikasi proyek website development, WordPress custom, mobile app, dan layanan digital lainnya.
                     </p>
                   </div>
 
