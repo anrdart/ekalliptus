@@ -9,6 +9,7 @@ type ThemeMode = "dark" | "light";
 const sectionLinks = [
   { label: "Home", hash: "#home" },
   { label: "Layanan", hash: "#services" },
+  { label: "Tentang", hash: "#about" },
   { label: "Kontak", hash: "#contact" },
 ];
 

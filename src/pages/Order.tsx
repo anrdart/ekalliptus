@@ -1,5 +1,6 @@
 import { useMemo, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
+import { Helmet } from "react-helmet-async";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
@@ -848,304 +849,321 @@ const Order = () => {
   };
 
   return (
-    <section className="content-vis relative px-4 py-24">
+    <>
+      <Helmet>
+        <title>Order Layanan - ekalliptus | Mulai Proyek Digital Anda</title>
+        <meta name="description" content="Form order layanan ekalliptus untuk website development, WordPress, mobile app, service HP laptop, dan editing foto video. Isi detail proyek Anda dan dapatkan proposal dalam 24 jam." />
+        <meta name="keywords" content="order website development, form WordPress custom, pesan mobile app, service HP laptop online, editing foto video, konsultasi digital agency" />
+        <link rel="canonical" href="https://ekalliptus.my.id/order" />
+        <meta property="og:title" content="Order Layanan - ekalliptus" />
+        <meta property="og:description" content="Mulai proyek digital Anda dengan ekalliptus. Isi form order untuk website, WordPress, mobile app, atau layanan multimedia." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://ekalliptus.my.id/order" />
+        <meta property="og:image" content="https://ekalliptus.my.id/og-order.jpg" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Order Layanan - ekalliptus" />
+        <meta name="twitter:description" content="Form order layanan digital profesional untuk transformasi bisnis Anda" />
+        <meta name="twitter:image" content="https://ekalliptus.my.id/og-order.jpg" />
+      </Helmet>
+      <section className="content-vis relative px-4 py-24">
 
-      <div className="relative z-10 mx-auto max-w-5xl">
-        <div className={`mb-14 text-center transition-all duration-700 ease-smooth ${fadeClass}`} ref={ref}>
-          <div className="mx-auto flex w-max items-center justify-center gap-2 rounded-full border border-white/10 bg-white/10 px-5 py-2 text-[0.65rem] font-semibold uppercase tracking-[0.6em] text-white/60">
-            Formulir Order
+        <div className="relative z-10 mx-auto max-w-5xl">
+          <div className={`mb-14 text-center transition-all duration-700 ease-smooth ${fadeClass}`} ref={ref}>
+            <div className="mx-auto flex w-max items-center justify-center gap-2 rounded-full border border-white/10 bg-white/10 px-5 py-2 text-[0.65rem] font-semibold uppercase tracking-[0.6em] text-white/60">
+              Formulir Order
+            </div>
+            <h1 className="mt-6 bg-gradient-to-r from-sky-400 via-indigo-300 to-emerald-300 bg-clip-text text-4xl font-semibold uppercase tracking-[0.4em] text-transparent md:text-5xl">
+              Mulai Kolaborasi
+            </h1>
+            <p className="mt-6 text-base leading-relaxed text-white/70 md:text-lg">
+              Ceritakan kebutuhan proyek Anda secara detail. Data akan otomatis masuk ke dashboard internal kami dan notifikasi email akan dikirim ke tim ekalliptus.
+            </p>
           </div>
-          <h1 className="mt-6 bg-gradient-to-r from-sky-400 via-indigo-300 to-emerald-300 bg-clip-text text-4xl font-semibold uppercase tracking-[0.4em] text-transparent md:text-5xl">
-            Mulai Kolaborasi
-          </h1>
-          <p className="mt-6 text-base leading-relaxed text-white/70 md:text-lg">
-            Ceritakan kebutuhan proyek Anda secara detail. Data akan otomatis masuk ke dashboard internal kami dan notifikasi email akan dikirim ke tim ekalliptus.
-          </p>
-        </div>
 
-        <Card className={`glass-panel neon-border border-white/10 p-8 shadow-elegant transition-all duration-700 ease-smooth md:p-12 ${fadeClass}`}>
-          <CardHeader className="space-y-3 px-0 pb-8">
-            <CardTitle className="text-3xl font-semibold text-white">Detail Proyek</CardTitle>
-            <CardDescription className="text-base text-white/65">
-              Informasi yang Anda berikan membantu kami menyiapkan solusi paling relevan serta estimasi yang presisi.
-            </CardDescription>
-          </CardHeader>
+          <Card className={`glass-panel neon-border border-white/10 p-8 shadow-elegant transition-all duration-700 ease-smooth md:p-12 ${fadeClass}`}>
+            <CardHeader className="space-y-3 px-0 pb-8">
+              <CardTitle className="text-3xl font-semibold text-white">Detail Proyek</CardTitle>
+              <CardDescription className="text-base text-white/65">
+                Informasi yang Anda berikan membantu kami menyiapkan solusi paling relevan serta estimasi yang presisi.
+              </CardDescription>
+            </CardHeader>
 
-          <CardContent className="p-0">
-            <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)} className="grid grid-cols-1 gap-8" noValidate>
-                <section className="grid grid-cols-1 gap-6 md:grid-cols-2">
-                  <FormField
-                    control={form.control}
-                    name="nama"
-                    rules={{ required: "Nama wajib diisi" }}
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Nama Lengkap</FormLabel>
-                        <FormControl>
-                          <Input placeholder="Contoh: Budi Santoso" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+            <CardContent className="p-0">
+              <Form {...form}>
+                <form onSubmit={form.handleSubmit(onSubmit)} className="grid grid-cols-1 gap-8" noValidate>
+                  <section className="grid grid-cols-1 gap-6 md:grid-cols-2">
+                    <FormField
+                      control={form.control}
+                      name="nama"
+                      rules={{ required: "Nama wajib diisi" }}
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Nama Lengkap</FormLabel>
+                          <FormControl>
+                            <Input placeholder="Contoh: Budi Santoso" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
 
-                  <FormField
-                    control={form.control}
-                    name="email"
-                    rules={{
-                      required: "Email wajib diisi",
-                      pattern: {
-                        value: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/i,
-                        message: "Format email tidak valid",
-                      },
-                    }}
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Email</FormLabel>
-                        <FormControl>
-                          <Input type="email" placeholder="nama@domain.com" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+                    <FormField
+                      control={form.control}
+                      name="email"
+                      rules={{
+                        required: "Email wajib diisi",
+                        pattern: {
+                          value: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/i,
+                          message: "Format email tidak valid",
+                        },
+                      }}
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Email</FormLabel>
+                          <FormControl>
+                            <Input type="email" placeholder="nama@domain.com" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
 
-                  <FormField
-                    control={form.control}
-                    name="whatsapp"
-                    rules={{
-                      required: "Nomor WhatsApp wajib diisi",
-                      pattern: {
-                        value: /^[+0-9\s()-]{9,20}$/i,
-                        message: "Masukkan nomor WhatsApp yang valid",
-                      },
-                    }}
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>WhatsApp</FormLabel>
-                        <FormControl>
-                          <Input type="tel" placeholder="Contoh: 0851xxxxxxx" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+                    <FormField
+                      control={form.control}
+                      name="whatsapp"
+                      rules={{
+                        required: "Nomor WhatsApp wajib diisi",
+                        pattern: {
+                          value: /^[+0-9\s()-]{9,20}$/i,
+                          message: "Masukkan nomor WhatsApp yang valid",
+                        },
+                      }}
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>WhatsApp</FormLabel>
+                          <FormControl>
+                            <Input type="tel" placeholder="Contoh: 0851xxxxxxx" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
 
-                </section>
+                  </section>
 
-                <section className="space-y-6">
-                  <FormField
-                    control={form.control}
-                    name="layanan"
-                    rules={{ required: "Pilih jenis layanan" }}
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Layanan Utama</FormLabel>
-                        <FormControl>
-                          <Select value={field.value} onValueChange={field.onChange}>
-                            <SelectTrigger>
-                              <SelectValue placeholder="Pilih layanan" />
-                            </SelectTrigger>
-                            <SelectContent>
-                              {layananOptions.map((opt) => (
-                                <SelectItem key={opt} value={opt}>
-                                  {opt}
-                                </SelectItem>
-                              ))}
-                            </SelectContent>
-                          </Select>
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+                  <section className="space-y-6">
+                    <FormField
+                      control={form.control}
+                      name="layanan"
+                      rules={{ required: "Pilih jenis layanan" }}
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Layanan Utama</FormLabel>
+                          <FormControl>
+                            <Select value={field.value} onValueChange={field.onChange}>
+                              <SelectTrigger>
+                                <SelectValue placeholder="Pilih layanan" />
+                              </SelectTrigger>
+                              <SelectContent>
+                                {layananOptions.map((opt) => (
+                                  <SelectItem key={opt} value={opt}>
+                                    {opt}
+                                  </SelectItem>
+                                ))}
+                              </SelectContent>
+                            </Select>
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
 
-                  <div className="rounded-2xl border border-white/10 bg-white/5 p-6 shadow-inner">
-                    <div className="flex flex-col gap-2 pb-4 text-white">
-                      <h3 className="text-lg font-semibold">Detail Layanan</h3>
-                      <p className="text-sm text-white/60">
-                        Isi kebutuhan spesifik sesuai layanan agar tim kami dapat meninjau dengan cepat dan akurat.
-                      </p>
+                    <div className="rounded-2xl border border-white/10 bg-white/5 p-6 shadow-inner">
+                      <div className="flex flex-col gap-2 pb-4 text-white">
+                        <h3 className="text-lg font-semibold">Detail Layanan</h3>
+                        <p className="text-sm text-white/60">
+                          Isi kebutuhan spesifik sesuai layanan agar tim kami dapat meninjau dengan cepat dan akurat.
+                        </p>
+                      </div>
+
+                      {selectedServiceKey && serviceSpecificFields.length > 0 ? (
+                        <div className="grid grid-cols-1 gap-5">
+                          {serviceSpecificFields.map((serviceField) => {
+                            const fieldPath = `layananDetails.${selectedServiceKey}.${String(serviceField.name)}` as ServiceFieldPath;
+                            const isRequired = serviceField.required !== false;
+                            return (
+                              <FormField
+                                key={fieldPath}
+                                control={form.control}
+                                name={fieldPath}
+                                rules={
+                                  isRequired
+                                    ? {
+                                        required: `${serviceField.label} wajib diisi`,
+                                      }
+                                    : undefined
+                                }
+                                render={({ field }) => (
+                                  <FormItem>
+                                    <div className="flex items-center justify-between gap-2">
+                                      <FormLabel className="text-sm font-semibold text-white">
+                                        {serviceField.label}
+                                      </FormLabel>
+                                      {!isRequired && (
+                                        <span className="text-xs uppercase tracking-[0.3em] text-white/40">Opsional</span>
+                                      )}
+                                    </div>
+                                    <FormControl>
+                                      {serviceField.textarea ? (
+                                        <Textarea
+                                          rows={3}
+                                          placeholder={serviceField.placeholder}
+                                          {...field}
+                                        />
+                                      ) : (
+                                        <Input placeholder={serviceField.placeholder} {...field} />
+                                      )}
+                                    </FormControl>
+                                    {serviceField.description ? (
+                                      <p className="text-xs text-white/50">{serviceField.description}</p>
+                                    ) : null}
+                                    <FormMessage />
+                                  </FormItem>
+                                )}
+                              />
+                            );
+                          })}
+                        </div>
+                      ) : (
+                        <div className="rounded-xl border border-dashed border-white/15 bg-white/0 p-6 text-sm text-white/55">
+                          Pilih layanan terlebih dahulu untuk menampilkan form rinci sesuai kebutuhan proyek Anda.
+                        </div>
+                      )}
                     </div>
 
-                    {selectedServiceKey && serviceSpecificFields.length > 0 ? (
-                      <div className="grid grid-cols-1 gap-5">
-                        {serviceSpecificFields.map((serviceField) => {
-                          const fieldPath = `layananDetails.${selectedServiceKey}.${String(serviceField.name)}` as ServiceFieldPath;
-                          const isRequired = serviceField.required !== false;
-                          return (
-                            <FormField
-                              key={fieldPath}
-                              control={form.control}
-                              name={fieldPath}
-                              rules={
-                                isRequired
-                                  ? {
-                                      required: `${serviceField.label} wajib diisi`,
-                                    }
-                                  : undefined
-                              }
-                              render={({ field }) => (
-                                <FormItem>
-                                  <div className="flex items-center justify-between gap-2">
-                                    <FormLabel className="text-sm font-semibold text-white">
-                                      {serviceField.label}
-                                    </FormLabel>
-                                    {!isRequired && (
-                                      <span className="text-xs uppercase tracking-[0.3em] text-white/40">Opsional</span>
-                                    )}
-                                  </div>
-                                  <FormControl>
-                                    {serviceField.textarea ? (
-                                      <Textarea
-                                        rows={3}
-                                        placeholder={serviceField.placeholder}
-                                        {...field}
-                                      />
-                                    ) : (
-                                      <Input placeholder={serviceField.placeholder} {...field} />
-                                    )}
-                                  </FormControl>
-                                  {serviceField.description ? (
-                                    <p className="text-xs text-white/50">{serviceField.description}</p>
-                                  ) : null}
-                                  <FormMessage />
-                                </FormItem>
-                              )}
-                            />
-                          );
-                        })}
-                      </div>
-                    ) : (
-                      <div className="rounded-xl border border-dashed border-white/15 bg-white/0 p-6 text-sm text-white/55">
-                        Pilih layanan terlebih dahulu untuk menampilkan form rinci sesuai kebutuhan proyek Anda.
-                      </div>
-                    )}
-                  </div>
-
-                </section>
-                <section className="grid grid-cols-1 gap-6">
-                  <FormField
-                    control={form.control}
-                    name="preferensiKontak"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Preferensi Komunikasi</FormLabel>
-                        <RadioGroup value={field.value} onValueChange={field.onChange} className="grid gap-3 md:grid-cols-3">
-                          {contactPreferences.map((option) => (
-                            <Label
-                              key={option.value}
-                              className={cn(
-                                "flex cursor-pointer flex-col gap-2 rounded-2xl border border-white/10 bg-white/5 p-4 transition hover:border-white/20 hover:bg-white/10",
-                                field.value === option.value ? "border-sky-400/50 bg-white/10" : "",
-                              )}
-                            >
-                              <div className="flex items-center gap-3">
-                                <RadioGroupItem value={option.value} className="h-5 w-5" />
-                                <span className="text-sm font-semibold text-white">{option.label}</span>
-                              </div>
-                              <p className="text-xs text-white/60">{option.helper}</p>
-                            </Label>
-                          ))}
-                        </RadioGroup>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </section>
-
-                <section className="grid grid-cols-1 gap-6">
-                  <FormField
-                    control={form.control}
-                    name="lampiran"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Lampiran (opsional)</FormLabel>
-                        <FormControl>
-                          <div className="flex flex-col gap-3">
-                            <div className="flex items-center gap-4">
-                              <button
-                                type="button"
-                                onClick={() => fileInputRef.current?.click()}
-                                className="rounded-2xl border border-white/20 bg-white/15 px-6 py-3 text-xs font-semibold uppercase tracking-[0.32em] text-white backdrop-blur-2xl transition hover:border-sky-300/40 hover:bg-sky-500/25"
-                              >
-                                Pilih File
-                              </button>
-                              <div className="flex-1 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white/70 backdrop-blur-2xl">
-                                {attachmentMeta ? (
-                                  <div className="flex items-center justify-between gap-3">
-                                    <span className="truncate font-medium text-white/85">{attachmentMeta.name}</span>
-                                    <span className="text-xs text-white/50">{attachmentMeta.size} KB</span>
-                                  </div>
-                                ) : (
-                                  <span className="text-xs uppercase tracking-[0.32em] text-white/40">Belum ada file dipilih</span>
+                  </section>
+                  <section className="grid grid-cols-1 gap-6">
+                    <FormField
+                      control={form.control}
+                      name="preferensiKontak"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Preferensi Komunikasi</FormLabel>
+                          <RadioGroup value={field.value} onValueChange={field.onChange} className="grid gap-3 md:grid-cols-3">
+                            {contactPreferences.map((option) => (
+                              <Label
+                                key={option.value}
+                                className={cn(
+                                  "flex cursor-pointer flex-col gap-2 rounded-2xl border border-white/10 bg-white/5 p-4 transition hover:border-white/20 hover:bg-white/10",
+                                  field.value === option.value ? "border-sky-400/50 bg-white/10" : "",
                                 )}
+                              >
+                                <div className="flex items-center gap-3">
+                                  <RadioGroupItem value={option.value} className="h-5 w-5" />
+                                  <span className="text-sm font-semibold text-white">{option.label}</span>
+                                </div>
+                                <p className="text-xs text-white/60">{option.helper}</p>
+                              </Label>
+                            ))}
+                          </RadioGroup>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </section>
+
+                  <section className="grid grid-cols-1 gap-6">
+                    <FormField
+                      control={form.control}
+                      name="lampiran"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Lampiran (opsional)</FormLabel>
+                          <FormControl>
+                            <div className="flex flex-col gap-3">
+                              <div className="flex items-center gap-4">
+                                <button
+                                  type="button"
+                                  onClick={() => fileInputRef.current?.click()}
+                                  className="rounded-2xl border border-white/20 bg-white/15 px-6 py-3 text-xs font-semibold uppercase tracking-[0.32em] text-white backdrop-blur-2xl transition hover:border-sky-300/40 hover:bg-sky-500/25"
+                                >
+                                  Pilih File
+                                </button>
+                                <div className="flex-1 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white/70 backdrop-blur-2xl">
+                                  {attachmentMeta ? (
+                                    <div className="flex items-center justify-between gap-3">
+                                      <span className="truncate font-medium text-white/85">{attachmentMeta.name}</span>
+                                      <span className="text-xs text-white/50">{attachmentMeta.size} KB</span>
+                                    </div>
+                                  ) : (
+                                    <span className="text-xs uppercase tracking-[0.32em] text-white/40">Belum ada file dipilih</span>
+                                  )}
+                                </div>
                               </div>
+                              <Input
+                                ref={fileInputRef}
+                                type="file"
+                                className="sr-only"
+                                onChange={(e) => {
+                                  const files = e.target.files as FileList;
+                                  field.onChange(files);
+                                  const file = files && files.length > 0 ? files[0] : null;
+                                  setAttachmentMeta(
+                                    file ? { name: file.name, size: Math.max(1, Math.round(file.size / 1024)) } : null,
+                                  );
+                                }}
+                              />
                             </div>
-                            <Input
-                              ref={fileInputRef}
-                              type="file"
-                              className="sr-only"
-                              onChange={(e) => {
-                                const files = e.target.files as FileList;
-                                field.onChange(files);
-                                const file = files && files.length > 0 ? files[0] : null;
-                                setAttachmentMeta(
-                                  file ? { name: file.name, size: Math.max(1, Math.round(file.size / 1024)) } : null,
-                                );
-                              }}
-                            />
-                          </div>
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </section>
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </section>
 
-                <div className="flex flex-col gap-4 rounded-2xl border border-white/10 bg-white/5 p-5 text-sm text-white/70">
-                  <div className="flex items-center gap-3 text-white">
-                    <span className="text-xs uppercase tracking-[0.4em] text-white/40">Catatan</span>
-                    <div className="h-px flex-1 bg-white/15" />
+                  <div className="flex flex-col gap-4 rounded-2xl border border-white/10 bg-white/5 p-5 text-sm text-white/70">
+                    <div className="flex items-center gap-3 text-white">
+                      <span className="text-xs uppercase tracking-[0.4em] text-white/40">Catatan</span>
+                      <div className="h-px flex-1 bg-white/15" />
+                    </div>
+                    <p>
+                      Dokumen langsung tersinkron ke Sheet internal ekalliptus. Jika ingin mengirim lampiran tambahan (wireframe,
+                      requirement, dsb), balas email konfirmasi yang Anda terima setelah pengiriman formulir ini.
+                    </p>
+                    <p className="text-xs text-white/50">
+                      Kami menjaga kerahasiaan data Anda dan hanya menggunakan informasi ini untuk keperluan komunikasi proyek.
+                    </p>
                   </div>
-                  <p>
-                    Dokumen langsung tersinkron ke Sheet internal ekalliptus. Jika ingin mengirim lampiran tambahan (wireframe,
-                    requirement, dsb), balas email konfirmasi yang Anda terima setelah pengiriman formulir ini.
-                  </p>
-                  <p className="text-xs text-white/50">
-                    Kami menjaga kerahasiaan data Anda dan hanya menggunakan informasi ini untuk keperluan komunikasi proyek.
-                  </p>
-                </div>
 
-                <div className="flex flex-col gap-3 pt-2 sm:flex-row sm:items-center">
-                  <Button
-                    type="submit"
-                    variant="hero"
-                    className="w-full rounded-full px-8 py-6 text-sm font-semibold uppercase tracking-wide sm:w-auto"
-                    disabled={isSubmitting}
-                  >
-                    {isSubmitting ? "Mengirim..." : "Kirim Order"}
-                  </Button>
-                  <Button
-                    type="button"
-                    variant="outline"
-                    className="w-full rounded-full border-white/15 bg-white/5 px-6 py-6 text-sm font-semibold text-white/80 hover:border-white/30 hover:bg-white/10 sm:w-auto"
-                    onClick={() => {
-                      form.reset(getDefaultFormValues());
-                      setAttachmentMeta(null);
-                    }}
-                    disabled={isSubmitting}
-                  >
-                    Reset Form
-                  </Button>
-                </div>
-              </form>
-            </Form>
-          </CardContent>
-        </Card>
-      </div>
-    </section>
+                  <div className="flex flex-col gap-3 pt-2 sm:flex-row sm:items-center">
+                    <Button
+                      type="submit"
+                      variant="hero"
+                      className="w-full rounded-full px-8 py-6 text-sm font-semibold uppercase tracking-wide sm:w-auto"
+                      disabled={isSubmitting}
+                    >
+                      {isSubmitting ? "Mengirim..." : "Kirim Order"}
+                    </Button>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      className="w-full rounded-full border-white/15 bg-white/5 px-6 py-6 text-sm font-semibold text-white/80 hover:border-white/30 hover:bg-white/10 sm:w-auto"
+                      onClick={() => {
+                        form.reset(getDefaultFormValues());
+                        setAttachmentMeta(null);
+                      }}
+                      disabled={isSubmitting}
+                    >
+                      Reset Form
+                    </Button>
+                  </div>
+                </form>
+              </Form>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
+    </>
   );
 };
 
