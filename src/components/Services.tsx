@@ -8,24 +8,32 @@ const services = [
     title: "Website Development",
     description: "Buat website profesional yang responsif dan user-friendly untuk bisnis Anda.",
     features: ["Responsive Design", "SEO Optimized", "Fast Loading", "Custom Domain"],
+    url: "/order",
+    category: "Development",
   },
   {
     icon: Code,
     title: "WordPress Development",
     description: "Kustomisasi WordPress sesuai kebutuhan dengan tema dan plugin terbaik.",
     features: ["Custom Theme", "Plugin Integration", "E-commerce Ready", "Content Management"],
+    url: "/order",
+    category: "Development",
   },
   {
     icon: Globe,
     title: "Berdu Platform",
     description: "Solusi platform berdu yang powerful untuk kebutuhan bisnis modern.",
     features: ["Admin Dashboard", "User Management", "Data Analytics", "Cloud Hosting"],
+    url: "/order",
+    category: "Platform",
   },
   {
     icon: Smartphone,
     title: "Mobile App Development",
     description: "Aplikasi mobile Android & iOS yang inovatif dan mudah digunakan.",
     features: ["Cross Platform", "Native Performance", "Push Notifications", "App Store Ready"],
+    url: "/order",
+    category: "Development",
   },
   {
     icon: Laptop,
@@ -38,6 +46,8 @@ const services = [
       "Perbaikan Software & Hardware",
       "Garansi Layanan",
     ],
+    url: "/order",
+    category: "Service",
   },
   {
     icon: Video,
@@ -45,6 +55,8 @@ const services = [
     description:
       "Editing profesional untuk foto dan video dengan hasil berkualitas tinggi.",
     features: ["Color Grading", "Motion Graphics", "Audio Mixing", "4K Quality"],
+    url: "/order",
+    category: "Multimedia",
   },
 ];
 
@@ -69,20 +81,24 @@ export const Services = () => {
           </p>
         </div>
 
-        <div className="mt-16 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-16 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3" itemScope itemType="https://schema.org/OfferCatalog">
           {services.map((service, index) => (
-            <div
+            <article
               key={index}
               className={`${base} ${show}`}
               style={{ transitionDelay: `${300 + index * 100}ms` }}
+              itemScope
+              itemType="https://schema.org/Service"
             >
+              <link itemProp="url" href={service.url} />
+              <meta itemProp="serviceType" content={service.category} />
               <ServiceCard
                 icon={service.icon}
                 title={service.title}
                 description={service.description}
                 features={service.features}
               />
-            </div>
+            </article>
           ))}
         </div>
       </div>

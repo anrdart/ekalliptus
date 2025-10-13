@@ -864,6 +864,45 @@ const Order = () => {
         <meta name="twitter:title" content="Order Layanan - ekalliptus" />
         <meta name="twitter:description" content="Form order website development Indonesia, WordPress custom Jakarta, mobile app development, dan layanan digital profesional" />
         <meta name="twitter:image" content="/assets/hero-bg.jpg" />
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://ekalliptus.my.id/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Order Layanan",
+                "item": "https://ekalliptus.my.id/order"
+              }
+            ]
+          })}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            "name": "Order Layanan - ekalliptus",
+            "description": "Form order layanan ekalliptus untuk website development, WordPress, mobile app, dan layanan digital profesional",
+            "url": "https://ekalliptus.my.id/order",
+            "inLanguage": "id",
+            "isPartOf": {
+              "@type": "WebSite",
+              "name": "ekalliptus",
+              "url": "https://ekalliptus.my.id"
+            },
+            "potentialAction": {
+              "@type": "OrderAction",
+              "target": "https://ekalliptus.my.id/order"
+            }
+          })}
+        </script>
       </Helmet>
       <section className="content-vis relative px-4 py-24">
 
