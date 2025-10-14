@@ -83,7 +83,7 @@ export const FAQ = () => {
               Pertanyaan yang Sering Diajukan
             </h2>
             <p className="mt-6 text-base leading-relaxed text-muted-foreground md:text-lg">
-              Temukan jawaban untuk pertanyaan umum seputar layanan website development Indonesia, WordPress custom Jakarta, mobile app development, dan layanan digital lainnya dari ekalliptus.
+              Temukan jawaban untuk pertanyaan umum seputar layanan website development Indonesia, WordPress custom, mobile app development, dan layanan digital lainnya dari ekalliptus.
             </p>
           </div>
 

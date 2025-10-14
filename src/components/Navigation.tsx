@@ -41,6 +41,30 @@ export const Navigation = () => {
     setMenuOpen(false);
   }, [location.pathname]);
 
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const coarseQuery = window.matchMedia("(pointer: coarse)");
+    const widthQuery = window.matchMedia("(max-width: 767px)");
+
+    const updateTouchMode = () => {
+      const shouldEnable = coarseQuery.matches || widthQuery.matches;
+      document.body.classList.toggle("is-touch", shouldEnable);
+    };
+
+    updateTouchMode();
+    const handleCoarseChange = () => updateTouchMode();
+    const handleWidthChange = () => updateTouchMode();
+
+    coarseQuery.addEventListener("change", handleCoarseChange);
+    widthQuery.addEventListener("change", handleWidthChange);
+
+    return () => {
+      coarseQuery.removeEventListener("change", handleCoarseChange);
+      widthQuery.removeEventListener("change", handleWidthChange);
+      document.body.classList.remove("is-touch");
+    };
+  }, []);
+
   const handleHashNavigation = useCallback(
     (hash: string) => {
       const id = hash.replace("#", "");

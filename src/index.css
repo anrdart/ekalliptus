@@ -45,6 +45,9 @@ All colors MUST be HSL.
     --card-glass: hsl(234 64% 14% / 0.65);
     --card-glass-hover: hsl(234 64% 16% / 0.75);
 
+    --glass-blur: 24px;
+    --glass-saturation: 140%;
+
     /* Shadows */
     --shadow-elegant: 0 20px 40px -12px hsl(217 91% 60% / 0.35);
     --shadow-glow: 0 0 45px hsl(212 96% 55% / 0.35);
@@ -108,6 +111,9 @@ All colors MUST be HSL.
     --shadow-glow: 0 0 45px hsl(221 83% 56% / 0.28);
     --shadow-card: 0 22px 55px -28px hsl(202 74% 46% / 0.2);
 
+    --glass-blur: 22px;
+    --glass-saturation: 130%;
+
     --hero-gradient: radial-gradient(120% 90% at 12% 10%, hsl(221 100% 88% / 0.6) 0%, transparent 55%), radial-gradient(90% 70% at 85% 8%, hsl(188 86% 82% / 0.5) 0%, transparent 60%), linear-gradient(180deg, hsl(210 50% 98%), hsl(210 36% 94%));
     --primary-gradient: linear-gradient(135deg, hsl(221 83% 56%) 0%, hsl(256 83% 68%) 48%, hsl(188 76% 52%) 100%);
     --accent-gradient: linear-gradient(135deg, hsl(188 76% 52%) 0%, hsl(212 84% 60%) 45%, hsl(256 83% 68%) 100%);
@@ -141,6 +147,36 @@ All colors MUST be HSL.
 
   .light body {
     color-scheme: light;
+  }
+
+  body.is-touch {
+    --glass-blur: 14px;
+    --glass-saturation: 120%;
+    --shadow-card: 0 12px 32px -20px hsl(215 60% 32% / 0.2);
+    --shadow-elegant: 0 20px 38px -22px hsl(215 70% 40% / 0.22);
+    --shadow-glow: 0 0 30px hsl(210 90% 62% / 0.25);
+    --fx-gradient-overlay: radial-gradient(70% 60% at 42% 15%, hsl(239 83% 67% / 0.08) 0%, transparent 65%),
+      radial-gradient(55% 50% at 78% 12%, hsl(199 94% 63% / 0.08) 0%, transparent 55%),
+      radial-gradient(55% 55% at 18% 70%, hsl(220 91% 66% / 0.08) 0%, transparent 60%);
+    --fx-blob-1: radial-gradient(circle at center, hsl(237 85% 69% / 0.55) 0%, hsl(237 85% 69% / 0) 70%);
+    --fx-blob-2: radial-gradient(circle at center, hsl(189 92% 43% / 0.5) 0%, hsl(189 92% 43% / 0) 68%);
+    --fx-blob-3: radial-gradient(circle at center, hsl(258 89% 66% / 0.52) 0%, hsl(258 89% 66% / 0) 65%);
+    --fx-glow-1: radial-gradient(circle at center, hsl(0 0% 100% / 0.12) 0%, transparent 70%);
+    --fx-glow-2: radial-gradient(circle at center, hsl(188 90% 60% / 0.14) 0%, transparent 70%);
+  }
+
+  body.light.is-touch {
+    --shadow-card: 0 18px 36px -26px hsl(210 32% 62% / 0.28);
+    --shadow-elegant: 0 24px 40px -24px hsl(210 42% 58% / 0.22);
+    --shadow-glow: 0 0 28px hsl(201 82% 62% / 0.22);
+    --fx-gradient-overlay: radial-gradient(70% 60% at 25% 12%, hsl(221 100% 89% / 0.32) 0%, transparent 60%),
+      radial-gradient(55% 60% at 82% 14%, hsl(188 87% 82% / 0.3) 0%, transparent 58%),
+      radial-gradient(50% 50% at 22% 72%, hsl(266 85% 88% / 0.28) 0%, transparent 60%);
+    --fx-blob-1: radial-gradient(circle at center, hsl(231 94% 80% / 0.45) 0%, hsl(231 94% 80% / 0) 70%);
+    --fx-blob-2: radial-gradient(circle at center, hsl(188 83% 75% / 0.42) 0%, hsl(188 83% 75% / 0) 68%);
+    --fx-blob-3: radial-gradient(circle at center, hsl(272 84% 80% / 0.38) 0%, hsl(272 84% 80% / 0) 65%);
+    --fx-glow-1: radial-gradient(circle at center, hsl(210 100% 96% / 0.65) 0%, transparent 70%);
+    --fx-glow-2: radial-gradient(circle at center, hsl(188 90% 85% / 0.6) 0%, transparent 70%);
   }
 
   @media (pointer: coarse) {
@@ -182,8 +218,8 @@ All colors MUST be HSL.
     background: var(--card-glass);
     border: 1px solid hsl(var(--border) / 0.4);
     box-shadow: var(--shadow-card);
-    backdrop-filter: blur(24px) saturate(140%);
-    -webkit-backdrop-filter: blur(24px) saturate(140%);
+    backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturation));
+    -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturation));
     transition: var(--transition-smooth);
   }
 
@@ -201,6 +237,23 @@ All colors MUST be HSL.
 
   body.light .neon-border::after {
     opacity: 0.35;
+  }
+
+  body.is-touch .smooth-hover {
+    transition-duration: 220ms;
+    will-change: auto;
+  }
+
+  body.is-touch .blur-blob {
+    filter: blur(55px);
+    opacity: 0.65;
+    transform: scale(0.9);
+    animation: none;
+  }
+
+  body.is-touch .floating,
+  body.is-touch .pulse-glow {
+    animation: none;
   }
 
   .bg-primary-gradient {

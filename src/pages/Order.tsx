@@ -863,7 +863,7 @@ const Order = () => {
         <meta property="og:image" content="/assets/hero-bg.jpg" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Order Layanan - ekalliptus" />
-        <meta name="twitter:description" content="Form order website development Indonesia, WordPress custom Jakarta, mobile app development, dan layanan digital profesional" />
+        <meta name="twitter:description" content="Form order website development Indonesia, WordPress custom, mobile app development, dan layanan digital profesional" />
         <meta name="twitter:image" content="/assets/hero-bg.jpg" />
         <script type="application/ld+json">
           {JSON.stringify({
@@ -916,10 +916,10 @@ const Order = () => {
               Order Layanan Digital
             </h1>
             <p className="mt-6 text-base leading-relaxed text-muted-foreground md:text-lg">
-              Ceritakan kebutuhan proyek website development Indonesia, WordPress custom Jakarta, mobile app development, atau layanan digital lainnya secara detail. Data akan otomatis masuk ke dashboard internal kami dan notifikasi email akan dikirim ke tim ekalliptus untuk memberikan proposal dalam 24 jam.
+              Ceritakan kebutuhan proyek website development Indonesia, WordPress custom, mobile app development, atau layanan digital lainnya secara detail. Data akan otomatis masuk ke dashboard internal kami dan notifikasi email akan dikirim ke tim ekalliptus untuk memberikan proposal dalam 24 jam.
             </p>
             <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
-              Kami melayani berbagai kebutuhan digital: jasa pembuatan website Indonesia, WordPress custom Jakarta, mobile app development untuk Android dan iOS, service HP laptop profesional, serta editing foto video berkualitas tinggi. Pilih layanan yang sesuai dan isi form di bawah ini.
+              Kami melayani berbagai kebutuhan digital: jasa pembuatan website Indonesia, WordPress custom, mobile app development untuk Android dan iOS, service HP laptop profesional, serta editing foto video berkualitas tinggi. Pilih layanan yang sesuai dan isi form di bawah ini.
             </p>
           </div>
 
@@ -927,7 +927,7 @@ const Order = () => {
             <CardHeader className="space-y-3 px-0 pb-8">
               <CardTitle className="text-3xl font-semibold text-foreground">Detail Proyek</CardTitle>
               <CardDescription className="text-base text-muted-foreground">
-                Informasi yang Anda berikan membantu kami menyiapkan solusi paling relevan serta estimasi yang presisi untuk website development Indonesia, WordPress custom Jakarta, mobile app development, atau layanan digital lainnya.
+                Informasi yang Anda berikan membantu kami menyiapkan solusi paling relevan serta estimasi yang presisi untuk website development Indonesia, WordPress custom, mobile app development, atau layanan digital lainnya.
               </CardDescription>
             </CardHeader>
 
@@ -1025,7 +1025,7 @@ const Order = () => {
                       <div className="flex flex-col gap-2 pb-4 text-foreground">
                         <h3 className="text-lg font-semibold">Detail Layanan</h3>
                         <p className="text-sm text-muted-foreground">
-                          Isi kebutuhan spesifik sesuai layanan website development Indonesia, WordPress custom Jakarta, mobile app development, service HP laptop, atau editing foto video agar tim kami dapat meninjau dengan cepat dan akurat.
+                          Isi kebutuhan spesifik sesuai layanan website development Indonesia, WordPress custom, mobile app development, service HP laptop, atau editing foto video agar tim kami dapat meninjau dengan cepat dan akurat.
                         </p>
                       </div>
 
@@ -1079,7 +1079,7 @@ const Order = () => {
                         </div>
                       ) : (
                         <div className="rounded-xl border border-dashed border-border/40 bg-transparent p-6 text-sm text-muted-foreground">
-                          Pilih layanan website development Indonesia, WordPress custom Jakarta, mobile app development, service HP laptop, atau editing foto video terlebih dahulu untuk menampilkan form rinci sesuai kebutuhan proyek Anda.
+                          Pilih layanan website development Indonesia, WordPress custom, mobile app development, service HP laptop, atau editing foto video terlebih dahulu untuk menampilkan form rinci sesuai kebutuhan proyek Anda.
                         </div>
                       )}
                     </div>
@@ -1170,7 +1170,7 @@ const Order = () => {
                       <div className="h-px flex-1 bg-border/50" />
                     </div>
                     <p>
-                      Dokumen langsung tersinkron ke Sheet internal ekalliptus untuk website development Indonesia, WordPress custom Jakarta, mobile app development, service HP laptop, dan editing foto video. Jika ingin mengirim lampiran tambahan (wireframe, requirement, dsb), balas email konfirmasi yang Anda terima setelah pengiriman formulir ini.
+                      Dokumen langsung tersinkron ke Sheet internal ekalliptus untuk website development Indonesia, WordPress custom, mobile app development, service HP laptop, dan editing foto video. Jika ingin mengirim lampiran tambahan (wireframe, requirement, dsb), balas email konfirmasi yang Anda terima setelah pengiriman formulir ini.
                     </p>
                     <p className="text-xs text-muted-foreground">
                       Kami menjaga kerahasiaan data Anda dan hanya menggunakan informasi ini untuk keperluan komunikasi proyek website development, WordPress custom, mobile app, dan layanan digital lainnya.
