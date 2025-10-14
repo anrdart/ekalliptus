@@ -100,9 +100,9 @@ const Index = () => {
         </Suspense>
         <section id="about" className="content-vis relative px-4 py-24">
           <div className="absolute inset-0">
-            <div className="pointer-events-none absolute left-[10%] top-[15%] h-40 w-40 rounded-full border border-border/20 bg-card/10 blur-3xl" />
-            <div className="pointer-events-none absolute right-[15%] top-[25%] h-32 w-32 rounded-full border border-border/20 bg-emerald-400/10 blur-3xl" />
-            <div className="pointer-events-none floating absolute bottom-[20%] left-[20%] h-36 w-36 rounded-full border border-border/20 bg-sky-400/10 blur-[70px]" />
+            <div className="pointer-events-none fx-bubble absolute left-[10%] top-[15%] h-40 w-40 rounded-full border border-border/20 bg-card/10 blur-3xl" />
+            <div className="pointer-events-none fx-bubble absolute right-[15%] top-[25%] h-32 w-32 rounded-full border border-border/20 bg-emerald-400/10 blur-3xl" />
+            <div className="pointer-events-none fx-bubble floating absolute bottom-[20%] left-[20%] h-36 w-36 rounded-full border border-border/20 bg-sky-400/10 blur-[70px]" />
           </div>
           
           <div className="relative z-10 mx-auto max-w-6xl">

@@ -14,7 +14,7 @@ export const ServiceCard = ({ icon: Icon, title, description, features }: Servic
       <meta itemProp="name" content={title} />
       <meta itemProp="description" content={description} />
       <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100">
-        <div className="absolute inset-0 bg-gradient-to-br from-sky-500/20 via-transparent to-emerald-400/20 blur-3xl" />
+        <div className="fx-bubble absolute inset-0 bg-gradient-to-br from-sky-500/20 via-transparent to-emerald-400/20 blur-3xl" />
       </div>
 
       <div className="relative flex flex-col gap-6">

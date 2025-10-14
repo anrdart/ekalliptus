@@ -19,9 +19,9 @@ export const Hero = () => {
   return (
     <section id="home" className="relative flex min-h-[calc(100vh-6rem)] items-center overflow-hidden px-4">
       <div className="absolute inset-0">
-        <div className="pointer-events-none absolute left-[12%] top-[12%] h-32 w-32 rounded-full border border-border/20 bg-card/20 blur-3xl" />
-        <div className="pointer-events-none absolute right-[18%] top-[18%] h-24 w-24 rounded-full border border-border/20 bg-cyan-400/20 blur-3xl" />
-        <div className="pointer-events-none floating absolute bottom-[10%] right-[10%] h-36 w-36 rounded-full border border-border/20 bg-indigo-400/20 blur-[70px]" />
+        <div className="pointer-events-none fx-bubble absolute left-[12%] top-[12%] h-32 w-32 rounded-full border border-border/20 bg-card/20 blur-3xl" />
+        <div className="pointer-events-none fx-bubble absolute right-[18%] top-[18%] h-24 w-24 rounded-full border border-border/20 bg-cyan-400/20 blur-3xl" />
+        <div className="pointer-events-none fx-bubble floating absolute bottom-[10%] right-[10%] h-36 w-36 rounded-full border border-border/20 bg-indigo-400/20 blur-[70px]" />
       </div>
 
       <div ref={ref} className="relative z-10 mx-auto flex w-full max-w-6xl flex-col items-center gap-12 py-16 lg:flex-row lg:items-start lg:gap-16">

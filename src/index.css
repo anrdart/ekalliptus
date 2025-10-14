@@ -150,33 +150,41 @@ All colors MUST be HSL.
   }
 
   body.is-touch {
-    --glass-blur: 14px;
-    --glass-saturation: 120%;
-    --shadow-card: 0 12px 32px -20px hsl(215 60% 32% / 0.2);
-    --shadow-elegant: 0 20px 38px -22px hsl(215 70% 40% / 0.22);
-    --shadow-glow: 0 0 30px hsl(210 90% 62% / 0.25);
-    --fx-gradient-overlay: radial-gradient(70% 60% at 42% 15%, hsl(239 83% 67% / 0.08) 0%, transparent 65%),
-      radial-gradient(55% 50% at 78% 12%, hsl(199 94% 63% / 0.08) 0%, transparent 55%),
-      radial-gradient(55% 55% at 18% 70%, hsl(220 91% 66% / 0.08) 0%, transparent 60%);
-    --fx-blob-1: radial-gradient(circle at center, hsl(237 85% 69% / 0.55) 0%, hsl(237 85% 69% / 0) 70%);
-    --fx-blob-2: radial-gradient(circle at center, hsl(189 92% 43% / 0.5) 0%, hsl(189 92% 43% / 0) 68%);
-    --fx-blob-3: radial-gradient(circle at center, hsl(258 89% 66% / 0.52) 0%, hsl(258 89% 66% / 0) 65%);
-    --fx-glow-1: radial-gradient(circle at center, hsl(0 0% 100% / 0.12) 0%, transparent 70%);
-    --fx-glow-2: radial-gradient(circle at center, hsl(188 90% 60% / 0.14) 0%, transparent 70%);
+    --card-glass: hsl(234 52% 12% / 0.92);
+    --card-glass-hover: hsl(234 52% 14% / 0.94);
+    --glass-blur: 0px;
+    --glass-saturation: 115%;
+    --shadow-card: 0 10px 28px -20px hsl(215 60% 32% / 0.18);
+    --shadow-elegant: 0 18px 30px -20px hsl(215 70% 40% / 0.2);
+    --shadow-glow: 0 0 24px hsl(210 90% 62% / 0.22);
+    --fx-gradient-base: linear-gradient(180deg, hsl(233 70% 10%), hsl(234 74% 8%));
+    --fx-gradient-overlay: radial-gradient(70% 60% at 42% 15%, hsl(239 83% 67% / 0.06) 0%, transparent 65%),
+      radial-gradient(55% 50% at 78% 12%, hsl(199 94% 63% / 0.06) 0%, transparent 55%),
+      radial-gradient(55% 55% at 18% 70%, hsl(220 91% 66% / 0.06) 0%, transparent 60%);
+    --fx-blob-1: radial-gradient(circle at center, hsl(237 85% 69% / 0.4) 0%, hsl(237 85% 69% / 0) 70%);
+    --fx-blob-2: radial-gradient(circle at center, hsl(189 92% 43% / 0.4) 0%, hsl(189 92% 43% / 0) 68%);
+    --fx-blob-3: radial-gradient(circle at center, hsl(258 89% 66% / 0.4) 0%, hsl(258 89% 66% / 0) 65%);
+    --fx-glow-1: radial-gradient(circle at center, hsl(0 0% 100% / 0.1) 0%, transparent 70%);
+    --fx-glow-2: radial-gradient(circle at center, hsl(188 90% 60% / 0.12) 0%, transparent 70%);
   }
 
   body.light.is-touch {
-    --shadow-card: 0 18px 36px -26px hsl(210 32% 62% / 0.28);
-    --shadow-elegant: 0 24px 40px -24px hsl(210 42% 58% / 0.22);
-    --shadow-glow: 0 0 28px hsl(201 82% 62% / 0.22);
-    --fx-gradient-overlay: radial-gradient(70% 60% at 25% 12%, hsl(221 100% 89% / 0.32) 0%, transparent 60%),
-      radial-gradient(55% 60% at 82% 14%, hsl(188 87% 82% / 0.3) 0%, transparent 58%),
-      radial-gradient(50% 50% at 22% 72%, hsl(266 85% 88% / 0.28) 0%, transparent 60%);
-    --fx-blob-1: radial-gradient(circle at center, hsl(231 94% 80% / 0.45) 0%, hsl(231 94% 80% / 0) 70%);
-    --fx-blob-2: radial-gradient(circle at center, hsl(188 83% 75% / 0.42) 0%, hsl(188 83% 75% / 0) 68%);
-    --fx-blob-3: radial-gradient(circle at center, hsl(272 84% 80% / 0.38) 0%, hsl(272 84% 80% / 0) 65%);
-    --fx-glow-1: radial-gradient(circle at center, hsl(210 100% 96% / 0.65) 0%, transparent 70%);
-    --fx-glow-2: radial-gradient(circle at center, hsl(188 90% 85% / 0.6) 0%, transparent 70%);
+    --card-glass: hsl(0 0% 100% / 0.94);
+    --card-glass-hover: hsl(0 0% 100% / 0.98);
+    --glass-blur: 0px;
+    --glass-saturation: 110%;
+    --shadow-card: 0 14px 34px -24px hsl(210 32% 62% / 0.25);
+    --shadow-elegant: 0 20px 34px -22px hsl(210 42% 58% / 0.18);
+    --shadow-glow: 0 0 22px hsl(201 82% 62% / 0.2);
+    --fx-gradient-base: linear-gradient(180deg, hsl(210 56% 96%), hsl(204 48% 92%));
+    --fx-gradient-overlay: radial-gradient(70% 60% at 25% 12%, hsl(221 100% 89% / 0.24) 0%, transparent 60%),
+      radial-gradient(55% 60% at 82% 14%, hsl(188 87% 82% / 0.22) 0%, transparent 58%),
+      radial-gradient(50% 50% at 22% 72%, hsl(266 85% 88% / 0.22) 0%, transparent 60%);
+    --fx-blob-1: radial-gradient(circle at center, hsl(231 94% 80% / 0.35) 0%, hsl(231 94% 80% / 0) 70%);
+    --fx-blob-2: radial-gradient(circle at center, hsl(188 83% 75% / 0.32) 0%, hsl(188 83% 75% / 0) 68%);
+    --fx-blob-3: radial-gradient(circle at center, hsl(272 84% 80% / 0.3) 0%, hsl(272 84% 80% / 0) 65%);
+    --fx-glow-1: radial-gradient(circle at center, hsl(210 100% 96% / 0.55) 0%, transparent 70%);
+    --fx-glow-2: radial-gradient(circle at center, hsl(188 90% 85% / 0.5) 0%, transparent 70%);
   }
 
   @media (pointer: coarse) {
@@ -228,6 +236,11 @@ All colors MUST be HSL.
     box-shadow: var(--shadow-elegant);
   }
 
+  body.is-touch .glass-panel {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
   /* Light mode adaptations for Index page */
   body.light section#home .absolute,
   body.light section#about .absolute {
@@ -239,21 +252,67 @@ All colors MUST be HSL.
     opacity: 0.35;
   }
 
+  body.is-touch .neon-border::after {
+    opacity: 0.18;
+  }
+
+  body.is-touch .fx-bubble {
+    display: none !important;
+  }
+
+  @media (pointer: coarse), (max-width: 767px) {
+    body {
+      --glass-blur: 0px;
+    }
+
+    .glass-panel {
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+    }
+
+    .blur-blob,
+    .floating,
+    .pulse-glow {
+      display: none;
+    }
+
+    .fx-bubble {
+      display: none !important;
+    }
+
+    input,
+    select,
+    textarea {
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+      background-color: hsl(var(--card) / 0.96);
+    }
+
+    .neon-border::after {
+      opacity: 0.18;
+    }
+  }
+
   body.is-touch .smooth-hover {
     transition-duration: 220ms;
     will-change: auto;
   }
 
   body.is-touch .blur-blob {
-    filter: blur(55px);
-    opacity: 0.65;
-    transform: scale(0.9);
-    animation: none;
+    display: none;
   }
 
   body.is-touch .floating,
   body.is-touch .pulse-glow {
-    animation: none;
+    display: none;
+  }
+
+  body.is-touch input,
+  body.is-touch select,
+  body.is-touch textarea {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background-color: hsl(var(--card) / 0.96);
   }
 
   .bg-primary-gradient {
