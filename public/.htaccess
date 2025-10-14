@@ -15,11 +15,12 @@
   RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
 
   # Canonical Domain Redirect - Ensure consistent domain
-  # If using multiple domains, redirect to primary domain
-  # Uncomment and adjust if needed:
-  # RewriteCond %{HTTP_HOST} ^ekalliptus\.id$ [NC,OR]
-  # RewriteCond %{HTTP_HOST} ^ekalliptus\.my\.id$ [NC]
-  # RewriteRule ^(.*)$ https://itsme.ekalliptus.id/$1 [R=301,L]
+  # Redirect all alternative domains to primary canonical domain
+  RewriteCond %{HTTP_HOST} ^ekalliptus\.id$ [NC,OR]
+  RewriteCond %{HTTP_HOST} ^www\.ekalliptus\.id$ [NC,OR]
+  RewriteCond %{HTTP_HOST} ^ekalliptus\.my\.id$ [NC,OR]
+  RewriteCond %{HTTP_HOST} ^www\.ekalliptus\.my\.id$ [NC]
+  RewriteRule ^(.*)$ https://itsme.ekalliptus.id/$1 [R=301,L]
 
   # Remove trailing slash (optional)
   RewriteCond %{REQUEST_FILENAME} !-d
