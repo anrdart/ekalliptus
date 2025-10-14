@@ -5,7 +5,7 @@
 
 export const SEO_CONFIG = {
   // Primary domain - MUST be consistent across all pages
-  SITE_URL: 'https://itsme.ekalliptus.id',
+  SITE_URL: 'https://ekalliptus.id',
   
   // Alternative/Development URLs (for reference only)
   ALT_URLS: ['https://ekalliptus.my.id'],

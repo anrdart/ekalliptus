@@ -855,11 +855,11 @@ const Order = () => {
         <title>Order Layanan - ekalliptus | Website Development, WordPress, Mobile App</title>
         <meta name="description" content="Form order layanan ekalliptus untuk website development Indonesia, WordPress custom Jakarta, mobile app development, service HP laptop, dan editing foto video profesional. Dapatkan proposal dalam 24 jam." />
         <meta name="keywords" content="order website development, form WordPress custom, pesan mobile app, service HP laptop online, editing foto video, konsultasi digital agency, jasa website Indonesia" />
-        <link rel="canonical" href="https://ekalliptus.my.id/order" />
+        <link rel="canonical" href={getCanonicalUrl(PAGE_SEO.order.path)} />
         <meta property="og:title" content="Order Layanan - ekalliptus | Website & Mobile App Development" />
         <meta property="og:description" content="Mulai proyek digital Anda dengan ekalliptus. Form order untuk website development Indonesia, WordPress custom, mobile app, dan layanan multimedia profesional." />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://ekalliptus.my.id/order" />
+        <meta property="og:url" content={getOgUrl(PAGE_SEO.order.path)} />
         <meta property="og:image" content="/assets/hero-bg.jpg" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Order Layanan - ekalliptus" />
@@ -874,13 +874,13 @@ const Order = () => {
                 "@type": "ListItem",
                 "position": 1,
                 "name": "Home",
-                "item": "https://ekalliptus.my.id/"
+                "item": getCanonicalUrl("/")
               },
               {
                 "@type": "ListItem",
                 "position": 2,
                 "name": "Order Layanan",
-                "item": "https://ekalliptus.my.id/order"
+                "item": getCanonicalUrl(PAGE_SEO.order.path)
               }
             ]
           })}
@@ -891,16 +891,16 @@ const Order = () => {
             "@type": "WebPage",
             "name": "Order Layanan - ekalliptus",
             "description": "Form order layanan ekalliptus untuk website development, WordPress, mobile app, dan layanan digital profesional",
-            "url": "https://ekalliptus.my.id/order",
+            "url": getCanonicalUrl(PAGE_SEO.order.path),
             "inLanguage": "id",
             "isPartOf": {
               "@type": "WebSite",
               "name": "ekalliptus",
-              "url": "https://ekalliptus.my.id"
+              "url": getCanonicalUrl("/")
             },
             "potentialAction": {
               "@type": "OrderAction",
-              "target": "https://ekalliptus.my.id/order"
+              "target": getCanonicalUrl(PAGE_SEO.order.path)
             }
           })}
         </script>

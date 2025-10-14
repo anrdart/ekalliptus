@@ -5,8 +5,8 @@ Disallow: /private/
 Disallow: /*.json$
 Disallow: /*.md$
 
-# Sitemap location
-Sitemap: https://itsme.ekalliptus.id/sitemap.xml
+# Sitemap location (canonical domain)
+Sitemap: https://ekalliptus.id/sitemap.xml
 
 # Crawl delay for all bots
 Crawl-delay: 1
