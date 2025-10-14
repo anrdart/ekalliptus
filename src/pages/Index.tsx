@@ -2,6 +2,7 @@ import { lazy, Suspense, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { Hero } from "@/components/Hero";
+import { SEO_CONFIG, getCanonicalUrl, getOgUrl, PAGE_SEO } from "@/config/seo.config";
 
 const ServicesLazy = lazy(() => import("@/components/Services").then((m) => ({ default: m.Services })));
 const ContactCTALazy = lazy(() => import("@/components/ContactCTA").then((m) => ({ default: m.ContactCTA })));
@@ -22,19 +23,38 @@ const Index = () => {
   return (
     <>
       <Helmet>
-        <title>ekalliptus - Solusi Digital Terdepan | Website, WordPress, Mobile App, Editing Profesional</title>
-        <meta name="description" content="Ekalliptus adalah digital agency terdepan di Indonesia yang menyediakan layanan website development, WordPress custom, aplikasi mobile Android iOS, service HP laptop, dan editing foto video berkualitas tinggi. Transformasi digital bisnis Anda dengan solusi teknologi modern." />
-        <meta name="keywords" content="jasa pembuatan website Indonesia, WordPress custom Jakarta, mobile app development, service HP laptop, editing foto video profesional, digital agency, UI UX design, ekalliptus" />
-        <link rel="canonical" href="https://ekalliptus.my.id/" />
-        <meta property="og:title" content="ekalliptus - Solusi Digital Terdepan" />
+        <title>{PAGE_SEO.home.title}</title>
+        <meta name="description" content={PAGE_SEO.home.description} />
+        <meta name="keywords" content={PAGE_SEO.home.keywords} />
+        <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+        
+        {/* Canonical URL */}
+        <link rel="canonical" href={getCanonicalUrl(PAGE_SEO.home.path)} />
+        
+        {/* hreflang Tags */}
+        <link rel="alternate" hrefLang="id" href={getCanonicalUrl(PAGE_SEO.home.path)} />
+        <link rel="alternate" hrefLang="x-default" href={getCanonicalUrl(PAGE_SEO.home.path)} />
+        
+        {/* Open Graph Tags */}
+        <meta property="og:title" content={SEO_CONFIG.SITE_TITLE} />
         <meta property="og:description" content="Digital agency Indonesia spesialis website development, WordPress, mobile app, dan multimedia editing. Transformasi bisnis Anda dengan teknologi terdepan." />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://ekalliptus.my.id/" />
-        <meta property="og:image" content="/assets/hero-bg.jpg" />
+        <meta property="og:url" content={getOgUrl(PAGE_SEO.home.path)} />
+        <meta property="og:image" content={SEO_CONFIG.IMAGES.heroImage} />
+        <meta property="og:image:alt" content="ekalliptus - Digital Agency Indonesia" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:locale" content={SEO_CONFIG.LOCALE} />
+        <meta property="og:site_name" content={SEO_CONFIG.SITE_NAME} />
+        
+        {/* Twitter Card Tags */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="ekalliptus - Solusi Digital Terdepan" />
+        <meta name="twitter:site" content={SEO_CONFIG.SOCIAL.twitter} />
+        <meta name="twitter:creator" content={SEO_CONFIG.SOCIAL.twitter} />
+        <meta name="twitter:title" content={SEO_CONFIG.SITE_TITLE} />
         <meta name="twitter:description" content="Digital agency Indonesia untuk website, WordPress, mobile app, dan editing profesional. Solusi digital terdepan untuk bisnis modern." />
-        <meta name="twitter:image" content="/assets/hero-bg.jpg" />
+        <meta name="twitter:image" content={SEO_CONFIG.IMAGES.heroImage} />
+        <meta name="twitter:image:alt" content="ekalliptus - Digital Agency Indonesia" />
         <script type="application/ld+json">
           {JSON.stringify({
             "@context": "https://schema.org",
@@ -44,19 +64,19 @@ const Index = () => {
                 "@type": "ListItem",
                 "position": 1,
                 "name": "Home",
-                "item": "https://ekalliptus.my.id/"
+                "item": getCanonicalUrl("/")
               },
               {
                 "@type": "ListItem",
                 "position": 2,
                 "name": "Services",
-                "item": "https://ekalliptus.my.id/#services"
+                "item": getCanonicalUrl("/#services")
               },
               {
                 "@type": "ListItem",
                 "position": 3,
                 "name": "About",
-                "item": "https://ekalliptus.my.id/#about"
+                "item": getCanonicalUrl("/#about")
               }
             ]
           })}

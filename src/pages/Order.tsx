@@ -12,6 +12,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useInView } from "@/hooks/use-in-view";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
+import { SEO_CONFIG, getCanonicalUrl, getOgUrl, PAGE_SEO } from "@/config/seo.config";
 
 const SHEET_API_URL = "https://sheetdb.io/api/v1/4br025yd4lsm5";
 const EMAILJS_API_URL = "https://api.emailjs.com/api/v1.0/email/send";
