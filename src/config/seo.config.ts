@@ -24,7 +24,7 @@ export const SEO_CONFIG = {
     whatsapp: '6281999900306',
     foundingYear: '2024',
     country: 'Indonesia',
-    region: 'Jakarta',
+    region: 'Tegal',
     latitude: -6.2088,
     longitude: 106.8456,
   },
@@ -45,7 +45,7 @@ export const SEO_CONFIG = {
   },
   
   // Default Meta Tags
-  DEFAULT_KEYWORDS: 'website development Indonesia, WordPress custom, mobile app development, photo editing service, video editing profesional, digital agency Jakarta, jasa pembuatan website, aplikasi mobile Android iOS, editing foto video berkualitas',
+  DEFAULT_KEYWORDS: 'website development Indonesia, WordPress custom, mobile app development, photo editing service, video editing profesional, digital agency Tegal, jasa pembuatan website, aplikasi mobile Android iOS, editing foto video berkualitas',
   
   // Language & Locale
   LANGUAGE: 'id',
@@ -78,12 +78,12 @@ export const PAGE_SEO = {
   home: {
     title: 'Ekalliptus Digital Agency — Website, WordPress, Mobile App Indonesia',
     description: 'Ekalliptus adalah digital agency terdepan di Indonesia yang menyediakan layanan website development, WordPress custom, aplikasi mobile Android iOS, service HP laptop, dan editing foto video berkualitas tinggi. Transformasi digital bisnis Anda dengan solusi teknologi modern.',
-    keywords: 'jasa pembuatan website Indonesia, WordPress custom Jakarta, mobile app development, service HP laptop, editing foto video profesional, digital agency, UI UX design, ekalliptus',
+    keywords: 'jasa pembuatan website Indonesia, WordPress custom, mobile app development, service HP laptop, editing foto video profesional, digital agency, UI UX design, ekalliptus',
     path: '/',
   },
   order: {
     title: 'Order Layanan — Ekalliptus Digital Agency | Website, WordPress, Mobile App',
-    description: 'Form order layanan ekalliptus untuk website development Indonesia, WordPress custom Jakarta, mobile app development, service HP laptop, dan editing foto video profesional. Dapatkan proposal dalam 24 jam.',
+    description: 'Form order layanan ekalliptus untuk website development Indonesia, WordPress custom, mobile app development, service HP laptop, dan editing foto video profesional. Dapatkan proposal dalam 24 jam.',
     keywords: 'order website development, form WordPress custom, pesan mobile app, service HP laptop online, editing foto video, konsultasi digital agency, jasa website Indonesia',
     path: '/order',
   },

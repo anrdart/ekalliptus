@@ -92,7 +92,7 @@ const Index = () => {
             ekalliptus - Solusi Digital Terdepan
           </h1>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Transformasi bisnis Anda dengan website development Indonesia, WordPress custom Jakarta, mobile app development, dan layanan digital profesional lainnya.
+            Transformasi bisnis Anda dengan website development Indonesia, WordPress custom, mobile app development, dan layanan digital profesional lainnya.
           </p>
         </div>
         <Suspense fallback={<div className="content-vis py-20" />}>
@@ -225,7 +225,7 @@ const Index = () => {
                     </div>
                     <h4 className="text-lg font-semibold text-foreground mb-2">Fokus Lokal</h4>
                     <p className="text-muted-foreground text-sm leading-relaxed">
-                      Spesialis <strong className="text-foreground">WordPress custom Jakarta</strong> untuk kebutuhan bisnis lokal dan <strong className="text-foreground">mobile app development</strong> untuk startup hingga enterprise.
+                      Spesialis <strong className="text-foreground">WordPress custom</strong> untuk kebutuhan bisnis lokal dan <strong className="text-foreground">mobile app development</strong> untuk startup hingga enterprise.
                     </p>
                   </div>
 
@@ -237,7 +237,7 @@ const Index = () => {
                     </div>
                     <h4 className="text-lg font-semibold text-foreground mb-2">Hasil Terjamin</h4>
                     <p className="text-muted-foreground text-sm leading-relaxed">
-                      Dengan fokus pada digital agency yang profesional, ekalliptus telah menjadi pilihan utama untuk <strong className="text-foreground">service HP laptop</strong> di Jakarta dan sekitarnya.
+                      Dengan fokus pada digital agency yang profesional, ekalliptus telah menjadi pilihan utama untuk <strong className="text-foreground">Service HP dan laptop</strong> di Tegal dan sekitarnya.
                     </p>
                   </div>
                 </div>
