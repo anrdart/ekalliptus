@@ -28,6 +28,9 @@ const Index = () => {
         <meta name="keywords" content={PAGE_SEO.home.keywords} />
         <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
         
+        { /* SEO Tags */}
+        <meta name="seobility" content="657264fb7c12fc1e19a558b469308911"></meta>
+        
         {/* Canonical URL */}
         <link rel="canonical" href={getCanonicalUrl(PAGE_SEO.home.path)} />
         
