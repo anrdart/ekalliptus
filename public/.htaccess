@@ -1,0 +1,3 @@
+RewriteEngine On
+RewriteCond %{HTTP_HOST} !^ekalliptus.id$
+RewriteRule ^(.*)$ https://ekalliptus.id/$1 [R=301,L]
