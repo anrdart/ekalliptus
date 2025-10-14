@@ -24,7 +24,7 @@ const App = () => (
         <CustomCursor />
         <BrowserRouter>
           <Navigation />
-          <main className="relative z-0 flex min-h-screen flex-col pt-36 md:pt-40">
+          <main className="relative z-0 flex min-h-screen flex-col pt-16 md:pt-20">
             <Routes>
               <Route path="/" element={<Index />} />
               <Route

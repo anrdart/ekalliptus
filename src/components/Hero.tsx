@@ -17,14 +17,14 @@ export const Hero = () => {
   const show = inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8";
 
   return (
-    <section id="home" className="relative flex min-h-[calc(100vh-8rem)] items-center overflow-hidden px-4">
+    <section id="home" className="relative flex min-h-[calc(100vh-6rem)] items-center overflow-hidden px-4">
       <div className="absolute inset-0">
         <div className="pointer-events-none absolute left-[12%] top-[12%] h-32 w-32 rounded-full border border-white/10 bg-white/10 blur-3xl" />
         <div className="pointer-events-none absolute right-[18%] top-[18%] h-24 w-24 rounded-full border border-white/10 bg-cyan-400/20 blur-3xl" />
         <div className="pointer-events-none floating absolute bottom-[10%] right-[10%] h-36 w-36 rounded-full border border-white/10 bg-indigo-400/20 blur-[70px]" />
       </div>
 
-      <div ref={ref} className="relative z-10 mx-auto flex w-full max-w-6xl flex-col items-center gap-12 py-24 lg:flex-row lg:items-start lg:gap-16">
+      <div ref={ref} className="relative z-10 mx-auto flex w-full max-w-6xl flex-col items-center gap-12 py-16 lg:flex-row lg:items-start lg:gap-16">
         <div className={cn("w-full max-w-2xl text-center lg:text-left", base, show)} style={{ transitionDelay: "120ms" }}>
           <div className="inline-flex items-center gap-2 rounded-full bg-white/10 px-5 py-2 text-xs uppercase tracking-[0.35em] text-white/70 shadow-lg shadow-sky-500/10">
             <Sparkles className="h-4 w-4" />

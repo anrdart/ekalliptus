@@ -92,7 +92,7 @@ export const Navigation = () => {
 
   return (
     <>
-      <header className="pointer-events-none fixed left-1/2 top-5 z-40 w-full max-w-4xl -translate-x-1/2 px-4 sm:top-6">
+      <header className="pointer-events-none fixed left-1/2 top-1 z-40 w-full max-w-4xl -translate-x-1/2 px-4 sm:top-2">
         <div
           className={cn(
             "glass-panel pointer-events-auto flex items-center justify-between rounded-full px-5 py-3 transition-all",
@@ -146,7 +146,7 @@ export const Navigation = () => {
       {menuOpen && (
         <>
           <div className="fixed inset-0 z-30 bg-slate-950/70 backdrop-blur-md md:hidden" onClick={() => setMenuOpen(false)} />
-          <div className="glass-panel fixed inset-x-4 top-24 z-40 space-y-4 rounded-3xl p-6 text-white md:hidden">
+          <div className="glass-panel fixed inset-x-4 top-16 z-40 space-y-4 rounded-3xl p-6 text-white md:hidden">
             <div className="flex items-center justify-between">
               <span className="text-sm uppercase tracking-[0.35em] text-white/60">Navigasi</span>
               <Button variant="ghost" size="icon" className="cursor-interactive h-9 w-9 rounded-full hover:border-white/30" onClick={() => setMenuOpen(false)}>

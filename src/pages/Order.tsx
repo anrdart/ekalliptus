@@ -852,9 +852,9 @@ const Order = () => {
   return (
     <>
       <Helmet>
-        <title>Order Layanan - ekalliptus | Website Development, WordPress, Mobile App</title>
-        <meta name="description" content="Form order layanan ekalliptus untuk website development Indonesia, WordPress custom Jakarta, mobile app development, service HP laptop, dan editing foto video profesional. Dapatkan proposal dalam 24 jam." />
-        <meta name="keywords" content="order website development, form WordPress custom, pesan mobile app, service HP laptop online, editing foto video, konsultasi digital agency, jasa website Indonesia" />
+        <title>{PAGE_SEO.order.title}</title>
+        <meta name="description" content={PAGE_SEO.order.description} />
+        <meta name="keywords" content={PAGE_SEO.order.keywords} />
         <link rel="canonical" href={getCanonicalUrl(PAGE_SEO.order.path)} />
         <meta property="og:title" content="Order Layanan - ekalliptus | Website & Mobile App Development" />
         <meta property="og:description" content="Mulai proyek digital Anda dengan ekalliptus. Form order untuk website development Indonesia, WordPress custom, mobile app, dan layanan multimedia profesional." />
