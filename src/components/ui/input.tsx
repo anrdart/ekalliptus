@@ -8,9 +8,9 @@ const Input = React.forwardRef<HTMLInputElement, React.ComponentProps<"input">>(
       <input
         type={type}
         className={cn(
-          "flex h-11 w-full appearance-none rounded-2xl border border-white/15 bg-white/5 px-4 py-2.5 text-base text-white shadow-[0_18px_45px_-22px_rgba(56,189,248,0.42)] backdrop-blur-3xl transition focus-visible:border-sky-400/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/70 focus-visible:ring-offset-0 placeholder:text-white/60 hover:border-sky-400/30 md:text-sm",
-          "file:mr-4 file:rounded-2xl file:border file:border-white/30 file:bg-white/15 file:px-6 file:py-2.5 file:text-xs file:font-semibold file:uppercase file:tracking-[0.32em] file:text-white file:leading-none file:h-full file:flex file:items-center file:justify-center file:hover:bg-white/25 file:cursor-pointer",
-          "supports-[backdrop-filter]:bg-white/10 supports-[backdrop-filter]:backdrop-blur-[36px]",
+          "flex h-11 w-full appearance-none rounded-2xl border border-border/50 bg-card/30 px-4 py-2.5 text-base text-foreground shadow-[0_18px_45px_-22px_rgba(56,189,248,0.28)] backdrop-blur-3xl transition placeholder:text-muted-foreground hover:border-primary/30 focus-visible:border-primary/45 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-0 md:text-sm",
+          "file:mr-4 file:flex file:h-full file:items-center file:justify-center file:rounded-2xl file:border file:border-border/50 file:bg-card/40 file:px-6 file:py-2.5 file:text-xs file:font-semibold file:uppercase file:tracking-[0.32em] file:text-foreground file:leading-none file:transition file:cursor-pointer file:hover:bg-card/50",
+          "supports-[backdrop-filter]:bg-card/40 supports-[backdrop-filter]:backdrop-blur-[36px]",
           className,
         )}
         ref={ref}

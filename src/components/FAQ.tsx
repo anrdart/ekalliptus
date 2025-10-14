@@ -76,13 +76,13 @@ export const FAQ = () => {
       <section id="faq" className="relative content-vis px-4 py-24">
         <div ref={ref} className="relative z-10 mx-auto max-w-4xl">
           <div className={`mb-12 text-center ${base} ${show}`}>
-            <div className="inline-flex items-center gap-2 rounded-full bg-white/10 px-5 py-2 text-[0.65rem] font-semibold uppercase tracking-[0.6em] text-white/60">
+            <div className="inline-flex items-center gap-2 rounded-full border border-border/40 bg-card/25 px-5 py-2 text-[0.65rem] font-semibold uppercase tracking-[0.6em] text-muted-foreground">
               FAQ
             </div>
-            <h2 className="mt-6 text-4xl font-semibold text-white md:text-5xl">
+            <h2 className="mt-6 text-4xl font-semibold text-foreground md:text-5xl">
               Pertanyaan yang Sering Diajukan
             </h2>
-            <p className="mt-6 text-base leading-relaxed text-white/70 md:text-lg">
+            <p className="mt-6 text-base leading-relaxed text-muted-foreground md:text-lg">
               Temukan jawaban untuk pertanyaan umum seputar layanan website development Indonesia, WordPress custom Jakarta, mobile app development, dan layanan digital lainnya dari ekalliptus.
             </p>
           </div>
@@ -93,16 +93,16 @@ export const FAQ = () => {
                 <AccordionItem
                   key={index}
                   value={`item-${index}`}
-                  className="glass-panel neon-border rounded-2xl border-white/10 px-6 py-2"
+                  className="glass-panel neon-border rounded-2xl px-6 py-2"
                   itemScope
                   itemProp="mainEntity"
                   itemType="https://schema.org/Question"
                 >
-                  <AccordionTrigger className="text-left text-lg font-semibold text-white hover:no-underline">
+                  <AccordionTrigger className="text-left text-lg font-semibold text-foreground hover:no-underline">
                     <span itemProp="name">{faq.question}</span>
                   </AccordionTrigger>
                   <AccordionContent
-                    className="text-base leading-relaxed text-white/70"
+                    className="text-base leading-relaxed text-muted-foreground"
                     itemScope
                     itemProp="acceptedAnswer"
                     itemType="https://schema.org/Answer"

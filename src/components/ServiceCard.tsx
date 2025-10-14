@@ -18,26 +18,26 @@ export const ServiceCard = ({ icon: Icon, title, description, features }: Servic
       </div>
 
       <div className="relative flex flex-col gap-6">
-        <div className="inline-flex w-max items-center gap-3 rounded-full bg-white/10 px-5 py-3">
-          <div className="rounded-full bg-primary-gradient p-3 text-white shadow-glow transition duration-500 group-hover:scale-110" aria-hidden="true">
+        <div className="inline-flex w-max items-center gap-3 rounded-full border border-border/50 bg-card/30 px-5 py-3 transition duration-500 group-hover:border-border/60 group-hover:bg-card/40">
+          <div className="rounded-full bg-primary-gradient p-3 text-primary-foreground shadow-glow transition duration-500 group-hover:scale-110" aria-hidden="true">
             <Icon className="h-5 w-5" />
           </div>
-          <span className="text-xs uppercase tracking-[0.4em] text-white/60">Specialized</span>
+          <span className="text-xs uppercase tracking-[0.4em] text-muted-foreground">Specialized</span>
         </div>
 
-        <h3 className="text-2xl font-semibold text-white transition-colors duration-500 group-hover:text-sky-200" itemProp="name">
+        <h3 className="text-2xl font-semibold text-foreground transition-colors duration-500 group-hover:text-primary" itemProp="name">
           {title}
         </h3>
 
-        <p className="text-base leading-relaxed text-white/65 transition-colors duration-500 group-hover:text-white/80" itemProp="description">
+        <p className="text-base leading-relaxed text-muted-foreground transition-colors duration-500 group-hover:text-foreground" itemProp="description">
           {description}
         </p>
 
-        <ul className="mt-2 flex flex-col gap-3 text-sm text-white/70" itemProp="hasOfferCatalog" itemScope itemType="https://schema.org/OfferCatalog">
+        <ul className="mt-2 flex flex-col gap-3 text-sm text-muted-foreground" itemProp="hasOfferCatalog" itemScope itemType="https://schema.org/OfferCatalog">
           {features.map((feature, index) => (
             <li
               key={index}
-              className="flex items-center gap-3 rounded-full bg-white/5 px-4 py-2 transition group-hover:bg-white/8 group-hover:text-white"
+              className="flex items-center gap-3 rounded-full bg-card/25 px-4 py-2 transition group-hover:bg-card/40 group-hover:text-foreground"
               itemProp="itemListElement"
               itemScope
               itemType="https://schema.org/Offer"

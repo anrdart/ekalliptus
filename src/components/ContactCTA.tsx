@@ -36,7 +36,7 @@ export const ContactCTA = () => {
               Siap memulai proyek Anda?
             </h2>
             <p
-              className={`mx-auto mt-6 max-w-2xl text-base leading-relaxed text-white/75 md:text-lg ${base} ${show}`}
+              className={`mx-auto mt-6 max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg ${base} ${show}`}
               style={{ transitionDelay: "300ms" }}
             >
               Ajak kami berdiskusi dan temukan bagaimana sentuhan desain immersive dapat meningkatkan persepsi brand serta mendekatkan pengguna dengan produk Anda.
@@ -64,7 +64,7 @@ export const ContactCTA = () => {
                 href={`mailto:ekalliptus@gmail.com?subject=${emailSubject}&body=${emailBody}`}
                 className={cn(
                   buttonVariants({ variant: "outline", size: "lg" }),
-                  "group pointer-events-auto rounded-full border-white/15 bg-white/5 px-8 py-5 text-base font-semibold text-white/80 transition hover:border-white/30 hover:bg-white/10 cursor-interactive relative z-20",
+                  "group pointer-events-auto rounded-full px-8 py-5 text-base font-semibold uppercase tracking-wide cursor-interactive relative z-20",
                 )}
               >
                 <Mail className="mr-2 h-5 w-5 transition-transform duration-300 group-hover:scale-110" />
@@ -74,7 +74,7 @@ export const ContactCTA = () => {
 
 
             <div
-              className={`mt-10 flex flex-col items-center justify-center gap-6 text-sm text-white/60 sm:flex-row ${base} ${show}`}
+              className={`mt-10 flex flex-col items-center justify-center gap-6 text-sm text-muted-foreground sm:flex-row ${base} ${show}`}
               style={{ transitionDelay: "500ms" }}
             >
               <div className="flex items-center space-x-2">

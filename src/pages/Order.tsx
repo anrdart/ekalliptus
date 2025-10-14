@@ -909,24 +909,24 @@ const Order = () => {
 
         <div className="relative z-10 mx-auto max-w-5xl">
           <div className={`mb-14 text-center transition-all duration-700 ease-smooth ${fadeClass}`} ref={ref}>
-            <div className="mx-auto flex w-max items-center justify-center gap-2 rounded-full border border-white/10 bg-white/10 px-5 py-2 text-[0.65rem] font-semibold uppercase tracking-[0.6em] text-white/60">
+            <div className="mx-auto flex w-max items-center justify-center gap-2 rounded-full border border-border/40 bg-card/25 px-5 py-2 text-[0.65rem] font-semibold uppercase tracking-[0.6em] text-muted-foreground">
               Formulir Order
             </div>
             <h1 className="mt-6 bg-gradient-to-r from-sky-400 via-indigo-300 to-emerald-300 bg-clip-text text-4xl font-semibold uppercase tracking-[0.4em] text-transparent md:text-5xl">
               Order Layanan Digital
             </h1>
-            <p className="mt-6 text-base leading-relaxed text-white/70 md:text-lg">
+            <p className="mt-6 text-base leading-relaxed text-muted-foreground md:text-lg">
               Ceritakan kebutuhan proyek website development Indonesia, WordPress custom Jakarta, mobile app development, atau layanan digital lainnya secara detail. Data akan otomatis masuk ke dashboard internal kami dan notifikasi email akan dikirim ke tim ekalliptus untuk memberikan proposal dalam 24 jam.
             </p>
-            <p className="mt-4 text-sm leading-relaxed text-white/60">
+            <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
               Kami melayani berbagai kebutuhan digital: jasa pembuatan website Indonesia, WordPress custom Jakarta, mobile app development untuk Android dan iOS, service HP laptop profesional, serta editing foto video berkualitas tinggi. Pilih layanan yang sesuai dan isi form di bawah ini.
             </p>
           </div>
 
-          <Card className={`glass-panel neon-border border-white/10 p-8 shadow-elegant transition-all duration-700 ease-smooth md:p-12 ${fadeClass}`}>
+          <Card className={`glass-panel neon-border p-8 shadow-elegant transition-all duration-700 ease-smooth md:p-12 ${fadeClass}`}>
             <CardHeader className="space-y-3 px-0 pb-8">
-              <CardTitle className="text-3xl font-semibold text-white">Detail Proyek</CardTitle>
-              <CardDescription className="text-base text-white/65">
+              <CardTitle className="text-3xl font-semibold text-foreground">Detail Proyek</CardTitle>
+              <CardDescription className="text-base text-muted-foreground">
                 Informasi yang Anda berikan membantu kami menyiapkan solusi paling relevan serta estimasi yang presisi untuk website development Indonesia, WordPress custom Jakarta, mobile app development, atau layanan digital lainnya.
               </CardDescription>
             </CardHeader>
@@ -1021,10 +1021,10 @@ const Order = () => {
                       )}
                     />
 
-                    <div className="rounded-2xl border border-white/10 bg-white/5 p-6 shadow-inner">
-                      <div className="flex flex-col gap-2 pb-4 text-white">
+                    <div className="rounded-2xl border border-border/40 bg-card/25 p-6 shadow-inner">
+                      <div className="flex flex-col gap-2 pb-4 text-foreground">
                         <h3 className="text-lg font-semibold">Detail Layanan</h3>
-                        <p className="text-sm text-white/60">
+                        <p className="text-sm text-muted-foreground">
                           Isi kebutuhan spesifik sesuai layanan website development Indonesia, WordPress custom Jakarta, mobile app development, service HP laptop, atau editing foto video agar tim kami dapat meninjau dengan cepat dan akurat.
                         </p>
                       </div>
@@ -1049,11 +1049,11 @@ const Order = () => {
                                 render={({ field }) => (
                                   <FormItem>
                                     <div className="flex items-center justify-between gap-2">
-                                      <FormLabel className="text-sm font-semibold text-white">
+                                      <FormLabel className="text-sm font-semibold text-foreground">
                                         {serviceField.label}
                                       </FormLabel>
                                       {!isRequired && (
-                                        <span className="text-xs uppercase tracking-[0.3em] text-white/40">Opsional</span>
+                                        <span className="text-xs uppercase tracking-[0.3em] text-muted-foreground">Opsional</span>
                                       )}
                                     </div>
                                     <FormControl>
@@ -1068,7 +1068,7 @@ const Order = () => {
                                       )}
                                     </FormControl>
                                     {serviceField.description ? (
-                                      <p className="text-xs text-white/50">{serviceField.description}</p>
+                                      <p className="text-xs text-muted-foreground">{serviceField.description}</p>
                                     ) : null}
                                     <FormMessage />
                                   </FormItem>
@@ -1078,7 +1078,7 @@ const Order = () => {
                           })}
                         </div>
                       ) : (
-                        <div className="rounded-xl border border-dashed border-white/15 bg-white/0 p-6 text-sm text-white/55">
+                        <div className="rounded-xl border border-dashed border-border/40 bg-transparent p-6 text-sm text-muted-foreground">
                           Pilih layanan website development Indonesia, WordPress custom Jakarta, mobile app development, service HP laptop, atau editing foto video terlebih dahulu untuk menampilkan form rinci sesuai kebutuhan proyek Anda.
                         </div>
                       )}
@@ -1097,15 +1097,15 @@ const Order = () => {
                               <Label
                                 key={option.value}
                                 className={cn(
-                                  "flex cursor-pointer flex-col gap-2 rounded-2xl border border-white/10 bg-white/5 p-4 transition hover:border-white/20 hover:bg-white/10",
-                                  field.value === option.value ? "border-sky-400/50 bg-white/10" : "",
+                                  "flex cursor-pointer flex-col gap-2 rounded-2xl border border-border/40 bg-card/25 p-4 transition hover:border-border/60 hover:bg-card/35",
+                                  field.value === option.value ? "border-primary/50 bg-primary/5" : "",
                                 )}
                               >
                                 <div className="flex items-center gap-3">
                                   <RadioGroupItem value={option.value} className="h-5 w-5" />
-                                  <span className="text-sm font-semibold text-white">{option.label}</span>
+                                  <span className="text-sm font-semibold text-foreground">{option.label}</span>
                                 </div>
-                                <p className="text-xs text-white/60">{option.helper}</p>
+                                <p className="text-xs text-muted-foreground">{option.helper}</p>
                               </Label>
                             ))}
                           </RadioGroup>
@@ -1128,18 +1128,18 @@ const Order = () => {
                                 <button
                                   type="button"
                                   onClick={() => fileInputRef.current?.click()}
-                                  className="rounded-2xl border border-white/20 bg-white/15 px-6 py-3 text-xs font-semibold uppercase tracking-[0.32em] text-white backdrop-blur-2xl transition hover:border-sky-300/40 hover:bg-sky-500/25"
+                                  className="rounded-2xl border border-border/40 bg-card/35 px-6 py-3 text-xs font-semibold uppercase tracking-[0.32em] text-foreground backdrop-blur-2xl transition hover:border-primary/45 hover:bg-primary/10"
                                 >
                                   Pilih File
                                 </button>
-                                <div className="flex-1 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white/70 backdrop-blur-2xl">
+                                <div className="flex-1 rounded-2xl border border-border/40 bg-card/25 px-4 py-3 text-sm text-muted-foreground backdrop-blur-2xl">
                                   {attachmentMeta ? (
                                     <div className="flex items-center justify-between gap-3">
-                                      <span className="truncate font-medium text-white/85">{attachmentMeta.name}</span>
-                                      <span className="text-xs text-white/50">{attachmentMeta.size} KB</span>
+                                      <span className="truncate font-medium text-foreground">{attachmentMeta.name}</span>
+                                      <span className="text-xs text-muted-foreground">{attachmentMeta.size} KB</span>
                                     </div>
                                   ) : (
-                                    <span className="text-xs uppercase tracking-[0.32em] text-white/40">Belum ada file dipilih</span>
+                                    <span className="text-xs uppercase tracking-[0.32em] text-muted-foreground">Belum ada file dipilih</span>
                                   )}
                                 </div>
                               </div>
@@ -1164,15 +1164,15 @@ const Order = () => {
                     />
                   </section>
 
-                  <div className="flex flex-col gap-4 rounded-2xl border border-white/10 bg-white/5 p-5 text-sm text-white/70">
-                    <div className="flex items-center gap-3 text-white">
-                      <span className="text-xs uppercase tracking-[0.4em] text-white/40">Catatan</span>
-                      <div className="h-px flex-1 bg-white/15" />
+                  <div className="flex flex-col gap-4 rounded-2xl border border-border/40 bg-card/25 p-5 text-sm text-muted-foreground">
+                    <div className="flex items-center gap-3 text-foreground">
+                      <span className="text-xs uppercase tracking-[0.4em] text-muted-foreground">Catatan</span>
+                      <div className="h-px flex-1 bg-border/50" />
                     </div>
                     <p>
                       Dokumen langsung tersinkron ke Sheet internal ekalliptus untuk website development Indonesia, WordPress custom Jakarta, mobile app development, service HP laptop, dan editing foto video. Jika ingin mengirim lampiran tambahan (wireframe, requirement, dsb), balas email konfirmasi yang Anda terima setelah pengiriman formulir ini.
                     </p>
-                    <p className="text-xs text-white/50">
+                    <p className="text-xs text-muted-foreground">
                       Kami menjaga kerahasiaan data Anda dan hanya menggunakan informasi ini untuk keperluan komunikasi proyek website development, WordPress custom, mobile app, dan layanan digital lainnya.
                     </p>
                   </div>
@@ -1189,7 +1189,7 @@ const Order = () => {
                     <Button
                       type="button"
                       variant="outline"
-                      className="w-full rounded-full border-white/15 bg-white/5 px-6 py-6 text-sm font-semibold text-white/80 hover:border-white/30 hover:bg-white/10 sm:w-auto"
+                      className="w-full rounded-full px-6 py-6 text-sm font-semibold uppercase tracking-wide sm:w-auto"
                       onClick={() => {
                         form.reset(getDefaultFormValues());
                         setAttachmentMeta(null);
