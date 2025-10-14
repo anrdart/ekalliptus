@@ -1,9 +1,6 @@
 RewriteEngine On
 
-# Redirect www to non-www
-RewriteCond %{HTTP_HOST} ^www\.ekalliptus\.id$ [NC]
-RewriteRule ^(.*)$ https://ekalliptus.id/$1 [R=301,L]
-
-# Force HTTPS
-RewriteCond %{HTTPS} off
-RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+# Canonical: redirect www to non-www and enforce HTTPS in one step
+RewriteCond %{HTTP_HOST} ^www\.ekalliptus\.id$ [OR]
+RewriteCond %{HTTPS} !=on
+RewriteRule ^ https://ekalliptus.id%{REQUEST_URI} [R=301,L]
