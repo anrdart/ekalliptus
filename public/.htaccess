@@ -14,13 +14,9 @@
   RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
   RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
 
-  # Canonical Domain Redirect - Ensure consistent domain
-  # Redirect all alternative domains to primary canonical domain
-  RewriteCond %{HTTP_HOST} ^ekalliptus\.id$ [NC,OR]
-  RewriteCond %{HTTP_HOST} ^www\.ekalliptus\.id$ [NC,OR]
-  RewriteCond %{HTTP_HOST} ^ekalliptus\.my\.id$ [NC,OR]
-  RewriteCond %{HTTP_HOST} ^www\.ekalliptus\.my\.id$ [NC]
-  RewriteRule ^(.*)$ https://itsme.ekalliptus.id/$1 [R=301,L]
+  # NOTE: Canonical Domain Redirect DISABLED
+  # This subdomain operates independently
+  # Do NOT redirect to ekalliptus.id or other domains
 
   # Remove trailing slash (optional)
   RewriteCond %{REQUEST_FILENAME} !-d
