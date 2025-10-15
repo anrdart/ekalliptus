@@ -244,16 +244,23 @@
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=()" />
     
-    <!-- Preconnect & DNS Prefetch -->
-    <link rel="preconnect" href="https://ekalliptus.id" />
-    <link rel="preconnect" href="https://ekalliptus.id" crossorigin />
-    <meta http-equiv="x-dns-prefetch-control" content="on" />
-    <link rel="dns-prefetch" href="//ekalliptus.id" />
+    <!-- Enhanced Preconnect & DNS Prefetch for Performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://api.emailjs.com" />
+    <link rel="preconnect" href="https://sheetdb.io" />
+    <link rel="preconnect" href="https://lovable.dev" crossorigin />
     <link rel="dns-prefetch" href="//fonts.googleapis.com" />
     <link rel="dns-prefetch" href="//fonts.gstatic.com" />
+    <link rel="dns-prefetch" href="//api.emailjs.com" />
+    <link rel="dns-prefetch" href="//sheetdb.io" />
+    <link rel="dns-prefetch" href="//lovable.dev" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+    <!-- Resource Hints for Critical Resources -->
+    <link rel="preload" href="/src/main.tsx" as="script" />
+    <link rel="modulepreload" href="/src/main.tsx" />
+    <link rel="preload" href="/src/index.css" as="style" />
     
     <!-- Favicon -->
     <link rel="icon" href="/favicon.ico" />

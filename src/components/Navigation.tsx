@@ -177,11 +177,8 @@ export const Navigation = () => {
         <>
           <div className="fixed inset-0 z-30 bg-background/70 backdrop-blur-md md:hidden" onClick={() => setMenuOpen(false)} />
           <div className="glass-panel fixed inset-x-4 top-16 z-40 space-y-4 rounded-3xl p-6 text-card-foreground md:hidden">
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-start">
               <span className="text-sm uppercase tracking-[0.35em] text-muted-foreground">Navigasi</span>
-              <Button variant="ghost" size="icon" className="cursor-interactive h-9 w-9 rounded-full hover:border-border/30" onClick={() => setMenuOpen(false)}>
-                <X className="h-5 w-5" />
-              </Button>
             </div>
 
             <div className="flex flex-col gap-3">

@@ -4,9 +4,16 @@ import { Helmet } from "react-helmet-async";
 import { Hero } from "@/components/Hero";
 import { SEO_CONFIG, getCanonicalUrl, getOgUrl, PAGE_SEO } from "@/config/seo.config";
 
-const ServicesLazy = lazy(() => import("@/components/Services").then((m) => ({ default: m.Services })));
-const ContactCTALazy = lazy(() => import("@/components/ContactCTA").then((m) => ({ default: m.ContactCTA })));
-const FAQLazy = lazy(() => import("@/components/FAQ").then((m) => ({ default: m.FAQ })));
+// Optimized lazy loading with preload hints
+const ServicesLazy = lazy(() =>
+  import("@/components/Services").then((m) => ({ default: m.Services }))
+);
+const ContactCTALazy = lazy(() =>
+  import("@/components/ContactCTA").then((m) => ({ default: m.ContactCTA }))
+);
+const FAQLazy = lazy(() =>
+  import("@/components/FAQ").then((m) => ({ default: m.FAQ }))
+);
 
 const Index = () => {
   const location = useLocation();
@@ -98,6 +105,11 @@ const Index = () => {
         <Suspense fallback={<div className="content-vis py-20" />}>
           <ServicesLazy />
         </Suspense>
+
+        <Suspense fallback={<div className="content-vis py-20" />}>
+          <FAQLazy />
+        </Suspense>
+
         <section id="about" className="content-vis relative px-4 py-24">
           <div className="absolute inset-0">
             <div className="pointer-events-none fx-bubble absolute left-[10%] top-[15%] h-40 w-40 rounded-full border border-border/20 bg-card/10 blur-3xl" />
@@ -278,9 +290,6 @@ const Index = () => {
             </div>
           </div>
         </section>
-        <Suspense fallback={<div className="content-vis py-20" />}>
-          <FAQLazy />
-        </Suspense>
         <Suspense fallback={<div className="content-vis py-20" />}>
           <ContactCTALazy />
         </Suspense>
