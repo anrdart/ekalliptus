@@ -29,26 +29,35 @@
   RewriteRule . /index.html [L]
 </IfModule>
 
-# Security Headers
+# Security Headers - Enhanced Trust & Safety
 <IfModule mod_headers.c>
   # Prevent MIME type sniffing
-  Header set X-Content-Type-Options "nosniff"
-  
-  # Prevent clickjacking
-  Header set X-Frame-Options "SAMEORIGIN"
-  
+  Header always set X-Content-Type-Options "nosniff"
+
+  # Prevent clickjacking (XFO)
+  Header always set X-Frame-Options "DENY"
+
   # XSS Protection
-  Header set X-XSS-Protection "1; mode=block"
-  
+  Header always set X-XSS-Protection "1; mode=block"
+
   # Referrer Policy
-  Header set Referrer-Policy "strict-origin-when-cross-origin"
-  
-  # Remove Server signature
-  Header unset Server
-  Header unset X-Powered-By
-  
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+
   # HSTS (HTTP Strict Transport Security) - Force HTTPS for 1 year
-  Header set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+  Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+
+  # Cross-Origin Opener Policy (COOP) - Prevent cross-origin attacks
+  Header always set Cross-Origin-Opener-Policy "same-origin"
+
+  # Content Security Policy (CSP) - Prevent XSS attacks
+  Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://api.emailjs.com https://sheetdb.io; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https: blob:; connect-src 'self' https://api.emailjs.com https://sheetdb.io https://lovable.dev; frame-ancestors 'none'; base-uri 'self'; form-action 'self' https://sheetdb.io; upgrade-insecure-requests"
+
+  # Permissions Policy - Restrict potentially dangerous APIs
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=()"
+
+  # Remove Server signature
+  Header always unset Server
+  Header always unset X-Powered-By
 </IfModule>
 
 # Browser Caching & Compression
