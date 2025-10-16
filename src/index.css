@@ -132,6 +132,10 @@ All colors MUST be HSL.
   html {
     font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     scroll-behavior: smooth;
+    /* macOS Safari specific cursor hiding */
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    -webkit-tap-highlight-color: transparent;
   }
 
   * {
@@ -142,7 +146,11 @@ All colors MUST be HSL.
     @apply bg-background text-foreground antialiased;
     background: var(--hero-gradient);
     color-scheme: dark;
-    cursor: none;
+    cursor: none !important;
+  }
+
+  html {
+    cursor: none !important;
   }
 
   .light body {
@@ -194,7 +202,9 @@ All colors MUST be HSL.
   }
 
   .custom-cursor-enabled,
-  .custom-cursor-enabled * {
+  .custom-cursor-enabled *,
+  .custom-cursor-enabled::before,
+  .custom-cursor-enabled::after {
     cursor: none !important;
   }
 
@@ -203,6 +213,88 @@ All colors MUST be HSL.
   .custom-cursor-enabled select,
   .custom-cursor-enabled [contenteditable="true"] {
     cursor: text !important;
+  }
+
+  /* Ensure custom cursor persists through modal interactions */
+  .custom-cursor-enabled .modal-backdrop,
+  .custom-cursor-enabled .language-modal,
+  .custom-cursor-enabled .language-button,
+  .custom-cursor-enabled [role="dialog"],
+  .custom-cursor-enabled [role="radiogroup"] {
+    cursor: none !important;
+  }
+
+  .custom-cursor-enabled .language-button:hover {
+    cursor: none !important;
+  }
+
+  /* Prevent cursor override on click events */
+  .custom-cursor-enabled:active,
+  .custom-cursor-enabled *:active {
+    cursor: none !important;
+  }
+
+  /* Ensure cursor stays hidden during all interaction states */
+  .custom-cursor-enabled:focus,
+  .custom-cursor-enabled *:focus {
+    cursor: none !important;
+  }
+
+  .custom-cursor-enabled:hover,
+  .custom-cursor-enabled *:hover {
+    cursor: none !important;
+  }
+
+  /* Force hide cursor on all possible interaction states */
+  .custom-cursor-enabled:focus-within,
+  .custom-cursor-enabled *:focus-within {
+    cursor: none !important;
+  }
+
+  .custom-cursor-enabled:focus-visible,
+  .custom-cursor-enabled *:focus-visible {
+    cursor: none !important;
+  }
+
+  /* macOS specific overrides */
+  .custom-cursor-enabled {
+    -webkit-user-select: none !important;
+    -webkit-touch-callout: none !important;
+    -webkit-tap-highlight-color: transparent !important;
+  }
+
+  /* Force cursor hiding on macOS WebKit */
+  @supports (-webkit-appearance: none) {
+    .custom-cursor-enabled *,
+    .custom-cursor-enabled::before,
+    .custom-cursor-enabled::after {
+      cursor: none !important;
+      -webkit-cursor: none !important;
+    }
+
+    .custom-cursor-enabled input,
+    .custom-cursor-enabled textarea,
+    .custom-cursor-enabled select,
+    .custom-cursor-enabled [contenteditable] {
+      cursor: text !important;
+      -webkit-cursor: text !important;
+    }
+
+    /* macOS Safari specific aggressive cursor hiding */
+    .custom-cursor-enabled {
+      -webkit-user-select: none !important;
+      -webkit-touch-callout: none !important;
+      -webkit-tap-highlight-color: rgba(0,0,0,0) !important;
+      -webkit-text-size-adjust: 100% !important;
+    }
+
+    /* Prevent macOS cursor override on interaction */
+    .custom-cursor-enabled:active *,
+    .custom-cursor-enabled:hover *,
+    .custom-cursor-enabled:focus * {
+      cursor: none !important;
+      -webkit-cursor: none !important;
+    }
   }
 }
 
@@ -367,12 +459,15 @@ All colors MUST be HSL.
   .custom-cursor,
   .cursor-follower {
     pointer-events: none;
-    position: fixed;
-    z-index: 50;
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    z-index: 9999 !important;
     border-radius: 9999px;
     will-change: transform;
     mix-blend-mode: screen;
     transform: translate(-50%, -50%);
+    transform-origin: center;
   }
 
   .custom-cursor {
