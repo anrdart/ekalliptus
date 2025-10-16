@@ -262,12 +262,12 @@ copies or substantial portions of the Software.
 - **Alamat**: Tegal, Indonesia
 
 ### **Media Sosial**
-- **Twitter**: [@ekalliptus](https://twitter.com/ekalliptus)
-- **LinkedIn**: [Ekalliptus Digital Agency](https://linkedin.com/company/ekalliptus)
+- **Instagram**: [@ekalliptus](https://instagram.com/ekalliptus)
+- **LinkedIn**: [Haikal Akhalul Azhar]([https://linkedin.com/alulanr/](https://www.linkedin.com/in/alulanr/?locale=in_ID))
 
 ### **Dukungan**
 - 📧 **Email Support**: ekalliptus@gmail.com
-- 💬 **Live Chat**: Tersedia di website
+- 💬 **Live Chat**: Tersedia di whatsapp
 - 📱 **WhatsApp**: +62 819-9990-0306
 - 🕒 **Jam Operasional**: 24/7
 
