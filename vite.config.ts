@@ -28,6 +28,8 @@ export default defineConfig(({ mode }) => ({
     rollupOptions: {
       output: {
         manualChunks: {
+          // Include i18n in vendor chunk for better caching
+          vendor: ['react-i18next', 'i18next', 'i18next-browser-languagedetector'],
           react: ["react", "react-dom", "react-router-dom"],
           radix: [
             "@radix-ui/react-accordion",

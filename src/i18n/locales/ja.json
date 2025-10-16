@@ -1,0 +1,489 @@
+{
+  "nav": {
+    "home": "ホーム",
+    "services": "サービス",
+    "about": "会社概要",
+    "contact": "お問い合わせ",
+    "consultation": "今すぐ相談",
+    "navigation": "ナビゲーション",
+    "darkMode": "ダークモード",
+    "lightMode": "ライトモード"
+  },
+  "hero": {
+    "solusiDigital": "デジタルソリューション",
+    "brand": "єкαℓℓιρтuѕ",
+    "description": "未来志向でありながら人間味あふれるデジタル製品をお届けします。マイクロインタラクション、グラスモーフィズム要素、スムーズなアニメーションを組み合わせ、心に残る体験を生み出します。",
+    "fokus": "現在のフォーカス:",
+    "uiUxDesign": "未来的UI/UXデザイン",
+    "digitalExperience": "没入型デジタル体験",
+    "web3d": "3Dタッチのウェブサイト",
+    "branding": "包括的なブランディング戦略",
+    "startProject": "プロジェクトを開始",
+    "profile": "私たちのプロフィール"
+  },
+  "index": {
+    "intro": {
+      "title": "ekalliptus — デジタルソリューションのリーダー",
+      "subtitle": "インドネシアのウェブサイト開発、カスタムWordPress、モバイルアプリ開発、その他のプロフェッショナルなデジタルサービスでビジネスを変革します。"
+    },
+    "about": {
+      "heading": "先進的なデジタル<highlight>トランスフォーメーション</highlight>",
+      "philosophyTitle": "私たちの哲学",
+      "philosophyDesc": "すべてのビジネスには、強力なデジタルプレゼンスを通じて伝えるべき独自のストーリーがあります。そのため私たちは、直感的なユーザー体験、高いパフォーマンス、持続的なSEO戦略を常に重視しています。",
+      "commitmentTitle": "品質へのコミットメント",
+      "commitmentDesc": "ekalliptusのチームは、経験豊富な開発者、クリエイティブなデザイナー、プロジェクトマネージャーで構成され、コンセプトからローンチまで伴走します。リーディングカンパニーとして、すべてのプロジェクトをGoogle検索で最大限パフォーマンスを発揮できるよう最適化します。"
+    },
+    "stats": {
+      "experience": "年の実績",
+      "clients": "支援クライアント",
+      "support": "24時間サポート"
+    },
+    "cta": {
+      "startProject": "デジタルプロジェクトを始める",
+      "viewServices": "サービスを見る",
+      "contactUs": "お問い合わせ",
+      "note": "無料相談やビジネスに合わせた提案をご希望の方は、<link>オーダーフォーム</link>からご連絡ください。"
+    }
+  },
+  "services": {
+    "pill": "主要サービス",
+    "title": "優雅なタッチでデジタル変革を",
+    "subtitle": "3D要素、グラスモーフィズム、繊細なインタラクションで、ユーザーが一歩ごとに没入できる独自のデジタル体験をデザインします。",
+    "expertise": "専門性",
+    "cards": {
+      "websiteDevelopment": {
+        "category": "開発",
+        "title": "ウェブサイト開発",
+        "description": "ビジネス目標に合わせたレスポンシブで使いやすいウェブサイトを構築します。",
+        "features": ["レスポンシブデザイン", "SEO最適化", "高速表示", "カスタムドメイン"]
+      },
+      "wordpressDevelopment": {
+        "category": "開発",
+        "title": "WordPress開発",
+        "description": "高品質なテーマとプラグインでWordPressをニーズに合わせてカスタマイズします。",
+        "features": ["カスタムテーマ", "プラグイン統合", "EC対応", "コンテンツ管理"]
+      },
+      "berduPlatform": {
+        "category": "プラットフォーム",
+        "title": "Berduプラットフォーム",
+        "description": "現代ビジネスに最適化された強力なBerduベースのプラットフォームソリューション。",
+        "features": ["管理ダッシュボード", "ユーザー管理", "データ分析", "クラウドホスティング"]
+      },
+      "mobileAppDevelopment": {
+        "category": "開発",
+        "title": "モバイルアプリ開発",
+        "description": "シームレスな体験のために設計された革新的なAndroid・iOSアプリ。",
+        "features": ["クロスプラットフォーム", "ネイティブ性能", "プッシュ通知", "ストア公開対応"]
+      },
+      "serviceHpLaptop": {
+        "category": "サービス",
+        "title": "デバイス修理サービス",
+        "description": "認定技術者がスマートフォンとノートPCを安心サポートします。",
+        "features": ["迅速診断", "純正部品", "ソフト・ハード修理", "サービス保証"]
+      },
+      "photoVideoEditing": {
+        "category": "マルチメディア",
+        "title": "写真・動画編集",
+        "description": "高品質なビジュアルを実現するプロフェッショナル編集サービス。",
+        "features": ["カラーグレーディング", "モーショングラフィックス", "オーディオミキシング", "4Kクオリティ"]
+      }
+    }
+  },
+  "about": {
+    "title": "会社概要",
+    "innovation": "継続的なイノベーション",
+    "quality": "品質保証",
+    "team": "プロフェッショナルチーム",
+    "innovationDesc": "Ekalliptusはインドネシアを拠点とするデジタルエージェンシーで、現代ビジネスのデジタル変革を専門としています。5年以上の業界経験を持ち、中小企業から大企業まで数百のクライアントのデジタルビジョンの実現を支援してまいりました。",
+    "qualityDesc": "レスポンシブでSEOフレンドリーなウェブサイト開発、カスタムWordPressの完全プラグイン統合、React NativeとFlutterを使用したクロスプラットフォームモバイルアプリ開発を提供しています。",
+    "teamDesc": "認定技術者によるHPおよびラップトップの修理サービス、Adobe Premiere、After Effects、Photoshopなどのソフトウェアを使用したインパクトのあるマーケティングコンテンツのためのプロフェッショナルな写真・動画編集。",
+    "whyChoose": "なぜEkalliptusを選ぶのか？",
+    "technology": "最先端技術",
+    "local": "ローカルフォーカス",
+    "results": "確実な成果",
+    "technologyDesc": "現代技術を使用した手頃で高品質なインドネシアウェブサイト制作サービスを提供しています。",
+    "localDesc": "地元ビジネスニーズのためのWordPressカスタムジャカルタ専門家、スタートアップから大手企業まで対応するモバイルアプリ開発。",
+    "resultsDesc": "プロフェッショナルなデジタルエージェンシーに焦点を当て、Ekalliptusはジャカルタおよび周辺地域のHPラップトップサービスでトップチョイスとなっています。",
+    "commitment": "美的だけでなく機能的でもある結果を提供することでクライアント満足を最優先します。私たちが手掛けるインドネシアのウェブサイト開発プロジェクトはすべて、Google検索エンジンでの最大限の視認性を確保するために最新のSEOベストプラクティスに従っています。",
+    "contactForm": "インドネシアでのビジネスニーズに合わせたカスタム提案を無料相談で入手するには、オーダーフォームからお問い合わせください。"
+  },
+  "contact": {
+    "insights": "洞察",
+    "customerJourney": "顧客体験",
+    "statusActive": "アクティブ",
+    "insightsDesc": "インタラクティブなランディングページから動的ダッシュボードまで、競合他社から際立つ没入感のあるデザインを詳細に作成します。",
+    "experience": "経験",
+    "clients": "集約クライアント",
+    "rating": "クライアント評価",
+    "interactive": "インタラクティブ",
+    "support": "フルサポート"
+  },
+  "footer": {
+    "contact": "お問い合わせ",
+    "services": "サービスを見る"
+  },
+  "contactCTA": {
+    "title": "プロジェクト開始の準備はできましたか？",
+    "description": "私たちと話し合い、没入型デザインがブランドの印象を高め、ユーザーとの距離を縮める方法を見つけましょう。",
+    "buttons": {
+      "whatsapp": "無料相談",
+      "email": "メールを送る"
+    },
+    "contact": {
+      "phone": "+62 819-9990-0306",
+      "email": "ekalliptus@gmail.com"
+    },
+    "whatsappMessage": "こんにちは、ekalliptusさん。提供中のサービスについて相談したいです。ご対応をお願いいたします。",
+    "emailSubject": "無料相談 - ekalliptus",
+    "emailBody": "こんにちは ekalliptus 様\n\n現在提供されているサービスについて相談したいと考えております。ご対応いただけますと幸いです。\n\nどうぞよろしくお願いいたします。"
+  },
+  "faq": {
+    "pill": "FAQ",
+    "title": "よくある質問",
+    "description": "ekalliptusが提供するウェブサイト開発、カスタムWordPress、モバイルアプリ開発、その他のデジタルサービスに関する代表的な質問と回答をご紹介します。",
+    "items": [
+      {
+        "question": "ウェブサイト開発にはどれくらい時間がかかりますか？",
+        "answer": "プロジェクトの複雑さによって期間は異なります。シンプルな企業サイトであれば通常2〜3週間、ECサイトや高度なWebアプリの場合は1〜3か月ほどです。初回ヒアリング後に詳細なスケジュールをご案内します。"
+      },
+      {
+        "question": "ローンチ後のメンテナンスサービスはありますか？",
+        "answer": "はい。定期的なアップデート、データバックアップ、セキュリティ監視、テクニカルサポートを含むメンテナンスプランをご用意しています。月次から年次まで、ビジネスニーズに合わせて柔軟にカスタマイズ可能です。"
+      },
+      {
+        "question": "WordPress開発は大規模ビジネスにも対応できますか？",
+        "answer": "もちろんです。私たちのWordPressソリューションは、カスタムプラグインや高パフォーマンス最適化、複雑なシステム連携によりエンタープライズ規模へスケールできます。柔軟性と豊富なプラグインエコシステムにより多くの大手ブランドが採用しています。"
+      },
+      {
+        "question": "ekalliptusでの注文プロセスを教えてください。",
+        "answer": "1) フォームにプロジェクト詳細を入力、2) 24時間以内に担当者が連絡しヒアリング、3) 提案書とお見積りを送付、4) 合意後に明確なマイルストーンで開発開始、5) テストと修正、6) リリースと引き渡しという流れです。"
+      },
+      {
+        "question": "モバイルアプリにカスタム機能を追加できますか？",
+        "answer": "はい、完全にカスタマイズ可能です。React NativeとFlutterを用いてクロスプラットフォームアプリを構築し、必要なネイティブ機能を実装します。ご要望を共有いただければ最適なソリューションをご提案します。"
+      },
+      {
+        "question": "他のデジタルエージェンシーとの違いは何ですか？",
+        "answer": "最新テクノロジーとユーザー中心のデザインを融合させている点です。クリーンなコードだけでなく、3Dエレメントやグラスモーフィズム、マイクロインタラクションによる印象的な体験にこだわります。各プロジェクトは専任チームが伴走し、成功までサポートします。"
+      },
+      {
+        "question": "デバイス修理サービスはどのブランドにも対応していますか？",
+        "answer": "はい。Apple、Samsung、Xiaomi、ASUS、Lenovo、HP、Dellなど幅広いブランドのスマートフォンやノートPCに対応しています。認定技術者が純正部品を使用し、ハード・ソフト両面のトラブルを解決します。"
+      },
+      {
+        "question": "写真・動画編集の料金はどのくらいですか？",
+        "answer": "ファイル数や尺、編集内容によって変動します。写真編集は1枚あたり5万ルピア程度から、動画編集は標準的な短尺で50万ルピアほどから承ります。詳細なお見積りはプロジェクト内容を伺った上でご案内します。"
+      }
+    ]
+  },
+  "order": {
+    "pill": "注文フォーム",
+    "title": "デジタルサービスのご依頼",
+    "description": "ウェブサイト開発、カスタムWordPress、モバイルアプリ、その他デジタルサービスのご要望を詳しくお聞かせください。送信内容は社内ダッシュボードに自動同期され、24時間以内に提案をご連絡します。",
+    "descriptionSecondary": "インドネシア向けのウェブサイト制作、WordPressカスタマイズ、Android/iOSアプリ開発、デバイス修理、写真・動画編集など幅広いニーズに対応しています。該当するサービスを選び、以下のフォームにご入力ください。",
+    "projectDetails": {
+      "title": "プロジェクト詳細",
+      "description": "ご記入いただく情報は、最適な提案と正確なお見積りを作成するために活用します。ウェブサイト、WordPress、モバイルアプリなど各サービスに対応しています。"
+    },
+    "validation": {
+      "nameRequired": "氏名は必須です",
+      "emailRequired": "メールアドレスは必須です",
+      "emailInvalid": "有効なメールアドレスを入力してください",
+      "whatsappRequired": "WhatsApp番号は必須です",
+      "whatsappInvalid": "有効なWhatsApp番号を入力してください",
+      "serviceRequired": "サービスを選択してください"
+    },
+    "common": {
+      "optional": "任意"
+    },
+    "fields": {
+      "name": {
+        "label": "氏名",
+        "placeholder": "例：山田 太郎"
+      },
+      "email": {
+        "label": "メールアドレス",
+        "placeholder": "name@example.com"
+      },
+      "whatsapp": {
+        "label": "WhatsApp",
+        "placeholder": "例：0851xxxxxxx"
+      },
+      "service": {
+        "label": "主なご希望サービス",
+        "placeholder": "サービスを選択"
+      },
+      "serviceDetails": {
+        "title": "サービス詳細",
+        "description": "ウェブサイト開発、WordPressカスタム、モバイルアプリ、デバイス修理、写真・動画編集など、必要な内容をできるだけ詳しくご記入ください。",
+        "emptyState": "まずサービスを選択すると、プロジェクト内容に合わせた詳細入力欄が表示されます。"
+      },
+      "contactPreference": {
+        "label": "ご連絡方法の希望"
+      },
+      "attachment": {
+        "label": "添付ファイル（任意）",
+        "choose": "ファイルを選択",
+        "empty": "選択されたファイルはありません"
+      }
+    },
+    "contactPreferences": {
+      "whatsapp": {
+        "label": "WhatsApp",
+        "helper": "ご入力いただいたWhatsApp番号にご連絡します。"
+      },
+      "email": {
+        "label": "メール",
+        "helper": "最新情報や提案書をメールでお送りします。"
+      },
+      "meeting": {
+        "label": "オンラインMTG",
+        "helper": "ZoomまたはGoogle Meetでの打ち合わせを手配します。"
+      }
+    },
+    "serviceOptions": {
+      "websiteDevelopment": "ウェブサイト開発",
+      "wordpressDevelopment": "WordPress開発",
+      "berduPlatform": "Berduプラットフォーム",
+      "mobileAppDevelopment": "モバイルアプリ開発",
+      "serviceHpLaptop": "デバイス修理サービス",
+      "photoVideoEditing": "写真・動画編集",
+      "other": "その他のサービス"
+    },
+    "services": {
+      "websiteDevelopment": {
+        "namaBisnisBrand": {
+          "label": "ビジネス / ブランド名",
+          "placeholder": "例：Ekalliptus Studio"
+        },
+        "jenisBisnis": {
+          "label": "業種",
+          "placeholder": "例：クリエイティブエージェンシー、飲食店、SaaSなど"
+        },
+        "tujuanWebsite": {
+          "label": "ウェブサイトの目的",
+          "placeholder": "企業情報、EC、会社紹介、予約プラットフォームなど"
+        },
+        "preferensiDesainWarna": {
+          "label": "デザイン / カラーテイスト",
+          "placeholder": "希望するビジュアルスタイルや配色をご記入ください"
+        },
+        "domainDiinginkan": {
+          "label": "希望するドメイン",
+          "placeholder": "例：ekalliptus.id"
+        },
+        "fiturKhusus": {
+          "label": "必要な機能",
+          "placeholder": "ブログ、ギャラリー、お問い合わせ、予約、多言語対応など"
+        },
+        "budgetEstimasiWaktu": {
+          "label": "予算 / スケジュール",
+          "placeholder": "目安の予算と公開希望時期を教えてください"
+        },
+        "kontakDapatDihubungi": {
+          "label": "担当者情報",
+          "placeholder": "ご連絡可能な氏名と連絡先"
+        },
+        "catatanTambahan": {
+          "label": "追加メモ / 参考資料",
+          "placeholder": "参考サイトやムードボードなどがあればご記入ください"
+        }
+      },
+      "wordpressDevelopment": {
+        "namaBrandSitus": {
+          "label": "サイト / ブランド名",
+          "placeholder": "例：Ekalliptus Blog"
+        },
+        "jenisWebsite": {
+          "label": "サイト種別",
+          "placeholder": "ブログ、EC、教育、ポートフォリオ、商品カタログなど"
+        },
+        "pilihanTema": {
+          "label": "希望テーマ",
+          "placeholder": "カスタムデザインまたは好みのテーマをご記入ください"
+        },
+        "kebutuhanPlugin": {
+          "label": "必要なプラグイン",
+          "placeholder": "EC、SEO、会員制、LMS、自動化など"
+        },
+        "kontenAwal": {
+          "label": "初期コンテンツ",
+          "placeholder": "記事、商品カテゴリ、商品データ、ビジュアル素材など"
+        },
+        "akunAdmin": {
+          "label": "管理者アカウント",
+          "placeholder": "必要なアカウント情報や権限構成"
+        },
+        "budgetDeadline": {
+          "label": "予算と公開予定",
+          "placeholder": "想定予算とリリース希望日"
+        },
+        "catatanTambahan": {
+          "label": "追加メモ / 参考資料",
+          "placeholder": "ステージング情報、ブランディング素材、特別な要件など"
+        }
+      },
+      "berduPlatform": {
+        "namaBisnis": {
+          "label": "ビジネス名",
+          "placeholder": "例：Ekalliptus Ventures"
+        },
+        "jenisUsaha": {
+          "label": "事業分類",
+          "placeholder": "小売、サービス、流通、リセラーなど"
+        },
+        "jumlahUserKelola": {
+          "label": "管理するユーザー数",
+          "placeholder": "システムを利用する管理者・担当者数"
+        },
+        "kebutuhanFiturDashboard": {
+          "label": "ダッシュボード要件",
+          "placeholder": "例：注文管理、在庫管理、ユーザー権限、レポートなど"
+        },
+        "jenisDataAnalytics": {
+          "label": "必要なデータ / 分析",
+          "placeholder": "確認したい主要KPIやレポート内容"
+        },
+        "preferensiIntegrasi": {
+          "label": "連携希望",
+          "placeholder": "クラウドストレージ、マーケットプレイス、決済ゲートウェイなど"
+        },
+        "kontakPic": {
+          "label": "担当者連絡先",
+          "placeholder": "ご担当者の氏名と連絡先"
+        },
+        "catatanTambahan": {
+          "label": "追加メモ",
+          "placeholder": "SOP、優先したい連携、その他の実装メモを記載してください"
+        }
+      },
+      "mobileAppDevelopment": {
+        "namaAplikasi": {
+          "label": "アプリ名",
+          "placeholder": "例：Ekalliptus Mobile"
+        },
+        "platformTarget": {
+          "label": "対応プラットフォーム",
+          "placeholder": "Android、iOS、または両方"
+        },
+        "tujuanAplikasi": {
+          "label": "アプリの目的",
+          "placeholder": "ビジネス、教育、コミュニティ、社内ツールなど"
+        },
+        "fiturUtama": {
+          "label": "必須機能",
+          "placeholder": "最低3つの主要機能をお知らせください"
+        },
+        "mockupDesain": {
+          "label": "初期デザイン / モックアップ",
+          "placeholder": "Figmaリンクやデザインメモがあれば共有してください"
+        },
+        "integrasiLayanan": {
+          "label": "外部サービス連携",
+          "placeholder": "例：決済、CRM、社内システムなど"
+        },
+        "estimasiJumlahPengguna": {
+          "label": "想定ユーザー数",
+          "placeholder": "リリース後3〜6か月のアクティブユーザー予測"
+        },
+        "kontak": {
+          "label": "連絡担当者",
+          "placeholder": "プロジェクトPICの氏名と連絡先"
+        },
+        "catatanTambahan": {
+          "label": "追加メモ",
+          "placeholder": "デザイン参考、既存リポジトリ、スコープメモなどがあれば記入"
+        }
+      },
+      "serviceHpLaptop": {
+        "namaLengkap": {
+          "label": "氏名",
+          "placeholder": "例：Budi Santoso"
+        },
+        "jenisPerangkat": {
+          "label": "デバイス種別",
+          "placeholder": "スマートフォン/ノートPC、ブランドと型番"
+        },
+        "masalahUtama": {
+          "label": "主な症状",
+          "placeholder": "例：画面が映らない、バッテリー消耗、OS再インストールなど"
+        },
+        "informasiGaransi": {
+          "label": "保証・部品情報",
+          "placeholder": "保証の有無、純正部品希望など"
+        },
+        "pilihanLayanan": {
+          "label": "希望するサービス",
+          "placeholder": "ハードウェア、ソフトウェア、アップグレード、コンサルなど"
+        },
+        "lokasiLayanan": {
+          "label": "サービス希望エリア",
+          "placeholder": "例：ジャカルタ東部、ブカシ、訪問 / 受け取りなど"
+        },
+        "kontak": {
+          "label": "連絡先",
+          "placeholder": "代替の電話番号またはWhatsApp"
+        },
+        "catatanTambahan": {
+          "label": "追加メモ",
+          "placeholder": "これまでの修理履歴や特別な要望など"
+        }
+      },
+      "photoVideoEditing": {
+        "namaProyek": {
+          "label": "プロジェクト名",
+          "placeholder": "例：ラマダンキャンペーン2024"
+        },
+        "jenisEditing": {
+          "label": "編集種別",
+          "placeholder": "写真、動画、リール、ロングフォーム、記録映像など"
+        },
+        "jumlahFile": {
+          "label": "ファイル数",
+          "placeholder": "編集対象のファイル数と長さ・サイズ"
+        },
+        "kebutuhanSpesifik": {
+          "label": "特別な要望",
+          "placeholder": "カラーグレーディング、モーショングラフィックス、音響調整、字幕など"
+        },
+        "resolusiFormatOutput": {
+          "label": "出力解像度 / 形式",
+          "placeholder": "例：4K、MP4、JPG、PNG、特定のアスペクト比"
+        },
+        "deadline": {
+          "label": "納期",
+          "placeholder": "希望納期または期間"
+        },
+        "kontak": {
+          "label": "連絡担当者",
+          "placeholder": "ご連絡先の担当者"
+        },
+        "catatanTambahan": {
+          "label": "追加メモ / 参考資料",
+          "placeholder": "アセットフォルダ、ムードボード、修正メモなどを共有してください"
+        }
+      }
+    },
+    "notes": {
+      "title": "備考",
+      "description": "送信された情報は、ウェブサイト開発やWordPress、モバイルアプリ、デバイス修理、写真・動画編集の社内シートに自動同期されます。追加資料（ワイヤーフレーム、要件書など）がある場合は、送信後の確認メールにご返信ください。",
+      "privacy": "お預かりした情報は厳重に管理し、プロジェクトに関する連絡以外の目的では使用しません。"
+    },
+    "actions": {
+      "submitting": "送信中...",
+      "submit": "注文を送信",
+      "reset": "フォームをリセット"
+    }
+  },
+  "notFound": {
+    "pill": "ページが見つかりません",
+    "description": "お探しのページはまだ公開されていません。ホームに戻り、私たちが用意した体験をご覧ください。",
+    "backHome": "ホームへ戻る",
+    "viewServices": "サービスを見る"
+  },
+  "seo": {
+    "title": "Ekalliptusデジタルエージェンシー — ウェブサイト、WordPress、モバイルアプリインドネシア",
+    "description": "Ekalliptus - インドネシアにおけるウェブサイト開発、WordPress、モバイルアプリ、プロフェッショナルな写真・動画編集のための最先端デジタルソリューション。ビジネスデジタル変革のためにお問い合わせください。",
+    "keywords": "インドネシアウェブサイト開発、WordPressカスタム、モバイルアプリ開発、写真編集サービス、動画編集プロフェッショナル、デジタルエージェンシージャカルタ、ウェブサイト制作サービス、モバイルアプリAndroid iOS、高品質写真動画編集"
+  }
+}

@@ -3,21 +3,20 @@ import { MessageCircle, Mail, Phone } from "lucide-react";
 import { useInView } from "@/hooks/use-in-view";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { useTranslation } from "react-i18next";
 
 
 export const ContactCTA = () => {
   const { ref, inView } = useInView<HTMLDivElement>({ threshold: 0.2 });
+  const { t } = useTranslation();
   const base =
     "transition-all duration-700 ease-smooth will-change-transform motion-reduce:transition-none motion-reduce:transform-none";
   const show = inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6";
   const whatsappNumber = "6281999900306";
-  const whatsappMessage =
-    "Halo ekalliptus, saya ingin berkonsultasi mengenai layanan yang tersedia. Mohon bantuannya ya.";
+  const whatsappMessage = t("contactCTA.whatsappMessage");
   const whatsappUrl = `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${encodeURIComponent(whatsappMessage)}`;
-  const emailSubject = encodeURIComponent("Konsultasi Gratis - ekalliptus");
-  const emailBody = encodeURIComponent(
-    "Halo ekalliptus,\n\nSaya ingin berkonsultasi mengenai layanan yang tersedia. Mohon bantuannya ya.\n\nTerima kasih.",
-  );
+  const emailSubject = encodeURIComponent(t("contactCTA.emailSubject"));
+  const emailBody = encodeURIComponent(t("contactCTA.emailBody"));
 
 
   return (
@@ -33,13 +32,13 @@ export const ContactCTA = () => {
               className={`bg-gradient-to-r from-sky-400 via-indigo-300 to-emerald-300 bg-clip-text text-3xl font-semibold uppercase tracking-[0.4em] text-transparent md:text-4xl ${base} ${show}`}
               style={{ transitionDelay: "200ms" }}
             >
-              Siap memulai proyek Anda?
+              {t("contactCTA.title")}
             </h2>
             <p
               className={`mx-auto mt-6 max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg ${base} ${show}`}
               style={{ transitionDelay: "300ms" }}
             >
-              Ajak kami berdiskusi dan temukan bagaimana sentuhan desain immersive dapat meningkatkan persepsi brand serta mendekatkan pengguna dengan produk Anda.
+              {t("contactCTA.description")}
             </p>
 
 
@@ -57,7 +56,7 @@ export const ContactCTA = () => {
                 )}
               >
                 <MessageCircle className="mr-2 h-5 w-5 transition-transform duration-300 group-hover:scale-110" />
-                Konsultasi Gratis
+                {t("contactCTA.buttons.whatsapp")}
               </a>
 
               <a
@@ -68,7 +67,7 @@ export const ContactCTA = () => {
                 )}
               >
                 <Mail className="mr-2 h-5 w-5 transition-transform duration-300 group-hover:scale-110" />
-                Kirim Email
+                {t("contactCTA.buttons.email")}
               </a>
             </div>
 
@@ -79,11 +78,11 @@ export const ContactCTA = () => {
             >
               <div className="flex items-center space-x-2">
                 <Phone className="h-4 w-4" />
-                <span>+62 819-9990-0306</span>
+                <span>{t("contactCTA.contact.phone")}</span>
               </div>
               <div className="flex items-center space-x-2">
                 <Mail className="h-4 w-4" />
-                <span>ekalliptus@gmail.com</span>
+                <span>{t("contactCTA.contact.email")}</span>
               </div>
             </div>
           </div>

@@ -1,6 +1,7 @@
 import { createRoot } from "react-dom/client";
 import App from "./App.tsx";
 import "./index.css";
+import "./i18n";
 
 // Initialize Trusted Types for DOM XSS prevention
 if ((window as any).trustedTypes && (window as any).trustedTypes.createPolicy) {

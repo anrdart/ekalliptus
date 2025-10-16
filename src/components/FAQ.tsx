@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { Helmet } from "react-helmet-async";
 import {
   Accordion,
@@ -6,8 +7,14 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { useInView } from "@/hooks/use-in-view";
+import { useTranslation } from "react-i18next";
 
-const faqs = [
+type FaqEntry = {
+  question: string;
+  answer: string;
+};
+
+const defaultFaqs: FaqEntry[] = [
   {
     question: "Berapa lama waktu pengerjaan untuk website development?",
     answer:
@@ -51,22 +58,32 @@ const faqs = [
 ];
 
 export const FAQ = () => {
+  const { t, i18n } = useTranslation();
   const { ref, inView } = useInView<HTMLDivElement>({ threshold: 0.2 });
   const base = "transition-all duration-700 ease-smooth";
   const show = inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6";
-
-  const faqSchema = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: faqs.map((faq) => ({
-      "@type": "Question",
-      name: faq.question,
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: faq.answer,
-      },
-    })),
-  };
+  const faqs = useMemo(() => {
+    const translated = t("faq.items", {
+      returnObjects: true,
+      defaultValue: [],
+    }) as FaqEntry[];
+    return translated && translated.length ? translated : defaultFaqs;
+  }, [t, i18n.language]);
+  const faqSchema = useMemo(
+    () => ({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: faqs.map((faq) => ({
+        "@type": "Question",
+        name: faq.question,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: faq.answer,
+        },
+      })),
+    }),
+    [faqs],
+  );
 
   return (
     <>
@@ -77,13 +94,16 @@ export const FAQ = () => {
         <div ref={ref} className="relative z-10 mx-auto max-w-4xl">
           <div className={`mb-12 text-center ${base} ${show}`}>
             <div className="inline-flex items-center gap-2 rounded-full border border-border/40 bg-card/25 px-5 py-2 text-[0.65rem] font-semibold uppercase tracking-[0.6em] text-muted-foreground">
-              FAQ
+              {t("faq.pill", { defaultValue: "FAQ" })}
             </div>
             <h2 className="mt-6 text-4xl font-semibold text-foreground md:text-5xl">
-              Pertanyaan yang Sering Diajukan
+              {t("faq.title", { defaultValue: "Pertanyaan yang Sering Diajukan" })}
             </h2>
             <p className="mt-6 text-base leading-relaxed text-muted-foreground md:text-lg">
-              Temukan jawaban untuk pertanyaan umum seputar layanan website development Indonesia, WordPress custom, mobile app development, dan layanan digital lainnya dari ekalliptus.
+              {t("faq.description", {
+                defaultValue:
+                  "Temukan jawaban untuk pertanyaan umum seputar layanan website development Indonesia, WordPress custom, mobile app development, dan layanan digital lainnya dari ekalliptus.",
+              })}
             </p>
           </div>
 

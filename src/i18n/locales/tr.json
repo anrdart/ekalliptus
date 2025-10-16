@@ -1,0 +1,489 @@
+{
+  "nav": {
+    "home": "Ana Sayfa",
+    "services": "Hizmetler",
+    "about": "Hakkımızda",
+    "contact": "İletişim",
+    "consultation": "Danışmanlık Alın",
+    "navigation": "Navigasyon",
+    "darkMode": "Koyu Mod",
+    "lightMode": "Açık Mod"
+  },
+  "hero": {
+    "solusiDigital": "Dijital Çözümler",
+    "brand": "єкαℓℓιρтuѕ",
+    "description": "Geleceğe yönelik ama insani dijital ürünler sunmak için buradayız. Mikro etkileşimleri, cam morfizm öğelerini ve akıcı animasyonları birleştirerek akılda kalıcı deneyimler yaratıyoruz.",
+    "fokus": "Mevcut odağımız:",
+    "uiUxDesign": "Geleceğe Dönük UI/UX Tasarımı",
+    "digitalExperience": "Sürükleyici Dijital Deneyim",
+    "web3d": "3D Dokunuşlu Web Siteleri",
+    "branding": "Kapsamlı Markalaşma Stratejisi",
+    "startProject": "Projenizi Başlatın",
+    "profile": "PROFİLİMİZ"
+  },
+  "index": {
+    "intro": {
+      "title": "ekalliptus — Öncü Dijital Çözümler",
+      "subtitle": "Endonezya web sitesi geliştirme, özel WordPress, mobil uygulama geliştirme ve diğer profesyonel dijital hizmetlerle işletmenizi dönüştürün."
+    },
+    "about": {
+      "heading": "Öncü Dijital <highlight>Dönüşüm</highlight>",
+      "philosophyTitle": "Felsefemiz",
+      "philosophyDesc": "Her işletmenin güçlü bir dijital varlıkla anlatılması gereken benzersiz bir hikâyesi olduğuna inanıyoruz. Bu nedenle yaklaşımımız her zaman sezgisel kullanıcı deneyimine, yüksek performansa ve sürdürülebilir SEO stratejilerine odaklanır.",
+      "commitmentTitle": "Kalite Taahhüdü",
+      "commitmentDesc": "Ekalliptus ekibi, konseptten lansmana kadar yanınızda olan deneyimli geliştiriciler, yaratıcı tasarımcılar ve proje yöneticilerinden oluşur. Lider dijital ortak olarak her projeyi Google arama performansı için optimize ederiz."
+    },
+    "stats": {
+      "experience": "Yıllık Deneyim",
+      "clients": "Merkezi Müşteriler",
+      "support": "7/24 Destek"
+    },
+    "cta": {
+      "startProject": "Dijital Projenizi Başlatın",
+      "viewServices": "Hizmetlerimizi Görüntüleyin",
+      "contactUs": "Bizimle İletişime Geçin",
+      "note": "Ücretsiz danışmanlık ve işletmenize özel teklif için <link>sipariş formu</link> üzerinden bize ulaşın."
+    }
+  },
+  "services": {
+    "pill": "Ana Hizmetler",
+    "title": "Zarif dokunuşla dijital dönüşüm",
+    "subtitle": "3D öğeler, cam morfizmi ve ince etkileşimlerle kullanıcıları her adımda bağlı tutan farklı dijital deneyimler tasarlıyoruz.",
+    "expertise": "Uzmanlık",
+    "cards": {
+      "websiteDevelopment": {
+        "category": "Geliştirme",
+        "title": "Web Sitesi Geliştirme",
+        "description": "İş hedeflerinize uygun, duyarlı ve kullanıcı dostu web siteleri oluşturuyoruz.",
+        "features": ["Duyarlı Tasarım", "SEO Optimizasyonu", "Hızlı Yüklenme", "Özel Alan Adı"]
+      },
+      "wordpressDevelopment": {
+        "category": "Geliştirme",
+        "title": "WordPress Geliştirme",
+        "description": "WordPress'i seçkin tema ve eklentilerle ihtiyaçlarınıza göre özelleştiriyoruz.",
+        "features": ["Özel Tema", "Eklenti Entegrasyonu", "E-ticarete Hazır", "İçerik Yönetimi"]
+      },
+      "berduPlatform": {
+        "category": "Platform",
+        "title": "Berdu Platformu",
+        "description": "Modern iş operasyonları için güçlü Berdu tabanlı platform çözümleri.",
+        "features": ["Yönetim Paneli", "Kullanıcı Yönetimi", "Veri Analitiği", "Bulut Barındırma"]
+      },
+      "mobileAppDevelopment": {
+        "category": "Geliştirme",
+        "title": "Mobil Uygulama Geliştirme",
+        "description": "Sorunsuz deneyimler sunan yenilikçi Android ve iOS uygulamaları.",
+        "features": ["Çapraz Platform", "Yerel Performans", "Push Bildirimleri", "Mağaza Hazır"]
+      },
+      "serviceHpLaptop": {
+        "category": "Hizmet",
+        "title": "Cihaz Onarım Hizmeti",
+        "description": "Sertifikalı teknisyenler telefon ve laptoplarınıza güvenilir bakım sağlar.",
+        "features": ["Hızlı Teşhis", "Orijinal Yedek Parça", "Yazılım & Donanım Onarımı", "Hizmet Garantisi"]
+      },
+      "photoVideoEditing": {
+        "category": "Multimedya",
+        "title": "Fotoğraf & Video Düzenleme",
+        "description": "Yüksek kaliteli görsel sonuçlar sunan profesyonel düzenleme hizmetleri.",
+        "features": ["Renk Düzenleme", "Motion Grafik", "Ses Miksi", "4K Kalite"]
+      }
+    }
+  },
+  "about": {
+    "title": "Hakkımızda",
+    "innovation": "Sürekli Yenilik",
+    "quality": "Garantili Kalite",
+    "team": "Profesyonel Takım",
+    "innovationDesc": "Ekalliptus, modern işletmeler için dijital dönüşümü uzmanlaşan Endonezya merkezli bir dijital ajanstır. 5 yıldan fazla sektör deneyimiyle, KOBİ'lerden işletmelere kadar yüzlerce müşterinin dijital vizyonunu gerçekleştirmesine yardımcı olduk.",
+    "qualityDesc": "Hizmetlerimiz duyarlı ve SEO dostu web sitesi geliştirmeyi, eksiksiz eklenti entegrasyonuyla özel WordPress'i, React Native ve Flutter kullanarak çapraz platform mobil uygulama geliştirmeyi içerir.",
+    "teamDesc": "Sertifikalı teknisyenler tarafından HP ve dizüstü bilgisayar onarım hizmetleri, Adobe Premiere, After Effects ve Photoshop gibi yazılımlar kullanarak etkili pazarlama içeriği için profesyonel fotoğraf ve video düzenleme.",
+    "whyChoose": "Neden Ekalliptus'u Seçmelisiniz?",
+    "technology": "Öncü Teknoloji",
+    "local": "Yerel Odak",
+    "results": "Garantili Sonuçlar",
+    "technologyDesc": "Modern teknoloji kullanarak uygun maliyetli ama yüksek kaliteli Endonezya web sitesi geliştirme hizmetleri sağlıyoruz.",
+    "localDesc": "Yerel iş ihtiyaçları için WordPress özel Jakarta uzmanları, startup'lardan işletmelere kadar mobil uygulama geliştirme.",
+    "resultsDesc": "Profesyonel dijital ajansa odaklanarak, Ekalliptus Jakarta ve çevresindeki HP dizüstü bilgisayar hizmetlerinde en iyi seçim haline geldi.",
+    "commitment": "Hem estetik hem de fonksiyonel sonuçlar sağlayarak müşteri memnuniyetini en öncelikli tutuyoruz. Üzerinde çalıştığımız her Endonezya web sitesi geliştirme projesi, Google arama motorlarında maksimum görünürlük sağlamak için en son SEO en iyi uygulamalarını takip eder.",
+    "contactForm": "Endonezya'daki işletme ihtiyaçlarınıza göre özelleştirilmiş teklifi ücretsiz danışmanlıkla almak için sipariş formu aracılığıyla bizimle iletişime geçin."
+  },
+  "contact": {
+    "insights": "İçgörüler",
+    "customerJourney": "Müşteri Yolculuğu",
+    "statusActive": "Aktif",
+    "insightsDesc": "Etkileşimli açılış sayfalarından dinamik kontrol panellerine kadar, her detayı rakip firmalardan daha öne çıkan sürükleyici bir şekilde tasarlıyoruz.",
+    "experience": "Deneyim",
+    "clients": "Merkezileştirilmiş Müşteriler",
+    "rating": "Müşteri Puanı",
+    "interactive": "Etkileşimli",
+    "support": "Tam Destek"
+  },
+  "footer": {
+    "contact": "Bize Ulaşın",
+    "services": "Hizmetlerimizi Görüntüleyin"
+  },
+  "contactCTA": {
+    "title": "Projenize başlamaya hazır mısınız?",
+    "description": "Bizimle konuşun ve immersif tasarımın marka algınızı nasıl güçlendirdiğini ve kullanıcıları ürününüze nasıl yakınlaştırdığını keşfedin.",
+    "buttons": {
+      "whatsapp": "Ücretsiz Danışmanlık",
+      "email": "E-posta Gönder"
+    },
+    "contact": {
+      "phone": "+62 819-9990-0306",
+      "email": "ekalliptus@gmail.com"
+    },
+    "whatsappMessage": "Merhaba ekalliptus, sunduğunuz hizmetler hakkında danışmak istiyorum. Yardımcı olabilir misiniz?",
+    "emailSubject": "Ücretsiz Danışmanlık - ekalliptus",
+    "emailBody": "Merhaba ekalliptus,\n\nSunduğunuz hizmetler hakkında danışmak istiyorum. Desteğiniz için şimdiden teşekkür ederim.\n\nSaygılarımla."
+  },
+  "faq": {
+    "pill": "SSS",
+    "title": "Sık Sorulan Sorular",
+    "description": "Ekalliptus'un sunduğu web sitesi geliştirme, özel WordPress, mobil uygulama geliştirme ve diğer dijital hizmetler hakkında sıkça sorulan sorulara yanıtlar.",
+    "items": [
+      {
+        "question": "Web sitesi geliştirme ne kadar sürer?",
+        "answer": "Projenin kapsamına göre değişir. Basit bir kurumsal site genellikle 2-3 hafta sürerken, e-ticaret veya karmaşık web uygulamaları 1-3 ay arasında tamamlanır. İhtiyaç analizi sonrasında detaylı bir takvim paylaşırız."
+      },
+      {
+        "question": "Lansmandan sonra bakım hizmeti veriyor musunuz?",
+        "answer": "Evet. Düzenli güncellemeler, veri yedekleme, güvenlik takibi ve teknik destek içeren bakım paketlerimiz var. Paketleri aylık veya yıllık olarak işletmenizin ihtiyacına göre özelleştirebiliriz."
+      },
+      {
+        "question": "WordPress geliştirme büyük ölçekli işletmeler için uygun mu?",
+        "answer": "Kesinlikle. Özel eklentiler, yüksek performans optimizasyonu ve karmaşık entegrasyonlarla enterprise düzeyine ölçekleyebiliriz. WordPress esnek yapısı ve zengin eklenti ekosistemi sayesinde pek çok büyük marka tarafından tercih ediliyor."
+      },
+      {
+        "question": "Ekalliptus'ta sipariş süreci nasıl işliyor?",
+        "answer": "1) Proje detaylarını formda doldurun, 2) 24 saat içinde ekibimiz sizinle iletişime geçip detayları konuşur, 3) Teklif ve bütçe gönderilir, 4) Onay sonrası net kilometre taşlarıyla geliştirme başlar, 5) Test ve revizyonlar yapılır, 6) Lansman ve teslimat gerçekleştirilir."
+      },
+      {
+        "question": "Mobil uygulama için özel özellikler talep edebilir miyim?",
+        "answer": "Evet, uygulamalar tamamen ihtiyaçlarınıza göre özelleştirilebilir. React Native ve Flutter ile güçlü yerel özelliklere sahip çapraz platform uygulamalar geliştiriyoruz. Gereksinimlerinizi paylaşın, en uygun çözümü önerelim."
+      },
+      {
+        "question": "Ekalliptus'u diğer dijital ajanslardan ayıran nedir?",
+        "answer": "En yeni teknolojileri kullanıcı odaklı tasarım anlayışıyla birleştiriyoruz. Temiz koda ek olarak 3D öğeler, cam morfizmi ve mikro etkileşimlerle akılda kalıcı deneyimler yaratıyoruz. Her projeye başarıya kadar eşlik eden özel bir ekip atanıyor."
+      },
+      {
+        "question": "Cihaz onarım hizmetiniz tüm markaları kapsıyor mu?",
+        "answer": "Evet. Apple, Samsung, Xiaomi, ASUS, Lenovo, HP, Dell ve daha birçok marka için telefon ve dizüstü tamiri yapıyoruz. Sertifikalı teknisyenlerimiz orijinal yedek parçalarla hem donanım hem yazılım sorunlarını çözüyor."
+      },
+      {
+        "question": "Profesyonel fotoğraf ve video düzenleme ücretleri nedir?",
+        "answer": "Dosya sayısı, süre ve düzenleme karmaşıklığına göre değişir. Fotoğraf düzenleme fotoğraf başına yaklaşık 50.000 IDR'den, video düzenleme ise standart kısa videolar için 500.000 IDR'den başlar. Projenize özel fiyat için bizimle iletişime geçin."
+      }
+    ]
+  },
+  "order": {
+    "pill": "Sipariş Formu",
+    "title": "Dijital Hizmet Talebi",
+    "description": "Web sitesi geliştirme, özel WordPress, mobil uygulama veya diğer dijital ihtiyaçlarınızı ayrıntılı şekilde paylaşın. Gönderdiğiniz bilgiler dahili panomuza aktarılır ve 24 saat içinde teklif ile dönüş yaparız.",
+    "descriptionSecondary": "Endonezya web sitesi geliştirme, WordPress özelleştirme, Android/iOS uygulamaları, cihaz onarımı ve profesyonel fotoğraf-video düzenleme gibi geniş bir yelpazede hizmet veriyoruz. Uygun hizmeti seçip formu doldurun.",
+    "projectDetails": {
+      "title": "Proje Detayları",
+      "description": "Paylaştığınız bilgiler web sitesi, WordPress, mobil uygulama ve diğer hizmetler için en uygun çözümü ve doğru bütçeyi hazırlamamıza yardımcı olur."
+    },
+    "validation": {
+      "nameRequired": "İsim zorunludur",
+      "emailRequired": "E-posta zorunludur",
+      "emailInvalid": "Lütfen geçerli bir e-posta adresi girin",
+      "whatsappRequired": "WhatsApp numarası zorunludur",
+      "whatsappInvalid": "Geçerli bir WhatsApp numarası girin",
+      "serviceRequired": "Lütfen bir hizmet seçin"
+    },
+    "common": {
+      "optional": "Opsiyonel"
+    },
+    "fields": {
+      "name": {
+        "label": "Ad Soyad",
+        "placeholder": "Örn: Ahmet Yılmaz"
+      },
+      "email": {
+        "label": "E-posta",
+        "placeholder": "name@example.com"
+      },
+      "whatsapp": {
+        "label": "WhatsApp",
+        "placeholder": "Örn: 0851xxxxxxx"
+      },
+      "service": {
+        "label": "Ana Hizmet",
+        "placeholder": "Hizmet seçin"
+      },
+      "serviceDetails": {
+        "title": "Hizmet Detayları",
+        "description": "Web sitesi geliştirme, WordPress özelleştirme, mobil uygulama, cihaz onarımı veya fotoğraf-video düzenleme ihtiyaçlarınızı mümkün olduğunca ayrıntılı yazın.",
+        "emptyState": "Önce hizmeti seçin, projeye özel detay alanları açılacaktır."
+      },
+      "contactPreference": {
+        "label": "Tercih edilen iletişim"
+      },
+      "attachment": {
+        "label": "Ek Dosya (opsiyonel)",
+        "choose": "Dosya Seç",
+        "empty": "Herhangi bir dosya seçilmedi"
+      }
+    },
+    "contactPreferences": {
+      "whatsapp": {
+        "label": "WhatsApp",
+        "helper": "Belirttiğiniz WhatsApp numarasından iletişime geçeceğiz."
+      },
+      "email": {
+        "label": "E-posta",
+        "helper": "Güncellemeleri ve teklifleri e-posta ile ileteceğiz."
+      },
+      "meeting": {
+        "label": "Online Toplantı",
+        "helper": "Zoom veya Google Meet üzerinden toplantı planlarız."
+      }
+    },
+    "serviceOptions": {
+      "websiteDevelopment": "Web Sitesi Geliştirme",
+      "wordpressDevelopment": "WordPress Geliştirme",
+      "berduPlatform": "Berdu Platformu",
+      "mobileAppDevelopment": "Mobil Uygulama Geliştirme",
+      "serviceHpLaptop": "Cihaz Onarım Hizmeti",
+      "photoVideoEditing": "Fotoğraf & Video Düzenleme",
+      "other": "Diğer Hizmetler"
+    },
+    "services": {
+      "websiteDevelopment": {
+        "namaBisnisBrand": {
+          "label": "İşletme / marka adı",
+          "placeholder": "Örn: Ekalliptus Studio"
+        },
+        "jenisBisnis": {
+          "label": "İşletme türü",
+          "placeholder": "Örn: Kreatif ajans, kafe, SaaS vb."
+        },
+        "tujuanWebsite": {
+          "label": "Web sitesinin amacı",
+          "placeholder": "Kurumsal bilgi, e-ticaret, şirket profili, rezervasyon platformu vb."
+        },
+        "preferensiDesainWarna": {
+          "label": "Tasarım / renk tercihleri",
+          "placeholder": "İstediğiniz görsel tarzı veya renk paletini açıklayın"
+        },
+        "domainDiinginkan": {
+          "label": "Tercih edilen alan adı",
+          "placeholder": "Örn: ekalliptus.id"
+        },
+        "fiturKhusus": {
+          "label": "Özel özellikler",
+          "placeholder": "Blog, galeri, iletişim formu, rezervasyon, çok dilli destek vb."
+        },
+        "budgetEstimasiWaktu": {
+          "label": "Bütçe / zaman planı",
+          "placeholder": "Tahmini bütçe ve hedef lansman tarihini paylaşın"
+        },
+        "kontakDapatDihubungi": {
+          "label": "İlgili kişi",
+          "placeholder": "İletişim kurabileceğimiz isim ve bilgiler"
+        },
+        "catatanTambahan": {
+          "label": "Ek notlar / referanslar",
+          "placeholder": "Referans bağlantıları, moodboard veya özel isteklerinizi ekleyin"
+        }
+      },
+      "wordpressDevelopment": {
+        "namaBrandSitus": {
+          "label": "Site / marka adı",
+          "placeholder": "Örn: Ekalliptus Blog"
+        },
+        "jenisWebsite": {
+          "label": "Site türü",
+          "placeholder": "Blog, e-ticaret, eğitim, portföy, ürün kataloğu vb."
+        },
+        "pilihanTema": {
+          "label": "Tema tercihi",
+          "placeholder": "Özel tasarım veya beğendiğiniz temaları belirtin"
+        },
+        "kebutuhanPlugin": {
+          "label": "Gerekli eklentiler",
+          "placeholder": "E-ticaret, SEO, üyelik, LMS, otomasyon vb."
+        },
+        "kontenAwal": {
+          "label": "İlk içerikler",
+          "placeholder": "Makaleler, ürün kategorileri, ürün verileri, görsel varlıklar vb."
+        },
+        "akunAdmin": {
+          "label": "Yönetici hesapları",
+          "placeholder": "Hazırlanması gereken erişim bilgileri veya yetkilendirme yapısı"
+        },
+        "budgetDeadline": {
+          "label": "Bütçe ve teslim tarihi",
+          "placeholder": "Beklenen bütçe ve hedef canlıya alma tarihi"
+        },
+        "catatanTambahan": {
+          "label": "Ek notlar",
+          "placeholder": "Staging erişimi, marka varlıkları veya özel ihtiyaçlar"
+        }
+      },
+      "berduPlatform": {
+        "namaBisnis": {
+          "label": "İşletme adı",
+          "placeholder": "Örn: Ekalliptus Ventures"
+        },
+        "jenisUsaha": {
+          "label": "İş alanı",
+          "placeholder": "Perakende, hizmet, dağıtım, bayilik vb."
+        },
+        "jumlahUserKelola": {
+          "label": "Yönetilecek kullanıcı sayısı",
+          "placeholder": "Sistemi kullanacak yönetici/operatör sayısı"
+        },
+        "kebutuhanFiturDashboard": {
+          "label": "Panel ihtiyaçları",
+          "placeholder": "Örn: sipariş yönetimi, stok, kullanıcı rolleri, raporlar vb."
+        },
+        "jenisDataAnalytics": {
+          "label": "Gerekli veri / analiz",
+          "placeholder": "Sunulması gereken başlıca KPI ve raporları yazın"
+        },
+        "preferensiIntegrasi": {
+          "label": "Entegrasyon tercihleri",
+          "placeholder": "Bulut depolama, pazaryeri, ödeme altyapısı vb."
+        },
+        "kontakPic": {
+          "label": "Sorumlu kişi",
+          "placeholder": "Sorumlu kişinin adı ve iletişim bilgileri"
+        },
+        "catatanTambahan": {
+          "label": "Ek notlar",
+          "placeholder": "SOP, öncelikli entegrasyonlar veya uygulama notları"
+        }
+      },
+      "mobileAppDevelopment": {
+        "namaAplikasi": {
+          "label": "Uygulama adı",
+          "placeholder": "Örn: Ekalliptus Mobile"
+        },
+        "platformTarget": {
+          "label": "Hedef platform",
+          "placeholder": "Android, iOS veya her ikisi"
+        },
+        "tujuanAplikasi": {
+          "label": "Uygulamanın amacı",
+          "placeholder": "İş, eğitim, topluluk, kurum içi araçlar vb."
+        },
+        "fiturUtama": {
+          "label": "Temel özellikler",
+          "placeholder": "Olmazsa olmaz en az üç özelliği yazın"
+        },
+        "mockupDesain": {
+          "label": "İlk tasarımlar / mockup",
+          "placeholder": "Varsa Figma linkleri, görseller veya tasarım notları"
+        },
+        "integrasiLayanan": {
+          "label": "Dış servis entegrasyonları",
+          "placeholder": "Örn: ödeme altyapısı, CRM, iç sistemler vb."
+        },
+        "estimasiJumlahPengguna": {
+          "label": "Tahmini kullanıcı sayısı",
+          "placeholder": "İlk 3-6 ay için beklenen aktif kullanıcı sayısı"
+        },
+        "kontak": {
+          "label": "Proje iletişim kişisi",
+          "placeholder": "PIC adı ve telefon/e-posta"
+        },
+        "catatanTambahan": {
+          "label": "Ek notlar",
+          "placeholder": "Tasarım referansları, mevcut repolar veya kapsam notları"
+        }
+      },
+      "serviceHpLaptop": {
+        "namaLengkap": {
+          "label": "Ad Soyad",
+          "placeholder": "Örn: Budi Santoso"
+        },
+        "jenisPerangkat": {
+          "label": "Cihaz türü",
+          "placeholder": "Telefon/bilgisayar, marka ve model"
+        },
+        "masalahUtama": {
+          "label": "Ana sorun",
+          "placeholder": "Örn: ekran açılmıyor, batarya zayıf, OS yeniden kurulmalı vb."
+        },
+        "informasiGaransi": {
+          "label": "Garanti / yedek parça bilgisi",
+          "placeholder": "Garanti durumu, orijinal parça tercihi vb."
+        },
+        "pilihanLayanan": {
+          "label": "Hizmet seçimi",
+          "placeholder": "Donanım, yazılım, yükseltme, danışmanlık vb."
+        },
+        "lokasiLayanan": {
+          "label": "Hizmet lokasyonu",
+          "placeholder": "Örn: Doğu Cakarta, Bekasi, yerinde servis / kurye"
+        },
+        "kontak": {
+          "label": "İletişim numarası",
+          "placeholder": "Alternatif telefon veya WhatsApp"
+        },
+        "catatanTambahan": {
+          "label": "Ek notlar",
+          "placeholder": "Servis geçmişi veya özel talepler"
+        }
+      },
+      "photoVideoEditing": {
+        "namaProyek": {
+          "label": "Proje adı",
+          "placeholder": "Örn: Ramazan Kampanyası 2024"
+        },
+        "jenisEditing": {
+          "label": "Düzenleme türü",
+          "placeholder": "Fotoğraf, video, reels, uzun format, dokümantasyon vb."
+        },
+        "jumlahFile": {
+          "label": "Dosya sayısı",
+          "placeholder": "Düzenlenecek dosya sayısı ve varsa süre/boyut"
+        },
+        "kebutuhanSpesifik": {
+          "label": "Özel ihtiyaçlar",
+          "placeholder": "Color grading, motion graphic, ses düzenleme, altyazı vb."
+        },
+        "resolusiFormatOutput": {
+          "label": "Çıkış çözünürlüğü / formatı",
+          "placeholder": "Örn: 4K, MP4, JPG, PNG veya özel oran"
+        },
+        "deadline": {
+          "label": "Teslim tarihi",
+          "placeholder": "Hedef tarih veya zaman aralığı"
+        },
+        "kontak": {
+          "label": "Proje sorumlusu",
+          "placeholder": "İrtibat kurulacak kişi"
+        },
+        "catatanTambahan": {
+          "label": "Ek notlar / referanslar",
+          "placeholder": "Varlık klasörleri, moodboard veya revizyon notları"
+        }
+      }
+    },
+    "notes": {
+      "title": "Notlar",
+      "description": "Gönderilen bilgiler web sitesi, WordPress, mobil uygulama, cihaz onarımı ve medya düzenleme süreçlerimizle doğrudan senkronize edilir. Ek dokümanlarınız varsa (wireframe, gereksinim dosyası vb.) gönderim sonrası alacağınız onay e-postasına yanıtlayabilirsiniz.",
+      "privacy": "Verilerinizi güvenle saklar, yalnızca proje iletişimi için kullanırız."
+    },
+    "actions": {
+      "submitting": "Gönderiliyor...",
+      "submit": "Siparişi Gönder",
+      "reset": "Formu Sıfırla"
+    }
+  },
+  "notFound": {
+    "pill": "Sayfa bulunamadı",
+    "description": "Aradığınız sayfa henüz hazır değil. Ana sayfaya dönüp sizin için hazırladığımız deneyimleri keşfedin.",
+    "backHome": "Ana Sayfaya Dön",
+    "viewServices": "Hizmetleri Gör"
+  },
+  "seo": {
+    "title": "Ekalliptus Dijital Ajans — Web Siteleri, WordPress, Mobil Uygulamalar Endonezya",
+    "description": "Ekalliptus - Endonezya'da web sitesi geliştirme, WordPress, mobil uygulamalar ve profesyonel fotoğraf/video düzenleme için önde gelen dijital çözümler. İşletmenizin dijital dönüşümü için bizimle iletişime geçin.",
+    "keywords": "Endonezya web sitesi geliştirme, WordPress özel, mobil uygulama geliştirme, fotoğraf düzenleme servisi, video düzenleme profesyonel, dijital ajans Jakarta, web sitesi oluşturma servisi, mobil uygulamalar Android iOS, kaliteli fotoğraf video düzenleme"
+  }
+}

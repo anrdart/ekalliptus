@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { Hero } from "@/components/Hero";
 import { SEO_CONFIG, getCanonicalUrl, getOgUrl, PAGE_SEO } from "@/config/seo.config";
+import { Trans, useTranslation } from "react-i18next";
 
 // Optimized lazy loading with preload hints
 const ServicesLazy = lazy(() =>
@@ -17,6 +18,7 @@ const FAQLazy = lazy(() =>
 
 const Index = () => {
   const location = useLocation();
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (!location.hash) return;
@@ -96,10 +98,13 @@ const Index = () => {
         <Hero />
         <div className="text-center py-8 px-4">
           <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-            ekalliptus - Solusi Digital Terdepan
+            {t("index.intro.title", { defaultValue: "ekalliptus - Solusi Digital Terdepan" })}
           </h1>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Transformasi bisnis Anda dengan website development Indonesia, WordPress custom, mobile app development, dan layanan digital profesional lainnya.
+            {t("index.intro.subtitle", {
+              defaultValue:
+                "Transformasi bisnis Anda dengan website development Indonesia, WordPress custom, mobile app development, dan layanan digital profesional lainnya.",
+            })}
           </p>
         </div>
         <Suspense fallback={<div className="content-vis py-20" />}>
@@ -120,10 +125,14 @@ const Index = () => {
           <div className="relative z-10 mx-auto max-w-6xl">
             <div className="mx-auto mb-16 max-w-4xl text-center">
               <div className="inline-flex items-center gap-2 rounded-full bg-card/20 px-5 py-2 text-[0.65rem] font-semibold uppercase tracking-[0.6em] text-muted-foreground mb-6">
-                <span>Tentang Kami</span>
+                <span>{t("about.title")}</span>
               </div>
               <h2 className="text-4xl font-semibold text-foreground md:text-5xl mb-8">
-                Transformasi Digital <span className="bg-gradient-to-r from-sky-400 to-emerald-300 bg-clip-text text-transparent">Terdepan</span>
+                <Trans
+                  i18nKey="index.about.heading"
+                  defaultValue="Transformasi Digital <highlight>Terdepan</highlight>"
+                  components={{ highlight: <span className="bg-gradient-to-r from-sky-400 to-emerald-300 bg-clip-text text-transparent" /> }}
+                />
               </h2>
               
               <div className="glass-panel neon-border rounded-3xl p-8 md:p-12 shadow-elegant mb-12">
@@ -136,9 +145,9 @@ const Index = () => {
                         </svg>
                       </div>
                       <div>
-                        <h3 className="text-xl font-semibold text-foreground mb-2">Inovasi Berkelanjutan</h3>
+                        <h3 className="text-xl font-semibold text-foreground mb-2">{t("about.innovation")}</h3>
                         <p className="text-muted-foreground leading-relaxed">
-                          ekalliptus adalah <strong className="text-foreground">digital agency berbasis di Indonesia</strong> yang spesialis dalam transformasi digital untuk bisnis modern. Dengan pengalaman lebih dari 5 tahun di industri, kami telah membantu ratusan klien dari UMKM hingga enterprise mencapai visi digital mereka.
+                          {t("about.innovationDesc")}
                         </p>
                       </div>
                     </div>
@@ -150,9 +159,9 @@ const Index = () => {
                         </svg>
                       </div>
                       <div>
-                        <h3 className="text-xl font-semibold text-foreground mb-2">Kualitas Terjamin</h3>
+                        <h3 className="text-xl font-semibold text-foreground mb-2">{t("about.quality")}</h3>
                         <p className="text-muted-foreground leading-relaxed">
-                          Layanan kami mencakup <a href="/order" className="text-sky-400 hover:text-sky-300 transition-colors font-medium underline decoration-sky-400/30 hover:decoration-sky-400">website development</a> yang responsif dan SEO-friendly, custom WordPress dengan plugin integrasi lengkap, pengembangan aplikasi mobile cross-platform menggunakan React Native dan Flutter.
+                          {t("about.qualityDesc")}
                         </p>
                       </div>
                     </div>
@@ -164,9 +173,9 @@ const Index = () => {
                         </svg>
                       </div>
                       <div>
-                        <h3 className="text-xl font-semibold text-foreground mb-2">Tim Profesional</h3>
+                        <h3 className="text-xl font-semibold text-foreground mb-2">{t("about.team")}</h3>
                         <p className="text-muted-foreground leading-relaxed">
-                          Service perbaikan HP dan laptop dengan teknisi bersertifikat, serta editing foto dan video profesional untuk konten marketing yang impactful menggunakan software seperti Adobe Premiere, After Effects, dan Photoshop.
+                          {t("about.teamDesc")}
                         </p>
                       </div>
                     </div>
@@ -174,23 +183,23 @@ const Index = () => {
                   
                   <div className="space-y-6">
                     <div className="glass-panel rounded-2xl p-6 bg-card/10">
-                      <div className="text-center">
-                        <div className="text-4xl font-bold bg-gradient-to-r from-sky-400 to-emerald-300 bg-clip-text text-transparent mb-2">5+</div>
-                        <div className="text-sm uppercase tracking-[0.3em] text-muted-foreground">Tahun Pengalaman</div>
+                        <div className="text-center">
+                          <div className="text-4xl font-bold bg-gradient-to-r from-sky-400 to-emerald-300 bg-clip-text text-transparent mb-2">5+</div>
+                          <div className="text-sm uppercase tracking-[0.3em] text-muted-foreground">{t("index.stats.experience", { defaultValue: "Tahun Pengalaman" })}</div>
                       </div>
                     </div>
 
                     <div className="glass-panel rounded-2xl p-6 bg-card/10">
-                      <div className="text-center">
-                        <div className="text-4xl font-bold bg-gradient-to-r from-emerald-400 to-sky-300 bg-clip-text text-transparent mb-2">200+</div>
-                        <div className="text-sm uppercase tracking-[0.3em] text-muted-foreground">Klien Terpusat</div>
+                        <div className="text-center">
+                          <div className="text-4xl font-bold bg-gradient-to-r from-emerald-400 to-sky-300 bg-clip-text text-transparent mb-2">200+</div>
+                          <div className="text-sm uppercase tracking-[0.3em] text-muted-foreground">{t("index.stats.clients", { defaultValue: "Klien Terpusat" })}</div>
                       </div>
                     </div>
 
                     <div className="glass-panel rounded-2xl p-6 bg-card/10">
-                      <div className="text-center">
-                        <div className="text-4xl font-bold bg-gradient-to-r from-indigo-400 to-emerald-300 bg-clip-text text-transparent mb-2">24/7</div>
-                        <div className="text-sm uppercase tracking-[0.3em] text-muted-foreground">Dukungan Penuh</div>
+                        <div className="text-center">
+                          <div className="text-4xl font-bold bg-gradient-to-r from-indigo-400 to-emerald-300 bg-clip-text text-transparent mb-2">24/7</div>
+                          <div className="text-sm uppercase tracking-[0.3em] text-muted-foreground">{t("index.stats.support", { defaultValue: "Dukungan Penuh" })}</div>
                       </div>
                     </div>
                   </div>
@@ -199,22 +208,28 @@ const Index = () => {
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
                 <div className="glass-panel neon-border rounded-2xl p-6 text-left">
-                  <h3 className="text-xl font-semibold text-foreground mb-4">Filosofi Kami</h3>
+                  <h3 className="text-xl font-semibold text-foreground mb-4">{t("index.about.philosophyTitle", { defaultValue: "Filosofi Kami" })}</h3>
                   <p className="text-muted-foreground leading-relaxed text-sm">
-                    Kami percaya bahwa setiap bisnis memiliki cerita unik yang perlu disampaikan melalui digital presence yang kuat. Oleh karena itu, pendekatan kami selalu berfokus pada user experience yang intuitif, performance tinggi, dan strategi SEO yang berkelanjutan.
+                    {t("index.about.philosophyDesc", {
+                      defaultValue:
+                        "Kami percaya bahwa setiap bisnis memiliki cerita unik yang perlu disampaikan melalui digital presence yang kuat. Oleh karena itu, pendekatan kami selalu berfokus pada user experience yang intuitif, performance tinggi, dan strategi SEO yang berkelanjutan.",
+                    })}
                   </p>
                 </div>
 
                 <div className="glass-panel neon-border rounded-2xl p-6 text-left">
-                  <h3 className="text-xl font-semibold text-foreground mb-4">Komitmen Kualitas</h3>
+                  <h3 className="text-xl font-semibold text-foreground mb-4">{t("index.about.commitmentTitle", { defaultValue: "Komitmen Kualitas" })}</h3>
                   <p className="text-muted-foreground leading-relaxed text-sm">
-                    Tim ekalliptus terdiri dari developer berpengalaman, designer kreatif, dan project manager yang siap mendampingi proyek Anda dari konsep hingga launch. Sebagai solusi digital terdepan, ekalliptus memastikan setiap proyek dioptimalkan untuk search engine Google.
+                    {t("index.about.commitmentDesc", {
+                      defaultValue:
+                        "Tim ekalliptus terdiri dari developer berpengalaman, designer kreatif, dan project manager yang siap mendampingi proyek Anda dari konsep hingga launch. Sebagai solusi digital terdepan, ekalliptus memastikan setiap proyek dioptimalkan untuk search engine Google.",
+                    })}
                   </p>
                 </div>
               </div>
               
               <div className="glass-panel neon-border rounded-2xl p-8 mb-12">
-                <h3 className="text-2xl font-semibold text-foreground mb-6 text-center">Mengapa Memilih ekalliptus?</h3>
+                <h3 className="text-2xl font-semibold text-foreground mb-6 text-center">{t("about.whyChoose")}</h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   <div className="text-center">
                     <div className="rounded-full bg-gradient-to-r from-sky-500 to-emerald-400 w-16 h-16 flex items-center justify-center mx-auto mb-4">
@@ -222,10 +237,8 @@ const Index = () => {
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                       </svg>
                     </div>
-                    <h4 className="text-lg font-semibold text-foreground mb-2">Teknologi Terdepan</h4>
-                    <p className="text-muted-foreground text-sm leading-relaxed">
-                      Kami menyediakan <strong className="text-foreground">jasa pembuatan website Indonesia</strong> yang terjangkau namun berkualitas tinggi dengan teknologi modern.
-                    </p>
+                    <h4 className="text-lg font-semibold text-foreground mb-2">{t("about.technology")}</h4>
+                    <p className="text-muted-foreground text-sm leading-relaxed">{t("about.technologyDesc")}</p>
                   </div>
 
                   <div className="text-center">
@@ -235,10 +248,8 @@ const Index = () => {
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                       </svg>
                     </div>
-                    <h4 className="text-lg font-semibold text-foreground mb-2">Fokus Lokal</h4>
-                    <p className="text-muted-foreground text-sm leading-relaxed">
-                      Spesialis <strong className="text-foreground">WordPress custom</strong> untuk kebutuhan bisnis lokal dan <strong className="text-foreground">mobile app development</strong> untuk startup hingga enterprise.
-                    </p>
+                    <h4 className="text-lg font-semibold text-foreground mb-2">{t("about.local")}</h4>
+                    <p className="text-muted-foreground text-sm leading-relaxed">{t("about.localDesc")}</p>
                   </div>
 
                   <div className="text-center">
@@ -247,35 +258,33 @@ const Index = () => {
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.818-4.364A9 9 0 1112 21c1.052 0 2.062-.18 3-.512" />
                       </svg>
                     </div>
-                    <h4 className="text-lg font-semibold text-foreground mb-2">Hasil Terjamin</h4>
-                    <p className="text-muted-foreground text-sm leading-relaxed">
-                      Dengan fokus pada digital agency yang profesional, ekalliptus telah menjadi pilihan utama untuk <strong className="text-foreground">Service HP dan laptop</strong> di Tegal dan sekitarnya.
-                    </p>
+                    <h4 className="text-lg font-semibold text-foreground mb-2">{t("about.results")}</h4>
+                    <p className="text-muted-foreground text-sm leading-relaxed">{t("about.resultsDesc")}</p>
                   </div>
                 </div>
               </div>
               
               <div className="text-center mb-8">
                 <p className="text-muted-foreground text-sm leading-relaxed max-w-3xl mx-auto">
-                  Kami mengutamakan kepuasan klien dengan memberikan hasil yang tidak hanya estetis namun juga fungsional. Setiap proyek <strong className="text-foreground">website development Indonesia</strong> yang kami kerjakan selalu mengikuti best practices SEO terbaru untuk memastikan visibilitas maksimal di mesin pencari Google.
+                  {t("about.commitment")}
                 </p>
               </div>
-              
+
               <div className="flex flex-col gap-4 sm:flex-row sm:gap-6 justify-center">
                 <a href="/order" className="group inline-flex items-center gap-3 rounded-full bg-gradient-to-r from-sky-500 to-emerald-500 px-8 py-4 text-lg font-semibold text-primary-foreground transition-all duration-300 hover:shadow-lg hover:shadow-sky-500/25 hover:scale-105 text-center">
-                  <span>Mulai Proyek Digital Anda</span>
+                  <span>{t("index.cta.startProject", { defaultValue: "Mulai Proyek Digital Anda" })}</span>
                   <svg className="h-5 w-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                   </svg>
                 </a>
                 <a href="#services" className="group inline-flex items-center gap-3 rounded-full border-2 border-sky-400 text-sky-400 px-8 py-4 text-lg font-semibold hover:bg-sky-400 hover:text-white transition-all duration-300 text-center">
-                  <span>Lihat Layanan Kami</span>
+                  <span>{t("index.cta.viewServices", { defaultValue: "Lihat Layanan Kami" })}</span>
                   <svg className="h-5 w-5 transition-transform group-hover:translate-y-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
                   </svg>
                 </a>
                 <a href="#contact" className="group inline-flex items-center gap-3 rounded-full border-2 border-emerald-400 text-emerald-400 px-8 py-4 text-lg font-semibold hover:bg-emerald-400 hover:text-white transition-all duration-300 text-center">
-                  <span>Hubungi Kami</span>
+                  <span>{t("index.cta.contactUs", { defaultValue: "Hubungi Kami" })}</span>
                   <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                   </svg>
@@ -284,7 +293,18 @@ const Index = () => {
               
               <div className="mt-8 text-center">
                 <p className="text-muted-foreground/80 text-xs uppercase tracking-[0.3em]">
-                  Hubungi kami melalui <a href="/order" className="text-sky-400 hover:text-sky-300 transition-colors font-medium underline decoration-sky-400/30 hover:decoration-sky-400">form order</a> untuk konsultasi gratis dan dapatkan proposal custom sesuai kebutuhan bisnis Anda di Indonesia.
+                  <Trans
+                    i18nKey="index.cta.note"
+                    defaultValue="Hubungi kami melalui <link>form order</link> untuk konsultasi gratis dan dapatkan proposal custom sesuai kebutuhan bisnis Anda di Indonesia."
+                    components={{
+                      link: (
+                        <a
+                          href="/order"
+                          className="text-sky-400 hover:text-sky-300 transition-colors font-medium underline decoration-sky-400/30 hover:decoration-sky-400"
+                        />
+                      ),
+                    }}
+                  />
                 </p>
               </div>
             </div>
@@ -293,6 +313,14 @@ const Index = () => {
         <Suspense fallback={<div className="content-vis py-20" />}>
           <ContactCTALazy />
         </Suspense>
+
+        <footer className="border-t border-border/40 bg-card/10 py-8 px-4">
+          <div className="mx-auto max-w-6xl text-center">
+            <p className="text-sm text-muted-foreground">
+              © {new Date().getFullYear()} ekalliptus. All rights reserved.
+            </p>
+          </div>
+        </footer>
       </div>
     </>
   );

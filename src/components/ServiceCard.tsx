@@ -1,5 +1,6 @@
 import { Card } from "@/components/ui/card";
 import { LucideIcon } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 interface ServiceCardProps {
   icon: LucideIcon;
@@ -9,6 +10,7 @@ interface ServiceCardProps {
 }
 
 export const ServiceCard = ({ icon: Icon, title, description, features }: ServiceCardProps) => {
+  const { t } = useTranslation();
   return (
     <Card className="group relative overflow-hidden p-8 text-left transition duration-500 hover:-translate-y-1.5">
       <meta itemProp="name" content={title} />
@@ -22,7 +24,7 @@ export const ServiceCard = ({ icon: Icon, title, description, features }: Servic
           <div className="rounded-full bg-primary-gradient p-3 text-primary-foreground shadow-glow transition duration-500 group-hover:scale-110" aria-hidden="true">
             <Icon className="h-5 w-5" />
           </div>
-          <span className="text-xs uppercase tracking-[0.4em] text-muted-foreground">Specialized</span>
+          <span className="text-xs uppercase tracking-[0.4em] text-muted-foreground">{t('services.expertise')}</span>
         </div>
 
         <h3 className="text-2xl font-semibold text-foreground transition-colors duration-500 group-hover:text-primary" itemProp="name">

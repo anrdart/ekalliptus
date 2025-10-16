@@ -1,16 +1,25 @@
+import { useMemo } from "react";
 import { ArrowRight, Play, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useInView } from "@/hooks/use-in-view";
 import { useTypewriter } from "@/hooks/use-typewriter";
 import { cn } from "@/lib/utils";
+import { useTranslation } from "react-i18next";
 
 export const Hero = () => {
   const { ref, inView } = useInView<HTMLDivElement>({ threshold: 0.35 });
-  const typed = useTypewriter(
-    ["UI/UX Design Futuristik", "Pengalaman Digital Imersif", "Website dengan Sentuhan 3D", "Strategi Branding Holistik"],
-    { typingSpeed: 80, deletingSpeed: 40, pauseTime: 1400 },
+  const { t, i18n } = useTranslation();
+  const typewriterWords = useMemo(
+    () => [
+      t("hero.uiUxDesign"),
+      t("hero.digitalExperience"),
+      t("hero.web3d"),
+      t("hero.branding"),
+    ],
+    [t, i18n.language],
   );
+  const typed = useTypewriter(typewriterWords, { typingSpeed: 80, deletingSpeed: 40, pauseTime: 1400 });
 
   const base =
     "transition-all duration-700 ease-smooth will-change-transform motion-reduce:transition-none motion-reduce:transform-none motion-reduce:opacity-100";
@@ -28,7 +37,7 @@ export const Hero = () => {
         <div className={cn("w-full max-w-2xl text-center lg:text-left", base, show)} style={{ transitionDelay: "120ms" }}>
           <div className="inline-flex items-center gap-2 rounded-full bg-card/20 px-5 py-2 text-xs uppercase tracking-[0.35em] text-foreground/70 shadow-lg shadow-primary/10">
             <Sparkles className="h-4 w-4" />
-            <span>Solusi Digital</span>
+            <span>{t("hero.solusiDigital")}</span>
           </div>
 
           <h1 className="mt-6 text-4xl font-medium text-foreground/80 md:text-6xl lg:text-7xl">
@@ -38,20 +47,20 @@ export const Hero = () => {
           </h1>
 
           <p className="mt-6 text-lg leading-relaxed text-foreground/70 md:text-xl">
-            Kami hadir untuk menghadirkan produk digital yang terasa futuristik namun tetap humanis. Menggabungkan micro-interaction, elemen glassmorphism, dan animasi halus untuk menciptakan pengalaman yang melekat di ingatan.
+            {t("hero.description")}
           </p>
 
           <p className="mt-4 text-sm font-medium uppercase tracking-[0.4em] text-foreground/50">
-            Fokus kami saat ini:
+            {t("hero.fokus")}
             <span className="ml-3 rounded-full bg-card/20 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-foreground">
-              {typed || "UI/UX Design Futuristik"}
+              {typed || t("hero.uiUxDesign")}
             </span>
           </p>
 
           <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-start">
             <Button variant="hero" size="lg" className="cursor-interactive rounded-full px-8 py-6 text-base font-semibold uppercase tracking-wide" asChild>
               <Link to="/order" onMouseEnter={() => import("../pages/Order")}>
-                Mulai Proyek Anda
+                {t("hero.startProject")}
                 <ArrowRight className="h-5 w-5" />
               </Link>
             </Button>
@@ -64,7 +73,7 @@ export const Hero = () => {
             >
               <a href="https://itsme.ekalliptus.id/" target="_blank" rel="noopener noreferrer">
                 <Play className="mr-2 h-4 w-4" />
-                PROFIL KAMI
+                {t("hero.profile")}
               </a>
             </Button>
           </div>
@@ -74,32 +83,34 @@ export const Hero = () => {
           <div className={cn("glass-panel neon-border rounded-3xl p-8 text-card-foreground shadow-elegant", base, show)} style={{ transitionDelay: "260ms" }}>
             <div className="flex items-start justify-between">
               <div>
-                <p className="text-xs uppercase tracking-[0.4em] text-muted-foreground">Wawasan</p>
-                <h2 className="mt-2 text-3xl font-semibold text-foreground">Perjalanan Pelanggan</h2>
+                <p className="text-xs uppercase tracking-[0.4em] text-muted-foreground">{t("contact.insights")}</p>
+                <h2 className="mt-2 text-3xl font-semibold text-foreground">{t("contact.customerJourney")}</h2>
               </div>
-              <div className="rounded-2xl bg-card/20 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-muted-foreground">Aktif</div>
+              <div className="rounded-2xl bg-card/20 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+                {t("contact.statusActive")}
+              </div>
             </div>
 
             <p className="mt-6 text-sm leading-relaxed text-muted-foreground">
-              Dari landing page interaktif hingga dashboard dinamis, kami merancang tiap detail agar terasa immersif dan menonjol dari kompetitor Anda.
+              {t("contact.insightsDesc")}
             </p>
 
             <div className="mt-8 grid grid-cols-2 gap-4 text-foreground">
               <div className="rounded-2xl bg-card/10 p-4 text-center">
                 <div className="text-3xl font-bold">+120</div>
-                <div className="mt-2 text-xs uppercase tracking-[0.35em] text-muted-foreground">Pengalaman</div>
+                <div className="mt-2 text-xs uppercase tracking-[0.35em] text-muted-foreground">{t("contact.experience")}</div>
               </div>
               <div className="rounded-2xl bg-card/10 p-4 text-center">
                 <div className="text-3xl font-bold">4.9★</div>
-                <div className="mt-2 text-xs uppercase tracking-[0.35em] text-muted-foreground">Skor Klien</div>
+                <div className="mt-2 text-xs uppercase tracking-[0.35em] text-muted-foreground">{t("contact.rating")}</div>
               </div>
               <div className="rounded-2xl bg-card/10 p-4 text-center">
                 <div className="text-3xl font-bold">3D</div>
-                <div className="mt-2 text-xs uppercase tracking-[0.35em] text-muted-foreground">Interaktif</div>
+                <div className="mt-2 text-xs uppercase tracking-[0.35em] text-muted-foreground">{t("contact.interactive")}</div>
               </div>
               <div className="rounded-2xl bg-card/10 p-4 text-center">
                 <div className="text-3xl font-bold">24/7</div>
-                <div className="mt-2 text-xs uppercase tracking-[0.35em] text-muted-foreground">Dukungan</div>
+                <div className="mt-2 text-xs uppercase tracking-[0.35em] text-muted-foreground">{t("contact.support")}</div>
               </div>
             </div>
           </div>

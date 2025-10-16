@@ -12,6 +12,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useInView } from "@/hooks/use-in-view";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
+import { useTranslation } from "react-i18next";
 import { SEO_CONFIG, getCanonicalUrl, getOgUrl, PAGE_SEO } from "@/config/seo.config";
 
 const SHEET_API_URL = "https://sheetdb.io/api/v1/4br025yd4lsm5";
@@ -678,6 +679,7 @@ const deriveSubmissionSummary = <K extends ServiceKey>(
 
 const Order = () => {
   const { toast } = useToast();
+  const { t } = useTranslation();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [attachmentMeta, setAttachmentMeta] = useState<{ name: string; size: number } | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
@@ -910,24 +912,35 @@ const Order = () => {
         <div className="relative z-10 mx-auto max-w-5xl">
           <div className={`mb-14 text-center transition-all duration-700 ease-smooth ${fadeClass}`} ref={ref}>
             <div className="mx-auto flex w-max items-center justify-center gap-2 rounded-full border border-border/40 bg-card/25 px-5 py-2 text-[0.65rem] font-semibold uppercase tracking-[0.6em] text-muted-foreground">
-              Formulir Order
+              {t("order.pill", { defaultValue: "Formulir Order" })}
             </div>
             <h1 className="mt-6 bg-gradient-to-r from-sky-400 via-indigo-300 to-emerald-300 bg-clip-text text-4xl font-semibold uppercase tracking-[0.4em] text-transparent md:text-5xl">
-              Order Layanan Digital
+              {t("order.title", { defaultValue: "Order Layanan Digital" })}
             </h1>
             <p className="mt-6 text-base leading-relaxed text-muted-foreground md:text-lg">
-              Ceritakan kebutuhan proyek website development Indonesia, WordPress custom, mobile app development, atau layanan digital lainnya secara detail. Data akan otomatis masuk ke dashboard internal kami dan notifikasi email akan dikirim ke tim ekalliptus untuk memberikan proposal dalam 24 jam.
+              {t("order.description", {
+                defaultValue:
+                  "Ceritakan kebutuhan proyek website development Indonesia, WordPress custom, mobile app development, atau layanan digital lainnya secara detail. Data akan otomatis masuk ke dashboard internal kami dan notifikasi email akan dikirim ke tim ekalliptus untuk memberikan proposal dalam 24 jam.",
+              })}
             </p>
             <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
-              Kami melayani berbagai kebutuhan digital: jasa pembuatan website Indonesia, WordPress custom, mobile app development untuk Android dan iOS, service HP laptop profesional, serta editing foto video berkualitas tinggi. Pilih layanan yang sesuai dan isi form di bawah ini.
+              {t("order.descriptionSecondary", {
+                defaultValue:
+                  "Kami melayani berbagai kebutuhan digital: jasa pembuatan website Indonesia, WordPress custom, mobile app development untuk Android dan iOS, service HP laptop profesional, serta editing foto video berkualitas tinggi. Pilih layanan yang sesuai dan isi form di bawah ini.",
+              })}
             </p>
           </div>
 
           <Card className={`glass-panel neon-border p-8 shadow-elegant transition-all duration-700 ease-smooth md:p-12 ${fadeClass}`}>
             <CardHeader className="space-y-3 px-0 pb-8">
-              <CardTitle className="text-3xl font-semibold text-foreground">Detail Proyek</CardTitle>
+              <CardTitle className="text-3xl font-semibold text-foreground">
+                {t("order.projectDetails.title", { defaultValue: "Detail Proyek" })}
+              </CardTitle>
               <CardDescription className="text-base text-muted-foreground">
-                Informasi yang Anda berikan membantu kami menyiapkan solusi paling relevan serta estimasi yang presisi untuk website development Indonesia, WordPress custom, mobile app development, atau layanan digital lainnya.
+                {t("order.projectDetails.description", {
+                  defaultValue:
+                    "Informasi yang Anda berikan membantu kami menyiapkan solusi paling relevan serta estimasi yang presisi untuk website development Indonesia, WordPress custom, mobile app development, atau layanan digital lainnya.",
+                })}
               </CardDescription>
             </CardHeader>
 
@@ -938,12 +951,12 @@ const Order = () => {
                     <FormField
                       control={form.control}
                       name="nama"
-                      rules={{ required: "Nama wajib diisi" }}
+                      rules={{ required: t("order.validation.nameRequired", { defaultValue: "Nama wajib diisi" }) }}
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Nama Lengkap</FormLabel>
+                          <FormLabel>{t("order.fields.name.label", { defaultValue: "Nama Lengkap" })}</FormLabel>
                           <FormControl>
-                            <Input placeholder="Contoh: Budi Santoso" {...field} />
+                            <Input placeholder={t("order.fields.name.placeholder", { defaultValue: "Contoh: Budi Santoso" })} {...field} />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -954,17 +967,17 @@ const Order = () => {
                       control={form.control}
                       name="email"
                       rules={{
-                        required: "Email wajib diisi",
+                        required: t("order.validation.emailRequired", { defaultValue: "Email wajib diisi" }),
                         pattern: {
                           value: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/i,
-                          message: "Format email tidak valid",
+                          message: t("order.validation.emailInvalid", { defaultValue: "Format email tidak valid" }),
                         },
                       }}
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Email</FormLabel>
+                          <FormLabel>{t("order.fields.email.label", { defaultValue: "Email" })}</FormLabel>
                           <FormControl>
-                            <Input type="email" placeholder="nama@domain.com" {...field} />
+                            <Input type="email" placeholder={t("order.fields.email.placeholder", { defaultValue: "nama@domain.com" })} {...field} />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -975,17 +988,17 @@ const Order = () => {
                       control={form.control}
                       name="whatsapp"
                       rules={{
-                        required: "Nomor WhatsApp wajib diisi",
+                        required: t("order.validation.whatsappRequired", { defaultValue: "Nomor WhatsApp wajib diisi" }),
                         pattern: {
                           value: /^[+0-9\s()-]{9,20}$/i,
-                          message: "Masukkan nomor WhatsApp yang valid",
+                          message: t("order.validation.whatsappInvalid", { defaultValue: "Masukkan nomor WhatsApp yang valid" }),
                         },
                       }}
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>WhatsApp</FormLabel>
+                          <FormLabel>{t("order.fields.whatsapp.label", { defaultValue: "WhatsApp" })}</FormLabel>
                           <FormControl>
-                            <Input type="tel" placeholder="Contoh: 0851xxxxxxx" {...field} />
+                            <Input type="tel" placeholder={t("order.fields.whatsapp.placeholder", { defaultValue: "Contoh: 0851xxxxxxx" })} {...field} />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -998,19 +1011,19 @@ const Order = () => {
                     <FormField
                       control={form.control}
                       name="layanan"
-                      rules={{ required: "Pilih jenis layanan" }}
+                      rules={{ required: t("order.validation.serviceRequired", { defaultValue: "Pilih jenis layanan" }) }}
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Layanan Utama</FormLabel>
+                          <FormLabel>{t("order.fields.service.label", { defaultValue: "Layanan Utama" })}</FormLabel>
                           <FormControl>
                             <Select value={field.value} onValueChange={field.onChange}>
                               <SelectTrigger>
-                                <SelectValue placeholder="Pilih layanan" />
+                                <SelectValue placeholder={t("order.fields.service.placeholder", { defaultValue: "Pilih layanan" })} />
                               </SelectTrigger>
                               <SelectContent>
                                 {layananOptions.map((opt) => (
                                   <SelectItem key={opt} value={opt}>
-                                    {opt}
+                                    {t(`order.serviceOptions.${toServiceKey(opt) ?? "other"}`, { defaultValue: opt })}
                                   </SelectItem>
                                 ))}
                               </SelectContent>
@@ -1023,9 +1036,12 @@ const Order = () => {
 
                     <div className="rounded-2xl border border-border/40 bg-card/25 p-6 shadow-inner">
                       <div className="flex flex-col gap-2 pb-4 text-foreground">
-                        <h3 className="text-lg font-semibold">Detail Layanan</h3>
+                        <h3 className="text-lg font-semibold">{t("order.fields.serviceDetails.title", { defaultValue: "Detail Layanan" })}</h3>
                         <p className="text-sm text-muted-foreground">
-                          Isi kebutuhan spesifik sesuai layanan website development Indonesia, WordPress custom, mobile app development, service HP laptop, atau editing foto video agar tim kami dapat meninjau dengan cepat dan akurat.
+                          {t("order.fields.serviceDetails.description", {
+                            defaultValue:
+                              "Isi kebutuhan spesifik sesuai layanan website development Indonesia, WordPress custom, mobile app development, service HP laptop, atau editing foto video agar tim kami dapat meninjau dengan cepat dan akurat.",
+                          })}
                         </p>
                       </div>
 
@@ -1034,6 +1050,7 @@ const Order = () => {
                           {serviceSpecificFields.map((serviceField) => {
                             const fieldPath = `layananDetails.${selectedServiceKey}.${String(serviceField.name)}` as ServiceFieldPath;
                             const isRequired = serviceField.required !== false;
+                            const fieldKeyBase = `order.services.${selectedServiceKey}.${String(serviceField.name)}`;
                             return (
                               <FormField
                                 key={fieldPath}
@@ -1050,25 +1067,38 @@ const Order = () => {
                                   <FormItem>
                                     <div className="flex items-center justify-between gap-2">
                                       <FormLabel className="text-sm font-semibold text-foreground">
-                                        {serviceField.label}
+                                        {t(`${fieldKeyBase}.label`, { defaultValue: serviceField.label })}
                                       </FormLabel>
                                       {!isRequired && (
-                                        <span className="text-xs uppercase tracking-[0.3em] text-muted-foreground">Opsional</span>
+                                        <span className="text-xs uppercase tracking-[0.3em] text-muted-foreground">
+                                          {t("order.common.optional", { defaultValue: "Opsional" })}
+                                        </span>
                                       )}
                                     </div>
                                     <FormControl>
                                       {serviceField.textarea ? (
                                         <Textarea
                                           rows={3}
-                                          placeholder={serviceField.placeholder}
+                                          placeholder={t(`${fieldKeyBase}.placeholder`, {
+                                            defaultValue: serviceField.placeholder,
+                                          })}
                                           {...field}
                                         />
                                       ) : (
-                                        <Input placeholder={serviceField.placeholder} {...field} />
+                                        <Input
+                                          placeholder={t(`${fieldKeyBase}.placeholder`, {
+                                            defaultValue: serviceField.placeholder,
+                                          })}
+                                          {...field}
+                                        />
                                       )}
                                     </FormControl>
                                     {serviceField.description ? (
-                                      <p className="text-xs text-muted-foreground">{serviceField.description}</p>
+                                      <p className="text-xs text-muted-foreground">
+                                        {t(`${fieldKeyBase}.description`, {
+                                          defaultValue: serviceField.description,
+                                        })}
+                                      </p>
                                     ) : null}
                                     <FormMessage />
                                   </FormItem>
@@ -1079,7 +1109,10 @@ const Order = () => {
                         </div>
                       ) : (
                         <div className="rounded-xl border border-dashed border-border/40 bg-transparent p-6 text-sm text-muted-foreground">
-                          Pilih layanan website development Indonesia, WordPress custom, mobile app development, service HP laptop, atau editing foto video terlebih dahulu untuk menampilkan form rinci sesuai kebutuhan proyek Anda.
+                          {t("order.fields.serviceDetails.emptyState", {
+                            defaultValue:
+                              "Pilih layanan website development Indonesia, WordPress custom, mobile app development, service HP laptop, atau editing foto video terlebih dahulu untuk menampilkan form rinci sesuai kebutuhan proyek Anda.",
+                          })}
                         </div>
                       )}
                     </div>
@@ -1091,7 +1124,7 @@ const Order = () => {
                       name="preferensiKontak"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Preferensi Komunikasi</FormLabel>
+                          <FormLabel>{t("order.fields.contactPreference.label", { defaultValue: "Preferensi Komunikasi" })}</FormLabel>
                           <RadioGroup value={field.value} onValueChange={field.onChange} className="grid gap-3 md:grid-cols-3">
                             {contactPreferences.map((option) => (
                               <Label
@@ -1103,9 +1136,13 @@ const Order = () => {
                               >
                                 <div className="flex items-center gap-3">
                                   <RadioGroupItem value={option.value} className="h-5 w-5" />
-                                  <span className="text-sm font-semibold text-foreground">{option.label}</span>
+                                  <span className="text-sm font-semibold text-foreground">
+                                    {t(`order.contactPreferences.${option.value}.label`, { defaultValue: option.label })}
+                                  </span>
                                 </div>
-                                <p className="text-xs text-muted-foreground">{option.helper}</p>
+                                <p className="text-xs text-muted-foreground">
+                                  {t(`order.contactPreferences.${option.value}.helper`, { defaultValue: option.helper })}
+                                </p>
                               </Label>
                             ))}
                           </RadioGroup>
@@ -1121,7 +1158,7 @@ const Order = () => {
                       name="lampiran"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Lampiran (opsional)</FormLabel>
+                          <FormLabel>{t("order.fields.attachment.label", { defaultValue: "Lampiran (opsional)" })}</FormLabel>
                           <FormControl>
                             <div className="flex flex-col gap-3">
                               <div className="flex items-center gap-4">
@@ -1130,7 +1167,7 @@ const Order = () => {
                                   onClick={() => fileInputRef.current?.click()}
                                   className="rounded-2xl border border-border/40 bg-card/35 px-6 py-3 text-xs font-semibold uppercase tracking-[0.32em] text-foreground backdrop-blur-2xl transition hover:border-primary/45 hover:bg-primary/10"
                                 >
-                                  Pilih File
+                                  {t("order.fields.attachment.choose", { defaultValue: "Pilih File" })}
                                 </button>
                                 <div className="flex-1 rounded-2xl border border-border/40 bg-card/25 px-4 py-3 text-sm text-muted-foreground backdrop-blur-2xl">
                                   {attachmentMeta ? (
@@ -1139,7 +1176,9 @@ const Order = () => {
                                       <span className="text-xs text-muted-foreground">{attachmentMeta.size} KB</span>
                                     </div>
                                   ) : (
-                                    <span className="text-xs uppercase tracking-[0.32em] text-muted-foreground">Belum ada file dipilih</span>
+                                    <span className="text-xs uppercase tracking-[0.32em] text-muted-foreground">
+                                      {t("order.fields.attachment.empty", { defaultValue: "Belum ada file dipilih" })}
+                                    </span>
                                   )}
                                 </div>
                               </div>
@@ -1166,14 +1205,22 @@ const Order = () => {
 
                   <div className="flex flex-col gap-4 rounded-2xl border border-border/40 bg-card/25 p-5 text-sm text-muted-foreground">
                     <div className="flex items-center gap-3 text-foreground">
-                      <span className="text-xs uppercase tracking-[0.4em] text-muted-foreground">Catatan</span>
+                      <span className="text-xs uppercase tracking-[0.4em] text-muted-foreground">
+                        {t("order.notes.title", { defaultValue: "Catatan" })}
+                      </span>
                       <div className="h-px flex-1 bg-border/50" />
                     </div>
                     <p>
-                      Dokumen langsung tersinkron ke Sheet internal ekalliptus untuk website development Indonesia, WordPress custom, mobile app development, service HP laptop, dan editing foto video. Jika ingin mengirim lampiran tambahan (wireframe, requirement, dsb), balas email konfirmasi yang Anda terima setelah pengiriman formulir ini.
+                      {t("order.notes.description", {
+                        defaultValue:
+                          "Dokumen langsung tersinkron ke Sheet internal ekalliptus untuk website development Indonesia, WordPress custom, mobile app development, service HP laptop, dan editing foto video. Jika ingin mengirim lampiran tambahan (wireframe, requirement, dsb), balas email konfirmasi yang Anda terima setelah pengiriman formulir ini.",
+                      })}
                     </p>
                     <p className="text-xs text-muted-foreground">
-                      Kami menjaga kerahasiaan data Anda dan hanya menggunakan informasi ini untuk keperluan komunikasi proyek website development, WordPress custom, mobile app, dan layanan digital lainnya.
+                      {t("order.notes.privacy", {
+                        defaultValue:
+                          "Kami menjaga kerahasiaan data Anda dan hanya menggunakan informasi ini untuk keperluan komunikasi proyek website development, WordPress custom, mobile app, dan layanan digital lainnya.",
+                      })}
                     </p>
                   </div>
 
@@ -1184,7 +1231,9 @@ const Order = () => {
                       className="w-full rounded-full px-8 py-6 text-sm font-semibold uppercase tracking-wide sm:w-auto"
                       disabled={isSubmitting}
                     >
-                      {isSubmitting ? "Mengirim..." : "Kirim Order"}
+                      {isSubmitting
+                        ? t("order.actions.submitting", { defaultValue: "Mengirim..." })
+                        : t("order.actions.submit", { defaultValue: "Kirim Order" })}
                     </Button>
                     <Button
                       type="button"
@@ -1196,7 +1245,7 @@ const Order = () => {
                       }}
                       disabled={isSubmitting}
                     >
-                      Reset Form
+                      {t("order.actions.reset", { defaultValue: "Reset Form" })}
                     </Button>
                   </div>
                 </form>
@@ -1205,6 +1254,14 @@ const Order = () => {
           </Card>
         </div>
       </section>
+
+      <footer className="border-t border-border/40 bg-card/10 py-8 px-4">
+        <div className="mx-auto max-w-6xl text-center">
+          <p className="text-sm text-muted-foreground">
+            © {new Date().getFullYear()} ekalliptus. All rights reserved.
+          </p>
+        </div>
+      </footer>
     </>
   );
 };
