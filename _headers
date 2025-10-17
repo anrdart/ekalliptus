@@ -75,6 +75,10 @@
 /*.webp
   Cache-Control: public, max-age=31536000
 
+/*.xml
+  Content-Type: application/xml; charset=utf-8
+  Cache-Control: public, max-age=86400
+
 # HTML files - No caching for SPA
 /*
   Cache-Control: no-cache, no-store, must-revalidate
