@@ -481,6 +481,12 @@
     "backHome": "Ana Sayfaya Dön",
     "viewServices": "Hizmetleri Gör"
   },
+  "payment": {
+    "deposit": "{{percentage}}% Depozito",
+    "cash": "Yerinde Ödeme",
+    "full": "Tam Ödeme",
+    "depositLabel": "Depozito"
+  },
   "seo": {
     "title": "Ekalliptus Dijital Ajans — Web Siteleri, WordPress, Mobil Uygulamalar Endonezya",
     "description": "Ekalliptus - Endonezya'da web sitesi geliştirme, WordPress, mobil uygulamalar ve profesyonel fotoğraf/video düzenleme için önde gelen dijital çözümler. İşletmenizin dijital dönüşümü için bizimle iletişime geçin.",

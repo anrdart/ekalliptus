@@ -1,16 +1,40 @@
+import { useMemo } from "react";
 import { Card } from "@/components/ui/card";
 import { LucideIcon } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { getServicePaymentConfig, ServiceKey } from "@/config/servicePayment.config";
 
 interface ServiceCardProps {
   icon: LucideIcon;
   title: string;
   description: string;
   features: string[];
+  serviceKey?: ServiceKey;
 }
 
-export const ServiceCard = ({ icon: Icon, title, description, features }: ServiceCardProps) => {
-  const { t } = useTranslation();
+export const ServiceCard = ({ icon: Icon, title, description, features, serviceKey }: ServiceCardProps) => {
+  const { t, i18n } = useTranslation();
+
+  // Get payment configuration for this service
+  const paymentConfig = serviceKey ? getServicePaymentConfig(serviceKey) : null;
+
+  // Generate payment text based on service config - reactive to language changes
+  const paymentText = useMemo(() => {
+    if (!paymentConfig) return t('services.expertise');
+
+    if (!paymentConfig.paymentRequired || paymentConfig.paymentType === 'cash') {
+      return t('payment.cash');
+    }
+
+    if (paymentConfig.paymentType === 'deposit') {
+      return t('payment.deposit', { percentage: paymentConfig.depositPercentage || 50 });
+    }
+
+    return t('payment.full');
+  }, [t, i18n.language, paymentConfig]);
+
+
+
   return (
     <Card className="group relative overflow-hidden p-8 text-left transition duration-500 hover:-translate-y-1.5">
       <meta itemProp="name" content={title} />
@@ -24,12 +48,14 @@ export const ServiceCard = ({ icon: Icon, title, description, features }: Servic
           <div className="rounded-full bg-primary-gradient p-3 text-primary-foreground shadow-glow transition duration-500 group-hover:scale-110" aria-hidden="true">
             <Icon className="h-5 w-5" />
           </div>
-          <span className="text-xs uppercase tracking-[0.4em] text-muted-foreground">{t('services.expertise')}</span>
+          <span className="text-xs uppercase tracking-[0.4em] text-muted-foreground">{paymentText}</span>
         </div>
 
-        <h3 className="text-2xl font-semibold text-foreground transition-colors duration-500 group-hover:text-primary" itemProp="name">
-          {title}
-        </h3>
+        <div className="flex items-center gap-3">
+          <h3 className="text-2xl font-semibold text-foreground transition-colors duration-500 group-hover:text-primary" itemProp="name">
+            {title}
+          </h3>
+        </div>
 
         <p className="text-base leading-relaxed text-muted-foreground transition-colors duration-500 group-hover:text-foreground" itemProp="description">
           {description}

@@ -157,20 +157,24 @@ export const Navigation = () => {
         <div
           className={cn(
             "glass-panel pointer-events-auto flex items-center justify-between rounded-full px-5 py-3 transition-all",
-            scrolled ? "bg-card/20 shadow-lg shadow-primary/10" : "bg-card/10",
+            scrolled
+              ? "bg-card/20 shadow-lg shadow-primary/10"
+              : "bg-card/15 hover:bg-card/20",
           )}
         >
           <button
             type="button"
             onClick={() => handleHashNavigation("#home")}
             className={cn(
-              "cursor-interactive flex items-center space-x-3 rounded-full px-4 py-2 font-semibold uppercase tracking-[0.2em] transition",
+              "cursor-interactive flex items-center space-x-3 rounded-full px-4 py-2 transition",
               isLight
                 ? "bg-card text-primary shadow-[0_16px_32px_-22px_hsl(221_83%_56%/0.3)] hover:bg-card/90"
                 : "bg-white/5 text-white/90 hover:bg-white/10",
             )}
           >
-            <span>єкαℓℓιρтuѕ</span>
+            <span className="bg-gradient-to-r from-sky-400 via-indigo-400 to-emerald-300 bg-clip-text text-2xl font-bold text-transparent leading-none tracking-tight">
+              єкαℓℓιρтuѕ
+            </span>
           </button>
 
           <nav className="hidden items-center gap-1 md:flex">{desktopLinks}</nav>

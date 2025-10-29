@@ -3,6 +3,7 @@ import { ServiceCard } from "./ServiceCard";
 import { Globe, Smartphone, Video, Code, Laptop } from "lucide-react";
 import { useInView } from "@/hooks/use-in-view";
 import { useTranslation } from "react-i18next";
+import { ServiceKey } from "@/config/servicePayment.config";
 
 type ServiceTranslation = {
   title: string;
@@ -29,6 +30,7 @@ export const Services = () => {
       {
         icon: Globe,
         url: "/order",
+        serviceKey: "websiteDevelopment" as ServiceKey,
         ...(serviceTranslations.websiteDevelopment ?? {
           title: "Website Development",
           description: "Buat website profesional yang responsif dan user-friendly untuk bisnis Anda.",
@@ -39,6 +41,7 @@ export const Services = () => {
       {
         icon: Code,
         url: "/order",
+        serviceKey: "wordpressDevelopment" as ServiceKey,
         ...(serviceTranslations.wordpressDevelopment ?? {
           title: "WordPress Development",
           description: "Kustomisasi WordPress sesuai kebutuhan dengan tema dan plugin terbaik.",
@@ -49,6 +52,7 @@ export const Services = () => {
       {
         icon: Globe,
         url: "/order",
+        serviceKey: "berduPlatform" as ServiceKey,
         ...(serviceTranslations.berduPlatform ?? {
           title: "Berdu Platform",
           description: "Solusi platform berdu yang powerful untuk kebutuhan bisnis modern.",
@@ -59,6 +63,7 @@ export const Services = () => {
       {
         icon: Smartphone,
         url: "/order",
+        serviceKey: "mobileAppDevelopment" as ServiceKey,
         ...(serviceTranslations.mobileAppDevelopment ?? {
           title: "Mobile App Development",
           description: "Aplikasi mobile Android & iOS yang inovatif dan mudah digunakan.",
@@ -69,6 +74,7 @@ export const Services = () => {
       {
         icon: Laptop,
         url: "/order",
+        serviceKey: "serviceHpLaptop" as ServiceKey,
         ...(serviceTranslations.serviceHpLaptop ?? {
           title: "Service HP & Laptop",
           description: "Perbaikan perangkat oleh teknisi berpengalaman dengan dukungan suku cadang original.",
@@ -79,6 +85,7 @@ export const Services = () => {
       {
         icon: Video,
         url: "/order",
+        serviceKey: "photoVideoEditing" as ServiceKey,
         ...(serviceTranslations.photoVideoEditing ?? {
           title: "Photo & Video Editing",
           description: "Editing profesional untuk foto dan video dengan hasil berkualitas tinggi.",
@@ -122,6 +129,7 @@ export const Services = () => {
                 title={service.title}
                 description={service.description}
                 features={service.features}
+                serviceKey={service.serviceKey}
               />
             </article>
           ))}

@@ -8,42 +8,42 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 234 68% 6%;
-    --foreground: 214 100% 95%;
+    --background: 214 15% 10%;
+    --foreground: 210 53% 95%;
 
-    --card: 234 60% 10%;
-    --card-foreground: 214 100% 96%;
+    --card: 218 11% 15%;
+    --card-foreground: 210 53% 95%;
 
-    --popover: 234 60% 10%;
-    --popover-foreground: 214 100% 96%;
+    --popover: 218 11% 15%;
+    --popover-foreground: 210 53% 95%;
 
-    --primary: 217 91% 60%;
-    --primary-foreground: 202 100% 97%;
+    --primary: 160 79% 60%;
+    --primary-foreground: 210 53% 96%;
 
-    --secondary: 256 83% 75%;
+    --secondary: 195 87% 61%;
     --secondary-foreground: 210 40% 98%;
 
-    --muted: 232 37% 20%;
-    --muted-foreground: 214 32% 78%;
+    --muted: 211 9% 17%;
+    --muted-foreground: 211 9% 70%;
 
-    --accent: 188 90% 48%;
-    --accent-foreground: 200 100% 98%;
+    --accent: 257 78% 70%;
+    --accent-foreground: 210 53% 96%;
 
-    --destructive: 359 84% 62%;
+    --destructive: 0 88% 64%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 225 60% 20%;
-    --input: 225 60% 20%;
-    --ring: 217 91% 60%;
+    --border: 218 11% 20%;
+    --input: 218 11% 20%;
+    --ring: 160 79% 60%;
 
     --radius: 1.5rem;
 
     /* Custom design tokens */
-    --primary-gradient: linear-gradient(135deg, hsl(217 91% 60%) 0%, hsl(256 83% 70%) 48%, hsl(188 90% 48%) 100%);
-    --accent-gradient: linear-gradient(135deg, hsl(188 90% 48%) 0%, hsl(212 96% 55%) 45%, hsl(256 83% 75%) 100%);
+    --primary-gradient: linear-gradient(135deg, hsl(160 79% 60%) 0%, hsl(195 87% 61%) 48%, hsl(257 78% 70%) 100%);
+    --accent-gradient: linear-gradient(135deg, hsl(257 78% 70%) 0%, hsl(202 68% 55%) 45%, hsl(195 87% 61%) 100%);
     --hero-gradient: radial-gradient(120% 80% at 15% 15%, hsl(256 83% 70% / 0.6) 0%, transparent 55%), radial-gradient(100% 70% at 80% 10%, hsl(217 91% 60% / 0.45) 0%, transparent 60%), hsl(234 68% 6%);
-    --card-glass: hsl(234 64% 14% / 0.65);
-    --card-glass-hover: hsl(234 64% 16% / 0.75);
+    --card-glass: hsl(218 11% 15% / 0.65);
+    --card-glass-hover: hsl(218 11% 17% / 0.75);
 
     --glass-blur: 24px;
     --glass-saturation: 140%;
@@ -76,23 +76,23 @@ All colors MUST be HSL.
   }
 
   .light {
-    --background: 210 50% 97%;
-    --foreground: 224 32% 16%;
+    --background: 0 0% 100%;
+    --foreground: 225 32% 16%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 224 32% 16%;
+    --card: 210 25% 88%;
+    --card-foreground: 225 32% 16%;
 
-    --popover: 0 0% 100%;
+    --popover: 210 25% 88%;
     --popover-foreground: 224 32% 16%;
 
     --primary: 221 83% 56%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 199 86% 68%;
+    --secondary: 202 83% 51%;
     --secondary-foreground: 224 32% 18%;
 
-    --muted: 210 40% 94%;
-    --muted-foreground: 222 22% 38%;
+    --muted: 210 15% 85%;
+    --muted-foreground: 218 15% 35%;
 
     --accent: 188 76% 52%;
     --accent-foreground: 0 0% 100%;
@@ -100,12 +100,12 @@ All colors MUST be HSL.
     --destructive: 0 84% 56%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 214 30% 82%;
+    --border: 215 28% 65%;
     --input: 214 30% 82%;
     --ring: 221 83% 56%;
 
-    --card-glass: hsl(0 0% 100% / 0.82);
-    --card-glass-hover: hsl(0 0% 100% / 0.94);
+    --card-glass: hsl(210 25% 88% / 0.85);
+    --card-glass-hover: hsl(210 25% 86% / 0.95);
 
     --shadow-elegant: 0 28px 60px -24px hsl(210 30% 30% / 0.22);
     --shadow-glow: 0 0 45px hsl(221 83% 56% / 0.28);
@@ -114,12 +114,12 @@ All colors MUST be HSL.
     --glass-blur: 22px;
     --glass-saturation: 130%;
 
-    --hero-gradient: radial-gradient(120% 90% at 12% 10%, hsl(221 100% 88% / 0.6) 0%, transparent 55%), radial-gradient(90% 70% at 85% 8%, hsl(188 86% 82% / 0.5) 0%, transparent 60%), linear-gradient(180deg, hsl(210 50% 98%), hsl(210 36% 94%));
-    --primary-gradient: linear-gradient(135deg, hsl(221 83% 56%) 0%, hsl(256 83% 68%) 48%, hsl(188 76% 52%) 100%);
-    --accent-gradient: linear-gradient(135deg, hsl(188 76% 52%) 0%, hsl(212 84% 60%) 45%, hsl(256 83% 68%) 100%);
+    --hero-gradient: linear-gradient(180deg, hsl(210 33% 96%), hsl(210 33% 96%));
+    --primary-gradient: linear-gradient(135deg, hsl(160 79% 60%) 0%, hsl(195 87% 61%) 48%, hsl(257 78% 70%) 100%);
+    --accent-gradient: linear-gradient(135deg, hsl(257 78% 70%) 0%, hsl(202 68% 55%) 45%, hsl(195 87% 61%) 100%);
 
-    --fx-gradient-base: linear-gradient(180deg, hsl(210 50% 98%) 0%, hsl(204 44% 93%) 100%);
-    --fx-gradient-overlay: radial-gradient(75% 75% at 20% 15%, hsl(221 100% 89% / 0.5) 0%, transparent 65%), radial-gradient(60% 70% at 82% 10%, hsl(188 87% 82% / 0.45) 0%, transparent 60%), radial-gradient(55% 60% at 18% 80%, hsl(266 85% 88% / 0.4) 0%, transparent 60%);
+    --fx-gradient-base: linear-gradient(180deg, hsl(210 33% 96%), hsl(210 33% 96%));
+    --fx-gradient-overlay: linear-gradient(180deg, transparent, transparent);
     --fx-blob-1: radial-gradient(circle at center, hsl(231 94% 80% / 0.55) 0%, hsl(231 94% 80% / 0) 70%);
     --fx-blob-2: radial-gradient(circle at center, hsl(188 83% 75% / 0.5) 0%, hsl(188 83% 75% / 0) 68%);
     --fx-blob-3: radial-gradient(circle at center, hsl(272 84% 80% / 0.45) 0%, hsl(272 84% 80% / 0) 65%);
@@ -132,6 +132,7 @@ All colors MUST be HSL.
   html {
     font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     scroll-behavior: smooth;
+    scroll-padding-top: 7rem;
     /* macOS Safari specific cursor hiding */
     user-select: none;
     -webkit-user-select: none;
@@ -185,10 +186,8 @@ All colors MUST be HSL.
     --shadow-card: 0 14px 34px -24px hsl(210 32% 62% / 0.25);
     --shadow-elegant: 0 20px 34px -22px hsl(210 42% 58% / 0.18);
     --shadow-glow: 0 0 22px hsl(201 82% 62% / 0.2);
-    --fx-gradient-base: linear-gradient(180deg, hsl(210 56% 96%), hsl(204 48% 92%));
-    --fx-gradient-overlay: radial-gradient(70% 60% at 25% 12%, hsl(221 100% 89% / 0.24) 0%, transparent 60%),
-      radial-gradient(55% 60% at 82% 14%, hsl(188 87% 82% / 0.22) 0%, transparent 58%),
-      radial-gradient(50% 50% at 22% 72%, hsl(266 85% 88% / 0.22) 0%, transparent 60%);
+    --fx-gradient-base: linear-gradient(180deg, hsl(210 33% 96%), hsl(210 33% 96%));
+    --fx-gradient-overlay: linear-gradient(180deg, transparent, transparent);
     --fx-blob-1: radial-gradient(circle at center, hsl(231 94% 80% / 0.35) 0%, hsl(231 94% 80% / 0) 70%);
     --fx-blob-2: radial-gradient(circle at center, hsl(188 83% 75% / 0.32) 0%, hsl(188 83% 75% / 0) 68%);
     --fx-blob-3: radial-gradient(circle at center, hsl(272 84% 80% / 0.3) 0%, hsl(272 84% 80% / 0) 65%);
@@ -339,8 +338,8 @@ All colors MUST be HSL.
   /* Light mode adaptations for Index page */
   body.light section#home .absolute,
   body.light section#about .absolute {
-    border-color: hsl(var(--foreground) / 0.08);
-    background-color: hsl(var(--foreground) / 0.04);
+    border-color: transparent;
+    background-color: transparent;
   }
 
   body.light .neon-border::after {

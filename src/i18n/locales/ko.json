@@ -481,6 +481,12 @@
     "backHome": "홈으로 돌아가기",
     "viewServices": "서비스 보기"
   },
+  "payment": {
+    "deposit": "{{percentage}}% 입금",
+    "cash": "현장 결제",
+    "full": "전액 결제",
+    "depositLabel": "입금"
+  },
   "seo": {
     "title": "Ekalliptus 디지털 에이전시 — 웹사이트, WordPress, 모바일 앱 인도네시아",
     "description": "Ekalliptus - 인도네시아 웹사이트 개발, WordPress, 모바일 앱, 전문 사진/비디오 편집을 위한 선도적 디지털 솔루션. 비즈니스 디지털 혁신을 위해 문의하십시오.",

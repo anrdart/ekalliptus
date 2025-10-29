@@ -26,7 +26,7 @@ export const Hero = () => {
   const show = inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8";
 
   return (
-    <section id="home" className="relative flex min-h-[calc(100vh-6rem)] items-center overflow-hidden px-4">
+    <section id="home" className="relative flex min-h-[calc(100vh-6rem)] items-center overflow-hidden px-4 scroll-mt-28 lg:scroll-mt-32">
       <div className="absolute inset-0">
         <div className="pointer-events-none fx-bubble absolute left-[12%] top-[12%] h-32 w-32 rounded-full border border-border/20 bg-card/20 blur-3xl" />
         <div className="pointer-events-none fx-bubble absolute right-[18%] top-[18%] h-24 w-24 rounded-full border border-border/20 bg-cyan-400/20 blur-3xl" />

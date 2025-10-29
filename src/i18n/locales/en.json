@@ -485,6 +485,12 @@
       "reset": "Reset Form"
     }
   },
+  "payment": {
+    "deposit": "{{percentage}}% Deposit",
+    "cash": "Pay on Site",
+    "full": "Full Payment",
+    "depositLabel": "Deposit"
+  },
   "seo": {
     "title": "Ekalliptus Digital Agency — Website, WordPress, Mobile App Indonesia",
     "description": "Ekalliptus - Leading digital solutions for website development, WordPress, mobile app, and professional photo/video editing in Indonesia. Contact us for your business digital transformation.",

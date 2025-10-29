@@ -1,5 +1,6 @@
 import { useMemo, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -13,10 +14,12 @@ import { useInView } from "@/hooks/use-in-view";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 import { useTranslation } from "react-i18next";
-import { SEO_CONFIG, getCanonicalUrl, getOgUrl, PAGE_SEO } from "@/config/seo.config";
+import { getCanonicalUrl, getOgUrl, PAGE_SEO } from "@/config/seo.config";
+import { useCheckout } from "@/context/CheckoutContext";
+import { orderApi } from "@/services/orderApi";
+import { shouldUsePaymentGateway, getServicePaymentConfig } from "@/config/servicePayment.config";
 
-const SHEET_API_URL = "https://sheetdb.io/api/v1/4br025yd4lsm5";
-const EMAILJS_API_URL = "https://api.emailjs.com/api/v1.0/email/send";
+const PAYMENT_LOGGING_ENABLED = import.meta.env.VITE_ENABLE_PAYMENT_LOGGING === "true";
 
 const layananOptions = [
   "Website Development",
@@ -83,7 +86,6 @@ type ServiceDetails = {
     catatanTambahan: string;
   };
   serviceHpLaptop: {
-    namaLengkap: string;
     jenisPerangkat: string;
     masalahUtama: string;
     informasiGaransi: string;
@@ -331,11 +333,6 @@ const serviceFieldConfigs: { [K in ServiceKey]: ServiceFieldConfig<K>[] } = {
   ],
   serviceHpLaptop: [
     {
-      name: "namaLengkap",
-      label: "Nama lengkap",
-      placeholder: "Contoh: Budi Santoso",
-    },
-    {
       name: "jenisPerangkat",
       label: "Jenis perangkat",
       placeholder: "HP/Laptop, merk, dan tipe",
@@ -467,7 +464,6 @@ const emptyServiceDetails: ServiceDetails = {
     catatanTambahan: "",
   },
   serviceHpLaptop: {
-    namaLengkap: "",
     jenisPerangkat: "",
     masalahUtama: "",
     informasiGaransi: "",
@@ -519,13 +515,6 @@ const contactPreferences = [
 ];
 
 const whatsappNumberEkal = "6281999900306";
-
-const emailConfig = {
-  serviceId: import.meta.env.VITE_EMAILJS_SERVICE_ID,
-  templateId: import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
-  publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY,
-  receiverEmail: import.meta.env.VITE_EMAILJS_RECEIVER ?? "ekalliptus@gmail.com",
-};
 
 function normalizeWhatsapp(input: string) {
   const digits = input.replace(/\D/g, "");
@@ -677,12 +666,31 @@ const deriveSubmissionSummary = <K extends ServiceKey>(
   return submissionMappers[serviceKey](details);
 };
 
+const sanitizeServiceDetails = (serviceKey: ServiceKey | undefined, details?: ServiceDetails[ServiceKey]) => {
+  if (!serviceKey || !details) {
+    return {};
+  }
+
+  return Object.entries(details).reduce<Record<string, string>>((accumulator, [key, value]) => {
+    if (typeof value === "string") {
+      accumulator[key] = value.trim();
+    } else if (value != null) {
+      accumulator[key] = String(value);
+    } else {
+      accumulator[key] = "";
+    }
+    return accumulator;
+  }, {});
+};
+
 const Order = () => {
   const { toast } = useToast();
   const { t } = useTranslation();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [attachmentMeta, setAttachmentMeta] = useState<{ name: string; size: number } | null>(null);
+  const [attachmentMeta, setAttachmentMeta] = useState<{ name: string; size: number; type?: string } | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const navigate = useNavigate();
+  const { setCheckoutSession } = useCheckout();
 
   const form = useForm<OrderFormValues>({
     defaultValues: getDefaultFormValues(),
@@ -697,152 +705,154 @@ const Order = () => {
   const { ref, inView } = useInView<HTMLDivElement>({ threshold: 0.15 });
   const fadeClass = useMemo(() => (inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"), [inView]);
 
-  const handleSheetSubmission = async (values: OrderFormValues) => {
+  const onSubmit = async (values: OrderFormValues) => {
     const serviceKey = toServiceKey(values.layanan ?? "");
-    const layananDetail = serviceKey ? summarizeServiceDetails(serviceKey, values.layananDetails[serviceKey]) : "-";
-    const submissionSummary = deriveSubmissionSummary(serviceKey, serviceKey ? values.layananDetails[serviceKey] : undefined);
-
-    const record = {
-      timestamp: new Date().toISOString(),
-      nama: values.nama,
-      email: values.email,
-      whatsapp: normalizeWhatsapp(values.whatsapp),
-      perusahaan: submissionSummary.perusahaan,
-      jabatan: submissionSummary.jabatan,
-      website: submissionSummary.website,
-      layanan: values.layanan,
-      scope: submissionSummary.scope,
-      anggaran: submissionSummary.anggaran,
-      timeline: submissionSummary.timeline,
-      deadline: submissionSummary.deadline,
-      preferensi_kontak: values.preferensiKontak,
-      zona_waktu: submissionSummary.zonaWaktu,
-      tujuan: submissionSummary.tujuan,
-      referensi: submissionSummary.referensi,
-      deskripsi: submissionSummary.deskripsi,
-      detail_layanan: layananDetail,
-      lampiran: values.lampiran && values.lampiran.length > 0 ? values.lampiran[0].name : "-",
-      status: "Baru",
-    };
-
-    const response = await fetch(SHEET_API_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ data: [record] }),
-    });
-
-    if (!response.ok) {
-      let errorMessage = "SheetDB API tidak merespons dengan benar";
-      try {
-        const errorBody = await response.json();
-        if (errorBody?.error) {
-          errorMessage = `SheetDB: ${errorBody.error}`;
-        }
-      } catch {
-        const fallbackText = await response.text();
-        if (fallbackText) {
-          errorMessage = `SheetDB: ${fallbackText}`;
-        }
-      }
-      throw new Error(errorMessage);
-    }
-  };
-
-  const handleEmailNotification = async (values: OrderFormValues) => {
-    if (!emailConfig.serviceId || !emailConfig.templateId || !emailConfig.publicKey) {
-      return false;
+    if (!serviceKey) {
+      toast({
+        title: "Layanan belum dipilih",
+        description: "Pilih salah satu layanan sebelum melanjutkan ke pembayaran.",
+        variant: "destructive",
+      });
+      return;
     }
 
-    const serviceKey = toServiceKey(values.layanan ?? "");
-    const layananDetail = serviceKey ? summarizeServiceDetails(serviceKey, values.layananDetails[serviceKey]) : "-";
-    const submissionSummary = deriveSubmissionSummary(serviceKey, serviceKey ? values.layananDetails[serviceKey] : undefined);
+    const serviceConfig = getServicePaymentConfig(serviceKey);
+    const requiresGateway = shouldUsePaymentGateway(serviceKey);
 
-    const response = await fetch(EMAILJS_API_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        service_id: emailConfig.serviceId,
-        template_id: emailConfig.templateId,
-        user_id: emailConfig.publicKey,
-        accessToken: emailConfig.publicKey,
-        template_params: {
-          to_email: emailConfig.receiverEmail,
-          nama: values.nama,
+    const serviceDetails = values.layananDetails[serviceKey];
+    const submissionSummary = deriveSubmissionSummary(serviceKey, serviceDetails);
+    const detailSummary = summarizeServiceDetails(serviceKey, serviceDetails);
+    const sanitizedDetails = sanitizeServiceDetails(serviceKey, serviceDetails);
+    const attachmentFile = values.lampiran && values.lampiran.length > 0 ? values.lampiran[0] : null;
+
+    setIsSubmitting(true);
+
+    if (!requiresGateway) {
+      // Service like "Service HP & Laptop" - pay in cash, show confirmation
+      const orderId = `ORDER-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+
+      const cashOrderSession = {
+        orderId,
+        customer: {
+          name: values.nama,
           email: values.email,
           whatsapp: normalizeWhatsapp(values.whatsapp),
+          contactPreference: values.preferensiKontak,
+        },
+        service: {
+          serviceId: values.layanan,
+          serviceKey,
+          summary: detailSummary,
+          details: sanitizedDetails,
+        },
+        submissionSummary: {
           perusahaan: submissionSummary.perusahaan,
           jabatan: submissionSummary.jabatan,
           website: submissionSummary.website,
-          layanan: values.layanan,
           scope: submissionSummary.scope,
           anggaran: submissionSummary.anggaran,
           timeline: submissionSummary.timeline,
           deadline: submissionSummary.deadline,
-          preferensiKontak: values.preferensiKontak,
           zonaWaktu: submissionSummary.zonaWaktu,
           tujuan: submissionSummary.tujuan,
           referensi: submissionSummary.referensi,
           deskripsi: submissionSummary.deskripsi,
-          detail_layanan: layananDetail,
-          lampiran: values.lampiran && values.lampiran.length > 0 ? values.lampiran[0].name : "-",
         },
-      }),
-    });
+        payment: null, // No payment gateway
+        createdAt: new Date().toISOString(),
+        status: "confirmed" as const,
+        attachmentMeta: attachmentMeta,
+      };
 
-    if (!response.ok) {
-      let errorMessage = "Gagal mengirim notifikasi email";
-      try {
-        const errorBody = await response.json();
-        if (errorBody?.error) {
-          errorMessage = `EmailJS: ${errorBody.error}`;
-        }
-      } catch {
-        const fallbackText = await response.text();
-        if (fallbackText) {
-          errorMessage = `EmailJS: ${fallbackText}`;
-        }
-      }
-      throw new Error(errorMessage);
-    }
-
-    return true;
-  };
-
-  const onSubmit = async (values: OrderFormValues) => {
-    setIsSubmitting(true);
-    try {
-      await handleSheetSubmission(values);
-
-      let emailWarning: string | null = null;
-      try {
-        const emailSent = await handleEmailNotification(values);
-        if (!emailSent) {
-          emailWarning =
-            "Notifikasi email tidak dikirim karena konfigurasi EmailJS belum diset. Tambahkan variabel lingkungan untuk mengaktifkannya.";
-        }
-      } catch (error) {
-        emailWarning =
-          error instanceof Error
-            ? `Data tersimpan, tetapi notifikasi email gagal: ${error.message}`
-            : "Data tersimpan, tetapi notifikasi email gagal dikirim.";
-      }
-
+      setCheckoutSession(cashOrderSession, attachmentFile);
       form.reset(getDefaultFormValues());
       setAttachmentMeta(null);
-      toast({
-        title: "Order berhasil dikirim",
-        description: emailWarning
-          ? emailWarning
-          : "Tim ekalliptus akan menghubungi Anda dalam waktu 24 jam. Terima kasih!",
-      });
-    } catch (error) {
-      const description =
-        error instanceof Error
-          ? error.message
-          : "Terjadi kesalahan ketika menyimpan order. Silakan coba lagi.";
 
       toast({
-        title: "Gagal mengirim order",
+        title: "Order berhasil dibuat",
+        description: "Tim kami akan segera menghubungi Anda untuk konfirmasi jadwal layanan.",
+      });
+
+      // Navigate to order confirmation page (will create this)
+      navigate(`/order-confirmation?order_id=${orderId}`);
+      return;
+    }
+
+    // Normal flow for services requiring payment gateway
+    const checkoutPayload = {
+      customer: {
+        name: values.nama,
+        email: values.email,
+        whatsapp: normalizeWhatsapp(values.whatsapp),
+        contactPreference: values.preferensiKontak,
+      },
+      service: {
+        serviceId: values.layanan,
+        serviceKey,
+        summary: detailSummary,
+        details: sanitizedDetails,
+      },
+      submissionSummary: {
+        perusahaan: submissionSummary.perusahaan,
+        jabatan: submissionSummary.jabatan,
+        website: submissionSummary.website,
+        scope: submissionSummary.scope,
+        anggaran: submissionSummary.anggaran,
+        timeline: submissionSummary.timeline,
+        deadline: submissionSummary.deadline,
+        zonaWaktu: submissionSummary.zonaWaktu,
+        tujuan: submissionSummary.tujuan,
+        referensi: submissionSummary.referensi,
+        deskripsi: submissionSummary.deskripsi,
+      },
+      attachmentMeta: attachmentMeta ?? undefined,
+    };
+
+    if (PAYMENT_LOGGING_ENABLED) {
+      console.info("[Order] Preparing checkout payload", checkoutPayload);
+    }
+
+    try {
+      const response = await orderApi.createCheckoutSession(checkoutPayload);
+      if (!response.success || !response.data) {
+        throw new Error(response.error || "Gagal menyiapkan sesi checkout");
+      }
+
+      const paymentInfo = response.data;
+
+      if (PAYMENT_LOGGING_ENABLED) {
+        console.info("[Order] Checkout session created", paymentInfo);
+      }
+
+      const checkoutSession = {
+        orderId: paymentInfo.orderId,
+        customer: checkoutPayload.customer,
+        service: checkoutPayload.service,
+        submissionSummary: checkoutPayload.submissionSummary,
+        payment: paymentInfo,
+        createdAt: new Date().toISOString(),
+        status: "draft" as const,
+        attachmentMeta: attachmentMeta,
+      };
+
+      setCheckoutSession(checkoutSession, attachmentFile);
+      form.reset(getDefaultFormValues());
+      setAttachmentMeta(null);
+
+      toast({
+        title: "Data siap dibayar",
+        description: serviceConfig.paymentType === 'deposit'
+          ? `Deposit ${serviceConfig.depositPercentage}% diperlukan untuk memulai proyek.`
+          : "Silakan lanjut ke halaman pembayaran untuk menyelesaikan order.",
+      });
+
+      navigate(`/payment?order_id=${paymentInfo.orderId}`);
+    } catch (error) {
+      const description =
+        error instanceof Error ? error.message : "Terjadi kesalahan ketika membuat sesi checkout. Silakan coba lagi.";
+
+      toast({
+        title: "Gagal memproses order",
         description,
         variant: "destructive",
       });
@@ -1191,7 +1201,13 @@ const Order = () => {
                                   field.onChange(files);
                                   const file = files && files.length > 0 ? files[0] : null;
                                   setAttachmentMeta(
-                                    file ? { name: file.name, size: Math.max(1, Math.round(file.size / 1024)) } : null,
+                                    file
+                                      ? {
+                                          name: file.name,
+                                          size: Math.max(1, Math.round(file.size / 1024)),
+                                          type: file.type,
+                                        }
+                                      : null,
                                   );
                                 }}
                               />
@@ -1232,8 +1248,8 @@ const Order = () => {
                       disabled={isSubmitting}
                     >
                       {isSubmitting
-                        ? t("order.actions.submitting", { defaultValue: "Mengirim..." })
-                        : t("order.actions.submit", { defaultValue: "Kirim Order" })}
+                        ? t("order.actions.submitting", { defaultValue: "Menyiapkan..." })
+                        : t("order.actions.submit", { defaultValue: "Lanjutkan Pembayaran" })}
                     </Button>
                     <Button
                       type="button"

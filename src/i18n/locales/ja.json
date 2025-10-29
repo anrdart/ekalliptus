@@ -481,6 +481,12 @@
     "backHome": "ホームへ戻る",
     "viewServices": "サービスを見る"
   },
+  "payment": {
+    "deposit": "{{percentage}}% デポジット",
+    "cash": "現地払い",
+    "full": "全額支払い",
+    "depositLabel": "デポジット"
+  },
   "seo": {
     "title": "Ekalliptusデジタルエージェンシー — ウェブサイト、WordPress、モバイルアプリインドネシア",
     "description": "Ekalliptus - インドネシアにおけるウェブサイト開発、WordPress、モバイルアプリ、プロフェッショナルな写真・動画編集のための最先端デジタルソリューション。ビジネスデジタル変革のためにお問い合わせください。",

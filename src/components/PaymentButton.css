@@ -1,0 +1,261 @@
+/* Payment Button Responsive Styles */
+.payment-button-container {
+  width: 100%;
+  position: relative;
+}
+
+.payment-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+@media (max-width: 640px) {
+  .payment-actions {
+    gap: 20px;
+  }
+}
+
+.payment-button {
+  width: 100%;
+  min-height: 48px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 16px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateZ(0);
+  will-change: transform;
+  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+  border: none;
+  color: white;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+  cursor: pointer;
+}
+
+/* Mobile Responsive */
+@media (max-width: 640px) {
+  .payment-button {
+    min-height: 52px;
+    font-size: 18px;
+    border-radius: 14px;
+  }
+  
+  .payment-button-container {
+    margin-bottom: 16px;
+  }
+}
+
+/* Tablet Responsive */
+@media (min-width: 641px) and (max-width: 1024px) {
+  .payment-button {
+    min-height: 50px;
+    font-size: 17px;
+  }
+}
+
+/* Desktop Responsive */
+@media (min-width: 1025px) {
+  .payment-button {
+    min-height: 48px;
+    font-size: 16px;
+  }
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+  .payment-button {
+    min-height: 56px;
+    font-size: 18px;
+    padding: 16px 24px;
+  }
+  
+  .payment-button:active {
+    transform: scale(0.98);
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .payment-button {
+    border: 2px solid currentColor;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .payment-button {
+    transition: none;
+  }
+  
+  .payment-button::after {
+    animation: none;
+  }
+}
+
+/* Loading state animations */
+.payment-button.loading {
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+.payment-button.loading::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+/* Error state styles */
+.payment-error-container {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  border-radius: 12px;
+  padding: 16px;
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* Focus styles for accessibility */
+.payment-button:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .payment-error-container {
+    background: rgba(239, 68, 68, 0.15);
+    border-color: rgba(239, 68, 68, 0.3);
+  }
+  
+}
+
+/* Button hover effects */
+.payment-button:not(:disabled):hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.4);
+}
+
+.payment-button:not(:disabled):active {
+  transform: translateY(0);
+  box-shadow: 0 5px 15px -5px rgba(59, 130, 246, 0.4);
+}
+
+/* Disabled state */
+.payment-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+  background: linear-gradient(135deg, #9ca3af 0%, #6b7280 100%) !important;
+}
+
+/* Retry button styles */
+.retry-button {
+  width: 100%;
+  margin-top: 12px;
+  min-height: 40px;
+  font-size: 14px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.retry-button:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+/* Payment method icons */
+.payment-method-icon {
+  transition: transform 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 8px;
+  font-size: 18px;
+  height: 18px;
+  width: 18px;
+}
+
+.payment-button:hover .payment-method-icon {
+
+/* Secondary button harmonization */
+.payment-secondary-button {
+  min-height: 48px;
+  font-weight: 600;
+  font-size: 16px;
+  border-radius: 12px !important;
+  transition: all 0.2s ease;
+}
+
+.payment-secondary-button:not(:disabled):hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 25px -10px rgba(59, 130, 246, 0.3);
+}
+
+.payment-secondary-button:disabled {
+  opacity: 0.7;
+  pointer-events: none;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.payment-secondary-button:focus-visible {
+  outline: 2px solid rgba(59, 130, 246, 0.6);
+  outline-offset: 2px;
+}
+  transform: scale(1.1);
+}
+
+/* Primary button focus styles */
+.payment-button:focus-visible {
+  outline: 2px solid #1d4ed8;
+  outline-offset: 2px;
+}
+
+/* Back button styles */
+.payment-button-container + button {
+  margin-top: 8px;
+  border-radius: 12px;
+  min-height: 48px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+@media (max-width: 640px) {
+  .payment-button-container + button {
+    min-height: 52px;
+    font-size: 16px;
+  }
+}
