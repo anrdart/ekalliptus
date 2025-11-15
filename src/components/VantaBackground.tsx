@@ -98,7 +98,7 @@ export const VantaBackground = () => {
         vantaEffectRef.current = null;
       }
     };
-  }, []);
+  }, [theme]); // Add theme dependency
 
   // Update colors when theme changes
   useEffect(() => {
