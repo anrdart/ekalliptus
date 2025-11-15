@@ -1,11 +1,10 @@
 /**
- * Midtrans Webhook Handler
- * Handles payment notifications from Midtrans
+ * Payment Webhook Handler
+ * Handles payment notifications from payment gateways
  */
 
 import { supabase } from '@/config/supabase';
 import type { Database } from '@/config/supabase';
-import midtransPaymentService from './midtransPaymentService';
 
 type PaymentTransaction = Database['public']['Tables']['payment_transactions']['Row'];
 
@@ -65,7 +64,7 @@ export interface WebhookPayload {
 }
 
 class WebhookHandler {
-  private readonly serverKey = import.meta.env.VITE_MIDTRANS_SERVER_KEY;
+  private readonly serverKey = import.meta.env.VITE_PAYMENT_SERVER_KEY;
 
   /**
    * Verify webhook signature

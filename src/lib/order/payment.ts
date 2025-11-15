@@ -25,15 +25,6 @@ class MockPaymentService implements PaymentGateway {
   }
 }
 
-class MidtransPaymentService implements PaymentGateway {
-  async createDepositInvoice(payload: PaymentPayload): Promise<{
-    payment_url: string;
-    payment_ref: string;
-  }> {
-    throw new Error('Midtrans integration not implemented. Please configure credentials.');
-  }
-}
-
 class XenditPaymentService implements PaymentGateway {
   async createDepositInvoice(payload: PaymentPayload): Promise<{
     payment_url: string;
@@ -69,8 +60,6 @@ class ManualPaymentService implements PaymentGateway {
 
 export function getPaymentService(): PaymentGateway {
   switch (CONFIG.DEFAULT_GATEWAY) {
-    case 'midtrans':
-      return new MidtransPaymentService();
     case 'xendit':
       return new XenditPaymentService();
     case 'tripay':

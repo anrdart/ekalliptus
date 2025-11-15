@@ -651,7 +651,7 @@
         "content": "We may share your information with:",
         "items": [
           "Service Providers: Third-party companies that assist us in operating our website and conducting our business, including cloud hosting providers, analytics services, and customer support platforms",
-          "Payment Processors: Secure payment processing services to handle transactions (Stripe, PayPal, Midtrans)",
+          "Payment Processors: Secure payment processing services to handle transactions",
           "Legal Authorities: When required by law, court order, or to protect our rights and safety",
           "Business Transfers: In connection with mergers, acquisitions, or asset sales with appropriate safeguards",
           "Affiliate Partners: With your consent, for joint service offerings or marketing campaigns",

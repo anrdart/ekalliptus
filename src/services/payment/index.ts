@@ -3,7 +3,6 @@
  * Provides a clean API for accessing different payment methods
  */
 
-export { default as MidtransPaymentService } from '../midtransPaymentService';
 export { default as GoPayDirectService } from '../gopayDirectService';
 export { default as StaticQrisService } from '../staticQrisService';
 export { generateQRISDataString, generateQRCode, type DynamicQROptions } from '../dynamicQrService';
@@ -36,7 +35,6 @@ export interface PaymentResponse {
  * Payment method types
  */
 export enum PaymentMethod {
-  MIDTRANS_QRIS = 'midtrans_qris',
   GOPAY_DIRECT = 'gopay_direct',
   STATIC_QRIS = 'static_qris',
   DYNAMIC_QR = 'dynamic_qr',
@@ -69,8 +67,6 @@ export class PaymentServiceFactory {
     const method = import.meta.env.VITE_DEFAULT_PAYMENT_METHOD;
 
     switch (method) {
-      case 'midtrans_qris':
-        return PaymentMethod.MIDTRANS_QRIS;
       case 'gopay_direct':
         return PaymentMethod.GOPAY_DIRECT;
       case 'static_qris':
@@ -96,8 +92,6 @@ export class PaymentServiceFactory {
    */
   getPaymentService(method: PaymentMethod): any {
     switch (method) {
-      case PaymentMethod.MIDTRANS_QRIS:
-        return import('../midtransPaymentService').then(m => m.default);
       case PaymentMethod.GOPAY_DIRECT:
         return import('../gopayDirectService').then(m => m.default);
       case PaymentMethod.STATIC_QRIS:

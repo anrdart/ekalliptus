@@ -36,7 +36,7 @@ export interface CreatePaymentTransactionPayload {
   custom_field1?: string;
   custom_field2?: string;
   custom_field3?: string;
-  [key: string]: any; // For flexible Midtrans notification data
+  [key: string]: any; // For flexible payment gateway notification data
 }
 
 export interface TransactionStatistics {
@@ -610,7 +610,7 @@ class SupabasePaymentApi {
   }
 
   /**
-   * Process payment notification from Midtrans
+   * Process payment notification from payment gateway
    */
   async processNotification(notificationData: any): Promise<{
     success: boolean;
