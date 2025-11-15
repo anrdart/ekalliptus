@@ -4,6 +4,8 @@ import { Menu, X, Moon, Sun, ArrowUpRight, Languages } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useTranslation } from "react-i18next";
+import { t } from "i18next";
+import i18n from "@/i18n";
 
 type ThemeMode = "dark" | "light";
 
@@ -14,6 +16,11 @@ const sectionLinks = [
   { label: "Kontak", hash: "#contact" },
 ];
 
+const legalLinks = [
+  { label: t('privacyPolicy.title'), path: "/privacy-policy" },
+  { label: t('termsOfService.title'), path: "/terms-of-service" },
+];
+
 export const Navigation = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [languageModalOpen, setLanguageModalOpen] = useState(false);
@@ -22,7 +29,7 @@ export const Navigation = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const isLight = theme === "light";
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
 
   const languages = [
     { code: 'id', name: 'Bahasa Indonesia', flag: '🇮🇩', nativeName: 'Indonesia' },
@@ -146,6 +153,7 @@ export const Navigation = () => {
             {t(`nav.${item.hash.replace('#', '')}`)}
           </button>
         ))}
+        {/* Legal links moved to footer only for better accessibility */}
       </>
     ),
     [handleHashNavigation, t],
@@ -156,9 +164,9 @@ export const Navigation = () => {
       <header className="pointer-events-none fixed left-1/2 top-1 z-40 w-full max-w-4xl -translate-x-1/2 px-4 sm:top-2">
         <div
           className={cn(
-            "glass-panel pointer-events-auto flex items-center justify-between rounded-full px-5 py-3 transition-all",
+            "glass-panel no-shadow pointer-events-auto flex items-center justify-between rounded-full px-5 py-3 transition-all",
             scrolled
-              ? "bg-card/20 shadow-lg shadow-primary/10"
+              ? "bg-card/20"
               : "bg-card/15 hover:bg-card/20",
           )}
         >
@@ -166,15 +174,16 @@ export const Navigation = () => {
             type="button"
             onClick={() => handleHashNavigation("#home")}
             className={cn(
-              "cursor-interactive flex items-center space-x-3 rounded-full px-4 py-2 transition",
-              isLight
-                ? "bg-card text-primary shadow-[0_16px_32px_-22px_hsl(221_83%_56%/0.3)] hover:bg-card/90"
-                : "bg-white/5 text-white/90 hover:bg-white/10",
+              "cursor-interactive flex items-center space-x-3 rounded-full px-4 py-2 transition text-foreground",
+              isLight ? "text-primary" : "text-white/90",
             )}
           >
-            <span className="bg-gradient-to-r from-sky-400 via-indigo-400 to-emerald-300 bg-clip-text text-2xl font-bold text-transparent leading-none tracking-tight">
-              єкαℓℓιρтuѕ
-            </span>
+            <img
+              src="/src/assets/ekalliptus_rounded.webp"
+              alt="ekalliptus"
+              className="h-8 w-auto transition-opacity hover:opacity-90"
+              loading="eager"
+            />
           </button>
 
           <nav className="hidden items-center gap-1 md:flex">{desktopLinks}</nav>
@@ -235,6 +244,15 @@ export const Navigation = () => {
                 >
                   {t(`nav.${item.hash.replace('#', '')}`)}
                 </button>
+              ))}
+              {legalLinks.map((item) => (
+                <a
+                  key={item.path}
+                  href={item.path}
+                  className="cursor-interactive rounded-2xl bg-card/10 px-4 py-3 text-left text-base font-medium text-foreground/60 transition hover:bg-card/20 hover:text-foreground"
+                >
+                  {item.label}
+                </a>
               ))}
             </div>
 

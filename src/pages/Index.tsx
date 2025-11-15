@@ -1,9 +1,10 @@
 import { lazy, Suspense, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { Hero } from "@/components/Hero";
 import { SEO_CONFIG, getCanonicalUrl, getOgUrl, PAGE_SEO } from "@/config/seo.config";
 import { Trans, useTranslation } from "react-i18next";
+import { useToast } from "@/hooks/use-toast";
 
 // Optimized lazy loading with preload hints
 const ServicesLazy = lazy(() =>
@@ -18,6 +19,8 @@ const FAQLazy = lazy(() =>
 
 const Index = () => {
   const location = useLocation();
+  const navigate = useNavigate();
+  const { toast } = useToast();
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -28,6 +31,18 @@ const Index = () => {
       setTimeout(() => target.scrollIntoView({ behavior: "smooth", block: "start" }), 120);
     }
   }, [location.hash]);
+
+  // Check for success message from order submission
+  useEffect(() => {
+    if (location.state?.successMessage) {
+      toast({
+        title: "🎉 Berhasil!",
+        description: location.state.successMessage,
+      });
+      // Clear the state to prevent showing the message again on refresh
+      window.history.replaceState({}, document.title);
+    }
+  }, [location.state, toast]);
 
   return (
     <>
@@ -119,7 +134,7 @@ const Index = () => {
           <div className="absolute inset-0">
             <div className="pointer-events-none fx-bubble absolute left-[10%] top-[15%] h-40 w-40 rounded-full border border-border/20 bg-card/10 blur-3xl" />
             <div className="pointer-events-none fx-bubble absolute right-[15%] top-[25%] h-32 w-32 rounded-full border border-border/20 bg-emerald-400/10 blur-3xl" />
-            <div className="pointer-events-none fx-bubble floating absolute bottom-[20%] left-[20%] h-36 w-36 rounded-full border border-border/20 bg-sky-400/10 blur-[70px]" />
+            <div className="pointer-events-none fx-bubble floating absolute bottom-[20%] left-[20%] h-36 w-36 rounded-full border border-border/20 bg-primary/10 blur-[70px]" />
           </div>
           
           <div className="relative z-10 mx-auto max-w-6xl">
@@ -131,7 +146,7 @@ const Index = () => {
                 <Trans
                   i18nKey="index.about.heading"
                   defaultValue="Transformasi Digital <highlight>Terdepan</highlight>"
-                  components={{ highlight: <span className="bg-gradient-to-r from-sky-400 to-emerald-300 bg-clip-text text-transparent" /> }}
+                  components={{ highlight: <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent" /> }}
                 />
               </h2>
               
@@ -139,7 +154,7 @@ const Index = () => {
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
                   <div className="space-y-6">
                     <div className="flex items-start gap-4">
-                      <div className="rounded-full bg-gradient-to-r from-sky-500 to-emerald-400 p-3 mt-1">
+                      <div className="rounded-full bg-gradient-to-r from-primary to-secondary p-3 mt-1">
                         <svg className="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                         </svg>
@@ -153,7 +168,7 @@ const Index = () => {
                     </div>
                     
                     <div className="flex items-start gap-4">
-                      <div className="rounded-full bg-gradient-to-r from-emerald-500 to-sky-400 p-3 mt-1">
+                      <div className="rounded-full bg-gradient-to-r from-secondary to-primary p-3 mt-1">
                         <svg className="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
@@ -167,7 +182,7 @@ const Index = () => {
                     </div>
                     
                     <div className="flex items-start gap-4">
-                      <div className="rounded-full bg-gradient-to-r from-indigo-500 to-emerald-400 p-3 mt-1">
+                      <div className="rounded-full bg-gradient-to-r from-accent to-secondary p-3 mt-1">
                         <svg className="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                         </svg>
@@ -184,21 +199,21 @@ const Index = () => {
                   <div className="space-y-6">
                     <div className="glass-panel rounded-2xl p-6 bg-card/10">
                         <div className="text-center">
-                          <div className="text-4xl font-bold bg-gradient-to-r from-sky-400 to-emerald-300 bg-clip-text text-transparent mb-2">5+</div>
+                          <div className="text-4xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent mb-2">5+</div>
                           <div className="text-sm uppercase tracking-[0.3em] text-muted-foreground">{t("index.stats.experience", { defaultValue: "Tahun Pengalaman" })}</div>
                       </div>
                     </div>
 
                     <div className="glass-panel rounded-2xl p-6 bg-card/10">
                         <div className="text-center">
-                          <div className="text-4xl font-bold bg-gradient-to-r from-emerald-400 to-sky-300 bg-clip-text text-transparent mb-2">200+</div>
+                          <div className="text-4xl font-bold bg-gradient-to-r from-secondary to-primary bg-clip-text text-transparent mb-2">200+</div>
                           <div className="text-sm uppercase tracking-[0.3em] text-muted-foreground">{t("index.stats.clients", { defaultValue: "Klien Terpusat" })}</div>
                       </div>
                     </div>
 
                     <div className="glass-panel rounded-2xl p-6 bg-card/10">
                         <div className="text-center">
-                          <div className="text-4xl font-bold bg-gradient-to-r from-indigo-400 to-emerald-300 bg-clip-text text-transparent mb-2">24/7</div>
+                          <div className="text-4xl font-bold bg-gradient-to-r from-accent to-secondary bg-clip-text text-transparent mb-2">24/7</div>
                           <div className="text-sm uppercase tracking-[0.3em] text-muted-foreground">{t("index.stats.support", { defaultValue: "Dukungan Penuh" })}</div>
                       </div>
                     </div>
@@ -232,7 +247,7 @@ const Index = () => {
                 <h3 className="text-2xl font-semibold text-foreground mb-6 text-center">{t("about.whyChoose")}</h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   <div className="text-center">
-                    <div className="rounded-full bg-gradient-to-r from-sky-500 to-emerald-400 w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                    <div className="rounded-full bg-gradient-to-r from-primary to-secondary w-16 h-16 flex items-center justify-center mx-auto mb-4">
                       <svg className="h-8 w-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                       </svg>
@@ -242,7 +257,7 @@ const Index = () => {
                   </div>
 
                   <div className="text-center">
-                    <div className="rounded-full bg-gradient-to-r from-emerald-500 to-sky-400 w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                    <div className="rounded-full bg-gradient-to-r from-secondary to-primary w-16 h-16 flex items-center justify-center mx-auto mb-4">
                       <svg className="h-8 w-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -253,7 +268,7 @@ const Index = () => {
                   </div>
 
                   <div className="text-center">
-                    <div className="rounded-full bg-gradient-to-r from-indigo-500 to-emerald-400 w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                    <div className="rounded-full bg-gradient-to-r from-accent to-secondary w-16 h-16 flex items-center justify-center mx-auto mb-4">
                       <svg className="h-8 w-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.818-4.364A9 9 0 1112 21c1.052 0 2.062-.18 3-.512" />
                       </svg>
@@ -271,13 +286,13 @@ const Index = () => {
               </div>
 
               <div className="flex flex-col gap-4 sm:flex-row sm:gap-6 justify-center">
-                <a href="/order" className="group inline-flex items-center gap-3 rounded-full bg-gradient-to-r from-sky-500 to-emerald-500 px-8 py-4 text-lg font-semibold text-primary-foreground transition-all duration-300 hover:shadow-lg hover:shadow-sky-500/25 hover:scale-105 text-center">
+                <a href="/order" className="group inline-flex items-center gap-3 rounded-full bg-gradient-to-r from-primary to-secondary px-8 py-4 text-lg font-semibold text-primary-foreground transition-all duration-300 hover:shadow-lg hover:shadow-primary/25 hover:scale-105 text-center">
                   <span>{t("index.cta.startProject", { defaultValue: "Mulai Proyek Digital Anda" })}</span>
                   <svg className="h-5 w-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                   </svg>
                 </a>
-                <a href="#services" className="group inline-flex items-center gap-3 rounded-full border-2 border-sky-400 text-sky-400 px-8 py-4 text-lg font-semibold hover:bg-sky-400 hover:text-white transition-all duration-300 text-center">
+                <a href="#services" className="group inline-flex items-center gap-3 rounded-full border-2 border-primary text-primary px-8 py-4 text-lg font-semibold hover:bg-primary hover:text-white transition-all duration-300 text-center">
                   <span>{t("index.cta.viewServices", { defaultValue: "Lihat Layanan Kami" })}</span>
                   <svg className="h-5 w-5 transition-transform group-hover:translate-y-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
@@ -300,7 +315,7 @@ const Index = () => {
                       link: (
                         <a
                           href="/order"
-                          className="text-sky-400 hover:text-sky-300 transition-colors font-medium underline decoration-sky-400/30 hover:decoration-sky-400"
+                          className="text-primary hover:text-primary transition-colors font-medium underline decoration-primary/30 hover:decoration-primary"
                         />
                       ),
                     }}
@@ -315,10 +330,26 @@ const Index = () => {
         </Suspense>
 
         <footer className="border-t border-border/40 bg-card/10 py-8 px-4">
-          <div className="mx-auto max-w-6xl text-center">
-            <p className="text-sm text-muted-foreground">
-              © {new Date().getFullYear()} ekalliptus. All rights reserved.
-            </p>
+          <div className="mx-auto max-w-6xl">
+            <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+              <p className="text-sm text-muted-foreground">
+                © {new Date().getFullYear()} ekalliptus. All rights reserved.
+              </p>
+              <div className="flex gap-6">
+                <a
+                  href="/privacy-policy"
+                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  {t('privacyPolicy.title')}
+                </a>
+                <a
+                  href="/terms-of-service"
+                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  {t('termsOfService.title')}
+                </a>
+              </div>
+            </div>
           </div>
         </footer>
       </div>

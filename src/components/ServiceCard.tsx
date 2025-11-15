@@ -40,7 +40,7 @@ export const ServiceCard = ({ icon: Icon, title, description, features, serviceK
       <meta itemProp="name" content={title} />
       <meta itemProp="description" content={description} />
       <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100">
-        <div className="fx-bubble absolute inset-0 bg-gradient-to-br from-sky-500/20 via-transparent to-emerald-400/20 blur-3xl" />
+        <div className="fx-bubble absolute inset-0 bg-gradient-to-br from-primary/20 via-transparent to-secondary/20 blur-3xl" />
       </div>
 
       <div className="relative flex flex-col gap-6">
@@ -70,7 +70,7 @@ export const ServiceCard = ({ icon: Icon, title, description, features, serviceK
               itemScope
               itemType="https://schema.org/Offer"
             >
-              <div className="h-1.5 w-1.5 rounded-full bg-gradient-to-r from-sky-400 to-emerald-300 transition group-hover:scale-125" aria-hidden="true" />
+              <div className="h-1.5 w-1.5 rounded-full bg-gradient-to-r from-primary to-secondary transition group-hover:scale-125" aria-hidden="true" />
               <span itemProp="name">{feature}</span>
             </li>
           ))}

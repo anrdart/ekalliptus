@@ -178,7 +178,7 @@ const PaymentHistory = () => {
         );
       case 'refund':
         return (
-          <Badge variant="outline" className="bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-400">
+          <Badge variant="outline" className="bg-primary/10 text-primary dark:bg-primary/20 dark:text-primary">
             <AlertTriangle className="mr-1 h-3 w-3" />
             Dikembalikan
           </Badge>

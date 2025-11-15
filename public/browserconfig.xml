@@ -4,7 +4,7 @@
     <tile>
       <!-- Use existing favicon asset to avoid 404 -->
       <square150x150logo src="/android-chrome-192x192.png"/>
-      <TileColor>#0ea5e9</TileColor>
+      <TileColor>#4F6F46</TileColor>
     </tile>
   </msapplication>
 </browserconfig>

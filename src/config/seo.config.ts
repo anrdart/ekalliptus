@@ -52,8 +52,8 @@ export const SEO_CONFIG = {
   LOCALE: 'id_ID',
   
   // Theme
-  THEME_COLOR: '#0ea5e9',
-  BACKGROUND_COLOR: '#0f172a',
+  THEME_COLOR: '#4F6F46',
+  BACKGROUND_COLOR: '#F8F7F2',
 } as const;
 
 /**

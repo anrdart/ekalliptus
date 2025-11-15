@@ -68,7 +68,7 @@ const PaymentDebugPanel: React.FC<PaymentDebugPanelProps> = ({ isVisible, onTogg
       case LogLevel.DEBUG:
         return 'bg-gray-100 text-gray-800 dark:bg-gray-900/20 dark:text-gray-400';
       case LogLevel.INFO:
-        return 'bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-400';
+        return 'bg-primary/10 text-primary dark:bg-primary/20 dark:text-primary';
       case LogLevel.WARN:
         return 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-400';
       case LogLevel.ERROR:

@@ -55,37 +55,67 @@
         "category": "Geliştirme",
         "title": "Web Sitesi Geliştirme",
         "description": "İş hedeflerinize uygun, duyarlı ve kullanıcı dostu web siteleri oluşturuyoruz.",
-        "features": ["Duyarlı Tasarım", "SEO Optimizasyonu", "Hızlı Yüklenme", "Özel Alan Adı"]
+        "features": [
+          "Duyarlı Tasarım",
+          "SEO Optimizasyonu",
+          "Hızlı Yüklenme",
+          "Özel Alan Adı"
+        ]
       },
       "wordpressDevelopment": {
         "category": "Geliştirme",
         "title": "WordPress Geliştirme",
         "description": "WordPress'i seçkin tema ve eklentilerle ihtiyaçlarınıza göre özelleştiriyoruz.",
-        "features": ["Özel Tema", "Eklenti Entegrasyonu", "E-ticarete Hazır", "İçerik Yönetimi"]
+        "features": [
+          "Özel Tema",
+          "Eklenti Entegrasyonu",
+          "E-ticarete Hazır",
+          "İçerik Yönetimi"
+        ]
       },
       "berduPlatform": {
         "category": "Platform",
         "title": "Berdu Platformu",
         "description": "Modern iş operasyonları için güçlü Berdu tabanlı platform çözümleri.",
-        "features": ["Yönetim Paneli", "Kullanıcı Yönetimi", "Veri Analitiği", "Bulut Barındırma"]
+        "features": [
+          "Yönetim Paneli",
+          "Kullanıcı Yönetimi",
+          "Veri Analitiği",
+          "Bulut Barındırma"
+        ]
       },
       "mobileAppDevelopment": {
         "category": "Geliştirme",
         "title": "Mobil Uygulama Geliştirme",
         "description": "Sorunsuz deneyimler sunan yenilikçi Android ve iOS uygulamaları.",
-        "features": ["Çapraz Platform", "Yerel Performans", "Push Bildirimleri", "Mağaza Hazır"]
+        "features": [
+          "Çapraz Platform",
+          "Yerel Performans",
+          "Push Bildirimleri",
+          "Mağaza Hazır"
+        ]
       },
       "serviceHpLaptop": {
         "category": "Hizmet",
         "title": "Cihaz Onarım Hizmeti",
         "description": "Sertifikalı teknisyenler telefon ve laptoplarınıza güvenilir bakım sağlar.",
-        "features": ["Hızlı Teşhis", "Orijinal Yedek Parça", "Yazılım & Donanım Onarımı", "Hizmet Garantisi"]
+        "features": [
+          "Hızlı Teşhis",
+          "Orijinal Yedek Parça",
+          "Yazılım & Donanım Onarımı",
+          "Hizmet Garantisi"
+        ]
       },
       "photoVideoEditing": {
         "category": "Multimedya",
         "title": "Fotoğraf & Video Düzenleme",
         "description": "Yüksek kaliteli görsel sonuçlar sunan profesyonel düzenleme hizmetleri.",
-        "features": ["Renk Düzenleme", "Motion Grafik", "Ses Miksi", "4K Kalite"]
+        "features": [
+          "Renk Düzenleme",
+          "Motion Grafik",
+          "Ses Miksi",
+          "4K Kalite"
+        ]
       }
     }
   },
@@ -181,9 +211,14 @@
     "title": "Dijital Hizmet Talebi",
     "description": "Web sitesi geliştirme, özel WordPress, mobil uygulama veya diğer dijital ihtiyaçlarınızı ayrıntılı şekilde paylaşın. Gönderdiğiniz bilgiler dahili panomuza aktarılır ve 24 saat içinde teklif ile dönüş yaparız.",
     "descriptionSecondary": "Endonezya web sitesi geliştirme, WordPress özelleştirme, Android/iOS uygulamaları, cihaz onarımı ve profesyonel fotoğraf-video düzenleme gibi geniş bir yelpazede hizmet veriyoruz. Uygun hizmeti seçip formu doldurun.",
+    "formTitle": "<highlight>Teklif</highlight> Talebi",
+    "subtitle": "Dijital projeniz için en iyi teklifi alın. Uzman ekibimiz danışmanlıktan uygulamaya kadar yardıma hazır.",
     "projectDetails": {
       "title": "Proje Detayları",
       "description": "Paylaştığınız bilgiler web sitesi, WordPress, mobil uygulama ve diğer hizmetler için en uygun çözümü ve doğru bütçeyi hazırlamamıza yardımcı olur."
+    },
+    "basicInfo": {
+      "title": "Temel Bilgiler"
     },
     "validation": {
       "nameRequired": "İsim zorunludur",
@@ -191,7 +226,17 @@
       "emailInvalid": "Lütfen geçerli bir e-posta adresi girin",
       "whatsappRequired": "WhatsApp numarası zorunludur",
       "whatsappInvalid": "Geçerli bir WhatsApp numarası girin",
-      "serviceRequired": "Lütfen bir hizmet seçin"
+      "serviceRequired": "Lütfen bir hizmet seçin",
+      "selectServiceFirst": "Lütfen göndermeden önce bir hizmet seçin.",
+      "fieldRequired": "{{field}} zorunludur"
+    },
+    "success": {
+      "title": "✅ Talep gönderildi!",
+      "description": "Ekibimiz 24 saat içinde sizinle iletişime geçecektir."
+    },
+    "error": {
+      "title": "Hata",
+      "description": "Bir hata oluştu. Lütfen tekrar deneyin."
     },
     "common": {
       "optional": "Opsiyonel"
@@ -224,8 +269,15 @@
       "attachment": {
         "label": "Ek Dosya (opsiyonel)",
         "choose": "Dosya Seç",
-        "empty": "Herhangi bir dosya seçilmedi"
-      }
+        "empty": "Dosya seçilmedi",
+        "uploadText": "Yüklemek için tıklayın veya sürükleyip bırakın",
+        "fileTypes": "SVG, PNG, JPG veya PDF (MAKS. 10MB)",
+        "selected": "Seçili dosyalar",
+        "uploaded": "Başarıyla yüklendi"
+      },
+      "label": "Ek",
+      "choose": "Dosya Seç",
+      "empty": "Dosya seçilmedi"
     },
     "contactPreferences": {
       "whatsapp": {
@@ -491,5 +543,33 @@
     "title": "Ekalliptus Dijital Ajans — Web Siteleri, WordPress, Mobil Uygulamalar Endonezya",
     "description": "Ekalliptus - Endonezya'da web sitesi geliştirme, WordPress, mobil uygulamalar ve profesyonel fotoğraf/video düzenleme için önde gelen dijital çözümler. İşletmenizin dijital dönüşümü için bizimle iletişime geçin.",
     "keywords": "Endonezya web sitesi geliştirme, WordPress özel, mobil uygulama geliştirme, fotoğraf düzenleme servisi, video düzenleme profesyonel, dijital ajans Jakarta, web sitesi oluşturma servisi, mobil uygulamalar Android iOS, kaliteli fotoğraf video düzenleme"
+  },
+  "privacyPolicy": {
+    "title": "Gizlilik Politikası",
+    "lastUpdated": "Son güncelleme: {{date}}"
+  },
+  "termsOfService": {
+    "title": "Kullanım Şartları",
+    "lastUpdated": "Son güncelleme: {{date}}"
+  },
+  "qrPayment": {
+    "title": "QR Kod ile Ödeme",
+    "description": "Lütfen ödeme yapmak için aşağıdaki QR kodu taratın",
+    "totalPayment": "Toplam Ödeme",
+    "copyAmount": "Miktarı Kopyala",
+    "copied": "Kopyalandı!",
+    "scanInstruction": "Yukarıdaki QR kodunu e-cüzdan veya mobil bankacılık uygulamanızla tarayın",
+    "paymentSteps": {
+      "title": "Ödeme Adımları:",
+      "step1": "E-cüzdan veya mobil bankacılık uygulamanızı açın",
+      "step2": "\"QR Tara\" veya \"Öde\" menüsünü seçin",
+      "step3": "Kameranızı yukarıdaki QR koduna doğrultun",
+      "step4": "Ödeme miktarının eşleştiğinden emin olun:",
+      "step5": "Ödemeyi onaylayın ve PIN/OTP girin",
+      "step6": "Ekran görüntüsü alın veya ödeme fişini kaydedin"
+    },
+    "orderId": "Sipariş ID:",
+    "confirmPayment": "Zaten Ödedim",
+    "confirmationNote": "Takımımız ödemenizi 24 saat içinde doğrulayacaktır"
   }
 }

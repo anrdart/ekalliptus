@@ -59,37 +59,67 @@
         "category": "Development",
         "title": "Website Development",
         "description": "Build responsive, user-friendly websites tailored to your business goals.",
-        "features": ["Responsive Design", "SEO Optimized", "Fast Loading", "Custom Domain"]
+        "features": [
+          "Responsive Design",
+          "SEO Optimized",
+          "Fast Loading",
+          "Custom Domain"
+        ]
       },
       "wordpressDevelopment": {
         "category": "Development",
         "title": "WordPress Development",
         "description": "Customize WordPress to match your needs with premium themes and plugins.",
-        "features": ["Custom Theme", "Plugin Integration", "E-commerce Ready", "Content Management"]
+        "features": [
+          "Custom Theme",
+          "Plugin Integration",
+          "E-commerce Ready",
+          "Content Management"
+        ]
       },
       "berduPlatform": {
         "category": "Platform",
         "title": "Berdu Platform",
         "description": "Powerful Berdu-based platform solutions for modern business operations.",
-        "features": ["Admin Dashboard", "User Management", "Data Analytics", "Cloud Hosting"]
+        "features": [
+          "Admin Dashboard",
+          "User Management",
+          "Data Analytics",
+          "Cloud Hosting"
+        ]
       },
       "mobileAppDevelopment": {
         "category": "Development",
         "title": "Mobile App Development",
         "description": "Innovative Android & iOS applications designed for seamless experiences.",
-        "features": ["Cross Platform", "Native Performance", "Push Notifications", "App Store Ready"]
+        "features": [
+          "Cross Platform",
+          "Native Performance",
+          "Push Notifications",
+          "App Store Ready"
+        ]
       },
       "serviceHpLaptop": {
         "category": "Service",
         "title": "Device Repair Service",
         "description": "Certified technicians providing trusted repair for phones and laptops.",
-        "features": ["Quick Diagnostics", "Original Spare Parts", "Software & Hardware Repair", "Service Warranty"]
+        "features": [
+          "Quick Diagnostics",
+          "Original Spare Parts",
+          "Software & Hardware Repair",
+          "Service Warranty"
+        ]
       },
       "photoVideoEditing": {
         "category": "Multimedia",
         "title": "Photo & Video Editing",
         "description": "Professional editing services delivering high-quality visual results.",
-        "features": ["Color Grading", "Motion Graphics", "Audio Mixing", "4K Quality"]
+        "features": [
+          "Color Grading",
+          "Motion Graphics",
+          "Audio Mixing",
+          "4K Quality"
+        ]
       }
     }
   },
@@ -188,12 +218,22 @@
   },
   "order": {
     "pill": "Order Form",
+    "badge": "Request Quote",
     "title": "Digital Service Order",
+    "formTitle": "Request <highlight>Quote</highlight>",
+    "subtitle": "Get the best offer for your digital project. Expert team ready to help from consultation to implementation.",
     "description": "Tell us about your website development, custom WordPress, mobile app, or other digital needs in detail. Submissions sync to our internal dashboard and notify the ekalliptus team so we can respond with a proposal within 24 hours.",
+    "attachments": {
+      "title": "Attachments (Optional)",
+      "description": "Upload reference files such as logos, brand guidelines, design examples, or project briefs. Maximum 5 files, 20MB per file."
+    },
     "descriptionSecondary": "We support a wide range of digital needs: Indonesian website development, custom WordPress, Android and iOS mobile apps, professional device repair, and high-quality photo & video editing. Choose the service that fits and complete the form below.",
     "projectDetails": {
       "title": "Project Details",
       "description": "The information you share helps us craft the most relevant solution and accurate estimates for website development, custom WordPress, mobile apps, and other digital services."
+    },
+    "basicInfo": {
+      "title": "Basic Information"
     },
     "validation": {
       "nameRequired": "Name is required",
@@ -201,7 +241,17 @@
       "emailInvalid": "Please enter a valid email address",
       "whatsappRequired": "WhatsApp number is required",
       "whatsappInvalid": "Enter a valid WhatsApp number",
-      "serviceRequired": "Select a service"
+      "serviceRequired": "Select a service",
+      "selectServiceFirst": "Please select a service before submitting.",
+      "fieldRequired": "{{field}} is required"
+    },
+    "success": {
+      "title": "✅ Request submitted!",
+      "description": "Our team will contact you within 24 hours."
+    },
+    "error": {
+      "title": "Error",
+      "description": "An error occurred. Please try again."
     },
     "common": {
       "optional": "Optional"
@@ -234,7 +284,11 @@
       "attachment": {
         "label": "Attachment (optional)",
         "choose": "Choose File",
-        "empty": "No file selected"
+        "empty": "No file selected",
+        "uploadText": "Click to upload or drag and drop",
+        "fileTypes": "SVG, PNG, JPG or PDF (MAX. 10MB)",
+        "selected": "Selected files",
+        "uploaded": "Uploaded successfully"
       }
     },
     "contactPreferences": {
@@ -491,9 +545,594 @@
     "full": "Full Payment",
     "depositLabel": "Deposit"
   },
+  "privacyPolicy": {
+    "title": "Privacy Policy",
+    "lastUpdated": "Last updated: {{date}}",
+    "sections": {
+      "introduction": {
+        "title": "1. Introduction",
+        "content": "Welcome to ekalliptus (\"we,\" \"us,\" or \"our\"). This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website ekalliptus.com and use our digital services, including website development, mobile app development, and multimedia editing services.",
+        "content2": "We are committed to protecting your personal data and respecting your privacy in accordance with applicable data protection laws, including the General Data Protection Regulation (GDPR), the California Consumer Privacy Act (CCPA), the Personal Data Protection Act (PDPA) of Singapore, and other relevant regional regulations.",
+        "content3": "This Privacy Policy applies to all information collected through our website, mobile applications, email communications, and any other digital platforms operated by ekalliptus."
+      },
+      "informationWeCollect": {
+        "title": "2. Information We Collect",
+        "personalInfo": {
+          "title": "2.1 Personal Information",
+          "content": "We may collect the following types of personal information:",
+          "items": [
+            "Name, email address, phone number, and contact details",
+            "Company information and job title",
+            "Payment information (processed securely through third-party payment processors)",
+            "Project requirements and communication history",
+            "IP address and geolocation data",
+            "Government-issued identifiers when required for service delivery",
+            "Marketing preferences and communication consent records",
+            "User-generated content including feedback, reviews, and testimonials"
+          ]
+        },
+        "technicalInfo": {
+          "title": "2.2 Technical Information",
+          "content": "We automatically collect certain technical information when you visit our website:",
+          "items": [
+            "Browser type and version",
+            "Operating system",
+            "Device information including hardware model and software version",
+            "Pages visited and time spent on our website",
+            "Referring website addresses",
+            "Clickstream data and user interaction patterns",
+            "Device identifiers and advertising identifiers",
+            "Network and connection information",
+            "Performance and diagnostic data"
+          ]
+        },
+        "sensitiveInfo": {
+          "title": "2.3 Sensitive Information",
+          "content": "We may collect sensitive personal information only with your explicit consent:",
+          "items": [
+            "Biometric data for authentication purposes",
+            "Health-related information when relevant to service delivery",
+            "Financial information for payment processing",
+            "Government identification numbers when legally required"
+          ]
+        }
+      },
+      "howWeUseInformation": {
+        "title": "3. How We Use Your Information",
+        "content": "We use your information for the following purposes:",
+        "items": [
+          "To provide and maintain our digital services",
+          "To process and fulfill your orders and payments",
+          "To communicate with you about your projects and inquiries",
+          "To improve our website and services through analytics and feedback",
+          "To send you marketing communications (with your consent)",
+          "To comply with legal obligations and regulatory requirements",
+          "To protect against fraud, ensure security, and prevent abuse",
+          "To conduct research and analysis to improve our offerings",
+          "To personalize user experience and deliver relevant content",
+          "To maintain accurate records and support business operations"
+        ]
+      },
+      "legalBasis": {
+        "title": "4. Legal Basis for Processing",
+        "content": "Under applicable data protection laws, we process your personal data based on the following legal bases:",
+        "items": [
+          "Consent: When you explicitly provide consent for specific processing activities",
+          "Contract: When processing is necessary for the performance of our service contract",
+          "Legal Obligation: When we are required to process data by law or regulatory authorities",
+          "Legitimate Interest: When processing is necessary for our legitimate business interests, provided your fundamental rights and freedoms are not overridden",
+          "Vital Interests: When processing is necessary to protect your vital interests or those of another person",
+          "Public Task: When processing is necessary for tasks carried out in the public interest"
+        ]
+      },
+      "cookies": {
+        "title": "5. Cookies and Tracking Technologies",
+        "content": "We use cookies and similar tracking technologies to enhance your experience on our website. Our cookie policy includes:",
+        "essential": {
+          "title": "5.1 Essential Cookies",
+          "content": "These cookies are necessary for the website to function and cannot be disabled in our systems. They include authentication, security, and session management cookies."
+        },
+        "analytics": {
+          "title": "5.2 Analytics Cookies",
+          "content": "We use Google Analytics, Hotjar, and similar tools to understand how our website is used, analyze user behavior, and improve our services. All analytics data is anonymized and aggregated."
+        },
+        "marketing": {
+          "title": "5.3 Marketing Cookies",
+          "content": "These cookies are used to deliver relevant advertisements, track marketing campaign effectiveness, and personalize marketing content across platforms."
+        },
+        "functional": {
+          "title": "5.4 Functional Cookies",
+          "content": "These cookies enable enhanced functionality and personalization, such as remembering your preferences and customizing content."
+        },
+        "control": "You can control cookie settings through your browser preferences and our cookie consent banner. Please note that disabling certain cookies may affect website functionality and user experience."
+      },
+      "dataSharing": {
+        "title": "6. Data Sharing and Disclosure",
+        "content": "We may share your information with:",
+        "items": [
+          "Service Providers: Third-party companies that assist us in operating our website and conducting our business, including cloud hosting providers, analytics services, and customer support platforms",
+          "Payment Processors: Secure payment processing services to handle transactions (Stripe, PayPal, Midtrans)",
+          "Legal Authorities: When required by law, court order, or to protect our rights and safety",
+          "Business Transfers: In connection with mergers, acquisitions, or asset sales with appropriate safeguards",
+          "Affiliate Partners: With your consent, for joint service offerings or marketing campaigns",
+          "Research Partners: Anonymized and aggregated data for research and analytics purposes"
+        ],
+        "noSale": "We do not sell your personal information to third parties for marketing purposes. Any sharing of data is conducted under strict confidentiality agreements and data protection standards.",
+        "international": "International data transfers are conducted using appropriate safeguards including Standard Contractual Clauses (SCCs), Binding Corporate Rules (BCRs), or other legally recognized mechanisms."
+      },
+      "dataSecurity": {
+        "title": "7. Data Security",
+        "content": "We implement comprehensive technical and organizational measures to protect your personal data against unauthorized access, alteration, disclosure, or destruction. These measures include:",
+        "items": [
+          "End-to-end SSL/TLS encryption for all data transmissions",
+          "AES-256 encryption for stored sensitive data",
+          "Secure password hashing using bcrypt or equivalent algorithms",
+          "Regular security assessments, penetration testing, and vulnerability scanning",
+          "Multi-factor authentication and access controls",
+          "Employee training on data protection and security best practices",
+          "Data minimization and purpose limitation principles",
+          "Regular backups and disaster recovery procedures",
+          "Incident response and breach notification procedures",
+          "Privacy by design and by default in system development"
+        ]
+      },
+      "dataBreaches": {
+        "title": "8. Data Breach Notification",
+        "content": "In the event of a personal data breach, we will:",
+        "items": [
+          "Assess the breach and determine potential risks to your rights and freedoms",
+          "Notify relevant regulatory authorities within 72 hours of becoming aware of the breach (where required)",
+          "Notify affected individuals without undue delay if the breach poses a high risk",
+          "Provide detailed information about the breach and recommended protective measures",
+          "Take immediate steps to contain the breach and prevent further damage"
+        ]
+      },
+      "yourRights": {
+        "title": "9. Your Rights",
+        "gdpr": {
+          "title": "9.1 GDPR Rights",
+          "content": "Under GDPR, you have the right to:",
+          "items": [
+            "Access your personal data and obtain a copy",
+            "Rectify inaccurate or incomplete personal data",
+            "Erase your personal data (\"right to be forgotten\")",
+            "Restrict processing of your personal data in certain circumstances",
+            "Data portability - receive your data in a structured, machine-readable format",
+            "Object to processing based on legitimate interests",
+            "Withdraw consent at any time for consent-based processing",
+            "Not be subject to automated decision-making or profiling",
+            "Lodge a complaint with a supervisory authority"
+          ]
+        },
+        "ccpa": {
+          "title": "9.2 CCPA Rights",
+          "content": "Under CCPA, California residents have the right to:",
+          "items": [
+            "Know what personal information is being collected and how it's used",
+            "Delete personal information held by us",
+            "Opt-out of sale or sharing of personal information",
+            "Non-discrimination for exercising privacy rights",
+            "Receive detailed privacy information upon request"
+          ]
+        },
+        "exercise": {
+          "title": "9.3 Exercising Your Rights",
+          "content": "To exercise your rights, please contact us using the information provided in the Contact section. We will respond to your request within the legally prescribed timeframe (typically 30 days for GDPR requests)."
+        }
+      },
+      "dataRetention": {
+        "title": "10. Data Retention",
+        "content": "We retain your personal data only as long as necessary to fulfill the purposes for which it was collected, comply with legal obligations, resolve disputes, and enforce our agreements. The retention period varies depending on the type of data and the legal requirements.",
+        "periods": {
+          "title": "10.1 Retention Periods",
+          "content": "Typical retention periods include:",
+          "items": [
+            "Project and transaction records: 7 years for tax and legal compliance",
+            "Customer communications: 3 years after project completion",
+            "Analytics and usage data: 26 months in anonymized form",
+            "Marketing consent records: 5 years after last interaction",
+            "Employment and contractor records: 7 years after termination"
+          ]
+        },
+        "criteria": {
+          "title": "10.2 Retention Criteria",
+          "content": "We determine retention periods based on:",
+          "items": [
+            "Legal and regulatory requirements",
+            "Contractual obligations",
+            "Business needs and operational requirements",
+            "Statute of limitations for potential legal claims",
+            "Historical and archival value"
+          ]
+        }
+      },
+      "internationalTransfers": {
+        "title": "11. International Data Transfers",
+        "content": "Your personal data may be transferred to and processed in countries other than your country of residence. We ensure appropriate safeguards are in place for such transfers:",
+        "mechanisms": {
+          "title": "11.1 Transfer Mechanisms",
+          "content": "We use the following mechanisms for international data transfers:",
+          "items": [
+            "Standard Contractual Clauses (SCCs) approved by the European Commission",
+            "Binding Corporate Rules (BCRs) for intra-organizational transfers",
+            "Adequacy decisions for countries recognized as providing adequate protection",
+            "Specific consent from data subjects for certain transfers",
+            "Contractual safeguards with third-party service providers"
+          ]
+        },
+        "risks": {
+          "title": "11.2 Risk Assessment",
+          "content": "We conduct risk assessments for international transfers and implement additional measures where necessary to ensure your data remains protected."
+        }
+      },
+      "childrensPrivacy": {
+        "title": "12. Children's Privacy",
+        "content": "Our services are not intended for individuals under the age of 18. We do not knowingly collect personal information from children under 18 without parental consent. If you become aware that we have collected information from a child under 18, please contact us immediately.",
+        "parentalConsent": {
+          "title": "12.1 Parental Consent",
+          "content": "If we discover that we have collected personal information from a child without parental consent, we will take steps to delete such information promptly."
+        },
+        "educational": {
+          "title": "12.2 Educational Services",
+          "content": "For educational services directed at minors, we obtain verifiable parental consent before collecting any personal information."
+        }
+      },
+      "thirdPartyLinks": {
+        "title": "13. Third-Party Websites and Links",
+        "content": "Our website may contain links to third-party websites. We are not responsible for the privacy practices of these external sites. We encourage you to review the privacy policies of any third-party websites you visit.",
+        "socialMedia": {
+          "title": "13.1 Social Media Integration",
+          "content": "Our integration with social media platforms may result in data collection by those platforms. Please review their respective privacy policies for more information."
+        }
+      },
+      "changes": {
+        "title": "14. Changes to This Policy",
+        "content": "We may update this Privacy Policy from time to time to reflect changes in our practices, legal requirements, or business operations. We will notify you of any material changes by:",
+        "notification": {
+          "title": "14.1 Notification Methods",
+          "content": "We will notify you of changes through:",
+          "items": [
+            "Email notification for registered users",
+            "Website banners and prominent notices",
+            "In-app notifications for mobile applications",
+            "Direct communication for significant changes"
+          ]
+        },
+        "review": "You are advised to review this Privacy Policy periodically for any changes. Your continued use of our services after any changes constitutes acceptance of the updated policy."
+      },
+      "contact": {
+        "title": "15. Contact Information",
+        "content": "If you have any questions about this Privacy Policy or wish to exercise your rights, please contact us:",
+        "email": "Email: privacy@ekalliptus.com",
+        "website": "Website: www.ekalliptus.com",
+        "responseTime": "Response Time: We will respond to your inquiry within 30 days of receipt as required by GDPR.",
+        "dpo": {
+          "title": "15.1 Data Protection Officer",
+          "content": "Our Data Protection Officer can be contacted at dpo@ekalliptus.com for privacy-related concerns."
+        },
+        "complaints": {
+          "title": "15.2 Regulatory Complaints",
+          "content": "If you are not satisfied with our response to your privacy concerns, you have the right to lodge a complaint with the relevant data protection authority in your jurisdiction."
+        }
+      }
+    }
+  },
+  "termsOfService": {
+    "title": "Terms of Service",
+    "lastUpdated": "Last updated: {{date}}",
+    "sections": {
+      "agreement": {
+        "title": "1. Agreement to Terms",
+        "content": "Welcome to ekalliptus (\"Company,\" \"we,\" \"us,\" or \"our\"). These Terms of Service (\"Terms\") govern your access to and use of our website, services, and products (collectively, the \"Services\").",
+        "content2": "By accessing or using our Services, you agree to be bound by these Terms. If you disagree with any part of these terms, then you may not access Service."
+      },
+      "description": {
+        "title": "2. Description of Services",
+        "content": "ekalliptus provides digital agency services including but not limited to:",
+        "items": [
+          "Website development and design",
+          "WordPress customization and development",
+          "Mobile application development",
+          "Multimedia editing services",
+          "Digital consulting and strategy",
+          "SEO optimization services",
+          "Technical support and maintenance"
+        ]
+      },
+      "userResponsibilities": {
+        "title": "3. User Responsibilities",
+        "content": "As a user of our Services, you agree to:",
+        "items": [
+          "Provide accurate, current, and complete information when required",
+          "Maintain the security of your account credentials and notify us immediately of any unauthorized use",
+          "Not use our Services for any illegal, unauthorized, or fraudulent purpose",
+          "Not interfere with or disrupt the Services or servers connected to the Services",
+          "Not attempt to gain unauthorized access to our systems, networks, or data",
+          "Respect intellectual property rights of ekalliptus and third parties",
+          "Comply with all applicable laws, regulations, and industry standards",
+          "Use the Services in accordance with any applicable documentation and guidelines",
+          "Not upload or transmit malicious code, viruses, or harmful content",
+          "Not engage in spam, phishing, or other deceptive practices",
+          "Cooperate with security investigations and report suspicious activities"
+        ],
+        "prohibitedUses": {
+          "title": "3.1 Prohibited Uses",
+          "content": "You are strictly prohibited from:",
+          "items": [
+            "Reverse engineering, decompiling, or attempting to extract source code",
+            "Using automated tools to access the Services without permission",
+            "Impersonating any person or entity or misrepresenting your affiliation",
+            "Violating any applicable export control laws or regulations",
+            "Interfering with or circumventing any security features of the Services"
+          ]
+        }
+      },
+      "paymentTerms": {
+        "title": "4. Payment Terms",
+        "fees": {
+          "title": "4.1 Fees and Payment",
+          "content": "Fees for our Services are outlined in project proposals and agreements. Payment terms typically include:",
+          "items": [
+            "Initial deposit (typically 30-50% of total project cost) due upon project commencement",
+            "Milestone payments as specified in project timeline and deliverables",
+            "Final payment upon project completion and delivery of final deliverables",
+            "All prices are quoted in the currency specified in the agreement (typically USD or IDR)",
+            "Taxes and government fees are additional unless otherwise specified",
+            "Payment methods include bank transfer, credit card, and digital payment platforms"
+          ]
+        },
+        "latePayments": {
+          "title": "4.2 Late Payments",
+          "content": "Late payments may incur interest at the rate of 1.5% per month or the maximum rate permitted by law, whichever is lower. We reserve the right to suspend services for accounts with overdue payments after providing written notice.",
+          "collection": "We may engage third-party collection agencies for delinquent accounts, and you will be responsible for reasonable collection costs."
+        },
+        "refundPolicy": {
+          "title": "4.3 Refund Policy",
+          "content": "Refunds are handled on a case-by-case basis and are subject to the terms outlined in your specific service agreement. Deposits for custom work are generally non-refundable once work has commenced.",
+          "conditions": {
+            "title": "4.3.1 Refund Conditions",
+            "content": "Refunds may be considered under the following circumstances:",
+            "items": [
+              "Service cancellation before work commencement (full deposit refund)",
+              "Significant deviation from agreed deliverables or quality standards",
+              "Failure to meet mutually agreed deadlines without reasonable cause",
+              "Technical issues that prevent service delivery and cannot be resolved"
+            ]
+          }
+        },
+        "disputes": {
+          "title": "4.4 Payment Disputes",
+          "content": "If you dispute any charge, you must notify us in writing within 30 days of the charge date. We will investigate and respond within 15 business days."
+        }
+      },
+      "intellectualProperty": {
+        "title": "5. Intellectual Property Rights",
+        "company": {
+          "title": "5.1 Company Intellectual Property",
+          "content": "The Services and its original content, features, functionality, and proprietary technology are and will remain the exclusive property of ekalliptus and its licensors. The Services are protected by copyright, trademark, trade secret, and other intellectual property laws.",
+          "examples": {
+            "title": "5.1.1 Company IP Examples",
+            "content": "This includes but is not limited to:",
+            "items": [
+              "Source code, algorithms, and software architecture",
+              "Business processes, methodologies, and workflows",
+              "Brand names, logos, and marketing materials",
+              "Documentation, training materials, and proprietary tools",
+              "Website design elements and user interface components"
+            ]
+          }
+        },
+        "client": {
+          "title": "5.2 Client Intellectual Property",
+          "content": "Upon full payment, clients receive ownership of the final deliverables as specified in their service agreement, excluding any third-party components, tools, or proprietary ekalliptus technologies used in development.",
+          "license": {
+            "title": "5.2.1 License Grant",
+            "content": "ekalliptus retains a non-exclusive, royalty-free license to use, modify, and display project deliverables for portfolio purposes, marketing, and demonstration of our capabilities, unless specifically prohibited by the client agreement."
+          }
+        },
+        "materials": {
+          "title": "5.3 Client Materials",
+          "content": "Clients grant ekalliptus a non-exclusive, worldwide, royalty-free license to use any materials provided by the client for the purpose of delivering the Services. This license includes the right to modify, reproduce, and distribute such materials as necessary for service delivery.",
+          "warranty": {
+            "title": "5.3.1 Client Material Warranty",
+            "content": "Clients warrant that they have all necessary rights to provide materials to ekalliptus and that such materials do not infringe any third-party intellectual property rights."
+          }
+        },
+        "thirdParty": {
+          "title": "5.4 Third-Party Components",
+          "content": "Some deliverables may incorporate third-party components, open-source software, or licensed materials. Clients will receive appropriate licenses for such components as specified in the project agreement."
+        }
+      },
+      "confidentiality": {
+        "title": "6. Confidentiality",
+        "content": "Both parties agree to maintain the confidentiality of proprietary information exchanged during the course of business. This includes but is not limited to:",
+        "items": [
+          "Business strategies and plans",
+          "Technical specifications and source code",
+          "Customer information and data",
+          "Financial information",
+          "Any information marked as confidential"
+        ],
+        "survival": "This confidentiality obligation survives the termination of these Terms."
+      },
+      "limitationOfLiability": {
+        "title": "7. Limitation of Liability",
+        "content": "TO THE MAXIMUM EXTENT PERMITTED BY LAW, ekalliptus SHALL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, INCLUDING BUT NOT LIMITED TO LOSS OF PROFITS, DATA, USE, OR GOODWILL, ARISING OUT OF OR IN CONNECTION WITH THESE TERMS OR THE SERVICES.",
+        "content2": "OUR TOTAL LIABILITY FOR ANY CLAIM ARISING OUT OF OR RELATING TO THESE TERMS OR THE SERVICES SHALL NOT EXCEED THE AMOUNT PAID BY YOU FOR THE SERVICES GIVING RISE TO THE CLAIM.",
+        "disclaimer": "SOME JURISDICTIONS DO NOT ALLOW THE EXCLUSION OF CERTAIN WARRANTIES OR LIMITATION OF LIABILITY, SO THESE EXCLUSIONS MAY NOT APPLY TO YOU."
+      },
+      "disclaimerOfWarranties": {
+        "title": "8. Disclaimer of Warranties",
+        "content": "THE SERVICES ARE PROVIDED ON AN \"AS IS\" AND \"AS AVAILABLE\" BASIS. WE MAKE NO REPRESENTATIONS OR WARRANTIES OF ANY KIND, EXPRESS OR IMPLIED, REGARDING THE OPERATION OR AVAILABILITY OF THE SERVICES.",
+        "content2": "WE DISCLAIM ALL WARRANTIES, INCLUDING BUT NOT LIMITED TO:",
+        "items": [
+          "WARRANTIES OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE",
+          "WARRANTIES OF NON-INFRINGEMENT",
+          "WARRANTIES ARISING FROM COURSE OF DEALING OR USAGE OF TRADE"
+        ]
+      },
+      "serviceAvailability": {
+        "title": "9. Service Availability",
+        "content": "We strive to maintain high availability of our Services, but we do not guarantee uninterrupted access. We may:",
+        "items": [
+          "Perform scheduled maintenance with reasonable notice",
+          "Temporarily suspend services for security or technical reasons",
+          "Modify or discontinue services with appropriate notice"
+        ],
+        "liability": "We are not liable for any losses resulting from service interruptions."
+      },
+      "termination": {
+        "title": "10. Termination",
+        "content": "Either party may terminate these Terms under the following circumstances:",
+        "items": [
+          "With 30 days written notice for convenience",
+          "Immediately for material breach of these Terms",
+          "Immediately if either party becomes insolvent or bankrupt"
+        ],
+        "obligations": "Upon termination, you must cease all use of the Services and pay any outstanding fees. Sections that by their nature should survive termination shall continue to apply."
+      },
+      "disputeResolution": {
+        "title": "11. Dispute Resolution",
+        "governingLaw": {
+          "title": "11.1 Governing Law",
+          "content": "These Terms shall be governed by and construed in accordance with the laws of Indonesia, without regard to its conflict of law principles."
+        },
+        "arbitration": {
+          "title": "11.2 Arbitration",
+          "content": "Any dispute arising from or relating to these Terms or the Services shall be resolved through binding arbitration in accordance with the rules of the Indonesian Arbitration Association. The arbitration shall be conducted in the Indonesian language and held in Jakarta, Indonesia."
+        },
+        "classActionWaiver": {
+          "title": "11.3 Class Action Waiver",
+          "content": "You agree to resolve disputes individually and waive any right to participate in class actions, class-wide arbitrations, or representative proceedings."
+        }
+      },
+      "indemnification": {
+        "title": "12. Indemnification",
+        "content": "You agree to indemnify, defend, and hold harmless ekalliptus and its officers, directors, employees, and agents from and against any claims, damages, losses, liabilities, and expenses (including reasonable attorneys' fees) arising out of or relating to your use of the Services, violation of these Terms, or violation of any rights of another."
+      },
+      "forceMajeure": {
+        "title": "13. Force Majeure",
+        "content": "We shall not be liable for any failure or delay in performance under these Terms due to circumstances beyond our reasonable control, including but not limited to acts of God, war, terrorism, natural disasters, labor disputes, or government actions."
+      },
+      "changes": {
+        "title": "14. Changes to Terms",
+        "content": "We reserve the right to modify these Terms at any time. Changes will be effective immediately upon posting on our website. Your continued use of Services after any changes constitutes acceptance of the new Terms.",
+        "notification": {
+          "title": "14.1 Change Notification",
+          "content": "We will notify you of material changes through:",
+          "items": [
+            "Email notification for registered users",
+            "Website banners and prominent notices",
+            "In-app notifications for mobile applications",
+            "Direct communication for significant changes",
+            "Social media announcements for major updates"
+          ]
+        },
+        "effect": {
+          "title": "14.2 Effect of Changes",
+          "content": "Your continued use of Services after any changes constitutes acceptance of the modified Terms. If you do not agree to the new Terms, you must cease using the Services."
+        }
+      },
+      "severability": {
+        "title": "15. Severability",
+        "content": "If any provision of these Terms is found to be unenforceable or invalid, that provision shall be limited or eliminated to the minimum extent necessary so that the remaining Terms shall remain in full force and effect.",
+        "interpretation": {
+          "title": "15.1 Interpretation",
+          "content": "These Terms shall be interpreted fairly and in accordance with their plain meaning. Headings are for convenience only and do not affect interpretation."
+        }
+      },
+      "entireAgreement": {
+        "title": "16. Entire Agreement",
+        "content": "These Terms, together with any service agreements or project proposals referenced herein, constitute the entire agreement between you and ekalliptus regarding the Services and supersede all prior agreements, whether written or oral.",
+        "interpretation": {
+          "title": "16.1 Interpretation",
+          "content": "These Terms shall be interpreted fairly and in accordance with their plain meaning. Headings are for convenience only and do not affect interpretation."
+        }
+      },
+      "assignment": {
+        "title": "17. Assignment",
+        "content": "You may not assign or transfer these Terms or any rights or obligations hereunder without our prior written consent. We may freely assign these Terms.",
+        "successors": {
+          "title": "17.1 Successors and Assigns",
+          "content": "These Terms shall be binding upon and inure to the benefit of the parties and their respective successors and permitted assigns."
+        }
+      },
+      "contact": {
+        "title": "18. Contact Information",
+        "content": "If you have any questions about these Terms of Service, please contact us:",
+        "email": "Email: legal@ekalliptus.com",
+        "website": "Website: www.ekalliptus.com",
+        "businessHours": "Business Hours: Monday - Friday, 9:00 AM - 6:00 PM WIB (Western Indonesia Time)",
+        "address": {
+          "title": "18.1 Business Address",
+          "content": "For legal notices and official correspondence, please use our registered business address as listed on our website."
+        },
+        "emergency": {
+          "title": "18.2 Emergency Contact",
+          "content": "For urgent legal matters requiring immediate attention, please mark your email as \"URGENT LEGAL MATTER\" in the subject line."
+        },
+        "language": {
+          "title": "18.3 Language",
+          "content": "These Terms are provided in English. All communications and notices shall be in English unless otherwise required by applicable law."
+        }
+      },
+      "compliance": {
+        "title": "19. Regulatory Compliance",
+        "content": "Both parties agree to comply with all applicable laws, regulations, and industry standards. This includes but is not limited to:",
+        "items": [
+          "Data protection and privacy laws (GDPR, CCPA, PDPA, etc.)",
+          "Consumer protection regulations",
+          "Export control and sanctions compliance",
+          "Anti-corruption and anti-bribery laws",
+          "Industry-specific regulations and standards"
+        ]
+      },
+      "waiver": {
+        "title": "20. Waiver",
+        "content": "No waiver of any provision of these Terms shall be effective unless in writing and signed by both parties. Any failure to exercise a right or timely objection to changes shall constitute a waiver of that right.",
+        "severability": {
+          "title": "20. Severability",
+          "content": "If any provision of these Terms is held to be invalid or unenforceable by a court of competent jurisdiction, the remaining provisions shall remain in full force and effect."
+        },
+        "notices": {
+          "title": "21. Notices",
+          "content": "All notices required under these Terms shall be in writing and delivered to the addresses specified in the contact section. Notices shall be deemed received when actually received.",
+          "electronic": {
+            "title": "21.1 Electronic Notices",
+            "content": "Electronic notices shall be deemed received when transmitted to the specified email address, unless sender receives notification of non-delivery."
+          }
+        }
+      }
+    },
+    "seo": {
+      "title": "Ekalliptus Digital Agency — Website, WordPress, Mobile App Indonesia",
+      "description": "Ekalliptus - Leading digital solutions for website development, WordPress, mobile app, and professional photo/video editing in Indonesia. Contact us for your business digital transformation.",
+      "keywords": "website development Indonesia, WordPress custom, mobile app development, photo editing service, video editing professional, digital agency Jakarta, website creation service, mobile app Android iOS, quality photo video editing"
+    }
+  },
   "seo": {
     "title": "Ekalliptus Digital Agency — Website, WordPress, Mobile App Indonesia",
     "description": "Ekalliptus - Leading digital solutions for website development, WordPress, mobile app, and professional photo/video editing in Indonesia. Contact us for your business digital transformation.",
     "keywords": "website development Indonesia, WordPress custom, mobile app development, photo editing service, video editing professional, digital agency Jakarta, website creation service, mobile app Android iOS, quality photo video editing"
+  },
+  "qrPayment": {
+    "title": "QR Code Payment",
+    "description": "Please scan the QR code below to make a payment",
+    "totalPayment": "Total Payment",
+    "copyAmount": "Copy Amount",
+    "copied": "Copied!",
+    "scanInstruction": "Scan the QR code above using your e-wallet or mobile banking app",
+    "paymentSteps": {
+      "title": "Payment Steps:",
+      "step1": "Open your e-wallet or mobile banking app",
+      "step2": "Select \"Scan QR\" or \"Pay\" menu",
+      "step3": "Point your camera at the QR code above",
+      "step4": "Make sure the payment amount matches:",
+      "step5": "Confirm payment and enter PIN/OTP",
+      "step6": "Screenshot or save proof of payment"
+    },
+    "orderId": "Order ID:",
+    "confirmPayment": "I Have Already Paid",
+    "confirmationNote": "Our team will verify your payment within 1x24 hours"
   }
 }

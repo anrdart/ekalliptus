@@ -59,37 +59,67 @@
         "category": "Pengembangan",
         "title": "Website Development",
         "description": "Buat website profesional yang responsif dan user-friendly untuk bisnis Anda.",
-        "features": ["Responsive Design", "SEO Optimized", "Fast Loading", "Custom Domain"]
+        "features": [
+          "Responsive Design",
+          "SEO Optimized",
+          "Fast Loading",
+          "Custom Domain"
+        ]
       },
       "wordpressDevelopment": {
         "category": "Pengembangan",
         "title": "WordPress Development",
         "description": "Kustomisasi WordPress sesuai kebutuhan dengan tema dan plugin terbaik.",
-        "features": ["Custom Theme", "Plugin Integration", "E-commerce Ready", "Content Management"]
+        "features": [
+          "Custom Theme",
+          "Plugin Integration",
+          "E-commerce Ready",
+          "Content Management"
+        ]
       },
       "berduPlatform": {
         "category": "Platform",
         "title": "Berdu Platform",
         "description": "Solusi platform berdu yang powerful untuk kebutuhan bisnis modern.",
-        "features": ["Admin Dashboard", "User Management", "Data Analytics", "Cloud Hosting"]
+        "features": [
+          "Admin Dashboard",
+          "User Management",
+          "Data Analytics",
+          "Cloud Hosting"
+        ]
       },
       "mobileAppDevelopment": {
         "category": "Pengembangan",
         "title": "Mobile App Development",
         "description": "Aplikasi mobile Android & iOS yang inovatif dan mudah digunakan.",
-        "features": ["Cross Platform", "Native Performance", "Push Notifications", "App Store Ready"]
+        "features": [
+          "Cross Platform",
+          "Native Performance",
+          "Push Notifications",
+          "App Store Ready"
+        ]
       },
       "serviceHpLaptop": {
         "category": "Layanan",
         "title": "Service HP & Laptop",
         "description": "Perbaikan perangkat oleh teknisi berpengalaman dengan dukungan suku cadang original.",
-        "features": ["Diagnosa Cepat", "Sparepart Original", "Perbaikan Software & Hardware", "Garansi Layanan"]
+        "features": [
+          "Diagnosa Cepat",
+          "Sparepart Original",
+          "Perbaikan Software & Hardware",
+          "Garansi Layanan"
+        ]
       },
       "photoVideoEditing": {
         "category": "Multimedia",
         "title": "Photo & Video Editing",
         "description": "Editing profesional untuk foto dan video dengan hasil berkualitas tinggi.",
-        "features": ["Color Grading", "Motion Graphics", "Audio Mixing", "4K Quality"]
+        "features": [
+          "Color Grading",
+          "Motion Graphics",
+          "Audio Mixing",
+          "4K Quality"
+        ]
       }
     }
   },
@@ -188,12 +218,22 @@
   },
   "order": {
     "pill": "Formulir Order",
+    "badge": "Permintaan Penawaran",
     "title": "Order Layanan Digital",
+    "formTitle": "Permintaan <highlight>Penawaran</highlight>",
+    "subtitle": "Dapatkan penawaran terbaik untuk proyek digital Anda. Tim ahli siap membantu dari konsultasi hingga implementasi.",
     "description": "Ceritakan kebutuhan proyek website development Indonesia, WordPress custom, mobile app development, atau layanan digital lainnya secara detail. Data akan otomatis masuk ke dashboard internal kami dan notifikasi email akan dikirim ke tim ekalliptus untuk memberikan proposal dalam 24 jam.",
+    "attachments": {
+      "title": "Lampiran (Opsional)",
+      "description": "Unggah file referensi seperti logo, brand guideline, contoh desain, atau dokumen brief proyek. Maksimal 5 file, 20MB per file."
+    },
     "descriptionSecondary": "Kami melayani berbagai kebutuhan digital: jasa pembuatan website Indonesia, WordPress custom, mobile app development untuk Android dan iOS, service HP laptop profesional, serta editing foto video berkualitas tinggi. Pilih layanan yang sesuai dan isi form di bawah ini.",
     "projectDetails": {
       "title": "Detail Proyek",
       "description": "Informasi yang Anda berikan membantu kami menyiapkan solusi paling relevan serta estimasi yang presisi untuk website development Indonesia, WordPress custom, mobile app development, atau layanan digital lainnya."
+    },
+    "basicInfo": {
+      "title": "Informasi Dasar"
     },
     "validation": {
       "nameRequired": "Nama wajib diisi",
@@ -201,7 +241,17 @@
       "emailInvalid": "Format email tidak valid",
       "whatsappRequired": "Nomor WhatsApp wajib diisi",
       "whatsappInvalid": "Masukkan nomor WhatsApp yang valid",
-      "serviceRequired": "Pilih jenis layanan"
+      "serviceRequired": "Pilih jenis layanan",
+      "selectServiceFirst": "Pilih salah satu layanan sebelum mengirim permintaan.",
+      "fieldRequired": "{{field}} wajib diisi"
+    },
+    "success": {
+      "title": "✅ Permintaan terkirim!",
+      "description": "Tim kami akan menghubungi Anda dalam 1x24 jam."
+    },
+    "error": {
+      "title": "Error",
+      "description": "Terjadi kesalahan. Silakan coba lagi."
     },
     "common": {
       "optional": "Opsional"
@@ -232,9 +282,13 @@
         "label": "Preferensi Komunikasi"
       },
       "attachment": {
-        "label": "Lampiran (opsional)",
+        "label": "Lampiran",
         "choose": "Pilih File",
-        "empty": "Belum ada file dipilih"
+        "empty": "Belum ada file dipilih",
+        "uploadText": "Klik untuk upload atau drag and drop",
+        "fileTypes": "SVG, PNG, JPG atau PDF (MAKS. 10MB)",
+        "selected": "File yang dipilih",
+        "uploaded": "Berhasil diupload"
       }
     },
     "contactPreferences": {
@@ -491,9 +545,340 @@
     "full": "Pembayaran Penuh",
     "depositLabel": "Uang Muka"
   },
+  "privacyPolicy": {
+    "title": "Kebijakan Privasi",
+    "lastUpdated": "Terakhir diperbarui: {{date}}",
+    "sections": {
+      "introduction": {
+        "title": "1. Pendahuluan",
+        "content": "Selamat datang di ekalliptus (\"kami,\" \"perusahaan,\" atau \"milik kami\"). Kebijakan Privasi ini menjelaskan bagaimana kami mengumpulkan, menggunakan, mengungkapkan, dan melindungi informasi Anda ketika Anda mengunjungi website kami ekalliptus.com dan menggunakan layanan digital kami, termasuk pengembangan website, pengembangan aplikasi mobile, dan layanan editing multimedia.",
+        "content2": "Kami berkomitmen untuk melindungi data pribadi Anda dan menghormati privasi Anda sesuai dengan hukum perlindungan data yang berlaku, termasuk Regulasi Perlindungan Data Umum (GDPR) dan Undang-Undang Privasi Konsumen California (CCPA)."
+      },
+      "informationWeCollect": {
+        "title": "2. Informasi yang Kami Kumpulkan",
+        "personalInfo": {
+          "title": "2.1 Informasi Pribadi",
+          "content": "Kami mungkin mengumpulkan jenis informasi pribadi berikut:",
+          "items": [
+            "Nama, alamat email, nomor telepon, dan detail kontak",
+            "Informasi perusahaan dan jabatan",
+            "Informasi pembayaran (diproses secara aman melalui prosesor pembayaran pihak ketiga)",
+            "Persyaratan proyek dan riwayat komunikasi",
+            "Alamat IP dan data geolokasi"
+          ]
+        },
+        "technicalInfo": {
+          "title": "2.2 Informasi Teknis",
+          "content": "Kami secara otomatis mengumpulkan informasi teknis tertentu ketika Anda mengunjungi website kami:",
+          "items": [
+            "Jenis dan versi browser",
+            "Sistem operasi",
+            "Informasi perangkat",
+            "Halaman yang dikunjungi dan waktu yang dihabiskan di website kami",
+            "Alamat website rujukan",
+            "Data klik aliran"
+          ]
+        }
+      },
+      "howWeUseInformation": {
+        "title": "3. Cara Kami Menggunakan Informasi Anda",
+        "content": "Kami menggunakan informasi Anda untuk tujuan berikut:",
+        "items": [
+          "Untuk menyediakan dan memelihara layanan digital kami",
+          "Untuk memproses dan memenuhi pesanan dan pembayaran Anda",
+          "Untuk berkomunikasi dengan Anda tentang proyek dan pertanyaan Anda",
+          "Untuk meningkatkan website dan layanan kami",
+          "Untuk mengirimkan komunikasi pemasaran (dengan persetujuan Anda)",
+          "Untuk mematuhi kewajiban hukum",
+          "Untuk melindungi terhadap penipuan dan memastikan keamanan"
+        ]
+      },
+      "legalBasis": {
+        "title": "4. Dasar Hukum untuk Pemrosesan (GDPR)",
+        "content": "Di bawah GDPR, kami memproses data pribadi Anda berdasarkan dasar hukum berikut:",
+        "items": [
+          "Persetujuan: Ketika Anda secara eksplisit memberikan persetujuan untuk aktivitas pemrosesan tertentu",
+          "Kontrak: Ketika pemrosesan diperlukan untuk kinerja kontrak layanan kami",
+          "Kewajiban Hukum: Ketika kami diwajibkan untuk memproses data oleh hukum",
+          "Kepentingan Sah: Ketika pemrosesan diperlukan untuk kepentingan bisnis sah kami"
+        ]
+      },
+      "cookies": {
+        "title": "5. Cookie dan Teknologi Pelacakan",
+        "content": "Kami menggunakan cookie dan teknologi pelacakan serupa untuk meningkatkan pengalaman Anda di website kami:",
+        "essential": {
+          "title": "5.1 Cookie Esensial",
+          "content": "Cookie ini diperlukan agar website berfungsi dan tidak dapat dinonaktifkan dalam sistem kami."
+        },
+        "analytics": {
+          "title": "5.2 Cookie Analitik",
+          "content": "Kami menggunakan Google Analytics dan alat serupa untuk memahami bagaimana website kami digunakan dan meningkatkan layanan kami."
+        },
+        "marketing": {
+          "title": "5.3 Cookie Pemasaran",
+          "content": "Cookie ini digunakan untuk memberikan iklan yang relevan dan melacak efektivitas kampanye pemasaran."
+        },
+        "control": "Anda dapat mengontrol pengaturan cookie melalui preferensi browser Anda. Harap dicatat bahwa menonaktifkan cookie tertentu dapat memengaruhi fungsionalitas website."
+      },
+      "dataSharing": {
+        "title": "6. Berbagi dan Pengungkapan Data",
+        "content": "Kami mungkin membagikan informasi Anda dengan:",
+        "items": [
+          "Penyedia Layanan: Perusahaan pihak ketiga yang membantu kami mengoperasikan website dan menjalankan bisnis kami",
+          "Prosesor Pembayaran: Layanan pemrosesan pembayaran yang aman untuk menangani transaksi",
+          "Otoritas Hukum: Ketika diminta oleh hukum atau untuk melindungi hak kami",
+          "Transfer Bisnis: Dalam kaitan dengan merger, akuisisi, atau penjualan aset"
+        ],
+        "noSale": "Kami tidak menjual informasi pribadi Anda kepada pihak ketiga untuk tujuan pemasaran."
+      },
+      "dataSecurity": {
+        "title": "7. Keamanan Data",
+        "content": "Kami menerapkan langkah-langkah teknis dan organisasi yang tepat untuk melindungi data pribadi Anda terhadap akses, perubahan, pengungkapan, atau penghancuran yang tidak sah. Langkah-langkah ini meliputi:",
+        "items": [
+          "Enkripsi SSL/TLS untuk transmisi data",
+          "Penyimpanan dan hashing kata sandi yang aman",
+          "Penilaian keamanan dan pembaruan reguler",
+          "Kontrol akses dan sistem autentikasi",
+          "Pelatihan karyawan tentang perlindungan data"
+        ]
+      },
+      "yourRights": {
+        "title": "8. Hak Anda",
+        "gdpr": {
+          "title": "8.1 Hak GDPR",
+          "content": "Di bawah GDPR, Anda memiliki hak untuk:",
+          "items": [
+            "Mengakses data pribadi Anda",
+            "Memperbaiki data pribadi yang tidak akurat",
+            "Menghapus data pribadi Anda (\"hak untuk dilupakan\")",
+            "Membatasi pemrosesan data pribadi Anda",
+            "Portabilitas data",
+            "Menolak pemrosesan",
+            "Menarik persetujuan kapan saja"
+          ]
+        },
+        "ccpa": {
+          "title": "8.2 Hak CCPA",
+          "content": "Di bawah CCPA, penduduk California memiliki hak untuk:",
+          "items": [
+            "Mengetahui informasi pribadi apa yang dikumpulkan",
+            "Menghapus informasi pribadi",
+            "Menolak penjualan informasi pribadi",
+            "Tidak diskriminasi untuk menggunakan hak privasi"
+          ]
+        }
+      },
+      "dataRetention": {
+        "title": "9. Retensi Data",
+        "content": "Kami menyimpan data pribadi Anda hanya selama diperlukan untuk memenuhi tujuan untuk mana itu dikumpulkan, mematuhi kewajiban hukum, menyelesaikan sengketa, dan menegakkan perjanjian kami. Periode retensi bervariasi tergantung pada jenis data dan persyaratan hukum."
+      },
+      "internationalTransfers": {
+        "title": "10. Transfer Data Internasional",
+        "content": "Data pribadi Anda mungkin ditransfer ke dan diproses di negara lain selain negara tempat tinggal Anda. Kami memastikan jaminan yang tepat ada untuk transfer tersebut, termasuk klausul kontrak standar atau mekanisme yang diakui secara hukum lainnya."
+      },
+      "childrensPrivacy": {
+        "title": "11. Privasi Anak",
+        "content": "Layanan kami tidak dimaksudkan untuk individu di bawah usia 18 tahun. Kami tidak sengaja mengumpulkan informasi pribadi dari anak di bawah 18 tahun. Jika Anda mengetahui bahwa kami telah mengumpulkan informasi dari anak di bawah 18 tahun, harap hubungi kami segera."
+      },
+      "changes": {
+        "title": "12. Perubahan pada Kebijakan Ini",
+        "content": "Kami mungkin memperbarui Kebijakan Privasi ini dari waktu ke waktu. Kami akan memberi tahu Anda tentang perubahan apa pun dengan memposting Kebijakan Privasi baru di halaman ini dan memperbarui tanggal \"Terakhir diperbarui\". Anda disarankan untuk meninjau Kebijakan Privasi ini secara berkala untuk perubahan apa pun."
+      },
+      "contact": {
+        "title": "13. Informasi Kontak",
+        "content": "Jika Anda memiliki pertanyaan tentang Kebijakan Privasi ini atau ingin menggunakan hak Anda, harap hubungi kami:",
+        "email": "Email: privacy@ekalliptus.com",
+        "website": "Website: www.ekalliptus.com",
+        "responseTime": "Waktu Respons: Kami akan merespons pertanyaan Anda dalam 30 hari setelah penerimaan."
+      }
+    }
+  },
+  "termsOfService": {
+    "title": "Syarat dan Ketentuan Layanan",
+    "lastUpdated": "Terakhir diperbarui: {{date}}",
+    "sections": {
+      "agreement": {
+        "title": "1. Persetujuan terhadap Syarat",
+        "content": "Selamat datang di ekalliptus (\"Perusahaan,\" \"kami,\" \"milik kami\"). Syarat dan Ketentuan Layanan ini (\"Syarat\") mengatur akses Anda ke dan penggunaan website, layanan, dan produk kami (secara kolektif, \"Layanan\").",
+        "content2": "Dengan mengakses atau menggunakan Layanan kami, Anda setuju untuk terikat oleh Syarat ini. Jika Anda tidak setuju dengan bagian apa pun dari syarat ini, maka Anda tidak dapat mengakses Layanan."
+      },
+      "description": {
+        "title": "2. Deskripsi Layanan",
+        "content": "ekalliptus menyediakan layanan agensi digital termasuk tetapi tidak terbatas pada:",
+        "items": [
+          "Pengembangan dan desain website",
+          "Kustomisasi dan pengembangan WordPress",
+          "Pengembangan aplikasi mobile",
+          "Layanan editing multimedia",
+          "Konsultasi dan strategi digital",
+          "Layanan optimasi SEO",
+          "Dukungan teknis dan pemeliharaan"
+        ]
+      },
+      "userResponsibilities": {
+        "title": "3. Tanggung Jawab Pengguna",
+        "content": "Sebagai pengguna Layanan kami, Anda setuju untuk:",
+        "items": [
+          "Memberikan informasi yang akurat, terkini, dan lengkap",
+          "Memelihara keamanan kredensial akun Anda",
+          "Tidak menggunakan Layanan kami untuk tujuan ilegal atau tidak sah",
+          "Tidak mengganggu atau mengganggu Layanan atau server",
+          "Tidak mencoba mendapatkan akses tidak sah ke sistem kami",
+          "Menghormati hak kekayaan intelektual",
+          "Mematuhi semua hukum dan peraturan yang berlaku"
+        ]
+      },
+      "paymentTerms": {
+        "title": "4. Syarat Pembayaran",
+        "fees": {
+          "title": "4.1 Biaya dan Pembayaran",
+          "content": "Biaya untuk Layanan kami diuraikan dalam proposal dan perjanjian proyek. Syarat pembayaran biasanya meliputi:",
+          "items": [
+            "Deposit awal (biasanya 30-50% dari total biaya proyek)",
+            "Pembayaran milestone seperti yang ditentukan dalam timeline proyek",
+            "Pembayaran akhir setelah penyelesaian dan pengiriman proyek",
+            "Semua harga dikutip dalam mata uang yang ditentukan dalam perjanjian"
+          ]
+        },
+        "latePayments": {
+          "title": "4.2 Pembayaran Terlambat",
+          "content": "Pembayaran terlambat mungkin dikenakan bunga pada tingkat 1,5% per bulan atau tingkat maksimum yang diizinkan oleh hukum, mana yang lebih rendah. Kami berhak untuk menangguhkan layanan untuk akun dengan pembayaran tertunggak."
+        },
+        "refundPolicy": {
+          "title": "4.3 Kebijakan Pengembalian",
+          "content": "Pengembalian ditangani secara kasus per kasus dan tunduk pada syarat yang diuraikan dalam perjanjian layanan spesifik Anda. Deposit untuk pekerjaan kustom umumnya tidak dapat dikembalikan setelah pekerjaan dimulai."
+        }
+      },
+      "intellectualProperty": {
+        "title": "5. Hak Kekayaan Intelektual",
+        "company": {
+          "title": "5.1 Kekayaan Intelektual Perusahaan",
+          "content": "Layanan dan konten asli, fitur, dan fungsionalitas adalah dan akan tetap menjadi milik eksklusif ekalliptus dan pemberi lisensinya. Layanan dilindungi oleh hak cipta, merek dagang, dan hukum lainnya."
+        },
+        "client": {
+          "title": "5.2 Kekayaan Intelektual Klien",
+          "content": "Setelah pembayaran penuh, klien menerima kepemilikan deliverables akhir seperti yang ditentukan dalam perjanjian layanan mereka, tidak termasuk komponen pihak ketiga, alat, atau teknologi ekalliptus milik yang digunakan dalam pengembangan."
+        },
+        "materials": {
+          "title": "5.3 Materi Klien",
+          "content": "Klien memberikan ekalliptus lisensi non-eksklusif, worldwide, bebas royalti untuk menggunakan materi apa pun yang disediakan oleh klien untuk tujuan penyampaian Layanan."
+        }
+      },
+      "confidentiality": {
+        "title": "6. Kerahasiaan",
+        "content": "Kedua belah pihak setuju untuk menjaga kerahasiaan informasi milik yang dipertukarkan selama kursus bisnis. Ini termasuk tetapi tidak terbatas pada:",
+        "items": [
+          "Strategi dan rencana bisnis",
+          "Spesifikasi teknis dan kode sumber",
+          "Informasi dan data pelanggan",
+          "Informasi keuangan",
+          "Informasi apa pun yang ditandai sebagai rahasia"
+        ],
+        "survival": "Kewajiban kerahasiaan ini bertahan setelah pengakhiran Syarat ini."
+      },
+      "limitationOfLiability": {
+        "title": "7. Pembatasan Tanggung Jawab",
+        "content": "SEJAUH Y DIIZINKAN OLEH HUKUM, ekalliptus TIDAK AKAN BERTANGGUNG JAWAB ATAS KERUSAKAN TIDAK LANGSUNG, INSIDENTAL, KHUSUS, ATAU KONSEKUENSIAL, TERMASUK TETAPI TIDAK TERBATAS PADA KEHILANGAN LABA, DATA, PENGGUNAAN, ATAU NAMA BAIK, YANG TIMBUL DARI ATAU TERKAIT DENGAN SYARAT INI ATAU LAYANAN.",
+        "content2": "TOTAL TANGGUNG JAWAB KAMI UNTUK KLAIM APA PUN YANG TIMBUL DARI ATAU TERKAIT DENGAN SYARAT INI ATAU LAYANAN TIDAK AKAN MELEBIHI JUMLAH YANG DIBAYAR OLEH ANDA UNTUK LAYANAN YANG MENYEBABKLAIM.",
+        "disclaimer": "BEBERAPA YURISDIKSI TIDAK MENGIZINKAN PENGECUALIAN JAMINAN TERTENTU ATAU PEMBATASAN TANGGUNG JAWAB, SEHINGGA PENGECUALIAN INI MUNGKIN TIDAK BERLAKU BAGI ANDA."
+      },
+      "disclaimerOfWarranties": {
+        "title": "8. Penafian Jaminan",
+        "content": "LAYANAN DISEDIAKAN PADA DASAR \"SEBAGAIMANA ADANYA\" DAN \"SEBAGAIMANA TERSEDIA\". KAMI TIDAK MEMBUAT PERWAKILAN ATAU JAMINAN APA PUN, BAIK EKSPLISIT MAUPUN TERSIRAT, MENGENAI OPERASI ATAU KETERSEDIAAN LAYANAN.",
+        "content2": "KAMI MENAFIKAN SEMUA JAMINAN, TERMASUK TETAPI TIDAK TERBATAS PADA:",
+        "items": [
+          "JAMINAN KELAYAKAN JUAL ATAU KESESUAIAN UNTUK TUJUAN TERTENTU",
+          "JAMINAN NON-PELANGGARAN",
+          "JAMINAN YANG TIMBUL DARI KURSUS PERDAGANGAN ATAU PENGGUNAAN PERDAGANGAN"
+        ]
+      },
+      "serviceAvailability": {
+        "title": "9. Ketersediaan Layanan",
+        "content": "Kami berusaha untuk menjaga ketersediaan tinggi Layanan kami, tetapi kami tidak menjamin akses yang tidak terganggu. Kami mungkin:",
+        "items": [
+          "Melakukan pemeliharaan terjadwal dengan pemberitahuan yang wajar",
+          "Sementara menangguhkan layanan untuk alasan keamanan atau teknis",
+          "Mengubah atau menghentikan layanan dengan pemberitahuan yang tepat"
+        ],
+        "liability": "Kami tidak bertanggung jawab atas kerugian apa pun yang diakibatkan oleh gangguan layanan."
+      },
+      "termination": {
+        "title": "10. Pengakhiran",
+        "content": "Salah satu pihak dapat mengakhiri Syarat ini dalam keadaan berikut:",
+        "items": [
+          "Dengan pemberitahuan tertulis 30 hari untuk kenyamanan",
+          "Segera untuk pelanggaran material Syarat ini",
+          "Segera jika salah satu pihak menjadi insolven atau bangkrut"
+        ],
+        "obligations": "Setelah pengakhiran, Anda harus menghentikan semua penggunaan Layanan dan membayar biaya yang belum dibayar. Bagian yang menurut sifatnya harus bertahan pengakhiran akan terus berlaku."
+      },
+      "disputeResolution": {
+        "title": "11. Penyelesaian Sengketa",
+        "governingLaw": {
+          "title": "11.1 Hukum yang Mengatur",
+          "content": "Syarat ini akan diatur dan ditafsirkan sesuai dengan hukum Indonesia, tanpa memperhatikan prinsip konflik hukumnya."
+        },
+        "arbitration": {
+          "title": "11.2 Arbitrase",
+          "content": "Setiap sengketa yang timbul dari atau terkait dengan Syarat atau Layanan akan diselesaikan melalui arbitrase yang mengikat sesuai dengan aturan Asosiasi Arbitrase Indonesia. Arbitrase akan dilakukan dalam bahasa Indonesia dan diadakan di Jakarta, Indonesia."
+        },
+        "classActionWaiver": {
+          "title": "11.3 Pelepasan Gugatan Kelas",
+          "content": "Anda setuju untuk menyelesaikan sengketa secara individual dan melepaskan hak apa pun untuk berpartisipasi dalam gugatan kelas, arbitrase seluruh kelas, atau proses perwakilan."
+        }
+      },
+      "indemnification": {
+        "title": "12. Indemnifikasi",
+        "content": "Anda setuju untuk mengganti rugi, membela, dan menahan ekalliptus dan pejabat, direktur, karyawan, dan agennya dari dan terhadap klaim, kerusakan, kerugian, dan kewajiban apa pun (termasuk biaya pengacara yang wajar) yang timbul dari atau terkait dengan penggunaan Layanan Anda, pelanggaran Syarat ini, atau pelanggaran hak apa pun dari pihak lain."
+      },
+      "forceMajeure": {
+        "title": "13. Force Majeure",
+        "content": "Kami tidak akan bertanggung jawab atas kegagalan atau keterlambatan dalam kinerja di bawah Syarat ini karena keadaan di luar kendali kami yang wajar, termasuk tetapi tidak terbatas pada tindakan Tuhan, perang, terorisme, bencana alam, sengketa ketenagakerjaan, atau tindakan pemerintah."
+      },
+      "changes": {
+        "title": "14. Perubahan pada Syarat",
+        "content": "Kami berhak mengubah Syarat ini kapan saja. Perubahan akan efektif segera setelah diposting di website kami. Penggunaan Layanan Anda yang berkelanjutan setelah perubahan apa pun merupakan penerimaan Syarat baru."
+      },
+      "severability": {
+        "title": "15. Keterpisahan",
+        "content": "Jika ketentuan apa pun dari Syarat ini ditemukan tidak dapat ditegakkan atau tidak valid, ketentuan tersebut akan dibatasi atau dihilangkan sejauh minimum yang diperlukan sehingga Syarat yang tersisa akan tetap berlaku penuh dan efektif."
+      },
+      "entireAgreement": {
+        "title": "16. Perjanjian Seluruhnya",
+        "content": "Syarat ini, bersama dengan perjanjian layanan atau proposal proyek yang dirujuk di sini, merupakan perjanjian seluruhnya antara Anda dan ekalliptus mengenai Layanan dan menggantikan semua perjanjian sebelumnya, baik tertulis maupun lisan."
+      },
+      "contact": {
+        "title": "17. Informasi Kontak",
+        "content": "Jika Anda memiliki pertanyaan tentang Syarat dan Ketentuan Layanan ini, harap hubungi kami:",
+        "email": "Email: legal@ekalliptus.com",
+        "website": "Website: www.ekalliptus.com",
+        "businessHours": "Jam Kerja: Senin - Jumat, 09:00 - 18:00 WIB (Waktu Indonesia Barat)"
+      }
+    }
+  },
   "seo": {
     "title": "Ekalliptus Digital Agency — Website, WordPress, Mobile App Indonesia",
     "description": "Ekalliptus - Solusi digital terdepan untuk website development, WordPress, mobile app, dan editing foto/video profesional di Indonesia. Hubungi kami untuk transformasi digital bisnis Anda.",
     "keywords": "website development Indonesia, WordPress custom, mobile app development, photo editing service, video editing profesional, digital agency Jakarta, jasa pembuatan website, aplikasi mobile Android iOS, editing foto video berkualitas"
+  },
+  "qrPayment": {
+    "title": "Pembayaran dengan QR Code",
+    "description": "Silakan scan QR code di bawah ini untuk melakukan pembayaran",
+    "totalPayment": "Total Pembayaran",
+    "copyAmount": "Salin Nominal",
+    "copied": "Disalin!",
+    "scanInstruction": "Scan QR code di atas menggunakan aplikasi e-wallet atau mobile banking Anda",
+    "paymentSteps": {
+      "title": "Cara Pembayaran:",
+      "step1": "Buka aplikasi e-wallet atau mobile banking Anda",
+      "step2": "Pilih menu \"Scan QR\" atau \"Bayar\"",
+      "step3": "Arahkan kamera ke QR code di atas",
+      "step4": "Pastikan nominal pembayaran sesuai:",
+      "step5": "Konfirmasi pembayaran dan masukkan PIN/OTP",
+      "step6": "Screenshot atau simpan bukti pembayaran"
+    },
+    "orderId": "ID Pesanan:",
+    "confirmPayment": "Saya Sudah Membayar",
+    "confirmationNote": "Tim kami akan memverifikasi pembayaran Anda dalam 1x24 jam"
   }
 }

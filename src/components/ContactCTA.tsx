@@ -29,7 +29,7 @@ export const ContactCTA = () => {
         >
           <div ref={ref} className="text-center">
             <h2
-              className={`bg-gradient-to-r from-sky-400 via-indigo-300 to-emerald-300 bg-clip-text text-3xl font-semibold uppercase tracking-[0.4em] text-transparent md:text-4xl ${base} ${show}`}
+              className={`bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-3xl font-semibold uppercase tracking-[0.4em] text-transparent md:text-4xl ${base} ${show}`}
               style={{ transitionDelay: "200ms" }}
             >
               {t("contactCTA.title")}

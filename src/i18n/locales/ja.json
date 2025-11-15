@@ -55,37 +55,67 @@
         "category": "開発",
         "title": "ウェブサイト開発",
         "description": "ビジネス目標に合わせたレスポンシブで使いやすいウェブサイトを構築します。",
-        "features": ["レスポンシブデザイン", "SEO最適化", "高速表示", "カスタムドメイン"]
+        "features": [
+          "レスポンシブデザイン",
+          "SEO最適化",
+          "高速表示",
+          "カスタムドメイン"
+        ]
       },
       "wordpressDevelopment": {
         "category": "開発",
         "title": "WordPress開発",
         "description": "高品質なテーマとプラグインでWordPressをニーズに合わせてカスタマイズします。",
-        "features": ["カスタムテーマ", "プラグイン統合", "EC対応", "コンテンツ管理"]
+        "features": [
+          "カスタムテーマ",
+          "プラグイン統合",
+          "EC対応",
+          "コンテンツ管理"
+        ]
       },
       "berduPlatform": {
         "category": "プラットフォーム",
         "title": "Berduプラットフォーム",
         "description": "現代ビジネスに最適化された強力なBerduベースのプラットフォームソリューション。",
-        "features": ["管理ダッシュボード", "ユーザー管理", "データ分析", "クラウドホスティング"]
+        "features": [
+          "管理ダッシュボード",
+          "ユーザー管理",
+          "データ分析",
+          "クラウドホスティング"
+        ]
       },
       "mobileAppDevelopment": {
         "category": "開発",
         "title": "モバイルアプリ開発",
         "description": "シームレスな体験のために設計された革新的なAndroid・iOSアプリ。",
-        "features": ["クロスプラットフォーム", "ネイティブ性能", "プッシュ通知", "ストア公開対応"]
+        "features": [
+          "クロスプラットフォーム",
+          "ネイティブ性能",
+          "プッシュ通知",
+          "ストア公開対応"
+        ]
       },
       "serviceHpLaptop": {
         "category": "サービス",
         "title": "デバイス修理サービス",
         "description": "認定技術者がスマートフォンとノートPCを安心サポートします。",
-        "features": ["迅速診断", "純正部品", "ソフト・ハード修理", "サービス保証"]
+        "features": [
+          "迅速診断",
+          "純正部品",
+          "ソフト・ハード修理",
+          "サービス保証"
+        ]
       },
       "photoVideoEditing": {
         "category": "マルチメディア",
         "title": "写真・動画編集",
         "description": "高品質なビジュアルを実現するプロフェッショナル編集サービス。",
-        "features": ["カラーグレーディング", "モーショングラフィックス", "オーディオミキシング", "4Kクオリティ"]
+        "features": [
+          "カラーグレーディング",
+          "モーショングラフィックス",
+          "オーディオミキシング",
+          "4Kクオリティ"
+        ]
       }
     }
   },
@@ -181,9 +211,14 @@
     "title": "デジタルサービスのご依頼",
     "description": "ウェブサイト開発、カスタムWordPress、モバイルアプリ、その他デジタルサービスのご要望を詳しくお聞かせください。送信内容は社内ダッシュボードに自動同期され、24時間以内に提案をご連絡します。",
     "descriptionSecondary": "インドネシア向けのウェブサイト制作、WordPressカスタマイズ、Android/iOSアプリ開発、デバイス修理、写真・動画編集など幅広いニーズに対応しています。該当するサービスを選び、以下のフォームにご入力ください。",
+    "formTitle": "お見積もり <highlight>お申し込み</highlight>",
+    "subtitle": "デジタルプロジェクト的最佳オファーをご利用料を。専門家チームが consulteion から実装まであらゆる段階でサポärtします。",
     "projectDetails": {
       "title": "プロジェクト詳細",
       "description": "ご記入いただく情報は、最適な提案と正確なお見積りを作成するために活用します。ウェブサイト、WordPress、モバイルアプリなど各サービスに対応しています。"
+    },
+    "basicInfo": {
+      "title": "基本情報"
     },
     "validation": {
       "nameRequired": "氏名は必須です",
@@ -191,7 +226,17 @@
       "emailInvalid": "有効なメールアドレスを入力してください",
       "whatsappRequired": "WhatsApp番号は必須です",
       "whatsappInvalid": "有効なWhatsApp番号を入力してください",
-      "serviceRequired": "サービスを選択してください"
+      "serviceRequired": "サービスを選択してください",
+      "selectServiceFirst": "送信前にサービスを選択してください。",
+      "fieldRequired": "{{field}}は必須項目です"
+    },
+    "success": {
+      "title": "✅ リクエストを送信しました！",
+      "description": "24時間以内にチームがご連絡いたします。"
+    },
+    "error": {
+      "title": "エラー",
+      "description": "エラーが発生しました。もう一度お試しください。"
     },
     "common": {
       "optional": "任意"
@@ -224,8 +269,15 @@
       "attachment": {
         "label": "添付ファイル（任意）",
         "choose": "ファイルを選択",
-        "empty": "選択されたファイルはありません"
-      }
+        "empty": "ファイルが選択されていません",
+        "uploadText": "クリックしてアップロードまたはドラッグ&ドロップ",
+        "fileTypes": "SVG、PNG、JPGまたはPDF（最大10MB）",
+        "selected": "選択されたファイル",
+        "uploaded": "アップロード完了"
+      },
+      "label": "添付ファイル",
+      "choose": "ファイルを選択",
+      "empty": "ファイルが選択されていません"
     },
     "contactPreferences": {
       "whatsapp": {
@@ -491,5 +543,33 @@
     "title": "Ekalliptusデジタルエージェンシー — ウェブサイト、WordPress、モバイルアプリインドネシア",
     "description": "Ekalliptus - インドネシアにおけるウェブサイト開発、WordPress、モバイルアプリ、プロフェッショナルな写真・動画編集のための最先端デジタルソリューション。ビジネスデジタル変革のためにお問い合わせください。",
     "keywords": "インドネシアウェブサイト開発、WordPressカスタム、モバイルアプリ開発、写真編集サービス、動画編集プロフェッショナル、デジタルエージェンシージャカルタ、ウェブサイト制作サービス、モバイルアプリAndroid iOS、高品質写真動画編集"
+  },
+  "privacyPolicy": {
+    "title": "プライバシーポリシー",
+    "lastUpdated": "最終更新日: {{date}}"
+  },
+  "termsOfService": {
+    "title": "利用規約",
+    "lastUpdated": "最終更新日: {{date}}"
+  },
+  "qrPayment": {
+    "title": "QRコード決済",
+    "description": "以下のQRコードをスキャンして決済を行ってください",
+    "totalPayment": "お支払総額",
+    "copyAmount": "金額をコピー",
+    "copied": "コピーしました！",
+    "scanInstruction": "上記のQRコードをeウォレットまたはモバイルバンキングアプリでスキャンしてください",
+    "paymentSteps": {
+      "title": "お支払い方法:",
+      "step1": "eウォレットまたはモバイルバンキングアプリを開く",
+      "step2": "「QRスキャン」または「支払い」メニューを選択",
+      "step3": "カメラを上記のQRコードに向ける",
+      "step4": "お支払額が正しいことを確認してください:",
+      "step5": "お支払いを確認し、PIN/OTPを入力",
+      "step6": "支払証明のスクリーンショットを保存"
+    },
+    "orderId": "注文ID:",
+    "confirmPayment": "すでに支払いました",
+    "confirmationNote": "チームは24時間以内にお支払いを確認します"
   }
 }

@@ -1,390 +1,307 @@
-import { MidtransNotificationData } from './notificationHandler';
-import { paymentApi } from './paymentApi';
-import { paymentLogger, PaymentEventType, logWebhookEvent, logApiEvent } from './paymentLogger';
-
 /**
- * Webhook handler untuk Midtrans notifications
- * Dalam production, ini akan menjadi endpoint backend yang menerima POST requests dari Midtrans
+ * Midtrans Webhook Handler
+ * Handles payment notifications from Midtrans
  */
 
-// Type untuk webhook response
-export interface WebhookResponse {
-  status: number;
-  message: string;
-  data?: any;
+import { supabase } from '@/config/supabase';
+import type { Database } from '@/config/supabase';
+import midtransPaymentService from './midtransPaymentService';
+
+type PaymentTransaction = Database['public']['Tables']['payment_transactions']['Row'];
+
+export interface WebhookPayload {
+  transaction_time: string;
+  transaction_status: string;
+  transaction_id: string;
+  status_message: string;
+  status_code: string;
+  order_id: string;
+  payment_type: string;
+  gross_amount: string;
+  payment_code?: string;
+  approval_code?: string;
+  bank?: string;
+  va_number?: string;
+  bill_key?: string;
+  biller_code?: string;
+  permata_va_number?: string;
+  bca_va_number?: string;
+  bni_va_number?: string;
+  bri_va_number?: string;
+  cimb_va_number?: string;
+  other_va_number?: string;
+  echannel_bill_key?: string;
+  echannel_biller_code?: string;
+  shopeepay_reference?: string;
+  qr_string?: string;
+  acquirer?: string;
+  issuer?: string;
+  card_type?: string;
+  masked_card?: string;
+  three_ds_secure?: string;
+  eci?: string;
+  saved_token_id?: string;
+  saved_token_id_expired_at?: string;
+  point_redeem_amount?: string;
+  point_redeem_quantity?: string;
+  points?: string;
+  installment_term?: string;
+  bin?: string;
+  last_4digit?: string;
+  expiry_date?: string;
+  card_number?: string;
+  cardholder_name?: string;
+  card_token?: string;
+  card_token_expired_at?: string;
+  expiry_time?: string;
+  cancel_time?: string;
+  refund_time?: string;
+  refund_amount?: string;
+  custom_field1?: string;
+  custom_field2?: string;
+  custom_field3?: string;
+  fraud_status?: string;
+  settlement_time?: string;
 }
 
-/**
- * Mock webhook handler function
- * Dalam production, ini akan menjadi endpoint seperti: POST /api/notification/handling
- */
-export const handleMidtransWebhook = async (
-  notificationData: MidtransNotificationData
-): Promise<WebhookResponse> => {
-  const startTime = Date.now();
-  
-  try {
-    logWebhookEvent(PaymentEventType.WEBHOOK_RECEIVED, {
-      orderId: notificationData.order_id,
-      transactionStatus: notificationData.transaction_status,
-      paymentType: notificationData.payment_type,
-      grossAmount: notificationData.gross_amount,
-    }, notificationData.order_id);
+class WebhookHandler {
+  private readonly serverKey = import.meta.env.VITE_MIDTRANS_SERVER_KEY;
 
-    // Step 1: Verify notification signature via backend
-    const { MIDTRANS_CONFIG } = await import('@/config/midtrans');
-    
+  /**
+   * Verify webhook signature
+   */
+  private verifySignature(payload: WebhookPayload, signature: string): boolean {
     try {
-      const response = await fetch(`${MIDTRANS_CONFIG.endpoints.apiBase}/payments/verify-signature`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(notificationData),
-      });
+      const expectedSignature = crypto
+        .createHash('sha512')
+        .update(payload.order_id + payload.status_code + payload.gross_amount + this.serverKey)
+        .digest('hex');
 
-      if (!response.ok) {
-        throw new Error(`Signature verification failed: ${response.statusText}`);
-      }
-
-      const verificationResult = await response.json();
-      
-      if (!verificationResult.verified) {
-        logWebhookEvent(PaymentEventType.WEBHOOK_FAILED, {
-          orderId: notificationData.order_id,
-          reason: 'Invalid signature (verified by backend)',
-          providedSignature: notificationData.signature_key,
-        }, notificationData.order_id);
-        
-        return {
-          status: 401,
-          message: 'Invalid signature',
-        };
-      }
-
-      logWebhookEvent(PaymentEventType.WEBHOOK_PROCESSED, {
-        orderId: notificationData.order_id,
-        step: 'signature_verified',
-      }, notificationData.order_id);
-      
+      return expectedSignature === signature;
     } catch (error) {
-      logWebhookEvent(PaymentEventType.WEBHOOK_FAILED, {
-        orderId: notificationData.order_id,
-        reason: 'Signature verification error',
-        error: error instanceof Error ? error.message : 'Unknown error',
-      }, notificationData.order_id);
-      
-      return {
-        status: 500,
-        message: 'Signature verification failed',
-      };
+      console.error('Signature verification error:', error);
+      return false;
     }
-
-    // Step 2: Process notification
-    const result = await paymentApi.handleNotification(notificationData);
-    const processingTime = Date.now() - startTime;
-
-    if (result.success) {
-      logWebhookEvent(PaymentEventType.WEBHOOK_PROCESSED, {
-        orderId: notificationData.order_id,
-        step: 'notification_processed',
-        processingTime,
-        result: result.data,
-      }, notificationData.order_id);
-
-      // Trigger custom event for real-time UI updates
-      window.dispatchEvent(new CustomEvent('paymentStatusUpdated', {
-        detail: {
-          orderId: notificationData.order_id,
-          status: notificationData.transaction_status,
-          paymentType: notificationData.payment_type,
-          grossAmount: notificationData.gross_amount,
-          transactionTime: notificationData.transaction_time,
-        }
-      }));
-
-      // Step 3: Send response to Midtrans (HTTP 200)
-      return {
-        status: 200,
-        message: 'Notification processed successfully',
-        data: {
-          order_id: notificationData.order_id,
-          transaction_status: notificationData.transaction_status,
-          processing_time_ms: processingTime,
-        },
-      };
-    } else {
-      logWebhookEvent(PaymentEventType.WEBHOOK_FAILED, {
-        orderId: notificationData.order_id,
-        step: 'notification_processing_failed',
-        error: result.error,
-        processingTime,
-      }, notificationData.order_id);
-      
-      return {
-        status: 500,
-        message: result.error || 'Failed to process notification',
-      };
-    }
-  } catch (error) {
-    const processingTime = Date.now() - startTime;
-    logWebhookEvent(PaymentEventType.WEBHOOK_FAILED, {
-      orderId: notificationData.order_id,
-      step: 'webhook_handler_error',
-      error: error instanceof Error ? error.message : 'Unknown error',
-      stack: error instanceof Error ? error.stack : undefined,
-      processingTime,
-    }, notificationData.order_id);
-    
-    return {
-      status: 500,
-      message: error instanceof Error ? error.message : 'Internal server error',
-    };
   }
-};
 
-/**
- * Mock webhook handler untuk recurring notifications
- */
-export const handleRecurringNotification = async (
-  notificationData: MidtransNotificationData
-): Promise<WebhookResponse> => {
-  const startTime = Date.now();
-  
-  try {
-    logWebhookEvent(PaymentEventType.WEBHOOK_RECEIVED, {
-      orderId: notificationData.order_id,
-      transactionStatus: notificationData.transaction_status,
-      type: 'recurring',
-    }, notificationData.order_id);
+  /**
+   * Process webhook notification
+   */
+  async processNotification(payload: WebhookPayload): Promise<{ success: boolean; message: string }> {
+    try {
+      console.log('Processing webhook:', payload);
 
-    // Process recurring notification
-    const result = await paymentApi.handleNotification(notificationData);
-    const processingTime = Date.now() - startTime;
+      // Log webhook
+      await this.logWebhook(payload);
 
-    if (result.success) {
-      logWebhookEvent(PaymentEventType.WEBHOOK_PROCESSED, {
-        orderId: notificationData.order_id,
-        type: 'recurring',
-        processingTime,
-      }, notificationData.order_id);
+      // Get existing transaction
+      const { data: transaction, error } = await supabase
+        .from('payment_transactions')
+        .select('*')
+        .eq('order_id', payload.order_id)
+        .single();
 
-      return {
-        status: 200,
-        message: 'Recurring notification processed successfully',
-        data: {
-          order_id: notificationData.order_id,
-          transaction_status: notificationData.transaction_status,
-          processing_time_ms: processingTime,
-        },
-      };
-    } else {
-      logWebhookEvent(PaymentEventType.WEBHOOK_FAILED, {
-        orderId: notificationData.order_id,
-        type: 'recurring',
-        error: result.error,
-        processingTime,
-      }, notificationData.order_id);
-      
-      return {
-        status: 500,
-        message: result.error || 'Failed to process recurring notification',
-      };
-    }
-  } catch (error) {
-    const processingTime = Date.now() - startTime;
-    logWebhookEvent(PaymentEventType.WEBHOOK_FAILED, {
-      orderId: notificationData.order_id,
-      type: 'recurring',
-      error: error instanceof Error ? error.message : 'Unknown error',
-      processingTime,
-    }, notificationData.order_id);
-    
-    return {
-      status: 500,
-      message: error instanceof Error ? error.message : 'Internal server error',
-    };
-  }
-};
-
-/**
- * Mock webhook handler untuk pay account notifications
- */
-export const handlePayAccountNotification = async (
-  notificationData: MidtransNotificationData
-): Promise<WebhookResponse> => {
-  const startTime = Date.now();
-  
-  try {
-    logWebhookEvent(PaymentEventType.WEBHOOK_RECEIVED, {
-      orderId: notificationData.order_id,
-      transactionStatus: notificationData.transaction_status,
-      type: 'pay_account',
-    }, notificationData.order_id);
-
-    // Process pay account notification
-    const result = await paymentApi.handleNotification(notificationData);
-    const processingTime = Date.now() - startTime;
-
-    if (result.success) {
-      logWebhookEvent(PaymentEventType.WEBHOOK_PROCESSED, {
-        orderId: notificationData.order_id,
-        type: 'pay_account',
-        processingTime,
-      }, notificationData.order_id);
-
-      return {
-        status: 200,
-        message: 'Pay account notification processed successfully',
-        data: {
-          order_id: notificationData.order_id,
-          transaction_status: notificationData.transaction_status,
-          processing_time_ms: processingTime,
-        },
-      };
-    } else {
-      logWebhookEvent(PaymentEventType.WEBHOOK_FAILED, {
-        orderId: notificationData.order_id,
-        type: 'pay_account',
-        error: result.error,
-        processingTime,
-      }, notificationData.order_id);
-      
-      return {
-        status: 500,
-        message: result.error || 'Failed to process pay account notification',
-      };
-    }
-  } catch (error) {
-    const processingTime = Date.now() - startTime;
-    logWebhookEvent(PaymentEventType.WEBHOOK_FAILED, {
-      orderId: notificationData.order_id,
-      type: 'pay_account',
-      error: error instanceof Error ? error.message : 'Unknown error',
-      processingTime,
-    }, notificationData.order_id);
-    
-    return {
-      status: 500,
-      message: error instanceof Error ? error.message : 'Internal server error',
-    };
-  }
-};
-
-/**
- * Simulate webhook endpoint untuk testing
- * Dalam development, kita bisa menggunakan function ini untuk simulate webhook calls
- */
-export const simulateWebhookCall = async (
-  orderId: string,
-  status: string = 'settlement'
-): Promise<void> => {
-  try {
-    logWebhookEvent(PaymentEventType.WEBHOOK_RECEIVED, {
-      orderId,
-      transactionStatus: status,
-      type: 'simulation',
-    }, orderId);
-
-    // Buat mock notification data
-    const mockNotification: MidtransNotificationData = {
-      order_id: orderId,
-      transaction_id: `trans-${Date.now()}`,
-      gross_amount: '100000',
-      payment_type: 'bank_transfer',
-      transaction_time: new Date().toISOString(),
-      transaction_status: status,
-      status_code: '200',
-      status_message: 'Transaction is successful',
-      fraud_status: 'accept',
-      signature_key: 'mock-signature-key',
-    };
-
-    // Simulate webhook call
-    const response = await handleMidtransWebhook(mockNotification);
-    
-    logWebhookEvent(PaymentEventType.WEBHOOK_PROCESSED, {
-      orderId,
-      type: 'simulation',
-      response,
-    }, orderId);
-    
-    // Trigger event untuk update UI
-    window.dispatchEvent(new CustomEvent('paymentStatusUpdated', {
-      detail: {
-        orderId,
-        status,
-        paymentType: mockNotification.payment_type,
-        grossAmount: mockNotification.gross_amount,
-        transactionTime: mockNotification.transaction_time,
+      if (error) {
+        console.error('Transaction not found:', error);
+        return { success: false, message: 'Transaction not found' };
       }
-    }));
-  } catch (error) {
-    logWebhookEvent(PaymentEventType.WEBHOOK_FAILED, {
-      orderId,
-      type: 'simulation',
-      error: error instanceof Error ? error.message : 'Unknown error',
-    }, orderId);
-  }
-};
 
-/**
- * Setup webhook listeners untuk development
- * Dalam production, ini tidak diperlukan karena webhook akan dipanggil oleh Midtrans
- */
-export const setupWebhookListeners = (): void => {
-  // Listen untuk custom events yang mensimulasikan webhook calls
-  window.addEventListener('simulateWebhook', async (event: CustomEvent) => {
-    const { orderId, status } = event.detail;
-    await simulateWebhookCall(orderId, status);
-  });
+      // Update transaction with webhook data
+      const updateData = {
+        transaction_status: payload.transaction_status,
+        status_code: payload.status_code,
+        status_message: payload.status_message,
+        payment_type: payload.payment_type,
+        bank: payload.bank || null,
+        va_number: payload.va_number || null,
+        approval_code: payload.approval_code || null,
+        qr_string: payload.qr_string || null,
+        masked_card: payload.masked_card || null,
+        card_type: payload.card_type || null,
+        fraud_status: payload.fraud_status || null,
+        expiry_time: payload.expiry_time || null,
+        cancel_time: payload.cancel_time || null,
+        settlement_time: payload.settlement_time || null,
+        refund_time: payload.refund_time || null,
+        refund_amount: payload.refund_amount || null,
+        metadata: payload,
+        updated_at: new Date().toISOString(),
+        processed: payload.transaction_status === 'settlement',
+      };
 
-  // Listen untuk payment status updates dan log
-  window.addEventListener('paymentStatusUpdated', (event: CustomEvent) => {
-    const { orderId, status, paymentType, grossAmount } = event.detail;
-    logWebhookEvent(PaymentEventType.WEBHOOK_PROCESSED, {
-      orderId,
-      status,
-      paymentType,
-      grossAmount,
-      source: 'ui_event',
-    }, orderId);
-  });
+      const { error: updateError } = await supabase
+        .from('payment_transactions')
+        .update(updateData)
+        .eq('order_id', payload.order_id);
 
-  paymentLogger.info('Webhook listeners setup complete', {}, 'webhook');
-};
+      if (updateError) {
+        console.error('Failed to update transaction:', updateError);
+        return { success: false, message: 'Failed to update transaction' };
+      }
 
-/**
- * Test webhook handler dengan berbagai scenarios
- */
-export const testWebhookHandler = async (): Promise<void> => {
-  const testCases = [
-    { orderId: 'TEST-ORDER-1', status: 'settlement', description: 'Successful payment' },
-    { orderId: 'TEST-ORDER-2', status: 'pending', description: 'Pending payment' },
-    { orderId: 'TEST-ORDER-3', status: 'deny', description: 'Denied payment' },
-    { orderId: 'TEST-ORDER-4', status: 'cancel', description: 'Cancelled payment' },
-    { orderId: 'TEST-ORDER-5', status: 'expire', description: 'Expired payment' },
-  ];
+      // Update order payment status
+      await this.updateOrderStatus(payload.order_id, payload.transaction_status, payload.status_code);
 
-  paymentLogger.info('Starting webhook handler tests', { testCases }, 'webhook');
+      // Handle specific status
+      await this.handleTransactionStatus(payload);
 
-  for (const testCase of testCases) {
-    paymentLogger.info(`Testing webhook: ${testCase.description}`, testCase, 'webhook');
-    await simulateWebhookCall(testCase.orderId, testCase.status);
-    
-    // Wait between tests
-    await new Promise(resolve => setTimeout(resolve, 1000));
+      console.log('Webhook processed successfully');
+      return { success: true, message: 'Webhook processed successfully' };
+
+    } catch (error) {
+      console.error('Webhook processing error:', error);
+      return {
+        success: false,
+        message: error instanceof Error ? error.message : 'Unknown error',
+      };
+    }
   }
 
-  paymentLogger.info('Webhook handler testing complete', {}, 'webhook');
-};
+  /**
+   * Log webhook to database
+   */
+  private async logWebhook(payload: WebhookPayload): Promise<void> {
+    try {
+      await supabase.from('webhook_logs').insert({
+        order_id: payload.order_id,
+        event_type: payload.transaction_status,
+        payload: payload as any,
+        processed: true,
+        processing_time_ms: 0,
+        error_message: null,
+      });
+    } catch (error) {
+      console.error('Failed to log webhook:', error);
+    }
+  }
 
-// Export webhook handler functions
-export default {
-  handleMidtransWebhook,
-  handleRecurringNotification,
-  handlePayAccountNotification,
-  simulateWebhookCall,
-  setupWebhookListeners,
-  testWebhookHandler,
-};
+  /**
+   * Update order payment status
+   */
+  private async updateOrderStatus(orderId: string, transactionStatus: string, statusCode: string): Promise<void> {
+    let paymentStatus = 'pending';
+
+    switch (transactionStatus) {
+      case 'capture':
+        if (statusCode === '200') {
+          paymentStatus = 'paid';
+        }
+        break;
+      case 'settlement':
+        paymentStatus = 'paid';
+        break;
+      case 'deny':
+      case 'cancel':
+      case 'expire':
+      case 'failure':
+        paymentStatus = 'failed';
+        break;
+      case 'refund':
+      case 'partial_refund':
+        paymentStatus = 'refunded';
+        break;
+    }
+
+    await supabase
+      .from('orders')
+      .update({
+        payment_status: paymentStatus,
+        updated_at: new Date().toISOString(),
+      })
+      .eq('order_id', orderId);
+  }
+
+  /**
+   * Handle specific transaction status
+   */
+  private async handleTransactionStatus(payload: WebhookPayload): Promise<void> {
+    switch (payload.transaction_status) {
+      case 'capture':
+      case 'settlement':
+        await this.onPaymentSuccess(payload);
+        break;
+      case 'deny':
+      case 'cancel':
+      case 'expire':
+        await this.onPaymentFailed(payload);
+        break;
+      case 'refund':
+      case 'partial_refund':
+        await this.onPaymentRefunded(payload);
+        break;
+    }
+  }
+
+  /**
+   * Handle successful payment
+   */
+  private async onPaymentSuccess(payload: WebhookPayload): Promise<void> {
+    console.log('Payment successful:', payload.order_id);
+
+    // Send confirmation email/notification
+    // TODO: Implement notification logic
+
+    // You can trigger real-time updates here
+    // The frontend will automatically receive updates via subscription
+  }
+
+  /**
+   * Handle failed payment
+   */
+  private async onPaymentFailed(payload: WebhookPayload): Promise<void> {
+    console.log('Payment failed:', payload.order_id);
+
+    // Send failure notification
+    // TODO: Implement notification logic
+  }
+
+  /**
+   * Handle refunded payment
+   */
+  private async onPaymentRefunded(payload: WebhookPayload): Promise<void> {
+    console.log('Payment refunded:', payload.order_id);
+
+    // Send refund notification
+    // TODO: Implement notification logic
+  }
+
+  /**
+   * Get payment history
+   */
+  async getPaymentHistory(orderId: string): Promise<PaymentTransaction | null> {
+    const { data, error } = await supabase
+      .from('payment_transactions')
+      .select('*')
+      .eq('order_id', orderId)
+      .single();
+
+    if (error) {
+      console.error('Error fetching payment history:', error);
+      return null;
+    }
+
+    return data;
+  }
+
+  /**
+   * Get all webhook logs
+   */
+  async getWebhookLogs(limit: number = 100) {
+    const { data, error } = await supabase
+      .from('webhook_logs')
+      .select('*')
+      .order('created_at', { ascending: false })
+      .limit(limit);
+
+    if (error) {
+      console.error('Error fetching webhook logs:', error);
+      return [];
+    }
+
+    return data;
+  }
+}
+
+// Export singleton instance
+export const webhookHandler = new WebhookHandler();
+export default webhookHandler;

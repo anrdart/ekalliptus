@@ -28,7 +28,7 @@
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   transform: translateZ(0);
   will-change: transform;
-  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+  background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--primary)) 100%);
   border: none;
   color: white;
   box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
@@ -149,7 +149,7 @@
 
 /* Focus styles for accessibility */
 .payment-button:focus-visible {
-  outline: 2px solid #3b82f6;
+  outline: 2px solid hsl(var(--primary));
   outline-offset: 2px;
 }
 
@@ -240,7 +240,7 @@
 
 /* Primary button focus styles */
 .payment-button:focus-visible {
-  outline: 2px solid #1d4ed8;
+  outline: 2px solid hsl(var(--primary));
   outline-offset: 2px;
 }
 
