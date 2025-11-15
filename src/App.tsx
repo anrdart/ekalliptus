@@ -10,7 +10,9 @@ import NotFound from "./pages/NotFound";
 import { BackgroundFX } from "@/components/BackgroundFX";
 import { CustomCursor } from "@/components/CustomCursor";
 import { Navigation } from "@/components/Navigation";
+import { VantaBackground } from "@/components/VantaBackground";
 import { AuthProvider } from "@/contexts/AuthContext";
+import { ThemeProvider } from "@/contexts/ThemeContext";
 const Order = lazy(() => import("./pages/Order"));
 const BankTransfer = lazy(() => import("./pages/BankTransfer"));
 const PaymentInstructions = lazy(() => import("./pages/PaymentInstructions"));
@@ -25,14 +27,16 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <HelmetProvider>
       <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BackgroundFX />
-        <CustomCursor />
-        <AuthProvider>
-          <BrowserRouter>
-            <Navigation />
-            <main className="relative z-0 flex min-h-screen flex-col pt-16 md:pt-20">
+        <ThemeProvider>
+          <Toaster />
+          <Sonner />
+          <VantaBackground />
+          <BackgroundFX />
+          <CustomCursor />
+          <AuthProvider>
+            <BrowserRouter>
+              <Navigation />
+              <main className="relative z-0 flex min-h-screen flex-col pt-16 md:pt-20">
             <Routes>
               <Route path="/" element={<Index />} />
               <Route
@@ -95,8 +99,9 @@ const App = () => (
               <Route path="*" element={<NotFound />} />
             </Routes>
           </main>
-        </BrowserRouter>
-      </AuthProvider>
+          </BrowserRouter>
+        </AuthProvider>
+        </ThemeProvider>
       </TooltipProvider>
     </HelmetProvider>
   </QueryClientProvider>

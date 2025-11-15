@@ -6,8 +6,7 @@ import { cn } from "@/lib/utils";
 import { useTranslation } from "react-i18next";
 import { t } from "i18next";
 import i18n from "@/i18n";
-
-type ThemeMode = "dark" | "light";
+import { useTheme } from "@/contexts/ThemeContext";
 
 const sectionLinks = [
   { label: "Home", hash: "#home" },
@@ -25,7 +24,7 @@ export const Navigation = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [languageModalOpen, setLanguageModalOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [theme, setTheme] = useState<ThemeMode>("dark");
+  const { theme, toggleTheme } = useTheme();
   const navigate = useNavigate();
   const location = useLocation();
   const isLight = theme === "light";
@@ -53,15 +52,6 @@ export const Navigation = () => {
   };
 
   const currentLanguage = languages.find(lang => lang.code === i18n.language) || languages[0];
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    const stored = window.localStorage.getItem("ekal-theme");
-    const prefersLight = window.matchMedia("(prefers-color-scheme: light)").matches;
-    const initial = (stored as ThemeMode | null) ?? (prefersLight ? "light" : "dark");
-    setTheme(initial);
-    document.body.classList.toggle("light", initial === "light");
-  }, []);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 32);
@@ -131,14 +121,6 @@ export const Navigation = () => {
     [location.pathname, navigate],
   );
 
-  const toggleTheme = () => {
-    const nextTheme: ThemeMode = theme === "dark" ? "light" : "dark";
-    setTheme(nextTheme);
-    if (typeof window !== "undefined") {
-      document.body.classList.toggle("light", nextTheme === "light");
-      window.localStorage.setItem("ekal-theme", nextTheme);
-    }
-  };
 
   const desktopLinks = useMemo(
     () => (
