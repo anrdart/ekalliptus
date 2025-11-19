@@ -7,7 +7,6 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
-import { BackgroundFX } from "@/components/BackgroundFX";
 import { CustomCursor } from "@/components/CustomCursor";
 import { Navigation } from "@/components/Navigation";
 import { VantaBackground } from "@/components/VantaBackground";
@@ -31,7 +30,6 @@ const App = () => (
           <Toaster />
           <Sonner />
           <VantaBackground />
-          <BackgroundFX />
           <CustomCursor />
           <AuthProvider>
             <BrowserRouter>

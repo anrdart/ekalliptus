@@ -146,6 +146,8 @@ All colors MUST be HSL.
     -webkit-user-select: none;
     -webkit-touch-callout: none;
     -webkit-tap-highlight-color: transparent;
+    /* Background behind Vanta for fallback */
+    background: hsl(120 20% 8%);
   }
 
   * {
@@ -153,8 +155,8 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground antialiased;
-    background: var(--hero-gradient);
+    @apply text-foreground antialiased;
+    background: transparent;
     color-scheme: dark;
     cursor: none !important;
   }
@@ -165,6 +167,10 @@ All colors MUST be HSL.
 
   .light body {
     color-scheme: light;
+  }
+
+  .light html {
+    background: hsl(48 33% 96%);
   }
 
   body.is-touch {
