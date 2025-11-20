@@ -1,6 +1,7 @@
 # Cloudflare Pages Security Headers & Configuration Migration
 # ekalliptus.id - Enhanced Trust & Safety
 # Migrated from Apache .htaccess to Cloudflare Pages _headers format
+# DEPLOYMENT VERIFICATION: Updated 2025-11-20 16:04:55 - Commit 03c0d5d with merged /* blocks
 
 # Security Headers - Applied to all routes (/*)
 /*
