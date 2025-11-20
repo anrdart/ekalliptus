@@ -161,7 +161,7 @@ export const Navigation = () => {
             )}
           >
             <img
-              src="/src/assets/ekalliptus_rounded.webp"
+              src="/ekalliptus_rounded.webp"
               alt="ekalliptus"
               className="h-8 w-auto transition-opacity hover:opacity-90"
               loading="eager"
