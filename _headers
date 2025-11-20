@@ -28,6 +28,11 @@
   # Permissions Policy - Restrict potentially dangerous APIs
   Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
 
+  # HTML Cache Control - No caching for SPA
+  Cache-Control: no-cache, no-store, must-revalidate
+  Pragma: no-cache
+  Expires: 0
+
   # Remove Server signature (Cloudflare does this automatically)
   # Remove X-Powered-By (Cloudflare does this automatically)
 
@@ -78,9 +83,3 @@
 /*.xml
   Content-Type: application/xml; charset=utf-8
   Cache-Control: public, max-age=86400
-
-# HTML files - No caching for SPA
-/*
-  Cache-Control: no-cache, no-store, must-revalidate
-  Pragma: no-cache
-  Expires: 0
