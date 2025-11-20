@@ -42,6 +42,15 @@ export const VantaBackground = () => {
       vantaScript.src = 'https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.dots.min.js';
       vantaScript.async = false;
 
+      // Error handling for script loading
+      threeScript.onerror = () => {
+        console.error('Failed to load Three.js from CDN');
+      };
+
+      vantaScript.onerror = () => {
+        console.error('Failed to load Vanta.js from CDN');
+      };
+
       // Wait for both to load
       threeScript.onload = () => {
         console.log('Three.js loaded');
