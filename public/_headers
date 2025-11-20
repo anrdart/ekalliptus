@@ -1,0 +1,86 @@
+# Cloudflare Pages Security Headers & Configuration Migration
+# ekalliptus.id - Enhanced Trust & Safety
+# Migrated from Apache .htaccess to Cloudflare Pages _headers format
+
+# Security Headers - Applied to all routes (/*)
+/*
+  # Prevent MIME type sniffing
+  X-Content-Type-Options: nosniff
+
+  # Prevent clickjacking (XFO)
+  X-Frame-Options: DENY
+
+  # XSS Protection
+  X-XSS-Protection: 1; mode=block
+
+  # Referrer Policy
+  Referrer-Policy: strict-origin-when-cross-origin
+
+  # HSTS (HTTP Strict Transport Security) - Force HTTPS for 1 year
+  Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+
+  # Cross-Origin Opener Policy (COOP) - Prevent cross-origin attacks
+  Cross-Origin-Opener-Policy: same-origin
+
+  # Content Security Policy (CSP) - Prevent XSS attacks
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: https://fonts.googleapis.com https://api.emailjs.com https://sheetdb.io https://static.cloudflareinsights.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https: blob:; connect-src 'self' https://api.emailjs.com https://sheetdb.io https://lovable.dev https://*.supabase.co wss://*.supabase.co; frame-ancestors 'none'; base-uri 'self'; form-action 'self' https://sheetdb.io; upgrade-insecure-requests
+
+  # Permissions Policy - Restrict potentially dangerous APIs
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+
+  # Remove Server signature (Cloudflare does this automatically)
+  # Remove X-Powered-By (Cloudflare does this automatically)
+
+# SPA Routing & Redirects (migrated from mod_rewrite)
+# Note: Cloudflare Pages handles SPA routing automatically
+# HTTPS and www redirects are handled by Cloudflare Page Rules/Dashboard
+
+# Browser Caching (migrated from mod_expires)
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/static/*
+  Cache-Control: public, max-age=2592000
+
+/*.js
+  Cache-Control: public, max-age=2592000
+
+/*.css
+  Cache-Control: public, max-age=2592000
+
+/*.woff
+  Cache-Control: public, max-age=31536000
+
+/*.woff2
+  Cache-Control: public, max-age=31536000
+
+/*.png
+  Cache-Control: public, max-age=31536000
+
+/*.jpg
+  Cache-Control: public, max-age=31536000
+
+/*.jpeg
+  Cache-Control: public, max-age=31536000
+
+/*.gif
+  Cache-Control: public, max-age=31536000
+
+/*.svg
+  Cache-Control: public, max-age=31536000
+
+/*.ico
+  Cache-Control: public, max-age=31536000
+
+/*.webp
+  Cache-Control: public, max-age=31536000
+
+/*.xml
+  Content-Type: application/xml; charset=utf-8
+  Cache-Control: public, max-age=86400
+
+# HTML files - No caching for SPA
+/*
+  Cache-Control: no-cache, no-store, must-revalidate
+  Pragma: no-cache
+  Expires: 0
