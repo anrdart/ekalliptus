@@ -15,7 +15,6 @@ dist-ssr
 # Environment variables
 # .env file should be committed with placeholder values
 # .env.local should be ignored (contains actual secrets)
-.env
 .env.local
 .env.production
 .env.development
