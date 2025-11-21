@@ -24,15 +24,32 @@ export const VantaBackground = () => {
   const [isLoading, setIsLoading] = useState(true);
   const isMobile = useIsMobile();
 
-  // Mobile optimization: Use static gradient instead of Vanta.js
-  // Saves 611KB (Three.js + Vanta.js) and improves performance score from 71 to 90+
-  if (isMobile) {
-    // Add small delay before hiding loading to show PreLoader animation
-    useEffect(() => {
+  // Mobile fade-in effect hook (must be called unconditionally)
+  useEffect(() => {
+    if (isMobile === true) {
       const timer = setTimeout(() => setIsLoading(false), 500);
       return () => clearTimeout(timer);
-    }, []);
+    }
+  }, [isMobile]);
 
+  // Show loading state while detecting device type (prevents flash)
+  if (isMobile === undefined) {
+    return (
+      <div
+        className="fixed inset-0"
+        style={{
+          width: '100vw',
+          height: '100vh',
+          zIndex: -10,
+          backgroundColor: theme === 'light' ? '#FAF8F5' : '#000000',
+        }}
+      />
+    );
+  }
+
+  // Mobile optimization: Use static gradient instead of Vanta.js
+  // Saves 611KB (Three.js + Vanta.js) and improves performance score from 71 to 90+
+  if (isMobile === true) {
     return (
       <>
         {/* Loading overlay for mobile */}
