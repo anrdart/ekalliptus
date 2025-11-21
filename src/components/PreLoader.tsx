@@ -4,20 +4,13 @@ export const PreLoader = () => {
   const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
-    // Hide pre-loader after window loads and minimum display time
-    const handleLoad = () => {
-      // Minimum 800ms display time for smooth UX
-      setTimeout(() => {
-        setIsVisible(false);
-      }, 800);
-    };
+    // Always show for minimum 1200ms on mobile for better UX
+    // This gives PreLoader + VantaBackground time to coordinate
+    const minDisplayTimer = setTimeout(() => {
+      setIsVisible(false);
+    }, 1200);
 
-    if (document.readyState === 'complete') {
-      handleLoad();
-    } else {
-      window.addEventListener('load', handleLoad);
-      return () => window.removeEventListener('load', handleLoad);
-    }
+    return () => clearTimeout(minDisplayTimer);
   }, []);
 
   if (!isVisible) return null;

@@ -27,19 +27,41 @@ export const VantaBackground = () => {
   // Mobile optimization: Use static gradient instead of Vanta.js
   // Saves 611KB (Three.js + Vanta.js) and improves performance score from 71 to 90+
   if (isMobile) {
+    // Add small delay before hiding loading to show PreLoader animation
+    useEffect(() => {
+      const timer = setTimeout(() => setIsLoading(false), 500);
+      return () => clearTimeout(timer);
+    }, []);
+
     return (
-      <div
-        className="fixed inset-0"
-        style={{
-          width: '100vw',
-          height: '100vh',
-          zIndex: -10,
-          background: theme === 'light'
-            ? 'radial-gradient(ellipse 120% 80% at 50% -20%, #d9e4d3 0%, #FAF8F5 50%, #e8f0e3 100%)'
-            : 'radial-gradient(ellipse 120% 80% at 50% -20%, #1a1f1a 0%, #000000 50%, #0a0f0a 100%)',
-          backgroundAttachment: 'fixed',
-        }}
-      />
+      <>
+        {/* Loading overlay for mobile */}
+        {isLoading && (
+          <div
+            className="fixed inset-0 transition-opacity duration-500"
+            style={{
+              zIndex: -10,
+              backgroundColor: theme === 'light' ? '#FAF8F5' : '#000000',
+              opacity: isLoading ? 1 : 0,
+            }}
+          />
+        )}
+
+        {/* Static gradient background for mobile */}
+        <div
+          className="fixed inset-0 transition-opacity duration-1000"
+          style={{
+            width: '100vw',
+            height: '100vh',
+            zIndex: -10,
+            background: theme === 'light'
+              ? 'radial-gradient(ellipse 120% 80% at 50% -20%, #d9e4d3 0%, #FAF8F5 50%, #e8f0e3 100%)'
+              : 'radial-gradient(ellipse 120% 80% at 50% -20%, #1a1f1a 0%, #000000 50%, #0a0f0a 100%)',
+            backgroundAttachment: 'fixed',
+            opacity: isLoading ? 0 : 1,
+          }}
+        />
+      </>
     );
   }
 
