@@ -10,6 +10,7 @@ import NotFound from "./pages/NotFound";
 import { CustomCursor } from "@/components/CustomCursor";
 import { Navigation } from "@/components/Navigation";
 import { VantaBackground } from "@/components/VantaBackground";
+import { PreLoader } from "@/components/PreLoader";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 const Order = lazy(() => import("./pages/Order"));
@@ -27,6 +28,7 @@ const App = () => (
     <HelmetProvider>
       <TooltipProvider>
         <ThemeProvider>
+          <PreLoader />
           <Toaster />
           <Sonner />
           <VantaBackground />
