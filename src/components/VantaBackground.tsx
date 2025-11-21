@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useTheme } from '@/contexts/ThemeContext';
 
 // Vanta types
@@ -20,6 +20,7 @@ export const VantaBackground = () => {
   const vantaRef = useRef<HTMLDivElement>(null);
   const vantaEffectRef = useRef<VantaEffect | null>(null);
   const { theme } = useTheme();
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     let mounted = true;
@@ -96,8 +97,12 @@ export const VantaBackground = () => {
 
         vantaEffectRef.current = effect;
         console.log('Vanta effect initialized successfully');
+
+        // Hide loading state after initialization
+        setTimeout(() => setIsLoading(false), 500);
       } catch (error) {
         console.error('Vanta initialization error:', error);
+        setIsLoading(false); // Hide loading even on error
       }
     };
 
@@ -129,14 +134,36 @@ export const VantaBackground = () => {
   }, [theme]);
 
   return (
-    <div
-      ref={vantaRef}
-      className="fixed inset-0"
-      style={{
-        width: '100vw',
-        height: '100vh',
-        zIndex: -10,
-      }}
-    />
+    <>
+      {/* Loading overlay - fade out when Vanta is ready */}
+      {isLoading && (
+        <div
+          className="fixed inset-0 transition-opacity duration-500"
+          style={{
+            zIndex: -10,
+            backgroundColor: theme === 'light' ? '#FAF8F5' : '#000000',
+            opacity: isLoading ? 1 : 0,
+          }}
+        >
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="animate-pulse text-sm opacity-30" style={{ color: theme === 'light' ? '#7e9367' : '#b7b09e' }}>
+              Loading background...
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Vanta background container */}
+      <div
+        ref={vantaRef}
+        className="fixed inset-0 transition-opacity duration-1000"
+        style={{
+          width: '100vw',
+          height: '100vh',
+          zIndex: -10,
+          opacity: isLoading ? 0 : 1,
+        }}
+      />
+    </>
   );
 };
