@@ -24,7 +24,8 @@ export const VantaBackground = () => {
   useEffect(() => {
     let mounted = true;
 
-    // Dynamically load Three.js and Vanta
+    // Dynamically load Three.js and Vanta from self-hosted files
+    // Files are in public/vendor/ to bypass CSP restrictions on external CDNs
     const loadScripts = async () => {
       // Check if already loaded
       if (window.VANTA && window.THREE) {
@@ -34,21 +35,21 @@ export const VantaBackground = () => {
 
       // Load Three.js
       const threeScript = document.createElement('script');
-      threeScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js';
+      threeScript.src = '/vendor/three.min.js';
       threeScript.async = false; // Load synchronously for correct order
 
       // Load Vanta Dots
       const vantaScript = document.createElement('script');
-      vantaScript.src = 'https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.dots.min.js';
+      vantaScript.src = '/vendor/vanta.dots.min.js';
       vantaScript.async = false;
 
       // Error handling for script loading
       threeScript.onerror = () => {
-        console.error('Failed to load Three.js from CDN');
+        console.error('Failed to load Three.js from /vendor/ - self-hosted file missing');
       };
 
       vantaScript.onerror = () => {
-        console.error('Failed to load Vanta.js from CDN');
+        console.error('Failed to load Vanta.js from /vendor/ - self-hosted file missing');
       };
 
       // Wait for both to load
