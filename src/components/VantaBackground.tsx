@@ -24,7 +24,12 @@ export const VantaBackground = () => {
   const [isLoading, setIsLoading] = useState(true);
   const isMobile = useIsMobile();
 
-  // Mobile fade-in effect hook (must be called unconditionally)
+  // ==========================================================================
+  // ALL HOOKS MUST BE CALLED UNCONDITIONALLY BEFORE ANY RETURNS
+  // This prevents React Error #300 (Rules of Hooks violation)
+  // ==========================================================================
+
+  // Hook 1: Mobile fade-in effect
   useEffect(() => {
     if (isMobile === true) {
       const timer = setTimeout(() => setIsLoading(false), 500);
@@ -32,57 +37,11 @@ export const VantaBackground = () => {
     }
   }, [isMobile]);
 
-  // Show loading state while detecting device type (prevents flash)
-  if (isMobile === undefined) {
-    return (
-      <div
-        className="fixed inset-0"
-        style={{
-          width: '100vw',
-          height: '100vh',
-          zIndex: -10,
-          backgroundColor: theme === 'light' ? '#FAF8F5' : '#000000',
-        }}
-      />
-    );
-  }
-
-  // Mobile optimization: Use static gradient instead of Vanta.js
-  // Saves 611KB (Three.js + Vanta.js) and improves performance score from 71 to 90+
-  if (isMobile === true) {
-    return (
-      <>
-        {/* Loading overlay for mobile */}
-        {isLoading && (
-          <div
-            className="fixed inset-0 transition-opacity duration-500"
-            style={{
-              zIndex: -10,
-              backgroundColor: theme === 'light' ? '#FAF8F5' : '#000000',
-              opacity: isLoading ? 1 : 0,
-            }}
-          />
-        )}
-
-        {/* Static gradient background for mobile */}
-        <div
-          className="fixed inset-0 transition-opacity duration-1000"
-          style={{
-            width: '100vw',
-            height: '100vh',
-            zIndex: -10,
-            background: theme === 'light'
-              ? 'radial-gradient(ellipse 120% 80% at 50% -20%, #d9e4d3 0%, #FAF8F5 50%, #e8f0e3 100%)'
-              : 'radial-gradient(ellipse 120% 80% at 50% -20%, #1a1f1a 0%, #000000 50%, #0a0f0a 100%)',
-            backgroundAttachment: 'fixed',
-            opacity: isLoading ? 0 : 1,
-          }}
-        />
-      </>
-    );
-  }
-
+  // Hook 2: Desktop Vanta loading - runs only on desktop
   useEffect(() => {
+    // Guard: Skip on mobile or undefined
+    if (isMobile !== false) return;
+
     let mounted = true;
 
     // Dynamically load Three.js and Vanta from self-hosted files
@@ -146,13 +105,13 @@ export const VantaBackground = () => {
           scale: 1.0,
           scaleMobile: 1.0,
           // Ekalliptus Theme Colors - subtle in light mode, vibrant in dark mode
-          color: theme === 'light' ? 0xc8d5c4 : 0x7e9367, // Light sage green for light mode, vibrant green for dark
-          color2: theme === 'light' ? 0xd9e4d3 : 0xb7b09e, // Very light mint for light mode, accent for dark
-          backgroundColor: theme === 'light' ? 0xFAF8F5 : 0x000000, // Warm cream for light mode, black for dark mode
-          size: theme === 'light' ? 3.5 : 5.0, // Slightly larger dots in light mode for visibility
-          spacing: theme === 'light' ? 22.0 : 18.0, // Moderate spacing in light mode
-          showLines: theme === 'light' ? false : true, // No lines in light mode to reduce visual complexity
-          opacity: theme === 'light' ? 0.5 : 0.8, // Balanced opacity in light mode
+          color: theme === 'light' ? 0xc8d5c4 : 0x7e9367,
+          color2: theme === 'light' ? 0xd9e4d3 : 0xb7b09e,
+          backgroundColor: theme === 'light' ? 0xFAF8F5 : 0x000000,
+          size: theme === 'light' ? 3.5 : 5.0,
+          spacing: theme === 'light' ? 22.0 : 18.0,
+          showLines: theme === 'light' ? false : true,
+          opacity: theme === 'light' ? 0.5 : 0.8,
         });
 
         vantaEffectRef.current = effect;
@@ -175,10 +134,13 @@ export const VantaBackground = () => {
         vantaEffectRef.current = null;
       }
     };
-  }, []); // Only run once on mount
+  }, [isMobile, theme]); // Added isMobile dependency
 
-  // Update all settings when theme changes
+  // Hook 3: Desktop theme update - runs only on desktop
   useEffect(() => {
+    // Guard: Skip on mobile or undefined
+    if (isMobile !== false) return;
+
     if (vantaEffectRef.current) {
       console.log('Updating Vanta settings for theme:', theme);
       vantaEffectRef.current.setOptions({
@@ -191,8 +153,63 @@ export const VantaBackground = () => {
         opacity: theme === 'light' ? 0.5 : 0.8,
       });
     }
-  }, [theme]);
+  }, [theme, isMobile]); // Added isMobile dependency
 
+  // ==========================================================================
+  // CONDITIONAL RETURNS - Safe to use after all hooks are declared
+  // ==========================================================================
+
+  // Show loading state while detecting device type (prevents flash)
+  if (isMobile === undefined) {
+    return (
+      <div
+        className="fixed inset-0"
+        style={{
+          width: '100vw',
+          height: '100vh',
+          zIndex: -10,
+          backgroundColor: theme === 'light' ? '#FAF8F5' : '#000000',
+        }}
+      />
+    );
+  }
+
+  // Mobile optimization: Use static gradient instead of Vanta.js
+  // Saves 611KB (Three.js + Vanta.js) and improves performance score from 71 to 90+
+  if (isMobile === true) {
+    return (
+      <>
+        {/* Loading overlay for mobile */}
+        {isLoading && (
+          <div
+            className="fixed inset-0 transition-opacity duration-500"
+            style={{
+              zIndex: -10,
+              backgroundColor: theme === 'light' ? '#FAF8F5' : '#000000',
+              opacity: isLoading ? 1 : 0,
+            }}
+          />
+        )}
+
+        {/* Static gradient background for mobile */}
+        <div
+          className="fixed inset-0 transition-opacity duration-1000"
+          style={{
+            width: '100vw',
+            height: '100vh',
+            zIndex: -10,
+            background: theme === 'light'
+              ? 'radial-gradient(ellipse 120% 80% at 50% -20%, #d9e4d3 0%, #FAF8F5 50%, #e8f0e3 100%)'
+              : 'radial-gradient(ellipse 120% 80% at 50% -20%, #1a1f1a 0%, #000000 50%, #0a0f0a 100%)',
+            backgroundAttachment: 'fixed',
+            opacity: isLoading ? 0 : 1,
+          }}
+        />
+      </>
+    );
+  }
+
+  // Desktop: Full Vanta.js experience
   return (
     <>
       {/* Loading overlay - fade out when Vanta is ready */}
