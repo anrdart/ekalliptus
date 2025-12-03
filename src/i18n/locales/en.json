@@ -287,8 +287,12 @@
         "empty": "No file selected",
         "uploadText": "Click to upload or drag and drop",
         "fileTypes": "SVG, PNG, JPG or PDF (MAX. 10MB)",
+        "videoTypes": "Video: MP4, WebM, MOV",
         "selected": "Selected files",
-        "uploaded": "Uploaded successfully"
+        "uploaded": "Uploaded successfully",
+        "videoLoading": "Loading video...",
+        "videoCompressing": "Compressing video...",
+        "videoUploading": "Uploading..."
       }
     },
     "contactPreferences": {

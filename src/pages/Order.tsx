@@ -519,9 +519,7 @@ export default function Order() {
     setIsSubmitting(true);
 
     try {
-      const orderId = `ORD-${Date.now()}-${Math.random().toString(36).substring(2, 9).toUpperCase()}`;
-
-      // Determine if this is service HP/Laptop (no payment needed)
+      // Determine if this is service HP/Laptop (onsite service - no deposit)
       const isServiceOnly = serviceKey === 'serviceHpLaptop';
 
       // Default amount - admin will adjust later
@@ -530,37 +528,26 @@ export default function Order() {
       // Load Supabase API
       const api = await loadSupabaseApi();
 
-      // Prepare order data for Supabase - match the schema exactly
+      // Prepare order data matching the actual Supabase schema
       const orderData = {
-        order_id: orderId,
-        customer_id: null,
         customer_name: values.nama,
-        customer_email: values.email,
-        customer_phone: values.whatsapp.replace(/\D/g, ''),
-        service_id: null,
-        service_name: values.layanan,
-        service_price: defaultAmount,
-        quantity: 1,
-        subtotal: defaultAmount,
-        fees: 0,
-        total: defaultAmount,
-        currency: 'IDR',
-        payment_status: isServiceOnly ? 'pending_contact' : 'unpaid',
-        payment_transaction_id: null,
-        attachment_meta: uploadedFiles.length > 0 ? { files: uploadedFiles } : null,
-        submission_summary: {
+        email: values.email,
+        whatsapp: values.whatsapp,
+        service_type: values.layanan, // Will be mapped to enum in API
+        urgency: 'normal' as const,
+        scope: {
           service_details: values.layananDetails[serviceKey],
           contact_preference: values.preferensiKontak,
           service_key: serviceKey,
+          attachments: uploadedFiles.length > 0 ? uploadedFiles : undefined,
         },
-        custom_field1: null,
-        custom_field2: null,
-        custom_field3: null,
-        metadata: {
-          service_type: values.layanan,
-          created_from: 'order_form',
-          ip_address: null,
-        },
+        delivery_method: 'pickup' as const,
+        schedule_date: new Date().toISOString().split('T')[0],
+        schedule_time: '10:00',
+        shipping_cost: 0,
+        subtotal: defaultAmount,
+        discount: 0,
+        fee: 0,
       };
 
       // Save to Supabase
@@ -570,22 +557,8 @@ export default function Order() {
         throw new Error(result.error || 'Failed to create order');
       }
 
-      // Create customer record - match schema with first_name/last_name
-      const nameParts = values.nama.split(' ');
-      const firstName = nameParts[0] || values.nama;
-      const lastName = nameParts.slice(1).join(' ') || null;
-
-      await api.createOrUpdateCustomer({
-        email: values.email,
-        first_name: firstName,
-        last_name: lastName,
-        phone: values.whatsapp.replace(/\D/g, ''),
-        billing_address: null,
-        shipping_address: null,
-        metadata: {
-          contact_preference: values.preferensiKontak,
-        },
-      });
+      const createdOrder = result.data;
+      const orderId = createdOrder?.id;
 
       // For service HP/Laptop, just show success message
       if (isServiceOnly) {
@@ -598,14 +571,13 @@ export default function Order() {
         navigate(`/order-success?orderId=${orderId}`);
       } else {
         // For other services, create payment transaction and redirect to payment page
+        const depositAmount = createdOrder?.deposit || Math.round(defaultAmount * 0.5);
+        
         const transactionResult = await api.createTransaction({
           order_id: orderId,
-          gross_amount: defaultAmount,
-          payment_type: 'bank_transfer',
-          transaction_status: 'pending',
-          transaction_time: new Date().toISOString(),
-          customer_email: values.email,
-          customer_phone: values.whatsapp.replace(/\D/g, ''),
+          amount: depositAmount,
+          type: 'dp',
+          method: 'bank_transfer',
           metadata: {
             service_type: values.layanan,
             customer_name: values.nama,
@@ -613,7 +585,7 @@ export default function Order() {
         });
 
         if (!transactionResult.success) {
-          throw new Error(transactionResult.error || 'Failed to create transaction');
+          console.warn('Transaction creation failed, but order was created:', transactionResult.error);
         }
 
         toast({
@@ -623,14 +595,14 @@ export default function Order() {
 
         // Redirect to payment instructions page
         setTimeout(() => {
-          navigate(`/payment-instructions?orderId=${orderId}&amount=${defaultAmount}`);
+          navigate(`/payment-instructions?orderId=${orderId}&amount=${depositAmount}`);
         }, 1500);
       }
     } catch (error) {
       console.error('Order submission error:', error);
       toast({
         title: t('order.error.title', { defaultValue: 'Error' }),
-        description: t('order.error.description', { defaultValue: 'Terjadi kesalahan. Silakan coba lagi.' }),
+        description: error instanceof Error ? error.message : t('order.error.description', { defaultValue: 'Terjadi kesalahan. Silakan coba lagi.' }),
         variant: 'destructive',
       });
     } finally {

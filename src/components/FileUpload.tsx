@@ -3,7 +3,16 @@ import { useDropzone } from "react-dropzone";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { useToast } from "@/hooks/use-toast";
-import { uploadFile, deleteFile, isImageFile, isPDFFile, getFileIcon } from "@/services/fileUploadService";
+import { 
+  uploadFile, 
+  deleteFile, 
+  isImageFile, 
+  isVideoFile, 
+  getFileIcon,
+  getVideoThumbnail,
+  formatFileSize,
+  type VideoCompressionProgress 
+} from "@/services/fileUploadService";
 import { useTranslation } from "react-i18next";
 
 interface UploadedFile {
@@ -14,19 +23,22 @@ interface UploadedFile {
   uploading: boolean;
   progress: number;
   error?: string;
+  compressionStage?: VideoCompressionProgress['stage'];
 }
 
 interface FileUploadProps {
   onFilesUploaded?: (files: { key: string; url: string; name: string }[]) => void;
   maxFiles?: number;
   maxSize?: number;
+  maxVideoSize?: number;
   className?: string;
 }
 
 export default function FileUpload({
   onFilesUploaded,
   maxFiles = 5,
-  maxSize = 10 * 1024 * 1024, // 10MB
+  maxSize = 10 * 1024 * 1024, // 10MB for images/pdf
+  maxVideoSize = 100 * 1024 * 1024, // 100MB for videos
   className = ""
 }: FileUploadProps) {
   const [uploadedFiles, setUploadedFiles] = useState<UploadedFile[]>([]);
@@ -46,13 +58,27 @@ export default function FileUpload({
       return;
     }
 
-    const newFiles: UploadedFile[] = acceptedFiles.map(file => ({
-      id: Math.random().toString(36).substr(2, 9),
-      file,
-      preview: isImageFile(file) ? URL.createObjectURL(file) : undefined,
-      uploading: true,
-      progress: 0
-    }));
+    const newFiles: UploadedFile[] = await Promise.all(
+      acceptedFiles.map(async (file) => {
+        const id = Math.random().toString(36).substr(2, 9);
+        let preview: string | undefined;
+
+        if (isImageFile(file)) {
+          preview = URL.createObjectURL(file);
+        } else if (isVideoFile(file)) {
+          preview = await getVideoThumbnail(file);
+        }
+
+        return {
+          id,
+          file,
+          preview,
+          uploading: true,
+          progress: 0,
+          compressionStage: isVideoFile(file) ? 'loading' as const : undefined
+        };
+      })
+    );
 
     setUploadedFiles(prev => [...prev, ...newFiles]);
 
@@ -61,7 +87,19 @@ export default function FileUpload({
 
     for (const newFile of newFiles) {
       try {
-        const result = await uploadFile(newFile.file);
+        const result = await uploadFile(newFile.file, (progress) => {
+          setUploadedFiles(prev =>
+            prev.map(f =>
+              f.id === newFile.id
+                ? {
+                    ...f,
+                    progress: progress.progress,
+                    compressionStage: progress.stage
+                  }
+                : f
+            )
+          );
+        });
 
         setUploadedFiles(prev =>
           prev.map(f =>
@@ -71,7 +109,8 @@ export default function FileUpload({
                   uploading: false,
                   progress: 100,
                   url: result.success ? result.url : undefined,
-                  error: result.success ? undefined : result.error
+                  error: result.success ? undefined : result.error,
+                  compressionStage: undefined
                 }
               : f
           )
@@ -94,7 +133,7 @@ export default function FileUpload({
         setUploadedFiles(prev =>
           prev.map(f =>
             f.id === newFile.id
-              ? { ...f, uploading: false, error: "Upload failed" }
+              ? { ...f, uploading: false, error: "Upload failed", compressionStage: undefined }
               : f
           )
         );
@@ -117,9 +156,10 @@ export default function FileUpload({
     onDrop,
     accept: {
       "image/*": [".jpg", ".jpeg", ".png", ".gif", ".webp", ".svg"],
-      "application/pdf": [".pdf"]
+      "application/pdf": [".pdf"],
+      "video/*": [".mp4", ".webm", ".mov", ".avi", ".mkv"]
     },
-    maxSize,
+    maxSize: maxVideoSize, // Use larger limit, validation happens in service
     maxFiles
   });
 
@@ -181,6 +221,9 @@ export default function FileUpload({
                 <p className="text-xs mt-1">
                   {t("order.fields.attachment.fileTypes")} (Max: {maxSize / 1024 / 1024}MB)
                 </p>
+                <p className="text-xs text-muted-foreground/70">
+                  {t("order.fields.attachment.videoTypes", "Video: MP4, WebM, MOV")} (Max: {maxVideoSize / 1024 / 1024}MB)
+                </p>
               </>
             )}
           </div>
@@ -203,13 +246,22 @@ export default function FileUpload({
                 className="flex items-center gap-3 p-3 border rounded-lg bg-card"
               >
                 {/* File Preview or Icon */}
-                <div className="flex-shrink-0 w-12 h-12 rounded overflow-hidden bg-muted flex items-center justify-center">
+                <div className="flex-shrink-0 w-12 h-12 rounded overflow-hidden bg-muted flex items-center justify-center relative">
                   {file.preview ? (
-                    <img
-                      src={file.preview}
-                      alt={file.file.name}
-                      className="w-full h-full object-cover"
-                    />
+                    <>
+                      <img
+                        src={file.preview}
+                        alt={file.file.name}
+                        className="w-full h-full object-cover"
+                      />
+                      {isVideoFile(file.file) && (
+                        <div className="absolute inset-0 flex items-center justify-center bg-black/30">
+                          <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M8 5v14l11-7z" />
+                          </svg>
+                        </div>
+                      )}
+                    </>
                   ) : (
                     <span className="text-2xl">{getFileIcon(file.file.name)}</span>
                   )}
@@ -219,12 +271,21 @@ export default function FileUpload({
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-medium truncate">{file.file.name}</p>
                   <p className="text-xs text-muted-foreground">
-                    {(file.file.size / 1024 / 1024).toFixed(2)} MB
+                    {formatFileSize(file.file.size)}
                   </p>
 
-                  {/* Upload Progress */}
+                  {/* Compression/Upload Progress */}
                   {file.uploading && (
-                    <Progress value={file.progress} className="mt-2 h-1" />
+                    <div className="mt-2">
+                      {file.compressionStage && (
+                        <p className="text-xs text-blue-500 mb-1">
+                          {file.compressionStage === 'loading' && t("order.fields.attachment.videoLoading", "Memuat video...")}
+                          {file.compressionStage === 'compressing' && t("order.fields.attachment.videoCompressing", "Mengompresi video...")}
+                          {file.compressionStage === 'uploading' && t("order.fields.attachment.videoUploading", "Mengunggah...")}
+                        </p>
+                      )}
+                      <Progress value={file.progress} className="h-1" />
+                    </div>
                   )}
 
                   {/* Error Message */}
