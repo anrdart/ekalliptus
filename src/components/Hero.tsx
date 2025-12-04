@@ -17,7 +17,7 @@ export const Hero = () => {
       t("hero.web3d"),
       t("hero.branding"),
     ],
-    [t, i18n.language],
+    [t],
   );
   const typed = useTypewriter(typewriterWords, { typingSpeed: 80, deletingSpeed: 40, pauseTime: 1400 });
 
@@ -59,7 +59,7 @@ export const Hero = () => {
               className="cursor-interactive rounded-full border-border/15 bg-card/20 px-6 py-6 text-base font-semibold text-foreground/80 transition hover:border-border/30 hover:bg-card/30"
               asChild
             >
-              <a href="https://itsme.ekalliptus.com/" target="_blank" rel="noopener noreferrer">
+              <a href="https://me.ekalliptus.com/" target="_blank" rel="noopener noreferrer">
                 <Play className="mr-2 h-4 w-4" />
                 {t("hero.profile")}
               </a>
