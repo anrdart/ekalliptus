@@ -10,7 +10,7 @@
         class="cursor-interactive flex items-center space-x-3 rounded-full px-4 py-2 transition text-foreground"
       >
         <img
-          src="/android-chrome-192x192.png"
+          src="/ekalliptus_rounded.webp"
           alt="ekalliptus - Digital Agency Indonesia Logo"
           width="32"
           height="32"

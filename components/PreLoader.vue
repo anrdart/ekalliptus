@@ -8,12 +8,11 @@
         <!-- Logo -->
         <div class="relative">
           <img
-            src="/android-chrome-192x192.png"
+            src="/ekalliptus_rounded.webp"
             alt="ekalliptus - Loading"
             width="80"
             height="80"
             loading="eager"
-            fetchpriority="high"
             class="h-20 w-20 animate-pulse"
           />
           <!-- Glow effect -->

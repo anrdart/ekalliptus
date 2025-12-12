@@ -119,9 +119,9 @@ export const externalDomains = {
     'https://wa.me',
     'https://me.ekalliptus.com'
   ],
-  // Critical assets to preload - Use smaller optimized logo
+  // Critical assets to preload
   preload: [
-    '/android-chrome-192x192.png'
+    '/ekalliptus_rounded.webp'
   ]
 }
 
