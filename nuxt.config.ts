@@ -15,7 +15,14 @@ export default defineNuxtConfig({
       },
       meta: [
         { charset: 'utf-8' },
-        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+        { name: 'viewport', content: 'width=device-width, initial-scale=1, viewport-fit=cover' },
+        // Mobile web app capable
+        { name: 'mobile-web-app-capable', content: 'yes' },
+        { name: 'apple-mobile-web-app-capable', content: 'yes' },
+        { name: 'apple-mobile-web-app-status-bar-style', content: 'black-translucent' },
+        // Theme color for mobile browsers
+        { name: 'theme-color', content: '#0c1222', media: '(prefers-color-scheme: dark)' },
+        { name: 'theme-color', content: '#f1f5f9', media: '(prefers-color-scheme: light)' },
         { name: 'description', content: 'Digital agency Indonesia spesialis website development, WordPress, mobile app, dan multimedia editing. Transformasi bisnis Anda dengan teknologi terdepan.' },
         { name: 'format-detection', content: 'telephone=no' },
         // Content language meta tag (Requirements 7.4)
@@ -51,8 +58,8 @@ export default defineNuxtConfig({
         { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap', media: 'print', onload: "this.media='all'" },
         // Preload critical font weight 400 for body text (Requirements 3.3)
         { rel: 'preload', href: 'https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiJ-Ek-_EeA.woff2', as: 'font', type: 'font/woff2', crossorigin: '', fetchpriority: 'high' },
-        // Preload critical assets (Requirements 6.5)
-        { rel: 'preload', href: '/ekalliptus_rounded.webp', as: 'image', type: 'image/webp', fetchpriority: 'high' }
+        // Preload critical assets (Requirements 6.5) - Use smaller optimized logo
+        { rel: 'preload', href: '/android-chrome-192x192.png', as: 'image', type: 'image/png', fetchpriority: 'high' }
       ],
       script: [
         // Defer non-critical scripts (Requirements 5.3)

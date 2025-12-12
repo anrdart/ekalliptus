@@ -154,7 +154,7 @@ describe('Property 13: Resource Hints Completeness', () => {
     // At minimum, the logo should be preloaded
     expect(externalDomains.preload).toBeDefined()
     expect(externalDomains.preload.length).toBeGreaterThan(0)
-    expect(externalDomains.preload).toContain('/ekalliptus_rounded.webp')
+    expect(externalDomains.preload).toContain('/android-chrome-192x192.png')
   })
 
   /**

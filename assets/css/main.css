@@ -480,3 +480,109 @@
     transform: scale(0.98);
   }
 }
+
+
+/* ============================================
+   MOBILE PERFORMANCE OPTIMIZATIONS
+   ============================================ */
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  
+  .floating {
+    animation: none;
+  }
+}
+
+/* Mobile-specific optimizations */
+@media (max-width: 768px) {
+  /* Reduce blur intensity on mobile for better performance */
+  .glass-panel,
+  .glass-card,
+  .glass-nav,
+  .glass-button,
+  .glass-pill,
+  .glass-modal,
+  .glass-input {
+    --glass-blur: 16px;
+  }
+  
+  /* Disable complex shadows on mobile */
+  .glass-panel:hover,
+  .glass-button:hover {
+    transform: none;
+    box-shadow: 
+      0 4px 16px hsl(var(--glass-shadow)),
+      0 0 0 1px hsl(var(--glass-border));
+  }
+  
+  /* Optimize page transitions for mobile */
+  .page-enter-active,
+  .page-leave-active {
+    transition-duration: 0.2s;
+  }
+  
+  .page-enter-from,
+  .page-leave-to {
+    transform: translateY(8px);
+    filter: none;
+  }
+  
+  /* Reduce content-visibility intrinsic size for mobile */
+  .content-vis {
+    contain-intrinsic-size: 0 300px;
+  }
+}
+
+/* Touch device optimizations */
+@media (pointer: coarse) {
+  /* Larger touch targets */
+  .glass-button,
+  button,
+  a {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Disable hover effects on touch devices */
+  .glass-panel:hover,
+  .glass-button:hover,
+  .glass-card:hover {
+    transform: none;
+  }
+}
+
+/* Low-end device detection via reduced data preference */
+@media (prefers-reduced-data: reduce) {
+  /* Disable backdrop-filter entirely */
+  .glass-panel,
+  .glass-card,
+  .glass-nav,
+  .glass-button,
+  .glass-pill,
+  .glass-modal,
+  .glass-input,
+  .modal-backdrop,
+  .language-modal,
+  .language-button {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+}
+
+/* Battery saver mode - reduce animations */
+@media (prefers-reduced-motion: reduce), (update: slow) {
+  .floating,
+  .animate-pulse,
+  .animate-bounce {
+    animation: none !important;
+  }
+}
