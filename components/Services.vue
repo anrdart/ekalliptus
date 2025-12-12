@@ -38,6 +38,8 @@
 
 <script setup lang="ts">
 import { Globe, Smartphone, Palette, Video, Monitor, Wrench } from 'lucide-vue-next'
+import { generateServicesSchemas, schemaToJsonLd } from '~/composables/useStructuredData'
+import type { ServiceInput } from '~/composables/useStructuredData'
 
 const { t } = useI18n()
 
@@ -49,6 +51,51 @@ const services = [
   { key: 'berduPlatform', icon: Monitor },
   { key: 'serviceHpLaptop', icon: Wrench }
 ]
+
+// Service data for structured data (Requirements 3.3)
+const serviceSchemaData: ServiceInput[] = [
+  {
+    name: 'Website Development',
+    description: 'Jasa pembuatan website profesional, responsif, dan SEO-friendly untuk bisnis Indonesia',
+    serviceType: 'WebDevelopment'
+  },
+  {
+    name: 'Mobile App Development',
+    description: 'Pengembangan aplikasi mobile Android dan iOS dengan React Native dan Flutter',
+    serviceType: 'MobileAppDevelopment'
+  },
+  {
+    name: 'WordPress Development',
+    description: 'Kustomisasi WordPress dengan tema dan plugin sesuai kebutuhan bisnis',
+    serviceType: 'WebDevelopment'
+  },
+  {
+    name: 'Photo & Video Editing',
+    description: 'Editing foto dan video profesional untuk konten marketing dan social media',
+    serviceType: 'MediaEditing'
+  },
+  {
+    name: 'Berdu Platform',
+    description: 'Solusi platform berdu yang powerful untuk kebutuhan bisnis modern',
+    serviceType: 'PlatformService'
+  },
+  {
+    name: 'Service HP & Laptop',
+    description: 'Perbaikan dan maintenance perangkat HP dan laptop dengan teknisi berpengalaman',
+    serviceType: 'DeviceRepair'
+  }
+]
+
+// Generate Service schemas for structured data
+const serviceSchemas = generateServicesSchemas(serviceSchemaData)
+
+// Inject Service schemas into head (Requirements 3.3)
+useHead({
+  script: serviceSchemas.map(schema => ({
+    type: 'application/ld+json',
+    innerHTML: schemaToJsonLd(schema)
+  }))
+})
 
 const getFeatures = (key: string): string[] => {
   // Try to get features array, fallback to empty array

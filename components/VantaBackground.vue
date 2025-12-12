@@ -153,17 +153,42 @@ onMounted(() => {
     return
   }
 
-  // Wait for scripts to load
+  // Wait for scripts to load with timeout fallback (Requirements 1.4, 4.2)
+  let attempts = 0
+  const maxAttempts = 50 // 5 seconds max wait time
+  const SCRIPT_LOAD_TIMEOUT = 5000 // 5 second timeout for script loading
+  
   const checkScripts = () => {
+    attempts++
     if (window.VANTA && window.THREE) {
       initVanta()
-    } else {
+    } else if (attempts < maxAttempts) {
       setTimeout(checkScripts, 100)
+    } else {
+      // Fallback: show static background if scripts fail to load (Requirements 4.2)
+      console.warn('Vanta scripts failed to load within timeout, using fallback background')
+      isLoading.value = false
     }
   }
   
-  // Start checking after a brief delay
-  setTimeout(checkScripts, 200)
+  // Schedule Vanta initialization after critical content renders (Requirements 4.2)
+  // Use requestIdleCallback to defer non-critical background initialization
+  const scheduleInit = () => {
+    if ('requestIdleCallback' in window) {
+      window.requestIdleCallback(() => {
+        checkScripts()
+      }, { timeout: SCRIPT_LOAD_TIMEOUT })
+    } else {
+      // Fallback for browsers without requestIdleCallback
+      setTimeout(checkScripts, 200)
+    }
+  }
+  
+  // Wait for initial render to complete before initializing Vanta
+  // This ensures critical content (Hero, Navigation) renders first
+  nextTick(() => {
+    scheduleInit()
+  })
   
   // Handle window resize
   window.addEventListener('resize', checkMobile)

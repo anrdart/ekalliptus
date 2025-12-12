@@ -1,10 +1,30 @@
 <template>
   <div>
     <Head>
-      <Title>{{ $t('order.title', 'Order Layanan') }} - ekalliptus</Title>
-      <Meta name="description" :content="$t('order.description', 'Pesan layanan digital ekalliptus - Web Development, Mobile App, WordPress, dan lainnya.')" />
+      <!-- SEO Meta Tags - Requirements 2.1, 2.2 -->
+      <Title>{{ pageTitle }}</Title>
+      <Meta name="description" :content="pageDescription" />
+      <Meta name="keywords" content="order layanan digital, pesan website, jasa website murah, order web development, pesan aplikasi mobile" />
+      
+      <!-- Canonical URL - Requirements 1.5 -->
+      <Link rel="canonical" :href="canonicalUrl" />
+      
+      <!-- Open Graph Tags - Requirements 2.3 -->
+      <!-- Note: og:image is handled by nuxt-og-image via defineOgImage -->
+      <Meta property="og:title" :content="pageTitle" />
+      <Meta property="og:description" :content="pageDescription" />
+      <Meta property="og:url" :content="canonicalUrl" />
+      <Meta property="og:type" content="website" />
+      <Meta property="og:locale" :content="ogLocale" />
+      <Meta property="og:site_name" content="ekalliptus" />
+      
+      <!-- Twitter Card Tags - Requirements 2.4 -->
+      <!-- Note: twitter:image is handled by nuxt-og-image via defineOgImage -->
+      <Meta name="twitter:card" content="summary_large_image" />
+      <Meta name="twitter:title" :content="pageTitle" />
+      <Meta name="twitter:description" :content="pageDescription" />
     </Head>
-
+    
     <div class="min-h-screen py-12 px-4">
       <div class="max-w-6xl mx-auto">
         <!-- Header -->
@@ -578,6 +598,45 @@ import {
   getDefaultScheduleTime 
 } from '~/composables/useOrderCalculation'
 import type { OrderInsert, ServiceType } from '~/types/database.types'
+import { seoConfig } from '~/config/seo.config'
+import { generateBreadcrumbSchema, schemaToJsonLd } from '~/composables/useStructuredData'
+
+// SEO Configuration - Requirements 2.1, 2.2, 2.3, 2.4, 3.5, 4.2
+const { locale } = useI18n()
+const route = useRoute()
+
+const pageTitle = computed(() => seoConfig.pages.order.title)
+const pageDescription = computed(() => seoConfig.pages.order.description)
+const canonicalUrl = computed(() => `${seoConfig.siteUrl}${route.path}`)
+const ogLocale = computed(() => locale.value === 'id' ? 'id_ID' : locale.value)
+
+// Define OG image for order page (Requirements 2.5)
+// nuxt-og-image will automatically generate the og:image and twitter:image meta tags
+defineOgImage({
+  component: 'OgImageDefault',
+  props: {
+    title: 'Order Layanan',
+    description: 'Digital Agency Indonesia',
+    siteName: 'ekalliptus',
+    siteUrl: 'ekalliptus.id'
+  }
+})
+
+// Breadcrumb Schema - Requirements 3.5
+const breadcrumbSchema = generateBreadcrumbSchema([
+  { name: 'Home', url: '/' },
+  { name: 'Order Layanan' }
+])
+
+// Add structured data via useHead - Requirements 3.5
+useHead({
+  script: [
+    {
+      type: 'application/ld+json',
+      innerHTML: schemaToJsonLd(breadcrumbSchema)
+    }
+  ]
+})
 
 const { toast } = useToast()
 const router = useRouter()

@@ -18,7 +18,8 @@
         "execute_sql",
         "apply_migration",
         "list_migrations",
-        "generate_typescript_types"
+        "generate_typescript_types",
+        "search_docs"
       ]
     },
     "Context7": {
@@ -29,7 +30,10 @@
       ],
       "env": {},
       "disabled": false,
-      "autoApprove": []
+      "autoApprove": [
+        "resolve-library-id",
+        "get-library-docs"
+      ]
     }
   }
 }

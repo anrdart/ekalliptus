@@ -11,9 +11,12 @@
       >
         <img
           src="/ekalliptus_rounded.webp"
-          alt="ekalliptus"
+          alt="ekalliptus - Digital Agency Indonesia Logo"
+          width="32"
+          height="32"
           class="h-8 w-auto transition-opacity hover:opacity-90"
           loading="eager"
+          fetchpriority="high"
         />
       </NuxtLink>
 

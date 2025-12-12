@@ -56,11 +56,14 @@
           :key="file.name + index"
           class="glass-panel rounded-xl p-3 flex items-center gap-3"
         >
-          <!-- Image Preview -->
+          <!-- Image Preview (Requirements 5.2) -->
           <div v-if="isImage(file)" class="h-12 w-12 rounded-lg overflow-hidden flex-shrink-0 bg-muted">
             <img
               :src="getPreviewUrl(file)"
               :alt="file.name"
+              width="48"
+              height="48"
+              loading="lazy"
               class="h-full w-full object-cover"
             />
           </div>

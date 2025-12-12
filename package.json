@@ -4,16 +4,23 @@
     "type": "module",
     "scripts": {
         "build": "nuxt build",
+        "build:analyze": "nuxt build && copy .nuxt\\dist\\client\\bundle-analysis.html dist\\bundle-analysis.html && echo Bundle analysis report generated at dist/bundle-analysis.html",
         "dev": "nuxt dev",
         "generate": "nuxt generate",
         "preview": "nuxt preview",
         "postinstall": "nuxt prepare",
         "lint": "eslint .",
-        "typecheck": "nuxt typecheck"
+        "typecheck": "nuxt typecheck",
+        "test": "vitest",
+        "test:run": "vitest run",
+        "test:coverage": "vitest run --coverage"
     },
     "dependencies": {
         "@nuxtjs/color-mode": "^3.5.2",
         "@nuxtjs/i18n": "^9.1.1",
+        "@nuxtjs/robots": "^5.6.4",
+        "@nuxtjs/seo": "^3.3.0",
+        "@nuxtjs/sitemap": "^7.4.9",
         "@nuxtjs/tailwindcss": "^6.12.2",
         "@supabase/supabase-js": "^2.87.1",
         "@vueuse/core": "^11.3.0",
@@ -33,13 +40,18 @@
     },
     "devDependencies": {
         "@nuxt/eslint": "^0.7.4",
+        "@nuxt/test-utils": "^3.21.0",
         "@types/node": "^22.16.5",
         "autoprefixer": "^10.4.21",
         "eslint": "^9.15.0",
+        "fast-check": "^4.4.0",
+        "happy-dom": "^20.0.11",
         "postcss": "^8.5.6",
+        "rollup-plugin-visualizer": "^6.0.5",
         "tailwindcss": "^3.4.17",
         "tailwindcss-animate": "^1.0.7",
         "typescript": "^5.8.3",
+        "vitest": "^3.2.4",
         "vue-tsc": "^2.2.0"
     }
 }

@@ -1,45 +1,24 @@
 <template>
   <div>
-    <!-- SEO Head -->
-    <Head>
-      <Title>ekalliptus - Digital Agency Indonesia | Web Development & Mobile App</Title>
-      <Meta name="description" content="Digital agency Indonesia spesialis website development, WordPress, mobile app, dan multimedia editing. Transformasi bisnis Anda dengan teknologi terdepan." />
-      <Meta name="keywords" content="digital agency indonesia, web development, wordpress, mobile app, website development indonesia" />
-      <Link rel="canonical" href="https://ekalliptus.id/" />
-      
-      <!-- Open Graph -->
-      <Meta property="og:title" content="ekalliptus - Digital Agency Indonesia" />
-      <Meta property="og:description" content="Digital agency Indonesia spesialis website development, WordPress, mobile app, dan multimedia editing. Transformasi bisnis Anda dengan teknologi terdepan." />
-      <Meta property="og:type" content="website" />
-      <Meta property="og:url" content="https://ekalliptus.id/" />
-      <Meta property="og:image" content="https://ekalliptus.id/og-image.webp" />
-      <Meta property="og:locale" content="id_ID" />
-      
-      <!-- Twitter -->
-      <Meta name="twitter:card" content="summary_large_image" />
-      <Meta name="twitter:title" content="ekalliptus - Digital Agency Indonesia" />
-      <Meta name="twitter:description" content="Digital agency Indonesia untuk website, WordPress, mobile app, dan editing profesional." />
-    </Head>
-
     <div class="relative flex flex-col gap-24 pb-24">
       <!-- Hero Section -->
       <Hero />
 
-      <!-- Intro -->
+      <!-- Intro - Single H1 with primary keyword (Requirements 4.1, 4.5) -->
       <div class="text-center py-8 px-4">
         <h1 class="text-3xl md:text-4xl font-bold text-foreground mb-4">
-          {{ $t('index.intro.title') }}
+          Digital Agency Indonesia - Web Development & Mobile App
         </h1>
         <p class="text-lg text-muted-foreground max-w-2xl mx-auto">
           {{ $t('index.intro.subtitle') }}
         </p>
       </div>
 
-      <!-- Services Section -->
-      <Services />
+      <!-- Services Section - Lazy loaded (Requirements 4.1) -->
+      <LazyServices />
 
-      <!-- FAQ Section -->
-      <FAQ />
+      <!-- FAQ Section - Lazy loaded (Requirements 4.1) -->
+      <LazyFAQ />
 
       <!-- About Section -->
       <section id="about" class="content-vis relative px-4 py-24">
@@ -144,8 +123,8 @@
         </div>
       </section>
 
-      <!-- Contact CTA -->
-      <ContactCTA />
+      <!-- Contact CTA - Lazy loaded (Requirements 4.1) -->
+      <LazyContactCTA />
 
       <!-- Footer -->
       <footer class="border-t border-border/40 bg-card/10 py-8 px-4">
@@ -177,4 +156,87 @@
 
 <script setup lang="ts">
 import { Zap, CheckCircle, Users, ArrowRight, ArrowDown } from 'lucide-vue-next'
+import { seoConfig } from '~/config/seo.config'
+import {
+  generateOrganizationSchema,
+  generateLocalBusinessSchema,
+  generateWebSiteSchema,
+  generateBreadcrumbSchema,
+  schemaToJsonLd
+} from '~/composables/useStructuredData'
+
+// Get page SEO config
+const pageMeta = seoConfig.pages.home
+const siteUrl = seoConfig.siteUrl
+
+// Set comprehensive SEO meta tags
+// Requirements: 2.1, 2.2, 2.3, 2.4, 4.1
+useSeoMeta({
+  // Basic meta tags (Requirements 2.1, 2.2)
+  title: pageMeta.title,
+  description: pageMeta.description,
+  keywords: pageMeta.keywords,
+  
+  // Open Graph tags (Requirements 2.3)
+  ogTitle: pageMeta.ogTitle || pageMeta.title,
+  ogDescription: pageMeta.ogDescription || pageMeta.description,
+  ogType: pageMeta.ogType || 'website',
+  ogUrl: `${siteUrl}/`,
+  ogLocale: 'id_ID',
+  ogSiteName: seoConfig.siteName,
+  
+  // Twitter Card tags (Requirements 2.4)
+  twitterCard: pageMeta.twitterCard || 'summary_large_image',
+  twitterTitle: pageMeta.twitterTitle || pageMeta.title,
+  twitterDescription: pageMeta.twitterDescription || pageMeta.description
+})
+
+// Define OG image for homepage (Requirements 2.5)
+// nuxt-og-image will automatically generate the og:image and twitter:image meta tags
+defineOgImage({
+  component: 'OgImageDefault',
+  props: {
+    title: 'ekalliptus',
+    description: 'Digital Agency Indonesia',
+    siteName: 'ekalliptus',
+    siteUrl: 'ekalliptus.id'
+  }
+})
+
+// Generate structured data schemas (Requirements 3.1, 3.2, 3.5, 7.1)
+const organizationSchema = generateOrganizationSchema()
+const localBusinessSchema = generateLocalBusinessSchema()
+const webSiteSchema = generateWebSiteSchema()
+const breadcrumbSchema = generateBreadcrumbSchema([
+  { name: 'Home', url: '/' }
+])
+
+// Set canonical URL and structured data (Requirements 1.5, 3.1, 3.2, 3.5, 7.1)
+useHead({
+  link: [
+    { rel: 'canonical', href: `${siteUrl}/` }
+  ],
+  script: [
+    // Organization Schema (Requirements 3.1)
+    {
+      type: 'application/ld+json',
+      innerHTML: schemaToJsonLd(organizationSchema)
+    },
+    // LocalBusiness Schema (Requirements 7.1)
+    {
+      type: 'application/ld+json',
+      innerHTML: schemaToJsonLd(localBusinessSchema)
+    },
+    // WebSite Schema with SearchAction (Requirements 3.2)
+    {
+      type: 'application/ld+json',
+      innerHTML: schemaToJsonLd(webSiteSchema)
+    },
+    // BreadcrumbList Schema (Requirements 3.5)
+    {
+      type: 'application/ld+json',
+      innerHTML: schemaToJsonLd(breadcrumbSchema)
+    }
+  ]
+})
 </script>

@@ -1,9 +1,30 @@
 <template>
   <div>
     <Head>
-      <Title>{{ $t('termsOfService.title', 'Syarat & Ketentuan') }} - ekalliptus</Title>
+      <!-- SEO Meta Tags - Requirements 4.4 -->
+      <Title>{{ pageTitle }}</Title>
+      <Meta name="description" :content="pageDescription" />
+      
+      <!-- Robots noindex,nofollow - Requirements 4.4 -->
+      <Meta name="robots" content="noindex,nofollow" />
+      
+      <!-- Canonical URL -->
+      <Link rel="canonical" :href="canonicalUrl" />
+      
+      <!-- Basic Open Graph Tags for completeness -->
+      <Meta property="og:title" :content="pageTitle" />
+      <Meta property="og:description" :content="pageDescription" />
+      <Meta property="og:url" :content="canonicalUrl" />
+      <Meta property="og:type" content="website" />
+      <Meta property="og:locale" :content="ogLocale" />
+      <Meta property="og:site_name" content="ekalliptus" />
+      
+      <!-- Basic Twitter Card Tags for completeness -->
+      <Meta name="twitter:card" content="summary" />
+      <Meta name="twitter:title" :content="pageTitle" />
+      <Meta name="twitter:description" :content="pageDescription" />
     </Head>
-
+    
     <div class="min-h-screen py-12 px-4">
       <div class="max-w-3xl mx-auto">
         <div class="glass-panel neon-border rounded-3xl p-8 md:p-12">
@@ -76,4 +97,31 @@
 
 <script setup lang="ts">
 import { ArrowLeft } from 'lucide-vue-next'
+import { seoConfig } from '~/config/seo.config'
+import { generateBreadcrumbSchema, schemaToJsonLd } from '~/composables/useStructuredData'
+
+// SEO Configuration - Requirements 4.4
+const { locale } = useI18n()
+const route = useRoute()
+
+const pageTitle = computed(() => seoConfig.pages.termsOfService.title)
+const pageDescription = computed(() => seoConfig.pages.termsOfService.description)
+const canonicalUrl = computed(() => `${seoConfig.siteUrl}${route.path}`)
+const ogLocale = computed(() => locale.value === 'id' ? 'id_ID' : locale.value)
+
+// Breadcrumb Schema - Requirements 3.5
+const breadcrumbSchema = generateBreadcrumbSchema([
+  { name: 'Home', url: '/' },
+  { name: 'Syarat & Ketentuan' }
+])
+
+// Add structured data via useHead - Requirements 3.5
+useHead({
+  script: [
+    {
+      type: 'application/ld+json',
+      innerHTML: schemaToJsonLd(breadcrumbSchema)
+    }
+  ]
+})
 </script>

@@ -213,6 +213,8 @@
   },
   "notFound": {
     "pill": "Page not found",
+    "title": "404 - Page Not Found",
+    "message": "The page you are looking for is not available.",
     "description": "The destination you were looking for isn’t available yet. Head back to the homepage and explore the experiences we’ve prepared.",
     "backHome": "Back to Home",
     "viewServices": "View Services"
@@ -1380,14 +1382,19 @@
           }
         }
       }
-    },
-    "seo": {
-      "title": "Ekalliptus Digital Agency — Website, WordPress, Mobile App Indonesia",
-      "description": "Ekalliptus - Leading digital solutions for website development, WordPress, mobile app, and professional photo/video editing in Indonesia. Contact us for your business digital transformation.",
-      "keywords": "website development Indonesia, WordPress custom, mobile app development, photo editing service, video editing professional, digital agency Jakarta, website creation service, mobile app Android iOS, quality photo video editing"
     }
   },
   "seo": {
+    "home": {
+      "title": "ekalliptus - Digital Agency Indonesia | Web & Mobile App",
+      "description": "Indonesia digital agency specializing in website development, WordPress, mobile apps, and multimedia editing. Transform your business with cutting-edge technology.",
+      "keywords": "digital agency indonesia, web development, wordpress, mobile app, website development indonesia, website creation service"
+    },
+    "order": {
+      "title": "Order Digital Services - ekalliptus | Order Now",
+      "description": "Order ekalliptus digital services - Web Development, Mobile App, WordPress, photo video editing. Get the best offer for your digital project.",
+      "keywords": "order digital services, order website, affordable website service, order web development"
+    },
     "title": "Ekalliptus Digital Agency — Website, WordPress, Mobile App Indonesia",
     "description": "Ekalliptus - Leading digital solutions for website development, WordPress, mobile app, and professional photo/video editing in Indonesia. Contact us for your business digital transformation.",
     "keywords": "website development Indonesia, WordPress custom, mobile app development, photo editing service, video editing professional, digital agency Jakarta, website creation service, mobile app Android iOS, quality photo video editing"

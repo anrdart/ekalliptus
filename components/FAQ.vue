@@ -63,6 +63,7 @@
 
 <script setup lang="ts">
 import { ChevronDown, ArrowRight } from 'lucide-vue-next'
+import { generateFAQPageSchema, schemaToJsonLd } from '~/composables/useStructuredData'
 
 interface FaqItem {
   question: string
@@ -71,33 +72,38 @@ interface FaqItem {
 
 const openItems = ref<number[]>([0])
 
-// Hardcode FAQ items for reliability - matches id.json structure
-const faqItems = ref<FaqItem[]>([
-  {
-    question: 'Berapa lama waktu pengerjaan untuk website development?',
-    answer: 'Waktu pengerjaan website development bervariasi tergantung kompleksitas proyek. Website company profile sederhana biasanya memakan waktu 2-3 minggu, sedangkan e-commerce atau aplikasi web kompleks dapat memakan waktu 1-3 bulan.'
-  },
-  {
-    question: 'Apakah ekalliptus menyediakan layanan maintenance website setelah launching?',
-    answer: 'Ya, kami menyediakan paket maintenance website yang mencakup update rutin, backup data, monitoring keamanan, dan technical support.'
-  },
-  {
-    question: 'Apakah WordPress development cocok untuk bisnis skala besar?',
-    answer: 'Absolut! WordPress development yang kami kerjakan dapat di-scale untuk bisnis enterprise dengan custom plugin, optimasi performa tinggi, dan integrasi sistem yang kompleks.'
-  },
-  {
-    question: 'Bagaimana proses order layanan di ekalliptus?',
-    answer: 'Proses sangat mudah: (1) Isi form order di website kami, (2) Tim kami menghubungi dalam 24 jam, (3) Kami kirimkan proposal, (4) Mulai development, (5) Testing dan revisi, (6) Launching.'
-  },
-  {
-    question: 'Apakah saya bisa request fitur custom untuk mobile app development?',
-    answer: 'Tentu saja! Mobile app development kami sepenuhnya customizable sesuai kebutuhan bisnis Anda dengan React Native dan Flutter.'
-  },
-  {
-    question: 'Apa yang membedakan layanan ekalliptus dengan digital agency lainnya?',
-    answer: 'ekalliptus menggabungkan teknologi terkini dengan desain yang user-centric, termasuk elemen 3D, glassmorphism, dan micro-interactions.'
+// Get FAQ items from i18n translations - supports all languages
+const { t, locale } = useI18n()
+
+// Number of FAQ items (same across all languages)
+const FAQ_COUNT = 8
+
+const faqItems = computed<FaqItem[]>(() => {
+  const items: FaqItem[] = []
+  for (let i = 0; i < FAQ_COUNT; i++) {
+    const question = t(`faq.items[${i}].question`)
+    const answer = t(`faq.items[${i}].answer`)
+    // Only add if translation exists (not returning the key)
+    if (question && !question.includes('faq.items[')) {
+      items.push({ question, answer })
+    }
   }
-])
+  return items
+})
+
+// Generate FAQPage structured data (Requirements 3.4)
+// Use watchEffect to update schema when language changes
+watchEffect(() => {
+  const faqSchema = generateFAQPageSchema(faqItems.value)
+  useHead({
+    script: [
+      {
+        type: 'application/ld+json',
+        innerHTML: schemaToJsonLd(faqSchema)
+      }
+    ]
+  })
+})
 
 const toggleItem = (index: number) => {
   const idx = openItems.value.indexOf(index)
@@ -110,10 +116,13 @@ const toggleItem = (index: number) => {
 </script>
 
 <style scoped>
+/* Accordion animation - uses max-height for variable content height */
+/* will-change hints browser for smoother animation */
 .accordion-enter-active,
 .accordion-leave-active {
-  transition: all 0.3s ease;
+  transition: opacity 0.3s ease, max-height 0.3s ease, padding 0.3s ease;
   overflow: hidden;
+  will-change: opacity, max-height;
 }
 
 .accordion-enter-from,
