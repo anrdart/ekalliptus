@@ -1,5 +1,5 @@
 /**
- * SEO Configuration for ekalliptus.id
+ * SEO Configuration for ekalliptus.com
  * Contains site-wide SEO settings, organization data, and page meta
  */
 
@@ -164,10 +164,10 @@ export function validateCanonicalSelfReference(canonicalUrl: string, currentPage
 
 export const seoConfig: SeoConfig = {
   siteName: 'ekalliptus',
-  siteUrl: 'https://ekalliptus.id',
+  siteUrl: 'https://ekalliptus.com',
   defaultLocale: 'id',
   supportedLocales: ['id', 'en', 'ja', 'ko', 'ru', 'ar', 'tr'],
-  
+
   organization: {
     name: 'ekalliptus',
     legalName: 'ekalliptus Digital Agency',
@@ -189,7 +189,7 @@ export const seoConfig: SeoConfig = {
       'https://wa.me/6281999900306'
     ]
   },
-  
+
   pages: {
     home: {
       title: 'ekalliptus - Digital Agency Indonesia | Web & Mobile App',

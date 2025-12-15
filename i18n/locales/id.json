@@ -16,7 +16,8 @@
   "hero": {
     "solusiDigital": "Solusi Digital",
     "brand": "єкαℓℓιρтuѕ",
-    "description": "Kami hadir untuk menghadirkan produk digital yang terasa futuristik namun tetap humanis. Menggabungkan micro-interaction, elemen glassmorphism, dan animasi halus untuk menciptakan pengalaman yang melekat di ingatan.",
+    "description": "Kami hadir untuk menghadirkan produk digital yang terasa futuristik namun tetap humanis. Menggabungkan micro-interaction, elemen glassmorphism, dan animasi halus.",
+    "subdescription": "Dapatkan keuntungan lebih dan penawaran menarik dengan menggunakan jasa kami!",
     "fokus": "Fokus kami saat ini:",
     "uiUxDesign": "UI/UX Design Futuristik",
     "digitalExperience": "Pengalaman Digital Imersif",
@@ -28,7 +29,7 @@
   "index": {
     "intro": {
       "title": "ekalliptus - Solusi Digital Terdepan",
-      "subtitle": "Transformasi bisnis Anda dengan website development Indonesia, WordPress custom, mobile app development, dan layanan digital profesional lainnya."
+      "subtitle": "Ingin membuat transformasi digital untuk bisnis modern? Atau ingin melakukan pengembangan website yang lebih profesional?"
     },
     "about": {
       "heading": "Transformasi Digital Terdepan",
@@ -102,7 +103,7 @@
       },
       "serviceHpLaptop": {
         "category": "Layanan",
-        "title": "Service HP & Laptop",
+        "title": "Service Perangkat",
         "description": "Perbaikan perangkat oleh teknisi berpengalaman dengan dukungan suku cadang original.",
         "features": [
           "Diagnosa Cepat",
@@ -274,7 +275,7 @@
         "description": "Desain interface modern dan user-friendly"
       },
       "maintenance": {
-        "title": "Service HP & Laptop",
+        "title": "Service Perangkat",
         "description": "Perbaikan dan maintenance perangkat"
       }
     },
@@ -422,7 +423,7 @@
       "wordpressDevelopment": "WordPress Development",
       "berduPlatform": "Berdu Platform",
       "mobileAppDevelopment": "Mobile App Development",
-      "serviceHpLaptop": "Service HP & Laptop",
+      "serviceHpLaptop": "Service Perangkat",
       "photoVideoEditing": "Photo & Video Editing",
       "other": "Layanan Lainnya"
     },
@@ -567,30 +568,64 @@
         }
       },
       "maintenance": {
-        "title": "Detail Service HP & Laptop",
+        "title": "Detail Service Perangkat",
         "deviceType": "Tipe Perangkat",
         "brand": "Merk",
         "brandPlaceholder": "Contoh: iPhone, Samsung, Asus, Lenovo",
         "model": "Model",
         "modelPlaceholder": "Contoh: iPhone 13, Galaxy S23, ROG Strix",
+        "serialNumber": "Nomor Seri (Opsional)",
+        "serialNumberPlaceholder": "Nomor seri/IMEI perangkat jika ada",
+        "deviceCondition": "Kondisi Perangkat",
         "problemType": "Jenis Masalah",
         "problemDesc": "Deskripsi Masalah",
-        "problemDescPlaceholder": "Jelaskan masalah perangkat Anda secara detail...",
+        "problemDescPlaceholder": "Jelaskan masalah perangkat Anda secara detail: kapan mulai terjadi, apa yang sudah dicoba, dll...",
+        "warrantyStatus": "Status Garansi",
+        "backupStatus": "Status Backup Data",
+        "pickupMethod": "Metode Pengambilan",
+        "pickupAddress": "Alamat Pengambilan/Antar",
+        "pickupAddressPlaceholder": "Masukkan alamat lengkap jika memilih pengambilan atau layanan on-site...",
         "urgency": "Tingkat Urgensi",
         "options": {
           "smartphone": "Smartphone",
           "laptop": "Laptop",
           "tablet": "Tablet",
           "desktop": "PC Desktop",
+          "allinone": "PC All-in-One",
+          "other": "Perangkat Lainnya",
+          "canTurnOn": "Bisa Menyala Normal",
+          "cannotTurnOn": "Tidak Bisa Menyala",
+          "intermittent": "Menyala Tapi Tidak Stabil",
+          "bootLoop": "Boot Loop / Restart Terus",
           "screen": "Layar/LCD",
           "battery": "Baterai",
-          "charging": "Charging",
+          "charging": "Port Charging",
+          "speaker": "Speaker",
+          "microphone": "Mikrofon",
+          "camera": "Kamera",
+          "keyboard": "Keyboard",
+          "touchpad": "Touchpad/Mouse",
+          "wifi": "WiFi",
+          "bluetooth": "Bluetooth",
+          "storage": "Storage/SSD/HDD",
+          "ram": "RAM",
           "software": "Software/OS",
+          "virus": "Virus/Malware",
           "performance": "Performa Lambat",
-          "hardware": "Hardware Lain",
-          "standard": "Standard (3-7 hari)",
-          "express": "Express (1-2 hari)",
-          "sameDay": "Same Day"
+          "overheating": "Overheat/Panas Berlebih",
+          "hardware": "Hardware Lainnya",
+          "inWarranty": "Masih Dalam Garansi",
+          "outWarranty": "Sudah Habis Garansi",
+          "notSure": "Tidak Yakin",
+          "backupDone": "Sudah Di-backup",
+          "noBackup": "Belum Di-backup (Data Penting)",
+          "helpBackup": "Butuh Bantuan Backup",
+          "dropOff": "Antar ke Lokasi Kami",
+          "pickup": "Jemput di Lokasi Saya",
+          "onsite": "Layanan On-Site",
+          "standard": "Standard (3-7 hari kerja)",
+          "express": "Express (1-2 hari kerja) +25%",
+          "sameDay": "Same Day (hari ini) +50%"
         }
       }
     },
@@ -614,7 +649,7 @@
         },
         "domainDiinginkan": {
           "label": "Domain yang diinginkan",
-          "placeholder": "Contoh: ekalliptus.id"
+          "placeholder": "Contoh: ekalliptus.com"
         },
         "fiturKhusus": {
           "label": "Fitur khusus",
@@ -818,12 +853,6 @@
       "submit": "Kirim Order",
       "reset": "Reset Form"
     }
-  },
-  "payment": {
-    "deposit": "{percentage}% Uang Muka",
-    "cash": "Bayar Tempat",
-    "full": "Pembayaran Penuh",
-    "depositLabel": "Uang Muka"
   },
   "privacyPolicy": {
     "title": "Kebijakan Privasi",
@@ -1142,6 +1171,33 @@
     "message": "Permintaan Anda telah berhasil dikirim. Tim kami akan menghubungi Anda dalam 1x24 jam melalui WhatsApp atau Email.",
     "backHome": "Kembali ke Beranda",
     "contactWhatsApp": "Hubungi via WhatsApp"
+  },
+  "payment": {
+    "title": "Pembayaran",
+    "heading": "Pembayaran",
+    "subheading": "Silakan transfer ke salah satu rekening di bawah ini",
+    "orderSummary": "Ringkasan Pesanan",
+    "service": "Layanan",
+    "orderId": "ID Pesanan",
+    "total": "Total",
+    "bankAccounts": "Rekening Pembayaran",
+    "accountName": "a.n",
+    "copy": "Salin",
+    "copied": "Disalin!",
+    "copiedMessage": "Nomor rekening berhasil disalin",
+    "uploadProof": "Upload Bukti Pembayaran",
+    "uploadDescription": "Setelah melakukan transfer, silakan upload bukti pembayaran atau kirim via WhatsApp.",
+    "sendWhatsApp": "Kirim via WhatsApp",
+    "important": "Penting",
+    "note1": "Pastikan transfer ke rekening yang benar",
+    "note2": "Simpan bukti transfer untuk konfirmasi",
+    "note3": "Pengerjaan dimulai setelah pembayaran dikonfirmasi",
+    "confirmPayment": "Saya Sudah Transfer",
+    "backHome": "Kembali ke Beranda",
+    "deposit": "{percentage}% Uang Muka",
+    "cash": "Bayar Tempat",
+    "full": "Pembayaran Penuh",
+    "depositLabel": "Uang Muka"
   },
   "seo": {
     "home": {

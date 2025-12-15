@@ -1,5 +1,5 @@
 /**
- * Performance Types for ekalliptus.id
+ * Performance Types for ekalliptus.com
  * Defines TypeScript interfaces for performance configuration and metrics
  */
 

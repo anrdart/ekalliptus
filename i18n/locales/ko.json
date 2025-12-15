@@ -12,7 +12,8 @@
   "hero": {
     "solusiDigital": "디지털 솔루션",
     "brand": "єкαℓℓιρтuѕ",
-    "description": "미래 지향적이면서도 인간적인 디지털 제품을 제공합니다. 마이크로 인터랙션, 글래스모피즘 요소, 부드러운 애니메이션을 결합하여 기억에 남는 경험을 창조합니다.",
+    "description": "미래 지향적이면서도 인간적인 디지털 제품을 제공합니다. 마이크로 인터랙션, 글래스모피즘 요소, 부드러운 애니메이션을 결합합니다.",
+    "subdescription": "저희 서비스를 이용하시면 더 많은 혜택과 매력적인 혜택을 받으실 수 있습니다!",
     "fokus": "현재 초점:",
     "uiUxDesign": "미래형 UI/UX 디자인",
     "digitalExperience": "몰입형 디지털 경험",
@@ -24,7 +25,7 @@
   "index": {
     "intro": {
       "title": "ekalliptus — 선도적인 디지털 솔루션",
-      "subtitle": "인도네시아 웹사이트 개발, 맞춤형 WordPress, 모바일 앱 개발과 같은 전문 디지털 서비스로 비즈니스를 혁신하세요."
+      "subtitle": "현대적인 비즈니스를 위한 디지털 전환을 원하시나요? 아니면 더 전문적인 웹사이트를 구축하고 싶으신가요?"
     },
     "about": {
       "heading": "선도적인 디지털트랜스포메이션",
@@ -599,7 +600,7 @@
         },
         "domainDiinginkan": {
           "label": "희망 도메인",
-          "placeholder": "예: ekalliptus.id"
+          "placeholder": "예: ekalliptus.com"
         },
         "fiturKhusus": {
           "label": "필요한 기능",

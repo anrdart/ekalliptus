@@ -140,7 +140,7 @@
                   />
                 </div>
 
-                <div class="space-y-2">
+                <div v-if="selectedService !== 'maintenance'" class="space-y-2">
                   <label class="text-sm font-medium text-foreground flex items-center gap-1">
                     <Building class="h-4 w-4 text-muted-foreground" />
                     {{ $t('order.company', 'Nama Perusahaan/Bisnis') }}
@@ -618,7 +618,7 @@ defineOgImage({
     title: 'Order Layanan',
     description: 'Digital Agency Indonesia',
     siteName: 'ekalliptus',
-    siteUrl: 'ekalliptus.id'
+    siteUrl: 'ekalliptus.com'
   }
 })
 
@@ -1000,8 +1000,23 @@ const handleSubmit = async () => {
       }
     }
     
-    toast.success(t('order.success.title', 'Berhasil!'), t('order.success.message', 'Permintaan Anda telah dikirim. Kami akan menghubungi Anda segera.'))
-    router.push('/order-success')
+    toast.success(t('order.success.title', 'Berhasil!'), t('order.success.message', 'Permintaan Anda telah dikirim. Silakan lakukan pembayaran.'))
+    
+    // Redirect to payment page with order details
+    const paymentQuery: Record<string, string> = {
+      orderId: data?.id || 'pending',
+      serviceName: selectedServiceData?.title || ''
+    }
+    
+    // Add amount if deposit is applicable
+    if (orderCalculation.value.deposit > 0) {
+      paymentQuery.amount = orderCalculation.value.deposit.toString()
+    }
+    
+    router.push({
+      path: '/payment',
+      query: paymentQuery
+    })
   } catch (error) {
     console.error('Order error:', error)
     toast.error(t('order.error.title', 'Gagal'), t('order.error.generic', 'Terjadi kesalahan. Silakan coba lagi atau hubungi kami via WhatsApp.'))

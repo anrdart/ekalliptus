@@ -4,13 +4,30 @@
       <!-- Hero Section -->
       <Hero />
 
-      <!-- Intro - Single H1 with primary keyword (Requirements 4.1, 4.5) -->
+      <!-- Intro Section with Hero Content -->
       <div class="text-center py-8 px-4">
-        <h1 class="text-3xl md:text-4xl font-bold text-foreground mb-4">
-          Digital Agency Indonesia - Web Development & Mobile App
-        </h1>
-        <p class="text-lg text-muted-foreground max-w-2xl mx-auto">
-          {{ $t('index.intro.subtitle') }}
+        <!-- Badge -->
+        <div class="inline-flex items-center gap-2 rounded-full bg-card/20 px-5 py-2 text-xs uppercase tracking-[0.35em] text-foreground/70 shadow-lg shadow-primary/10 mb-6">
+          <Sparkles class="h-4 w-4" />
+          <span>{{ $t('hero.solusiDigital') }}</span>
+        </div>
+
+        <!-- Description -->
+        <p class="text-lg leading-relaxed text-foreground/70 md:text-xl max-w-3xl mx-auto">
+          {{ $t('hero.description') }}
+        </p>
+
+        <!-- Sub Description -->
+        <p class="mt-3 text-base leading-relaxed text-primary font-medium md:text-lg max-w-2xl mx-auto">
+          {{ $t('hero.subdescription') }}
+        </p>
+
+        <!-- Typewriter -->
+        <p class="mt-4 text-sm font-medium uppercase tracking-[0.4em] text-foreground/50">
+          {{ $t('hero.fokus') }}
+          <span class="ml-3 rounded-full bg-card/20 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-foreground">
+            {{ displayText }}
+          </span>
         </p>
       </div>
 
@@ -155,7 +172,7 @@
 </template>
 
 <script setup lang="ts">
-import { Zap, CheckCircle, Users, ArrowRight, ArrowDown } from 'lucide-vue-next'
+import { Zap, CheckCircle, Users, ArrowRight, ArrowDown, Sparkles } from 'lucide-vue-next'
 import { seoConfig } from '~/config/seo.config'
 import {
   generateOrganizationSchema,
@@ -164,6 +181,61 @@ import {
   generateBreadcrumbSchema,
   schemaToJsonLd
 } from '~/composables/useStructuredData'
+
+// Typewriter logic
+const { t, locale } = useI18n()
+const displayText = ref('')
+const currentWordIndex = ref(0)
+
+const words = computed(() => [
+  t('hero.uiUxDesign'),
+  t('hero.digitalExperience'),
+  t('hero.web3d'),
+  t('hero.branding')
+])
+
+onMounted(() => {
+  let charIndex = 0
+  let isDeleting = false
+  let timeoutId: ReturnType<typeof setTimeout>
+  
+  displayText.value = words.value[0]
+  
+  const typeWriter = () => {
+    const currentWord = words.value[currentWordIndex.value]
+    
+    if (isDeleting) {
+      displayText.value = currentWord.substring(0, charIndex - 1)
+      charIndex--
+    } else {
+      displayText.value = currentWord.substring(0, charIndex + 1)
+      charIndex++
+    }
+    
+    let timeout = isDeleting ? 40 : 80
+    
+    if (!isDeleting && charIndex === currentWord.length) {
+      timeout = 1400
+      isDeleting = true
+    } else if (isDeleting && charIndex === 0) {
+      isDeleting = false
+      currentWordIndex.value = (currentWordIndex.value + 1) % words.value.length
+      timeout = 500
+    }
+    
+    timeoutId = setTimeout(typeWriter, timeout)
+  }
+  
+  timeoutId = setTimeout(typeWriter, 1000)
+  
+  onUnmounted(() => {
+    clearTimeout(timeoutId)
+  })
+})
+
+watch(locale, () => {
+  displayText.value = words.value[currentWordIndex.value]
+})
 
 // Get page SEO config
 const pageMeta = seoConfig.pages.home
@@ -199,7 +271,7 @@ defineOgImage({
     title: 'ekalliptus',
     description: 'Digital Agency Indonesia',
     siteName: 'ekalliptus',
-    siteUrl: 'ekalliptus.id'
+    siteUrl: 'ekalliptus.com'
   }
 })
 

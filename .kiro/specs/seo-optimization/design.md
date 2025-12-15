@@ -2,7 +2,7 @@
 
 ## Overview
 
-Dokumen ini menjelaskan arsitektur dan implementasi untuk optimasi SEO komprehensif pada website ekalliptus.id menggunakan Nuxt 3. Implementasi akan memanfaatkan fitur bawaan Nuxt untuk SSR, module @nuxtjs/seo untuk manajemen SEO otomatis, dan custom composables untuk structured data. Fokus utama adalah meningkatkan indexability, rich snippets, dan Core Web Vitals tanpa mengubah UI/UX design.
+Dokumen ini menjelaskan arsitektur dan implementasi untuk optimasi SEO komprehensif pada website ekalliptus.com menggunakan Nuxt 3. Implementasi akan memanfaatkan fitur bawaan Nuxt untuk SSR, module @nuxtjs/seo untuk manajemen SEO otomatis, dan custom composables untuk structured data. Fokus utama adalah meningkatkan indexability, rich snippets, dan Core Web Vitals tanpa mengubah UI/UX design.
 
 ## Architecture
 
@@ -142,7 +142,7 @@ interface PageSeoMeta {
 // config/seo.config.ts
 export const seoConfig = {
   siteName: 'ekalliptus',
-  siteUrl: 'https://ekalliptus.id',
+  siteUrl: 'https://ekalliptus.com',
   defaultLocale: 'id',
   supportedLocales: ['id', 'en', 'ja', 'ko', 'ru', 'ar', 'tr'],
   

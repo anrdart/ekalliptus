@@ -1,6 +1,6 @@
 /**
  * Structured Data Composable for SEO
- * Generates JSON-LD schema.org structured data for ekalliptus.id
+ * Generates JSON-LD schema.org structured data for ekalliptus.com
  * 
  * Requirements: 3.1, 3.2, 3.3, 3.4, 3.5, 7.1
  */
@@ -166,7 +166,10 @@ export function generateWebSiteSchema(overrides?: Partial<{
     url: siteUrl,
     potentialAction: {
       '@type': 'SearchAction',
-      target: overrides?.searchTarget || `${siteUrl}/search?q={search_term_string}`,
+      target: {
+        '@type': 'EntryPoint',
+        urlTemplate: overrides?.searchTarget || `${siteUrl}/search?q={search_term_string}`
+      },
       'query-input': 'required name=search_term_string'
     }
   }
@@ -302,7 +305,11 @@ export function generateBreadcrumbSchema(
 
     // Add item URL for all items except the last one (current page)
     if (item.url !== undefined) {
-      breadcrumbItem.item = item.url.startsWith('http') ? item.url : `${baseUrl}${item.url}`
+      const itemUrl = item.url.startsWith('http') ? item.url : `${baseUrl}${item.url}`
+      breadcrumbItem.item = {
+        '@type': 'WebPage',
+        '@id': itemUrl
+      }
     }
 
     return breadcrumbItem

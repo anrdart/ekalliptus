@@ -110,16 +110,51 @@ export const serviceFormConfigs = {
         fields: [
             {
                 id: 'deviceType', labelKey: 'order.serviceDetails.maintenance.deviceType', type: 'select', required: true,
-                optionKeys: ['order.serviceDetails.maintenance.options.smartphone', 'order.serviceDetails.maintenance.options.laptop', 'order.serviceDetails.maintenance.options.tablet', 'order.serviceDetails.maintenance.options.desktop']
+                optionKeys: ['order.serviceDetails.maintenance.options.smartphone', 'order.serviceDetails.maintenance.options.laptop', 'order.serviceDetails.maintenance.options.tablet', 'order.serviceDetails.maintenance.options.desktop', 'order.serviceDetails.maintenance.options.allinone', 'order.serviceDetails.maintenance.options.other']
             },
             { id: 'deviceBrand', labelKey: 'order.serviceDetails.maintenance.brand', type: 'text', required: true, placeholderKey: 'order.serviceDetails.maintenance.brandPlaceholder' },
             { id: 'deviceModel', labelKey: 'order.serviceDetails.maintenance.model', type: 'text', required: true, placeholderKey: 'order.serviceDetails.maintenance.modelPlaceholder' },
+            { id: 'serialNumber', labelKey: 'order.serviceDetails.maintenance.serialNumber', type: 'text', placeholderKey: 'order.serviceDetails.maintenance.serialNumberPlaceholder' },
+            {
+                id: 'deviceCondition', labelKey: 'order.serviceDetails.maintenance.deviceCondition', type: 'select', required: true,
+                optionKeys: ['order.serviceDetails.maintenance.options.canTurnOn', 'order.serviceDetails.maintenance.options.cannotTurnOn', 'order.serviceDetails.maintenance.options.intermittent', 'order.serviceDetails.maintenance.options.bootLoop']
+            },
             {
                 id: 'problemTypes', labelKey: 'order.serviceDetails.maintenance.problemType', type: 'checkbox', required: true,
-                optionKeys: ['order.serviceDetails.maintenance.options.screen', 'order.serviceDetails.maintenance.options.battery', 'order.serviceDetails.maintenance.options.charging', 'order.serviceDetails.maintenance.options.software', 'order.serviceDetails.maintenance.options.performance', 'order.serviceDetails.maintenance.options.hardware']
+                optionKeys: [
+                    'order.serviceDetails.maintenance.options.screen',
+                    'order.serviceDetails.maintenance.options.battery',
+                    'order.serviceDetails.maintenance.options.charging',
+                    'order.serviceDetails.maintenance.options.speaker',
+                    'order.serviceDetails.maintenance.options.microphone',
+                    'order.serviceDetails.maintenance.options.camera',
+                    'order.serviceDetails.maintenance.options.keyboard',
+                    'order.serviceDetails.maintenance.options.touchpad',
+                    'order.serviceDetails.maintenance.options.wifi',
+                    'order.serviceDetails.maintenance.options.bluetooth',
+                    'order.serviceDetails.maintenance.options.storage',
+                    'order.serviceDetails.maintenance.options.ram',
+                    'order.serviceDetails.maintenance.options.software',
+                    'order.serviceDetails.maintenance.options.virus',
+                    'order.serviceDetails.maintenance.options.performance',
+                    'order.serviceDetails.maintenance.options.overheating',
+                    'order.serviceDetails.maintenance.options.hardware'
+                ]
             },
             { id: 'problemDescription', labelKey: 'order.serviceDetails.maintenance.problemDesc', type: 'textarea', required: true, placeholderKey: 'order.serviceDetails.maintenance.problemDescPlaceholder' },
-            { id: 'urgency', labelKey: 'order.serviceDetails.maintenance.urgency', type: 'select', optionKeys: ['order.serviceDetails.maintenance.options.standard', 'order.serviceDetails.maintenance.options.express', 'order.serviceDetails.maintenance.options.sameDay'] }
+            {
+                id: 'warrantyStatus', labelKey: 'order.serviceDetails.maintenance.warrantyStatus', type: 'select',
+                optionKeys: ['order.serviceDetails.maintenance.options.inWarranty', 'order.serviceDetails.maintenance.options.outWarranty', 'order.serviceDetails.maintenance.options.notSure']
+            },
+            {
+                id: 'backupStatus', labelKey: 'order.serviceDetails.maintenance.backupStatus', type: 'select', required: true,
+                optionKeys: ['order.serviceDetails.maintenance.options.backupDone', 'order.serviceDetails.maintenance.options.noBackup', 'order.serviceDetails.maintenance.options.helpBackup']
+            },
+            {
+                id: 'pickupMethod', labelKey: 'order.serviceDetails.maintenance.pickupMethod', type: 'select', required: true,
+                optionKeys: ['order.serviceDetails.maintenance.options.dropOff', 'order.serviceDetails.maintenance.options.pickup', 'order.serviceDetails.maintenance.options.onsite']
+            },
+            { id: 'pickupAddress', labelKey: 'order.serviceDetails.maintenance.pickupAddress', type: 'textarea', placeholderKey: 'order.serviceDetails.maintenance.pickupAddressPlaceholder' }
         ]
     }
 }

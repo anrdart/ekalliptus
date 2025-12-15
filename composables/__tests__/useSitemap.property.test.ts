@@ -34,7 +34,7 @@ const validPathArb = fc.stringMatching(/^\/[a-z0-9-]{0,20}$/)
  * Arbitrary generator for valid site URLs
  */
 const validSiteUrlArb = fc.constantFrom(
-  'https://ekalliptus.id',
+  'https://ekalliptus.com',
   'https://example.com',
   'https://test-site.org'
 )
@@ -62,7 +62,7 @@ const isoDateArb = fc.integer({ min: 1577836800000, max: 1924905600000 }) // 202
  * Arbitrary generator for sitemap URL entries
  */
 const sitemapUrlArb: fc.Arbitrary<SitemapUrl> = fc.record({
-  loc: fc.tuple(validSiteUrlArb, validPathArb).map(([site, path]) => 
+  loc: fc.tuple(validSiteUrlArb, validPathArb).map(([site, path]) =>
     path === '/' ? site + '/' : site + path
   ),
   lastmod: fc.option(isoDateArb, { nil: undefined }),
@@ -197,7 +197,7 @@ describe('Property 13: Sitemap XML Validity', () => {
         lastmod: new Date().toISOString()
       }]
     }
-    
+
     const xml = generateSitemapXml(configWithSpecialChars)
     expect(xml).toContain('&amp;')
     expect(validateSitemapXml(xml)).toBe(true)
@@ -320,15 +320,15 @@ describe('Property 14: Sitemap Page Inclusion', () => {
         (path, siteUrl) => {
           const alternatives = generateAlternatives(path, siteUrl)
           const hreflangs = alternatives.map(alt => alt.hreflang)
-          
+
           // Should have all supported locales
-          const hasAllLocales = SUPPORTED_LOCALES.every(locale => 
+          const hasAllLocales = SUPPORTED_LOCALES.every(locale =>
             hreflangs.includes(locale)
           )
-          
+
           // Should have x-default
           const hasXDefault = hreflangs.includes('x-default')
-          
+
           return hasAllLocales && hasXDefault
         }
       ),
@@ -376,7 +376,7 @@ describe('Sitemap Edge Cases', () => {
       siteUrl: 'https://example.com',
       urls: []
     }
-    
+
     const xml = generateSitemapXml(config)
     expect(validateSitemapXml(xml)).toBe(true)
     expect(xml).toContain('<urlset')
@@ -391,7 +391,7 @@ describe('Sitemap Edge Cases', () => {
         lastmod: new Date().toISOString()
       }]
     }
-    
+
     const xml = generateSitemapXml(config)
     expect(validateSitemapXml(xml)).toBe(true)
     expect(xml).toContain('&amp;') // & should be escaped
@@ -399,11 +399,11 @@ describe('Sitemap Edge Cases', () => {
 
   it('should handle root path correctly', () => {
     const url = generateSitemapUrl('/')
-    expect(url.loc).toBe('https://ekalliptus.id/')
+    expect(url.loc).toBe('https://ekalliptus.com/')
   })
 
   it('should handle non-root paths correctly', () => {
     const url = generateSitemapUrl('/order')
-    expect(url.loc).toBe('https://ekalliptus.id/order')
+    expect(url.loc).toBe('https://ekalliptus.com/order')
   })
 })

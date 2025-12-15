@@ -1,5 +1,5 @@
 /**
- * Performance Configuration for ekalliptus.id
+ * Performance Configuration for ekalliptus.com
  * Contains bundle size targets, Core Web Vitals thresholds, and optimization settings
  */
 

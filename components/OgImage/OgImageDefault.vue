@@ -14,7 +14,7 @@ withDefaults(defineProps<{
   title: 'ekalliptus',
   description: 'Digital Agency Indonesia',
   siteName: 'ekalliptus',
-  siteUrl: 'ekalliptus.id'
+  siteUrl: 'ekalliptus.com'
 })
 </script>
 

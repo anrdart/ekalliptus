@@ -2,7 +2,7 @@
 
 ## Overview
 
-Dokumen ini menjelaskan arsitektur dan implementasi untuk optimasi performa website ekalliptus.id menggunakan Nuxt 3. Implementasi akan memanfaatkan fitur bawaan Nuxt untuk code splitting, lazy loading, dan SSR optimization. Fokus utama adalah meningkatkan Core Web Vitals (LCP < 2.5s, FID < 100ms, CLS < 0.1) tanpa mengubah UI/UX design yang sudah ada.
+Dokumen ini menjelaskan arsitektur dan implementasi untuk optimasi performa website ekalliptus.com menggunakan Nuxt 3. Implementasi akan memanfaatkan fitur bawaan Nuxt untuk code splitting, lazy loading, dan SSR optimization. Fokus utama adalah meningkatkan Core Web Vitals (LCP < 2.5s, FID < 100ms, CLS < 0.1) tanpa mengubah UI/UX design yang sudah ada.
 
 ## Architecture
 

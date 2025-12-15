@@ -28,10 +28,10 @@ defineOgImage({
   width: 1200,
   height: 630,
   props: {
-    title: 'ekalliptus',
-    description: 'Digital Agency Indonesia',
+    title: 'Ekalliptus',
+    description: 'Ekalliptus - Digital Agency Indonesia',
     siteName: 'ekalliptus',
-    siteUrl: 'ekalliptus.id'
+    siteUrl: 'ekalliptus.com'
   }
 })
 
@@ -52,7 +52,7 @@ useHead({
     // Self-referencing canonical URL (Requirements 1.5)
     { rel: 'canonical', href: canonicalUrl },
     // Hreflang tags for all supported languages (Requirements 1.4, 6.1, 6.2)
-    ...hreflangLinks.value
+    ...(hreflangLinks.value as any[])
   ]
 })
 

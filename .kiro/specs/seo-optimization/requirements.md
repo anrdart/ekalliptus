@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Dokumen ini mendefinisikan requirements untuk optimasi SEO komprehensif pada website ekalliptus.id - sebuah digital agency Indonesia. Tujuan utama adalah meningkatkan visibilitas website di Google Search secara signifikan untuk website baru, tanpa mengubah UI/UX design yang sudah ada. Optimasi mencakup technical SEO, on-page SEO, structured data, dan Core Web Vitals.
+Dokumen ini mendefinisikan requirements untuk optimasi SEO komprehensif pada website ekalliptus.com - sebuah digital agency Indonesia. Tujuan utama adalah meningkatkan visibilitas website di Google Search secara signifikan untuk website baru, tanpa mengubah UI/UX design yang sudah ada. Optimasi mencakup technical SEO, on-page SEO, structured data, dan Core Web Vitals.
 
 ## Glossary
 

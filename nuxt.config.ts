@@ -82,7 +82,7 @@ export default defineNuxtConfig({
 
   // SEO Configuration
   site: {
-    url: 'https://ekalliptus.id',
+    url: 'https://ekalliptus.com',
     name: 'ekalliptus',
     description: 'Digital agency Indonesia spesialis website development, WordPress, mobile app, dan multimedia editing.',
     defaultLocale: 'id'
@@ -100,7 +100,7 @@ export default defineNuxtConfig({
         title: 'ekalliptus',
         description: 'Digital Agency Indonesia',
         siteName: 'ekalliptus',
-        siteUrl: 'ekalliptus.id'
+        siteUrl: 'ekalliptus.com'
       }
     },
     // Use Inter font for consistency with site branding
@@ -117,7 +117,7 @@ export default defineNuxtConfig({
   // Sitemap Configuration (Requirements 1.2, 6.4)
   sitemap: {
     // Sitemap URL configuration
-    siteUrl: 'https://ekalliptus.id',
+    siteUrl: 'https://ekalliptus.com',
     // Default values for all URLs
     defaults: {
       changefreq: 'weekly',
@@ -134,14 +134,14 @@ export default defineNuxtConfig({
         changefreq: 'weekly',
         priority: 1.0,
         alternatives: [
-          { hreflang: 'id', href: 'https://ekalliptus.id/' },
-          { hreflang: 'en', href: 'https://ekalliptus.id/' },
-          { hreflang: 'ja', href: 'https://ekalliptus.id/' },
-          { hreflang: 'ko', href: 'https://ekalliptus.id/' },
-          { hreflang: 'ru', href: 'https://ekalliptus.id/' },
-          { hreflang: 'ar', href: 'https://ekalliptus.id/' },
-          { hreflang: 'tr', href: 'https://ekalliptus.id/' },
-          { hreflang: 'x-default', href: 'https://ekalliptus.id/' }
+          { hreflang: 'id', href: 'https://ekalliptus.com/' },
+          { hreflang: 'en', href: 'https://ekalliptus.com/' },
+          { hreflang: 'ja', href: 'https://ekalliptus.com/' },
+          { hreflang: 'ko', href: 'https://ekalliptus.com/' },
+          { hreflang: 'ru', href: 'https://ekalliptus.com/' },
+          { hreflang: 'ar', href: 'https://ekalliptus.com/' },
+          { hreflang: 'tr', href: 'https://ekalliptus.com/' },
+          { hreflang: 'x-default', href: 'https://ekalliptus.com/' }
         ]
       },
       {
@@ -150,14 +150,14 @@ export default defineNuxtConfig({
         changefreq: 'monthly',
         priority: 0.9,
         alternatives: [
-          { hreflang: 'id', href: 'https://ekalliptus.id/order' },
-          { hreflang: 'en', href: 'https://ekalliptus.id/order' },
-          { hreflang: 'ja', href: 'https://ekalliptus.id/order' },
-          { hreflang: 'ko', href: 'https://ekalliptus.id/order' },
-          { hreflang: 'ru', href: 'https://ekalliptus.id/order' },
-          { hreflang: 'ar', href: 'https://ekalliptus.id/order' },
-          { hreflang: 'tr', href: 'https://ekalliptus.id/order' },
-          { hreflang: 'x-default', href: 'https://ekalliptus.id/order' }
+          { hreflang: 'id', href: 'https://ekalliptus.com/order' },
+          { hreflang: 'en', href: 'https://ekalliptus.com/order' },
+          { hreflang: 'ja', href: 'https://ekalliptus.com/order' },
+          { hreflang: 'ko', href: 'https://ekalliptus.com/order' },
+          { hreflang: 'ru', href: 'https://ekalliptus.com/order' },
+          { hreflang: 'ar', href: 'https://ekalliptus.com/order' },
+          { hreflang: 'tr', href: 'https://ekalliptus.com/order' },
+          { hreflang: 'x-default', href: 'https://ekalliptus.com/order' }
         ]
       }
     ],
@@ -174,8 +174,8 @@ export default defineNuxtConfig({
   // Robots Configuration (Requirements 1.3, 8.4)
   robots: {
     // Sitemap reference for crawlers
-    sitemap: 'https://ekalliptus.id/sitemap.xml',
-    
+    sitemap: 'https://ekalliptus.com/sitemap.xml',
+
     // Default rules for all user agents
     groups: [
       {
@@ -293,7 +293,7 @@ export default defineNuxtConfig({
       redirectOn: 'root'
     },
     // SEO Configuration for hreflang generation (Requirements 1.4, 6.1, 6.2)
-    baseUrl: 'https://ekalliptus.id',
+    baseUrl: 'https://ekalliptus.com',
     // Configure SEO meta generation
     seo: true
   },

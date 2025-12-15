@@ -1,5 +1,5 @@
 /**
- * SEO Types for ekalliptus.id
+ * SEO Types for ekalliptus.com
  * Defines TypeScript interfaces for SEO configuration
  */
 
@@ -91,7 +91,10 @@ export interface BreadcrumbItem {
   '@type': 'ListItem'
   position: number
   name: string
-  item?: string
+  item?: {
+    '@type': 'WebPage'
+    '@id': string
+  }
 }
 
 export interface BreadcrumbSchema {
@@ -107,7 +110,10 @@ export interface WebSiteSchema {
   url: string
   potentialAction?: {
     '@type': 'SearchAction'
-    target: string
+    target: {
+      '@type': 'EntryPoint'
+      urlTemplate: string
+    }
     'query-input': string
   }
 }

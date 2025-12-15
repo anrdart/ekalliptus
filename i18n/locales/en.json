@@ -16,7 +16,8 @@
   "hero": {
     "solusiDigital": "Digital Solutions",
     "brand": "єкαℓℓιρтuѕ",
-    "description": "We are here to deliver digital products that feel futuristic yet human. Combining micro-interactions, glassmorphism elements, and smooth animations to create memorable experiences.",
+    "description": "We are here to deliver digital products that feel futuristic yet human. Combining micro-interactions, glassmorphism elements, and smooth animations.",
+    "subdescription": "Get more benefits and attractive offers by using our services!",
     "fokus": "Our current focus:",
     "uiUxDesign": "Futuristic UI/UX Design",
     "digitalExperience": "Immersive Digital Experience",
@@ -28,7 +29,7 @@
   "index": {
     "intro": {
       "title": "ekalliptus — Leading Digital Solutions",
-      "subtitle": "Transform your business with Indonesian website development, custom WordPress, mobile app development, and other professional digital services."
+      "subtitle": "Looking to drive digital transformation for your modern business? Or want to build a more professional website?"
     },
     "about": {
       "heading": "Leading Digital Transformation",
@@ -572,24 +573,58 @@
         "brandPlaceholder": "Example: iPhone, Samsung, Asus, Lenovo",
         "model": "Model",
         "modelPlaceholder": "Example: iPhone 13, Galaxy S23, ROG Strix",
+        "serialNumber": "Serial Number (Optional)",
+        "serialNumberPlaceholder": "Device serial number/IMEI if available",
+        "deviceCondition": "Device Condition",
         "problemType": "Problem Type",
         "problemDesc": "Problem Description",
-        "problemDescPlaceholder": "Describe your device problem in detail...",
+        "problemDescPlaceholder": "Describe your device problem in detail: when it started, what you've tried, etc...",
+        "warrantyStatus": "Warranty Status",
+        "backupStatus": "Data Backup Status",
+        "pickupMethod": "Pickup Method",
+        "pickupAddress": "Pickup/Delivery Address",
+        "pickupAddressPlaceholder": "Enter full address if you choose pickup or on-site service...",
         "urgency": "Urgency Level",
         "options": {
           "smartphone": "Smartphone",
           "laptop": "Laptop",
           "tablet": "Tablet",
           "desktop": "PC Desktop",
+          "allinone": "All-in-One PC",
+          "other": "Other Device",
+          "canTurnOn": "Can Turn On Normally",
+          "cannotTurnOn": "Cannot Turn On",
+          "intermittent": "Turns On But Unstable",
+          "bootLoop": "Boot Loop / Keeps Restarting",
           "screen": "Screen/LCD",
           "battery": "Battery",
-          "charging": "Charging",
+          "charging": "Charging Port",
+          "speaker": "Speaker",
+          "microphone": "Microphone",
+          "camera": "Camera",
+          "keyboard": "Keyboard",
+          "touchpad": "Touchpad/Mouse",
+          "wifi": "WiFi",
+          "bluetooth": "Bluetooth",
+          "storage": "Storage/SSD/HDD",
+          "ram": "RAM",
           "software": "Software/OS",
+          "virus": "Virus/Malware",
           "performance": "Slow Performance",
+          "overheating": "Overheating",
           "hardware": "Other Hardware",
-          "standard": "Standard (3-7 days)",
-          "express": "Express (1-2 days)",
-          "sameDay": "Same Day"
+          "inWarranty": "Still Under Warranty",
+          "outWarranty": "Out of Warranty",
+          "notSure": "Not Sure",
+          "backupDone": "Already Backed Up",
+          "noBackup": "Not Backed Up (Important Data)",
+          "helpBackup": "Need Help with Backup",
+          "dropOff": "Drop Off at Our Location",
+          "pickup": "Pick Up from My Location",
+          "onsite": "On-Site Service",
+          "standard": "Standard (3-7 business days)",
+          "express": "Express (1-2 business days) +25%",
+          "sameDay": "Same Day +50%"
         }
       }
     },
@@ -613,7 +648,7 @@
         },
         "domainDiinginkan": {
           "label": "Desired domain",
-          "placeholder": "Example: ekalliptus.id"
+          "placeholder": "Example: ekalliptus.com"
         },
         "fiturKhusus": {
           "label": "Special features",
@@ -817,12 +852,6 @@
       "submit": "Submit Order",
       "reset": "Reset Form"
     }
-  },
-  "payment": {
-    "deposit": "{percentage}% Deposit",
-    "cash": "Pay on Site",
-    "full": "Full Payment",
-    "depositLabel": "Deposit"
   },
   "privacyPolicy": {
     "title": "Privacy Policy",
@@ -1405,6 +1434,33 @@
     "message": "Your request has been successfully submitted. Our team will contact you within 24 hours via WhatsApp or Email.",
     "backHome": "Back to Home",
     "contactWhatsApp": "Contact via WhatsApp"
+  },
+  "payment": {
+    "title": "Payment",
+    "heading": "Payment",
+    "subheading": "Please transfer to one of the accounts below",
+    "orderSummary": "Order Summary",
+    "service": "Service",
+    "orderId": "Order ID",
+    "total": "Total",
+    "bankAccounts": "Payment Accounts",
+    "accountName": "Account Name",
+    "copy": "Copy",
+    "copied": "Copied!",
+    "copiedMessage": "Account number copied successfully",
+    "uploadProof": "Upload Payment Proof",
+    "uploadDescription": "After transferring, please upload your payment proof or send via WhatsApp.",
+    "sendWhatsApp": "Send via WhatsApp",
+    "important": "Important",
+    "note1": "Make sure to transfer to the correct account",
+    "note2": "Keep your transfer receipt for confirmation",
+    "note3": "Work will begin after payment is confirmed",
+    "confirmPayment": "I Have Transferred",
+    "backHome": "Back to Home",
+    "deposit": "{percentage}% Deposit",
+    "cash": "Pay on Site",
+    "full": "Full Payment",
+    "depositLabel": "Deposit"
   },
   "qrPayment": {
     "title": "QR Code Payment",

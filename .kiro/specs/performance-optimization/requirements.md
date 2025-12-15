@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Dokumen ini mendefinisikan requirements untuk optimasi performa website ekalliptus.id - sebuah digital agency Indonesia berbasis Nuxt 3. Tujuan utama adalah meningkatkan Core Web Vitals (LCP, FID, CLS), mengurangi bundle size, dan mempercepat waktu loading tanpa mengubah UI/UX design yang sudah ada. Optimasi mencakup code splitting, lazy loading, image optimization, font optimization, dan caching strategy.
+Dokumen ini mendefinisikan requirements untuk optimasi performa website ekalliptus.com - sebuah digital agency Indonesia berbasis Nuxt 3. Tujuan utama adalah meningkatkan Core Web Vitals (LCP, FID, CLS), mengurangi bundle size, dan mempercepat waktu loading tanpa mengubah UI/UX design yang sudah ada. Optimasi mencakup code splitting, lazy loading, image optimization, font optimization, dan caching strategy.
 
 ## Glossary
 

@@ -12,7 +12,8 @@
   "hero": {
     "solusiDigital": "Dijital Çözümler",
     "brand": "єкαℓℓιρтuѕ",
-    "description": "Geleceğe yönelik ama insani dijital ürünler sunmak için buradayız. Mikro etkileşimleri, cam morfizm öğelerini ve akıcı animasyonları birleştirerek akılda kalıcı deneyimler yaratıyoruz.",
+    "description": "Geleceğe yönelik ama insani dijital ürünler sunmak için buradayız. Mikro etkileşimleri, cam morfizm öğelerini ve akıcı animasyonları birleştiriyoruz.",
+    "subdescription": "Hizmetlerimizi kullanarak daha fazla avantaj ve cazip teklifler elde edin!",
     "fokus": "Mevcut odağımız:",
     "uiUxDesign": "Geleceğe Dönük UI/UX Tasarımı",
     "digitalExperience": "Sürükleyici Dijital Deneyim",
@@ -24,7 +25,7 @@
   "index": {
     "intro": {
       "title": "ekalliptus — Öncü Dijital Çözümler",
-      "subtitle": "Endonezya web sitesi geliştirme, özel WordPress, mobil uygulama geliştirme ve diğer profesyonel dijital hizmetlerle işletmenizi dönüştürün."
+      "subtitle": "Modern işletmeniz için dijital dönüşüm yapmak mı istiyorsunuz? Ya da daha profesyonel bir web sitesi geliştirmek mi?"
     },
     "about": {
       "heading": "Öncü Dijital Dönüşüm",
@@ -599,7 +600,7 @@
         },
         "domainDiinginkan": {
           "label": "Tercih edilen alan adı",
-          "placeholder": "Örn: ekalliptus.id"
+          "placeholder": "Örn: ekalliptus.com"
         },
         "fiturKhusus": {
           "label": "Özel özellikler",

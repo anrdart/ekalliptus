@@ -9,26 +9,17 @@
         :class="[inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8']"
         :style="{ transitionDelay: '120ms' }"
       >
-        <!-- Badge -->
-        <div class="inline-flex items-center gap-2 rounded-full bg-card/20 px-5 py-2 text-xs uppercase tracking-[0.35em] text-foreground/70 shadow-lg shadow-primary/10">
-          <Sparkles class="h-4 w-4" />
-          <span>{{ $t('hero.solusiDigital') }}</span>
-        </div>
+        <!-- H1 Title -->
+        <h1 class="font-bold text-foreground mb-6" style="font-size: clamp(1.5rem, 5vw, 3.5rem);">
+          Ekalliptus - Digital Agency Indonesia
+        </h1>
 
-        <!-- Description -->
-        <p class="mt-6 text-lg leading-relaxed text-foreground/70 md:text-xl">
-          {{ $t('hero.description') }}
+        <!-- Subtitle -->
+        <p class="text-lg md:text-xl leading-relaxed text-foreground/70 max-w-3xl mx-auto">
+          {{ $t('index.intro.subtitle') }}
         </p>
 
-        <!-- Typewriter -->
-        <p class="mt-4 text-sm font-medium uppercase tracking-[0.4em] text-foreground/50">
-          {{ $t('hero.fokus') }}
-          <span class="ml-3 rounded-full bg-card/20 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-foreground">
-            {{ displayText }}
-          </span>
-        </p>
-
-        <!-- CTA Buttons - Removed gradient -->
+        <!-- CTA Buttons -->
         <div class="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
           <NuxtLink
             to="/order"
@@ -54,24 +45,11 @@
 </template>
 
 <script setup lang="ts">
-import { Sparkles, ArrowRight, Play } from 'lucide-vue-next'
-
-const { t, locale } = useI18n()
+import { ArrowRight, Play } from 'lucide-vue-next'
 
 const heroRef = ref<HTMLElement | null>(null)
 const inView = ref(false)
-const displayText = ref('')
-const currentWordIndex = ref(0)
 
-// Reactive words that update when locale changes
-const words = computed(() => [
-  t('hero.uiUxDesign'),
-  t('hero.digitalExperience'),
-  t('hero.web3d'),
-  t('hero.branding')
-])
-
-// Initialize displayText
 onMounted(() => {
   if (!heroRef.value) return
   
@@ -84,48 +62,8 @@ onMounted(() => {
   
   observer.observe(heroRef.value)
   
-  let charIndex = 0
-  let isDeleting = false
-  let timeoutId: ReturnType<typeof setTimeout>
-  
-  // Initialize with first word
-  displayText.value = words.value[0]
-  
-  const typeWriter = () => {
-    const currentWord = words.value[currentWordIndex.value]
-    
-    if (isDeleting) {
-      displayText.value = currentWord.substring(0, charIndex - 1)
-      charIndex--
-    } else {
-      displayText.value = currentWord.substring(0, charIndex + 1)
-      charIndex++
-    }
-    
-    let timeout = isDeleting ? 40 : 80
-    
-    if (!isDeleting && charIndex === currentWord.length) {
-      timeout = 1400
-      isDeleting = true
-    } else if (isDeleting && charIndex === 0) {
-      isDeleting = false
-      currentWordIndex.value = (currentWordIndex.value + 1) % words.value.length
-      timeout = 500
-    }
-    
-    timeoutId = setTimeout(typeWriter, timeout)
-  }
-  
-  timeoutId = setTimeout(typeWriter, 1000)
-  
   onUnmounted(() => {
     observer.disconnect()
-    clearTimeout(timeoutId)
   })
-})
-
-// Reset typewriter when locale changes
-watch(locale, () => {
-  displayText.value = words.value[currentWordIndex.value]
 })
 </script>
