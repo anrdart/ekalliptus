@@ -46,6 +46,9 @@ export default defineNuxtConfig({
         // DNS prefetch for external links (Requirements 6.4)
         { rel: 'dns-prefetch', href: 'https://wa.me' },
         { rel: 'dns-prefetch', href: 'https://me.ekalliptus.com' },
+        // DNS prefetch for Google Analytics
+        { rel: 'dns-prefetch', href: 'https://www.googletagmanager.com' },
+        { rel: 'dns-prefetch', href: 'https://www.google-analytics.com' },
         // Font stylesheet with display=swap for performance (Requirements 3.1, 3.4, 3.5)
         // Only load font weights actually used: 400 (body), 500 (medium), 600 (semibold), 700 (bold)
         { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap', media: 'print', onload: "this.media='all'" },
@@ -55,6 +58,11 @@ export default defineNuxtConfig({
         { rel: 'preload', href: '/ekalliptus_rounded.webp', as: 'image', type: 'image/webp', fetchpriority: 'high' }
       ],
       script: [
+        // Google Analytics 4 (gtag.js)
+        { src: 'https://www.googletagmanager.com/gtag/js?id=G-HQL55M3RTK', async: true },
+        {
+          children: `window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', 'G-HQL55M3RTK');`
+        },
         // Defer non-critical scripts (Requirements 5.3)
         // Three.js and Vanta.js are loaded with defer for non-blocking execution
         // These scripts are only needed for the background effect, not core functionality
