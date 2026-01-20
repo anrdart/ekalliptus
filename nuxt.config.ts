@@ -9,7 +9,7 @@ export default defineNuxtConfig({
   // App configuration
   app: {
     head: {
-      title: 'ekalliptus - Digital Agency Indonesia | Web & Mobile App',
+      title: 'Ekalliptus Digital | Web & Mobile App',
       htmlAttrs: {
         lang: 'id'
       },
@@ -61,7 +61,7 @@ export default defineNuxtConfig({
         // Google Analytics 4 (gtag.js)
         { src: 'https://www.googletagmanager.com/gtag/js?id=G-HQL55M3RTK', async: true },
         {
-          children: `window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', 'G-HQL55M3RTK');`
+          innerHTML: `window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', 'G-HQL55M3RTK');`
         },
         // Defer non-critical scripts (Requirements 5.3)
         // Three.js and Vanta.js are loaded with defer for non-blocking execution
@@ -71,7 +71,7 @@ export default defineNuxtConfig({
       ],
       // Noscript fallback for users with JavaScript disabled
       noscript: [
-        { children: 'This website requires JavaScript for the best experience.' }
+        { innerHTML: 'This website requires JavaScript for the best experience.' }
       ]
     },
     pageTransition: { name: 'page', mode: 'out-in' }
@@ -106,7 +106,7 @@ export default defineNuxtConfig({
       extension: 'png',
       props: {
         title: 'ekalliptus',
-        description: 'Digital Agency Indonesia',
+        description: 'Ekalliptus Digital',
         siteName: 'ekalliptus',
         siteUrl: 'ekalliptus.com'
       }
@@ -124,8 +124,6 @@ export default defineNuxtConfig({
 
   // Sitemap Configuration (Requirements 1.2, 6.4)
   sitemap: {
-    // Sitemap URL configuration
-    siteUrl: 'https://ekalliptus.com',
     // Default values for all URLs
     defaults: {
       changefreq: 'weekly',
@@ -198,8 +196,7 @@ export default defineNuxtConfig({
           '/*.json$',        // JSON files
           '/*.md$',          // Markdown files
           '/order-success'   // Order success page (transient)
-        ],
-        crawlDelay: 1        // 1 second delay for general bots
+        ]
       },
       {
         // Googlebot - faster crawling allowed
@@ -210,8 +207,7 @@ export default defineNuxtConfig({
           '/_nuxt/',
           '/admin/',
           '/private/'
-        ],
-        crawlDelay: 0.5      // 0.5 second delay for Googlebot
+        ]
       },
       {
         // Bingbot - faster crawling allowed
@@ -222,8 +218,7 @@ export default defineNuxtConfig({
           '/_nuxt/',
           '/admin/',
           '/private/'
-        ],
-        crawlDelay: 0.5      // 0.5 second delay for Bingbot
+        ]
       },
       {
         // Yandex - moderate crawling
@@ -234,8 +229,7 @@ export default defineNuxtConfig({
           '/_nuxt/',
           '/admin/',
           '/private/'
-        ],
-        crawlDelay: 1
+        ]
       },
       {
         // Baidu - moderate crawling
@@ -246,8 +240,7 @@ export default defineNuxtConfig({
           '/_nuxt/',
           '/admin/',
           '/private/'
-        ],
-        crawlDelay: 1
+        ]
       },
       {
         // Block bad bots
@@ -301,9 +294,7 @@ export default defineNuxtConfig({
       redirectOn: 'root'
     },
     // SEO Configuration for hreflang generation (Requirements 1.4, 6.1, 6.2)
-    baseUrl: 'https://ekalliptus.com',
-    // Configure SEO meta generation
-    seo: true
+    baseUrl: 'https://ekalliptus.com'
   },
 
   // Runtime config for environment variables

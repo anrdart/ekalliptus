@@ -170,7 +170,7 @@ export const seoConfig: SeoConfig = {
 
   organization: {
     name: 'ekalliptus',
-    legalName: 'ekalliptus Digital Agency',
+    legalName: 'Ekalliptus Digital',
     email: 'ekalliptus@gmail.com',
     telephone: '+62-819-9990-0306',
     address: {
@@ -192,7 +192,7 @@ export const seoConfig: SeoConfig = {
 
   pages: {
     home: {
-      title: 'ekalliptus - Digital Agency Indonesia | Web & Mobile App',
+      title: 'Ekalliptus Digital | Web & Mobile App',
       description: 'Digital agency Indonesia spesialis website development, WordPress, mobile app, dan multimedia editing. Transformasi bisnis Anda dengan teknologi terdepan.',
       keywords: 'digital agency indonesia, web development, wordpress, mobile app, website development indonesia, jasa pembuatan website',
       ogType: 'website',
@@ -206,13 +206,13 @@ export const seoConfig: SeoConfig = {
       twitterCard: 'summary_large_image'
     },
     privacyPolicy: {
-      title: 'Kebijakan Privasi - ekalliptus Digital Agency',
+      title: 'Kebijakan Privasi - Ekalliptus Digital',
       description: 'Kebijakan privasi ekalliptus menjelaskan bagaimana kami mengumpulkan, menggunakan, dan melindungi informasi pribadi Anda.',
       robots: 'noindex,nofollow'
     },
     termsOfService: {
-      title: 'Syarat dan Ketentuan - ekalliptus Digital Agency',
-      description: 'Syarat dan ketentuan layanan ekalliptus Digital Agency. Baca sebelum menggunakan layanan kami.',
+      title: 'Syarat dan Ketentuan - Ekalliptus Digital',
+      description: 'Syarat dan ketentuan layanan Ekalliptus Digital. Baca sebelum menggunakan layanan kami.',
       robots: 'noindex,nofollow'
     }
   }

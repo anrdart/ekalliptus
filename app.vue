@@ -29,7 +29,7 @@ defineOgImage({
   height: 630,
   props: {
     title: 'Ekalliptus',
-    description: 'Ekalliptus - Digital Agency Indonesia',
+    description: 'Ekalliptus Digital',
     siteName: 'ekalliptus',
     siteUrl: 'ekalliptus.com'
   }

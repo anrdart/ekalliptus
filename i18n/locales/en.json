@@ -154,6 +154,43 @@
     "interactive": "Interactive",
     "support": "Full Support"
   },
+  "appPurpose": {
+    "badge": "Application Purpose",
+    "title": "What is Ekalliptus?",
+    "description": "Ekalliptus is a professional digital agency platform based in Indonesia that helps businesses and individuals access various digital services. Our application provides an easy-to-use interface for ordering digital services, managing projects, and communicating with our team.",
+    "whatWeDo": {
+      "title": "What We Do",
+      "description": "Ekalliptus provides comprehensive digital solutions including website development, mobile app development, WordPress customization, photo & video editing, and device repair services. We help businesses establish and enhance their digital presence with modern, user-centric designs."
+    },
+    "ourServices": {
+      "title": "Our Services",
+      "service1": "Professional website development (company profile, e-commerce, landing pages)",
+      "service2": "Cross-platform mobile app development (Android & iOS)",
+      "service3": "WordPress development with custom themes and plugins",
+      "service4": "Photo & video editing for marketing content"
+    },
+    "dataUsage": {
+      "title": "How We Use Your Data",
+      "description": "We only collect information necessary to process your service orders and provide customer support. Your data is used solely to deliver the services you request, communicate project updates, and improve our service quality. We never sell or share your personal information with third parties for marketing purposes."
+    },
+    "howItWorks": {
+      "title": "How Our Application Works",
+      "orderProcess": {
+        "title": "Service Order Process",
+        "step1": "Browse our services and select what you need",
+        "step2": "Fill out the order form with your project details",
+        "step3": "Our team reviews and contacts you within 24 hours",
+        "step4": "We deliver your project with ongoing support"
+      },
+      "privacyCommitment": {
+        "title": "Our Privacy Commitment",
+        "point1": "Your data is encrypted and stored securely",
+        "point2": "We comply with data protection regulations",
+        "point3": "You can request data deletion at any time"
+      }
+    },
+    "learnMore": "For more details about how we handle your information, please review our policies:"
+  },
   "footer": {
     "contact": "Contact Us",
     "services": "View Our Services"
@@ -1415,7 +1452,7 @@
   },
   "seo": {
     "home": {
-      "title": "ekalliptus - Digital Agency Indonesia | Web & Mobile App",
+      "title": "Ekalliptus Digital | Web & Mobile App",
       "description": "Indonesia digital agency specializing in website development, WordPress, mobile apps, and multimedia editing. Transform your business with cutting-edge technology.",
       "keywords": "digital agency indonesia, web development, wordpress, mobile app, website development indonesia, website creation service"
     },
@@ -1424,7 +1461,7 @@
       "description": "Order ekalliptus digital services - Web Development, Mobile App, WordPress, photo video editing. Get the best offer for your digital project.",
       "keywords": "order digital services, order website, affordable website service, order web development"
     },
-    "title": "Ekalliptus Digital Agency — Website, WordPress, Mobile App Indonesia",
+    "title": "Ekalliptus Digital — Website, WordPress, Mobile App Indonesia",
     "description": "Ekalliptus - Leading digital solutions for website development, WordPress, mobile app, and professional photo/video editing in Indonesia. Contact us for your business digital transformation.",
     "keywords": "website development Indonesia, WordPress custom, mobile app development, photo editing service, video editing professional, digital agency Jakarta, website creation service, mobile app Android iOS, quality photo video editing"
   },

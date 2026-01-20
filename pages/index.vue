@@ -31,6 +31,136 @@
         </p>
       </div>
 
+      <!-- Application Purpose Section - Google Verification Requirement -->
+      <section id="application-purpose" class="content-vis relative px-4 py-16 bg-card/5">
+        <div class="relative z-10 mx-auto max-w-5xl">
+          <div class="mx-auto mb-12 max-w-4xl text-center">
+            <!-- Badge -->
+            <div class="inline-flex items-center gap-2 rounded-full bg-primary/10 px-5 py-2 text-[0.65rem] font-semibold uppercase tracking-[0.6em] text-primary mb-6">
+              <Info class="h-4 w-4" />
+              <span>{{ $t('appPurpose.badge') }}</span>
+            </div>
+            
+            <h2 class="text-3xl font-semibold text-foreground md:text-4xl mb-6">
+              {{ $t('appPurpose.title') }}
+            </h2>
+            
+            <p class="text-lg text-muted-foreground leading-relaxed max-w-3xl mx-auto mb-8">
+              {{ $t('appPurpose.description') }}
+            </p>
+          </div>
+
+          <!-- Purpose Cards Grid -->
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+            <!-- Card 1: What We Do -->
+            <div class="glass-panel rounded-2xl p-6 bg-card/10 border border-border/20">
+              <div class="rounded-full bg-primary/10 p-3 w-fit mb-4">
+                <Target class="h-6 w-6 text-primary" />
+              </div>
+              <h3 class="text-xl font-semibold text-foreground mb-3">{{ $t('appPurpose.whatWeDo.title') }}</h3>
+              <p class="text-muted-foreground leading-relaxed text-sm">{{ $t('appPurpose.whatWeDo.description') }}</p>
+            </div>
+
+            <!-- Card 2: Our Services -->
+            <div class="glass-panel rounded-2xl p-6 bg-card/10 border border-border/20">
+              <div class="rounded-full bg-secondary/10 p-3 w-fit mb-4">
+                <Layers class="h-6 w-6 text-secondary" />
+              </div>
+              <h3 class="text-xl font-semibold text-foreground mb-3">{{ $t('appPurpose.ourServices.title') }}</h3>
+              <ul class="text-muted-foreground text-sm space-y-2">
+                <li class="flex items-start gap-2">
+                  <Check class="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
+                  <span>{{ $t('appPurpose.ourServices.service1') }}</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <Check class="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
+                  <span>{{ $t('appPurpose.ourServices.service2') }}</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <Check class="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
+                  <span>{{ $t('appPurpose.ourServices.service3') }}</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <Check class="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
+                  <span>{{ $t('appPurpose.ourServices.service4') }}</span>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Card 3: Data Usage -->
+            <div class="glass-panel rounded-2xl p-6 bg-card/10 border border-border/20">
+              <div class="rounded-full bg-accent/10 p-3 w-fit mb-4">
+                <Shield class="h-6 w-6 text-accent" />
+              </div>
+              <h3 class="text-xl font-semibold text-foreground mb-3">{{ $t('appPurpose.dataUsage.title') }}</h3>
+              <p class="text-muted-foreground leading-relaxed text-sm">{{ $t('appPurpose.dataUsage.description') }}</p>
+            </div>
+          </div>
+
+          <!-- Detailed Explanation -->
+          <div class="glass-panel neon-border rounded-3xl p-8 md:p-10 bg-card/10">
+            <h3 class="text-2xl font-semibold text-foreground mb-6 text-center">{{ $t('appPurpose.howItWorks.title') }}</h3>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div>
+                <h4 class="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
+                  <FileText class="h-5 w-5 text-primary" />
+                  {{ $t('appPurpose.howItWorks.orderProcess.title') }}
+                </h4>
+                <ol class="text-muted-foreground text-sm space-y-3 list-decimal list-inside">
+                  <li>{{ $t('appPurpose.howItWorks.orderProcess.step1') }}</li>
+                  <li>{{ $t('appPurpose.howItWorks.orderProcess.step2') }}</li>
+                  <li>{{ $t('appPurpose.howItWorks.orderProcess.step3') }}</li>
+                  <li>{{ $t('appPurpose.howItWorks.orderProcess.step4') }}</li>
+                </ol>
+              </div>
+              
+              <div>
+                <h4 class="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
+                  <Lock class="h-5 w-5 text-primary" />
+                  {{ $t('appPurpose.howItWorks.privacyCommitment.title') }}
+                </h4>
+                <ul class="text-muted-foreground text-sm space-y-3">
+                  <li class="flex items-start gap-2">
+                    <Check class="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
+                    <span>{{ $t('appPurpose.howItWorks.privacyCommitment.point1') }}</span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <Check class="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
+                    <span>{{ $t('appPurpose.howItWorks.privacyCommitment.point2') }}</span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <Check class="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
+                    <span>{{ $t('appPurpose.howItWorks.privacyCommitment.point3') }}</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Links to Privacy & Terms -->
+          <div class="mt-8 text-center">
+            <p class="text-sm text-muted-foreground mb-4">{{ $t('appPurpose.learnMore') }}</p>
+            <div class="flex flex-wrap justify-center gap-4">
+              <NuxtLink 
+                to="/privacy-policy" 
+                class="inline-flex items-center gap-2 text-primary hover:text-primary/80 transition-colors text-sm font-medium"
+              >
+                <Shield class="h-4 w-4" />
+                {{ $t('privacyPolicy.title') }}
+              </NuxtLink>
+              <NuxtLink 
+                to="/terms-of-service" 
+                class="inline-flex items-center gap-2 text-primary hover:text-primary/80 transition-colors text-sm font-medium"
+              >
+                <FileText class="h-4 w-4" />
+                {{ $t('termsOfService.title') }}
+              </NuxtLink>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <!-- Services Section - Lazy loaded (Requirements 4.1) -->
       <LazyServices />
 
@@ -172,7 +302,7 @@
 </template>
 
 <script setup lang="ts">
-import { Zap, CheckCircle, Users, ArrowRight, ArrowDown, Sparkles } from 'lucide-vue-next'
+import { Zap, CheckCircle, Users, ArrowRight, ArrowDown, Sparkles, Info, Target, Layers, Check, Shield, Lock, FileText } from 'lucide-vue-next'
 import { seoConfig } from '~/config/seo.config'
 import {
   generateOrganizationSchema,
@@ -268,8 +398,8 @@ useSeoMeta({
 defineOgImage({
   component: 'OgImageDefault',
   props: {
-    title: 'ekalliptus',
-    description: 'Digital Agency Indonesia',
+    title: 'Ekalliptus',
+    description: 'Ekalliptus Digital',
     siteName: 'ekalliptus',
     siteUrl: 'ekalliptus.com'
   }

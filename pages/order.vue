@@ -59,7 +59,7 @@
                   v-for="service in services"
                   :key="service.id"
                   type="button"
-                  @click="selectedService = service.id"
+                  @click="selectedService = service.id as ServiceId"
                   class="glass-button p-5 rounded-2xl text-left transition-all cursor-interactive group"
                   :class="[
                     selectedService === service.id
@@ -616,7 +616,7 @@ defineOgImage({
   component: 'OgImageDefault',
   props: {
     title: 'Order Layanan',
-    description: 'Digital Agency Indonesia',
+    description: 'Ekalliptus Digital',
     siteName: 'ekalliptus',
     siteUrl: 'ekalliptus.com'
   }

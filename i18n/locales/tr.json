@@ -154,6 +154,43 @@
     "contact": "Bize Ulaşın",
     "services": "Hizmetlerimizi Görüntüleyin"
   },
+  "appPurpose": {
+    "badge": "Uygulama Amacı",
+    "title": "Ekalliptus Nedir?",
+    "description": "Ekalliptus, Endonezya merkezli profesyonel bir dijital ajans platformudur ve işletmelerin ve bireylerin çeşitli dijital hizmetlere erişmesine yardımcı olur. Uygulamamız, dijital hizmet siparişi verme, proje yönetimi ve ekibimizle iletişim kurma için kullanımı kolay bir arayüz sunar.",
+    "whatWeDo": {
+      "title": "Ne Yapıyoruz",
+      "description": "Ekalliptus; web sitesi geliştirme, mobil uygulama geliştirme, WordPress özelleştirme, fotoğraf ve video düzenleme ile cihaz onarım hizmetlerini içeren kapsamlı dijital çözümler sunar. Modern, kullanıcı odaklı tasarımlarla işletmelerin dijital varlıklarını oluşturmalarına ve güçlendirmelerine yardımcı oluyoruz."
+    },
+    "ourServices": {
+      "title": "Hizmetlerimiz",
+      "service1": "Profesyonel web sitesi geliştirme (kurumsal site, e-ticaret, açılış sayfası)",
+      "service2": "Çapraz platform mobil uygulama geliştirme (Android ve iOS)",
+      "service3": "Özel tema ve eklentilerle WordPress geliştirme",
+      "service4": "Pazarlama içeriği için fotoğraf ve video düzenleme"
+    },
+    "dataUsage": {
+      "title": "Verilerinizi Nasıl Kullanıyoruz",
+      "description": "Yalnızca hizmet siparişlerinizi işlemek ve müşteri desteği sağlamak için gerekli bilgileri topluyoruz. Verileriniz yalnızca talep ettiğiniz hizmetleri sunmak, proje güncellemelerini iletmek ve hizmet kalitesini artırmak için kullanılır. Kişisel bilgilerinizi pazarlama amacıyla üçüncü taraflarla asla satmaz veya paylaşmayız."
+    },
+    "howItWorks": {
+      "title": "Uygulamamız Nasıl Çalışır",
+      "orderProcess": {
+        "title": "Hizmet Sipariş Süreci",
+        "step1": "Hizmetlerimize göz atın ve ihtiyacınız olanı seçin",
+        "step2": "Proje detaylarınızla sipariş formunu doldurun",
+        "step3": "Ekibimiz 24 saat içinde inceleyip sizinle iletişime geçer",
+        "step4": "Sürekli destekle projenizi teslim ediyoruz"
+      },
+      "privacyCommitment": {
+        "title": "Gizlilik Taahhüdümüz",
+        "point1": "Verileriniz şifrelenerek güvenli bir şekilde saklanır",
+        "point2": "Veri koruma düzenlemelerine uyuyoruz",
+        "point3": "İstediğiniz zaman veri silme talebinde bulunabilirsiniz"
+      }
+    },
+    "learnMore": "Bilgilerinizi nasıl işlediğimiz hakkında daha fazla bilgi için lütfen politikalarımızı inceleyin:"
+  },
   "contactCTA": {
     "title": "Projenize başlamaya hazır mısınız?",
     "description": "Bizimle konuşun ve immersif tasarımın marka algınızı nasıl güçlendirdiğini ve kullanıcıları ürününüze nasıl yakınlaştırdığını keşfedin.",

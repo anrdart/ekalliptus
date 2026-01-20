@@ -11,7 +11,7 @@
       >
         <!-- H1 Title -->
         <h1 class="font-bold text-foreground mb-6" style="font-size: clamp(1.5rem, 5vw, 3.5rem);">
-          Ekalliptus - Digital Agency Indonesia
+          Ekalliptus Digital
         </h1>
 
         <!-- Subtitle -->

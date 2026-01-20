@@ -12,7 +12,7 @@ withDefaults(defineProps<{
   siteUrl?: string
 }>(), {
   title: 'ekalliptus',
-  description: 'Digital Agency Indonesia',
+  description: 'Ekalliptus Digital',
   siteName: 'ekalliptus',
   siteUrl: 'ekalliptus.com'
 })
@@ -38,7 +38,7 @@ withDefaults(defineProps<{
       <div class="flex items-center justify-center w-36 h-36 rounded-full mb-8"
            style="background: #1e293b; border: 3px solid transparent; background-image: linear-gradient(#1e293b, #1e293b), linear-gradient(90deg, #2dd4bf, #34d399, #2dd4bf); background-origin: border-box; background-clip: padding-box, border-box;">
         <span class="text-7xl font-bold"
-              style="background: linear-gradient(90deg, #2dd4bf, #34d399); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">e</span>
+              style="background: linear-gradient(90deg, #2dd4bf, #34d399); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;">e</span>
       </div>
       
       <!-- Brand name -->

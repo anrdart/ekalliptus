@@ -154,6 +154,43 @@
     "interactive": "Interaktif",
     "support": "Dukungan Penuh"
   },
+  "appPurpose": {
+    "badge": "Tujuan Aplikasi",
+    "title": "Apa itu Ekalliptus?",
+    "description": "Ekalliptus adalah platform digital agency profesional berbasis di Indonesia yang membantu bisnis dan individu mengakses berbagai layanan digital. Aplikasi kami menyediakan antarmuka yang mudah digunakan untuk memesan layanan digital, mengelola proyek, dan berkomunikasi dengan tim kami.",
+    "whatWeDo": {
+      "title": "Apa yang Kami Lakukan",
+      "description": "Ekalliptus menyediakan solusi digital komprehensif termasuk pengembangan website, pengembangan aplikasi mobile, kustomisasi WordPress, editing foto & video, dan layanan perbaikan perangkat. Kami membantu bisnis membangun dan meningkatkan kehadiran digital mereka dengan desain modern yang berpusat pada pengguna."
+    },
+    "ourServices": {
+      "title": "Layanan Kami",
+      "service1": "Pengembangan website profesional (company profile, e-commerce, landing page)",
+      "service2": "Pengembangan aplikasi mobile cross-platform (Android & iOS)",
+      "service3": "Pengembangan WordPress dengan tema dan plugin custom",
+      "service4": "Editing foto & video untuk konten marketing"
+    },
+    "dataUsage": {
+      "title": "Bagaimana Kami Menggunakan Data Anda",
+      "description": "Kami hanya mengumpulkan informasi yang diperlukan untuk memproses pesanan layanan Anda dan memberikan dukungan pelanggan. Data Anda digunakan semata-mata untuk memberikan layanan yang Anda minta, mengomunikasikan pembaruan proyek, dan meningkatkan kualitas layanan kami. Kami tidak pernah menjual atau membagikan informasi pribadi Anda kepada pihak ketiga untuk tujuan pemasaran."
+    },
+    "howItWorks": {
+      "title": "Cara Kerja Aplikasi Kami",
+      "orderProcess": {
+        "title": "Proses Pemesanan Layanan",
+        "step1": "Jelajahi layanan kami dan pilih yang Anda butuhkan",
+        "step2": "Isi formulir pesanan dengan detail proyek Anda",
+        "step3": "Tim kami meninjau dan menghubungi Anda dalam 24 jam",
+        "step4": "Kami menyelesaikan proyek Anda dengan dukungan berkelanjutan"
+      },
+      "privacyCommitment": {
+        "title": "Komitmen Privasi Kami",
+        "point1": "Data Anda dienkripsi dan disimpan dengan aman",
+        "point2": "Kami mematuhi regulasi perlindungan data",
+        "point3": "Anda dapat meminta penghapusan data kapan saja"
+      }
+    },
+    "learnMore": "Untuk detail lebih lanjut tentang bagaimana kami menangani informasi Anda, silakan tinjau kebijakan kami:"
+  },
   "footer": {
     "contact": "Hubungi Kami",
     "services": "Lihat Layanan Kami"
@@ -1201,7 +1238,7 @@
   },
   "seo": {
     "home": {
-      "title": "ekalliptus - Digital Agency Indonesia | Web & Mobile App",
+      "title": "Ekalliptus Digital | Web & Mobile App",
       "description": "Digital agency Indonesia spesialis website development, WordPress, mobile app, dan multimedia editing. Transformasi bisnis Anda dengan teknologi terdepan.",
       "keywords": "digital agency indonesia, web development, wordpress, mobile app, website development indonesia, jasa pembuatan website"
     },
@@ -1210,7 +1247,7 @@
       "description": "Pesan layanan digital ekalliptus - Web Development, Mobile App, WordPress, editing foto video. Dapatkan penawaran terbaik untuk proyek digital Anda.",
       "keywords": "order layanan digital, pesan website, jasa website murah, order web development"
     },
-    "title": "Ekalliptus Digital Agency — Website, WordPress, Mobile App Indonesia",
+    "title": "Ekalliptus Digital — Website, WordPress, Mobile App Indonesia",
     "description": "Ekalliptus - Solusi digital terdepan untuk website development, WordPress, mobile app, dan editing foto/video profesional di Indonesia. Hubungi kami untuk transformasi digital bisnis Anda.",
     "keywords": "website development Indonesia, WordPress custom, mobile app development, photo editing service, video editing profesional, digital agency Jakarta, jasa pembuatan website, aplikasi mobile Android iOS, editing foto video berkualitas"
   },
