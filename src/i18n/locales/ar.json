@@ -4,10 +4,14 @@
     "services": "الخدمات",
     "about": "من نحن",
     "contact": "اتصل بنا",
-    "consultation": "احصل على استشارة",
+    "consultation": "استشر الآن",
     "navigation": "التنقل",
-    "darkMode": "الوضع المظلم",
-    "lightMode": "الوضع الفاتح"
+    "darkMode": "الوضع الداكن",
+    "lightMode": "الوضع الفاتح",
+    "language": "اللغة",
+    "selectLanguage": "اختر اللغة",
+    "closeModal": "إغلاق اختيار اللغة",
+    "languageHint": "سيتم حفظ تفضيلات اللغة تلقائياً"
   },
   "hero": {
     "solusiDigital": "الحلول الرقمية",

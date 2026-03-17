@@ -7,7 +7,11 @@
     "consultation": "Получить консультацию",
     "navigation": "Навигация",
     "darkMode": "Тёмный режим",
-    "lightMode": "Светлый режим"
+    "lightMode": "Светлый режим",
+    "language": "Язык",
+    "selectLanguage": "Выберите язык",
+    "closeModal": "Закрыть выбор языка",
+    "languageHint": "Предпочтения языка будут сохранены автоматически"
   },
   "hero": {
     "solusiDigital": "Цифровые решения",

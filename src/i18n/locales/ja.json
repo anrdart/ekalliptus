@@ -7,7 +7,11 @@
     "consultation": "今すぐ相談",
     "navigation": "ナビゲーション",
     "darkMode": "ダークモード",
-    "lightMode": "ライトモード"
+    "lightMode": "ライトモード",
+    "language": "言語",
+    "selectLanguage": "言語を選",
+    "closeModal": "言語選択を閉じる",
+    "languageHint": "言語設定は自動的に保存されます"
   },
   "hero": {
     "solusiDigital": "デジタルソリューション",

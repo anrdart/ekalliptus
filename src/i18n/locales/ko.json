@@ -7,7 +7,11 @@
     "consultation": "지금 상담",
     "navigation": "내비게이션",
     "darkMode": "다크 모드",
-    "lightMode": "라이트 모드"
+    "lightMode": "라이트 모드",
+    "language": "언어",
+    "selectLanguage": "언어 선택",
+    "closeModal": "언어 선택 닫기",
+    "languageHint": "언어 설정이 자동으로 저장됩니다"
   },
   "hero": {
     "solusiDigital": "디지털 솔루션",

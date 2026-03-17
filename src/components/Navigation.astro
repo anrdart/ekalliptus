@@ -189,7 +189,7 @@ const isHomePage = currentPath === '/'
   <div class="w-full max-w-sm rounded-2xl language-modal p-6 shadow-2xl">
     <div class="flex items-center justify-between mb-4">
       <h3 class="text-lg font-semibold text-foreground">
-        {t('nav.selectLanguage')}
+        {t('nav.selectLanguage') || 'Select Language'}
       </h3>
       <button
         id="close-lang-modal"
@@ -219,7 +219,7 @@ const isHomePage = currentPath === '/'
 
     <div class="mt-4 text-center">
       <p class="text-xs text-muted-foreground">
-        {t('nav.languageHint')}
+        {t('nav.languageHint') || 'Language preference will be saved automatically'}
       </p>
     </div>
   </div>
