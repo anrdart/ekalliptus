@@ -263,12 +263,12 @@ const currentLanguage = languages.find(lang => lang.code === currentLang) || lan
     updateThemeIcons(!isDark)
   }
   
-  function updateThemeIcons(isDark: boolean) {
+  function updateThemeIcons(isDark) {
     document.querySelectorAll('.dark-icon').forEach(el => {
-      (el as HTMLElement).classList.toggle('hidden', isDark)
+      el.classList.toggle('hidden', isDark)
     })
     document.querySelectorAll('.light-icon').forEach(el => {
-      (el asHTMLElement).classList.toggle('hidden', !isDark)
+      el.classList.toggle('hidden', !isDark)
     })
   }
   
