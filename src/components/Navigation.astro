@@ -336,10 +336,11 @@ const isHomePage = currentPath === '/'
     btn.addEventListener('click', function(e) {
       var lang = e.currentTarget.dataset.lang
       if (lang) {
-        localStorage.setItem('i18n_redirected', lang)
+        document.cookie = 'i18n_redirected=' + lang + ';path=/;max-age=31536000'
         window.location.reload()
       }
     })
+  })
   })
   
   document.addEventListener('keydown', function(e) {
