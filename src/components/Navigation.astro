@@ -26,6 +26,9 @@ const languages = [
 ]
 
 const currentLanguage = languages.find(lang => lang.code === currentLang) || languages[0]
+
+const currentPath = Astro.url.pathname
+const isHomePage = currentPath === '/'
 ---
 
 <header class="pointer-events-none fixed left-1/2 top-0 z-40 w-full max-w-4xl -translate-x-1/2 px-4 sm:px-6 lg:px-8 pt-2 sm:pt-3">
@@ -49,13 +52,22 @@ const currentLanguage = languages.find(lang => lang.code === currentLang) || lan
 
     <div class="hidden items-center gap-1 md:flex" id="desktop-nav">
       {sectionLinks.map((item) => (
-        <button
-          type="button"
-          data-hash={item.hash}
-          class="nav-link cursor-interactive rounded-full px-4 py-2 text-sm font-medium text-foreground/80 transition hover:bg-foreground/10 hover:text-foreground"
-        >
-          {t(`nav.${item.key}`)}
-        </button>
+        isHomePage ? (
+          <button
+            type="button"
+            data-hash={item.hash}
+            class="nav-link cursor-interactive rounded-full px-4 py-2 text-sm font-medium text-foreground/80 transition hover:bg-foreground/10 hover:text-foreground"
+          >
+            {t(`nav.${item.key}`)}
+          </button>
+        ) : (
+          <a
+            href={`/${item.hash}`}
+            class="nav-link cursor-interactive rounded-full px-4 py-2 text-sm font-medium text-foreground/80 transition hover:bg-foreground/10 hover:text-foreground"
+          >
+            {t(`nav.${item.key}`)}
+          </a>
+        )
       ))}
     </div>
 
@@ -96,13 +108,22 @@ const currentLanguage = languages.find(lang => lang.code === currentLang) || lan
 <div id="mobile-menu" class="fixed inset-x-4 top-16 z-40 rounded-2xl border border-border bg-card p-4 shadow-lg md:hidden hidden">
   <nav class="flex flex-col gap-1">
     {sectionLinks.map((item) => (
-      <button
-        type="button"
-        data-hash={item.hash}
-        class="nav-link cursor-interactive rounded-lg px-4 py-3 text-left text-sm font-medium text-foreground/80 transition hover:bg-accent hover:text-foreground"
-      >
-        {t(`nav.${item.key}`)}
-      </button>
+      isHomePage ? (
+        <button
+          type="button"
+          data-hash={item.hash}
+          class="nav-link cursor-interactive rounded-lg px-4 py-3 text-left text-sm font-medium text-foreground/80 transition hover:bg-accent hover:text-foreground"
+        >
+          {t(`nav.${item.key}`)}
+        </button>
+      ) : (
+        <a
+          href={`/${item.hash}`}
+          class="nav-link cursor-interactive rounded-lg px-4 py-3 text-left text-sm font-medium text-foreground/80 transition hover:bg-accent hover:text-foreground"
+        >
+          {t(`nav.${item.key}`)}
+        </a>
+      )
     ))}
     
     <div class="my-2 border-t border-border"></div>
@@ -204,7 +225,7 @@ const currentLanguage = languages.find(lang => lang.code === currentLang) || lan
   </div>
 </div>
 
-<script>
+<script define:vars={{ isHomePage }}>
   const nav = document.getElementById('main-nav')
   const mobileToggle = document.getElementById('mobile-menu-toggle')
   const mobileMenu = document.getElementById('mobile-menu')
@@ -226,16 +247,16 @@ const currentLanguage = languages.find(lang => lang.code === currentLang) || lan
       menuOpen = !menuOpen
       mobileMenu.classList.toggle('hidden', !menuOpen)
       mobileBackdrop.classList.toggle('hidden', !menuOpen)
-      menuIcon?.classList.toggle('hidden', menuOpen)
-      closeIcon?.classList.toggle('hidden', !menuOpen)
+      if (menuIcon) menuIcon.classList.toggle('hidden', menuOpen)
+      if (closeIcon) closeIcon.classList.toggle('hidden', !menuOpen)
     })
     
     mobileBackdrop.addEventListener('click', () => {
       menuOpen = false
       mobileMenu.classList.add('hidden')
       mobileBackdrop.classList.add('hidden')
-      menuIcon?.classList.remove('hidden')
-      closeIcon?.classList.add('hidden')
+      if (menuIcon) menuIcon.classList.remove('hidden')
+      if (closeIcon) closeIcon.classList.add('hidden')
     })
   }
   
@@ -264,23 +285,23 @@ const currentLanguage = languages.find(lang => lang.code === currentLang) || lan
   }
   
   function updateThemeIcons(isDark) {
-    document.querySelectorAll('.dark-icon').forEach(el => {
+    document.querySelectorAll('.dark-icon').forEach(function(el) {
       el.classList.toggle('hidden', isDark)
     })
-    document.querySelectorAll('.light-icon').forEach(el => {
+    document.querySelectorAll('.light-icon').forEach(function(el) {
       el.classList.toggle('hidden', !isDark)
     })
   }
   
-  themeToggle?.addEventListener('click', toggleTheme)
-  mobileThemeToggle?.addEventListener('click', toggleTheme)
+  if (themeToggle) themeToggle.addEventListener('click', toggleTheme)
+  if (mobileThemeToggle) mobileThemeToggle.addEventListener('click', toggleTheme)
   
-  const savedTheme = localStorage.getItem('ekal-theme') || 'dark'
+  var savedTheme = localStorage.getItem('ekal-theme') || 'dark'
   updateThemeIcons(savedTheme === 'dark')
   
-  let scrolled = false
-  window.addEventListener('scroll', () => {
-    const newScrolled = window.scrollY > 32
+  var scrolled = false
+  window.addEventListener('scroll', function() {
+    var newScrolled = window.scrollY > 32
     if (newScrolled !== scrolled && nav) {
       scrolled = newScrolled
       nav.classList.toggle('bg-background/95', scrolled)
@@ -288,29 +309,32 @@ const currentLanguage = languages.find(lang => lang.code === currentLang) || lan
     }
   }, { passive: true })
   
-  document.querySelectorAll('.nav-link').forEach(link => {
-    link.addEventListener('click', (e) => {
-      const hash = (e.currentTarget as HTMLElement).dataset.hash
-      if (hash) {
-        const id = hash.replace('#', '')
-        const target = document.getElementById(id)
-        if (target) {
-          target.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  // Only handle scroll on homepage
+  if (isHomePage) {
+    document.querySelectorAll('.nav-link[data-hash]').forEach(function(link) {
+      link.addEventListener('click', function(e) {
+        var hash = e.currentTarget.dataset.hash
+        if (hash) {
+          var id = hash.replace('#', '')
+          var target = document.getElementById(id)
+          if (target) {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' })
+          }
+          if (menuOpen && mobileMenu) {
+            menuOpen = false
+            mobileMenu.classList.add('hidden')
+            if (mobileBackdrop) mobileBackdrop.classList.add('hidden')
+            if (menuIcon) menuIcon.classList.remove('hidden')
+            if (closeIcon) closeIcon.classList.add('hidden')
+          }
         }
-        if (menuOpen && mobileMenu) {
-          menuOpen = false
-          mobileMenu.classList.add('hidden')
-          mobileBackdrop?.classList.add('hidden')
-          menuIcon?.classList.remove('hidden')
-          closeIcon?.classList.add('hidden')
-        }
-      }
+      })
     })
-  })
+  }
   
-  document.querySelectorAll('.lang-btn, .lang-modal-btn').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      const lang = (e.currentTarget as HTMLElement).dataset.lang
+  document.querySelectorAll('.lang-btn, .lang-modal-btn').forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+      var lang = e.currentTarget.dataset.lang
       if (lang) {
         localStorage.setItem('i18n_redirected', lang)
         window.location.reload()
@@ -318,7 +342,7 @@ const currentLanguage = languages.find(lang => lang.code === currentLang) || lan
     })
   })
   
-  document.addEventListener('keydown', (e) => {
+  document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') {
       if (langModalOpen && langModal && langBackdrop) {
         langModalOpen = false
@@ -329,8 +353,8 @@ const currentLanguage = languages.find(lang => lang.code === currentLang) || lan
         menuOpen = false
         mobileMenu.classList.add('hidden')
         mobileBackdrop.classList.add('hidden')
-        menuIcon?.classList.remove('hidden')
-        closeIcon?.classList.add('hidden')
+        if (menuIcon) menuIcon.classList.remove('hidden')
+        if (closeIcon) closeIcon.classList.add('hidden')
       }
     }
   })
