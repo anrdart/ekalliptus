@@ -4,7 +4,9 @@ import sitemap from '@astrojs/sitemap'
 
 export default defineConfig({
   output: 'server',
-  adapter: cloudflare(),
+  adapter: cloudflare({
+    imageService: false,
+  }),
   site: 'https://ekalliptus.com',
   integrations: [
     sitemap({
