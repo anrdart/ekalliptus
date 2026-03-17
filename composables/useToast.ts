@@ -6,11 +6,20 @@ interface Toast {
     duration?: number
 }
 
-const toasts = ref<Toast[]>([])
+interface ToastFn {
+    (options: Omit<Toast, 'id'>): string
+    success: (title: string, description?: string) => string
+    error: (title: string, description?: string) => string
+    warning: (title: string, description?: string) => string
+}
+
+let toastIdCounter = 0
 
 export const useToast = () => {
+    const toasts = useState<Toast[]>('toasts', () => [])
+    
     const addToast = (toast: Omit<Toast, 'id'>) => {
-        const id = Math.random().toString(36).slice(2)
+        const id = `toast-${++toastIdCounter}-${Date.now()}`
         const newToast: Toast = {
             id,
             duration: 5000,
@@ -20,7 +29,6 @@ export const useToast = () => {
 
         toasts.value.push(newToast)
 
-        // Auto remove after duration
         if (newToast.duration && newToast.duration > 0) {
             setTimeout(() => {
                 removeToast(id)
@@ -37,11 +45,10 @@ export const useToast = () => {
         }
     }
 
-    const toast = (options: Omit<Toast, 'id'>) => {
+    const toast = function(options: Omit<Toast, 'id'>) {
         return addToast(options)
-    }
+    } as ToastFn
 
-    // Convenience methods
     toast.success = (title: string, description?: string) => {
         return addToast({ title, description, variant: 'success' })
     }
@@ -61,4 +68,3 @@ export const useToast = () => {
         removeToast
     }
 }
-

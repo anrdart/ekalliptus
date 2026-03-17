@@ -1,19 +1,19 @@
 import { createClient, type SupabaseClient } from '@supabase/supabase-js'
 import type { Database, Order, OrderInsert, OrderAttachment, OrderAttachmentInsert, ServiceType, OrderStatus } from '~/types/database.types'
 
-let supabaseClient: SupabaseClient<Database> | null = null
-
 export const useSupabase = () => {
     const config = useRuntimeConfig()
+    
+    const supabaseClient = useState<SupabaseClient<Database> | null>('supabase-client', () => null)
 
-    if (!supabaseClient) {
+    if (!supabaseClient.value) {
         const supabaseUrl = config.public.supabaseUrl as string
         const supabaseAnonKey = config.public.supabaseAnonKey as string
 
         if (!supabaseUrl || !supabaseAnonKey) {
             console.warn('Supabase credentials not configured')
         } else {
-            supabaseClient = createClient<Database>(supabaseUrl, supabaseAnonKey, {
+            supabaseClient.value = createClient<Database>(supabaseUrl, supabaseAnonKey, {
                 auth: {
                     persistSession: true,
                     autoRefreshToken: true
@@ -23,7 +23,7 @@ export const useSupabase = () => {
     }
 
     return {
-        supabase: supabaseClient
+        supabase: supabaseClient.value
     }
 }
 

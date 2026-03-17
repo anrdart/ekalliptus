@@ -19,6 +19,8 @@
           class="glass-panel rounded-2xl overflow-hidden"
         >
           <button
+            :aria-expanded="openItems.includes(index)"
+            :aria-controls="`faq-content-${index}`"
             @click="toggleItem(index)"
             class="flex w-full items-center justify-between px-6 py-4 text-left cursor-interactive"
           >
@@ -34,6 +36,7 @@
           <Transition name="accordion">
             <div
               v-if="openItems.includes(index)"
+              :id="`faq-content-${index}`"
               class="px-6 pb-4"
             >
               <p class="text-muted-foreground text-sm leading-relaxed">
@@ -83,7 +86,6 @@ const faqItems = computed<FaqItem[]>(() => {
   for (let i = 0; i < FAQ_COUNT; i++) {
     const question = t(`faq.items[${i}].question`)
     const answer = t(`faq.items[${i}].answer`)
-    // Only add if translation exists (not returning the key)
     if (question && !question.includes('faq.items[')) {
       items.push({ question, answer })
     }
@@ -91,19 +93,20 @@ const faqItems = computed<FaqItem[]>(() => {
   return items
 })
 
-// Generate FAQPage structured data (Requirements 3.4)
-// Use watchEffect to update schema when language changes
-watchEffect(() => {
+const faqSchemaJson = computed(() => {
   const faqSchema = generateFAQPageSchema(faqItems.value)
-  useHead({
-    script: [
-      {
-        type: 'application/ld+json',
-        innerHTML: schemaToJsonLd(faqSchema)
-      }
-    ]
-  })
+  return schemaToJsonLd(faqSchema)
 })
+
+useHead(computed(() => ({
+  script: [
+    {
+      type: 'application/ld+json',
+      innerHTML: faqSchemaJson.value,
+      key: 'faq-schema'
+    }
+  ]
+})))
 
 const toggleItem = (index: number) => {
   const idx = openItems.value.indexOf(index)

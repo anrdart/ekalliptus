@@ -38,6 +38,7 @@
           </div>
           
           <button
+            :aria-label="$t('common.close', 'Close notification')"
             @click="removeToast(toast.id)"
             class="text-muted-foreground hover:text-foreground transition-colors cursor-interactive"
           >

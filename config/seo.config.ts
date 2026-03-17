@@ -102,8 +102,7 @@ export function generateOgTags(
  */
 export function validateOgTagCompleteness(ogTags: Record<string, string>): boolean {
   return REQUIRED_OG_TAGS.every(tag => {
-    const key = tag.replace('og:', 'og:')
-    return ogTags[key] && ogTags[key].trim().length > 0
+    return ogTags[tag] && ogTags[tag].trim().length > 0
   })
 }
 

@@ -281,7 +281,7 @@ export function calculateDynamicPrice(serviceId: string, details: ServiceDetails
         price += VIDEO_DURATION_PRICES[details.videoDuration] || 0
       }
       // Quantity multiplier
-      const qty = typeof details.quantity === 'string' ? parseInt(details.quantity) : details.quantity
+      const qty = typeof details.quantity === 'string' ? parseInt(details.quantity, 10) : details.quantity
       if (qty && qty > 1) {
         price = price * qty
       }

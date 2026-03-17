@@ -35,21 +35,32 @@
 
 <script setup lang="ts">
 const isLoading = ref(true)
+const isMounted = ref(true)
+
+const hideLoader = () => {
+  if (isMounted.value) {
+    isLoading.value = false
+  }
+}
 
 onMounted(() => {
-  // Minimum display time for preloader
-  setTimeout(() => {
-    isLoading.value = false
-  }, 1500)
+  const minDisplayTimeout = setTimeout(hideLoader, 1500)
   
-  // Also hide when page fully loaded
   if (typeof window !== 'undefined') {
-    window.addEventListener('load', () => {
-      setTimeout(() => {
-        isLoading.value = false
-      }, 500)
+    const onLoad = () => {
+      setTimeout(hideLoader, 500)
+    }
+    window.addEventListener('load', onLoad)
+    
+    onUnmounted(() => {
+      clearTimeout(minDisplayTimeout)
+      window.removeEventListener('load', onLoad)
     })
   }
+})
+
+onUnmounted(() => {
+  isMounted.value = false
 })
 </script>
 

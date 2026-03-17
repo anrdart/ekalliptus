@@ -2,10 +2,16 @@
   <div class="space-y-4">
     <!-- Drop Zone -->
     <div
+      ref="dropZoneRef"
+      tabindex="0"
+      role="button"
+      :aria-label="$t('order.attachments.dragDrop', 'Drag & drop files here')"
       @drop.prevent="handleDrop"
       @dragover.prevent="onDragOver"
       @dragleave.prevent="onDragLeave"
       @click="triggerFileInput"
+      @keydown.enter="triggerFileInput"
+      @keydown.space.prevent="triggerFileInput"
       class="border-2 border-dashed rounded-2xl p-6 text-center transition-all duration-300 cursor-pointer"
       :class="[
         isDragging 

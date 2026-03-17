@@ -97,28 +97,25 @@ useHead({
   }))
 })
 
+const featuresCache = new Map<string, string[]>()
+
 const getFeatures = (key: string): string[] => {
-  // Try to get features array, fallback to empty array
-  try {
-    const result = t(`services.cards.${key}.features`)
-    // If it returns the key itself, features don't exist
-    if (typeof result === 'string' && result.includes('features')) {
-      return []
-    }
-    // For Nuxt i18n, we need to access each feature individually
-    const features: string[] = []
-    for (let i = 0; i < 10; i++) {
-      const feature = t(`services.cards.${key}.features[${i}]`)
-      if (feature && !feature.includes(`features[${i}]`)) {
-        features.push(feature)
-      } else {
-        break
-      }
-    }
-    return features
-  } catch {
-    return []
+  if (featuresCache.has(key)) {
+    return featuresCache.get(key)!
   }
+  
+  const features: string[] = []
+  for (let i = 0; i < 10; i++) {
+    const feature = t(`services.cards.${key}.features[${i}]`)
+    if (feature && !feature.includes(`features[${i}]`)) {
+      features.push(feature)
+    } else {
+      break
+    }
+  }
+  
+  featuresCache.set(key, features)
+  return features
 }
 </script>
 

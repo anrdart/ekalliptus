@@ -96,33 +96,33 @@ export const preloaderConfig = {
  * Requirements: 6.4, 6.5
  */
 export const externalDomains = {
-  // Critical domains that need preconnect for early connection establishment
   preconnect: [
     'https://fonts.googleapis.com',
     'https://fonts.gstatic.com'
   ],
-  // All external domains that need dns-prefetch for faster DNS resolution
   dnsPrefetch: [
-    // Font domains
     'https://fonts.googleapis.com',
     'https://fonts.gstatic.com',
-    // CDN domains
     'https://cdnjs.cloudflare.com',
     'https://cdn.jsdelivr.net',
     'https://static.cloudflareinsights.com',
-    // API/service domains
     'https://api.emailjs.com',
     'https://sheetdb.io',
-    // Supabase
-    'https://muyzxygtlwsfegzyvgcm.supabase.co',
-    // External links
     'https://wa.me',
     'https://me.ekalliptus.com'
   ],
-  // Critical assets to preload
   preload: [
     '/ekalliptus_rounded.webp'
   ]
+}
+
+export const getSupabaseDomain = (supabaseUrl: string) => {
+  try {
+    const url = new URL(supabaseUrl)
+    return url.origin
+  } catch {
+    return null
+  }
 }
 
 export default performanceTargets

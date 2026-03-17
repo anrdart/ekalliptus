@@ -6,7 +6,7 @@
 
 <script setup lang="ts">
 import { seoConfig } from '~/config/seo.config'
-import { generateHreflangTags } from '~/composables/useI18nSeo'
+import { generateHreflangTags, type HreflangLink } from '~/composables/useI18nSeo'
 
 // Get current route for canonical URL generation
 const route = useRoute()
@@ -36,7 +36,7 @@ defineOgImage({
 })
 
 // Generate hreflang tags for all supported languages (Requirements 1.4, 6.1, 6.2)
-const hreflangLinks = computed(() => {
+const hreflangLinks = computed((): HreflangLink[] => {
   return generateHreflangTags(route.path, seoConfig.siteUrl)
 })
 
@@ -52,7 +52,7 @@ useHead({
     // Self-referencing canonical URL (Requirements 1.5)
     { rel: 'canonical', href: canonicalUrl },
     // Hreflang tags for all supported languages (Requirements 1.4, 6.1, 6.2)
-    ...(hreflangLinks.value as any[])
+    ...hreflangLinks.value
   ]
 })
 

@@ -32,7 +32,11 @@
 <script setup lang="ts">
 import { FileQuestion, Home } from 'lucide-vue-next'
 
-// Clear error on mount
 const error = useError()
-const handleError = () => clearError({ redirect: '/' })
+
+const handleClearError = () => clearError({ redirect: '/' })
+
+if (error.value) {
+  console.error('Application error:', error.value)
+}
 </script>

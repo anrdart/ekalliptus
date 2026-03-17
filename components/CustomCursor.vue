@@ -33,8 +33,14 @@ const cursorStyle = computed(() => ({
   transform: 'translate(-50%, -50%)'
 }))
 
+let rafId: number | null = null
+
 const handleMouseMove = (e: MouseEvent) => {
-  position.value = { x: e.clientX, y: e.clientY }
+  if (rafId) return
+  rafId = requestAnimationFrame(() => {
+    position.value = { x: e.clientX, y: e.clientY }
+    rafId = null
+  })
 }
 
 const handleMouseOver = (e: MouseEvent) => {
@@ -43,10 +49,11 @@ const handleMouseOver = (e: MouseEvent) => {
   isHovering.value = !!interactive
 }
 
+const styleElement = ref<HTMLStyleElement | null>(null)
+
 onMounted(() => {
   if (typeof window === 'undefined') return
   
-  // Detect touch device
   const coarse = window.matchMedia('(pointer: coarse)').matches
   const narrow = window.matchMedia('(max-width: 768px)').matches
   isTouch.value = coarse || narrow
@@ -55,10 +62,8 @@ onMounted(() => {
     document.addEventListener('mousemove', handleMouseMove)
     document.addEventListener('mouseover', handleMouseOver)
     
-    // Hide default cursor
     document.body.style.cursor = 'none'
     
-    // Add cursor-none to all interactive elements
     const style = document.createElement('style')
     style.textContent = `
       a, button, [role="button"], input, textarea, select, .cursor-interactive {
@@ -66,14 +71,22 @@ onMounted(() => {
       }
     `
     document.head.appendChild(style)
+    styleElement.value = style
   }
 })
 
 onUnmounted(() => {
-  if (typeof window !== 'undefined' && !isTouch.value) {
-    document.removeEventListener('mousemove', handleMouseMove)
-    document.removeEventListener('mouseover', handleMouseOver)
-    document.body.style.cursor = ''
+  if (typeof window !== 'undefined') {
+    if (rafId) {
+      cancelAnimationFrame(rafId)
+      rafId = null
+    }
+    if (!isTouch.value) {
+      document.removeEventListener('mousemove', handleMouseMove)
+      document.removeEventListener('mouseover', handleMouseOver)
+      document.body.style.cursor = ''
+      styleElement.value?.remove()
+    }
   }
 })
 </script>

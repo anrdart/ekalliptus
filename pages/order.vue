@@ -959,20 +959,13 @@ const handleSubmit = async () => {
       status: serviceType === 'service_device' ? 'waiting_onsite_payment' : 'waiting_dp'
     }
     
-    console.log('Submitting order data:', JSON.stringify(orderData, null, 2))
-    
-    // Try to save to Supabase
     const { createOrder, uploadAttachment } = useOrderService()
     const { data, error } = await createOrder(orderData)
     
     if (error) {
-      console.error('Order save error:', error)
-      console.error('Order data that failed:', JSON.stringify(orderData, null, 2))
       toast.error(t('order.error.title', 'Error'), `${t('order.error.saveFailed', 'Failed to save order')}: ${error.message}`)
       return
     }
-    
-    console.log('Order saved successfully:', data)
     
     // Upload attachments if any (don't block order on attachment failures)
     if (form.attachments.length > 0 && data?.id) {

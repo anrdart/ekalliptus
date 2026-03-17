@@ -96,7 +96,7 @@ describe('Property 16: Debounce/Throttle Usage', () => {
           fc.string(), // argument to pass
           (delay, arg) => {
             let receivedArg: string | undefined
-            const fn = (value: string) => { receivedArg = value }
+            const fn = (value: unknown) => { receivedArg = value as string }
             const debouncedFn = debounce(fn, delay)
 
             debouncedFn(arg)
@@ -199,7 +199,7 @@ describe('Property 16: Debounce/Throttle Usage', () => {
           fc.string(), // argument to pass
           (limit, arg) => {
             let receivedArg: string | undefined
-            const fn = (value: string) => { receivedArg = value }
+            const fn = (value: unknown) => { receivedArg = value as string }
             const throttledFn = throttle(fn, limit)
 
             throttledFn(arg)
@@ -262,13 +262,13 @@ describe('Property 16: Debounce/Throttle Usage', () => {
         fc.property(
           fc.integer({ min: 1, max: 100 }), // timeout
           (timeout) => {
-            let executed = false
+            let executed: boolean = false
             const callback = () => { executed = true }
             
             scheduleIdleTask(callback, { timeout })
             vi.advanceTimersByTime(timeout + 1)
             
-            return executed === true
+            return executed
           }
         ),
         { numRuns: 50 }

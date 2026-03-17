@@ -274,9 +274,13 @@ const toggleTheme = () => {
 }
 
 const changeLanguage = async (code: LocaleCode) => {
-  await setLocale(code)
-  languageModalOpen.value = false
-  menuOpen.value = false
+  try {
+    await setLocale(code)
+    languageModalOpen.value = false
+    menuOpen.value = false
+  } catch (error) {
+    console.error('Failed to change language:', error)
+  }
 }
 
 const navigateToSection = (hash: string) => {

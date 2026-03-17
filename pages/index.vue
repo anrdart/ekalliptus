@@ -316,6 +316,8 @@ import {
 const { t, locale } = useI18n()
 const displayText = ref('')
 const currentWordIndex = ref(0)
+let charIndex = 0
+let isDeleting = false
 
 const words = computed(() => [
   t('hero.uiUxDesign'),
@@ -325,8 +327,6 @@ const words = computed(() => [
 ])
 
 onMounted(() => {
-  let charIndex = 0
-  let isDeleting = false
   let timeoutId: ReturnType<typeof setTimeout>
   
   displayText.value = words.value[0]
@@ -364,6 +364,8 @@ onMounted(() => {
 })
 
 watch(locale, () => {
+  charIndex = 0
+  isDeleting = false
   displayText.value = words.value[currentWordIndex.value]
 })
 

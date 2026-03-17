@@ -28,6 +28,7 @@ export interface HreflangLink {
   rel: 'alternate'
   hreflang: string
   href: string
+  [key: `data-${string}`]: string
 }
 
 /**

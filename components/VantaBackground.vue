@@ -13,7 +13,7 @@
         <div class="absolute inset-0 flex items-center justify-center">
           <div 
             class="animate-pulse text-sm opacity-30"
-            :style="{ color: isDark ? '#8ca13' : '#14ca18' }"
+            :style="{ color: isDark ? '#8cfa13' : '#14ca18' }"
           >
             Loading background...
           </div>

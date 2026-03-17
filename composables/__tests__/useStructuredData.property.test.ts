@@ -388,11 +388,10 @@ describe('Property 9: Breadcrumb Schema Hierarchy', () => {
         (items, siteUrl) => {
           const schema = generateBreadcrumbSchema(items, siteUrl)
           
-          // All items with URLs should have item property set
           return items.every((item, index) => {
             const schemaItem = schema.itemListElement[index]
             if (item.url) {
-              return schemaItem.item !== undefined && schemaItem.item.includes(item.url)
+              return schemaItem.item !== undefined && schemaItem.item['@id'].includes(item.url)
             }
             return true
           })

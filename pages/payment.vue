@@ -288,10 +288,11 @@ const whatsappMessage = computed(() => {
 // Copy to clipboard function
 const copyToClipboard = async (text: string) => {
   try {
-    await navigator.clipboard.writeText(text.replace(/-/g, ''))
+    await navigator.clipboard.writeText(text)
     toast.toast({ title: t('payment.copied', 'Disalin!'), description: t('payment.copiedMessage', 'Nomor rekening berhasil disalin'), variant: 'success' })
   } catch (err) {
     console.error('Failed to copy:', err)
+    toast.toast.error(t('payment.copyFailed', 'Gagal menyalin'), t('payment.copyFailedMessage', 'Tidak dapat menyalin ke clipboard. Silakan salin manual.'))
   }
 }
 </script>
