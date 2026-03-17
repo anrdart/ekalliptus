@@ -1,6 +1,5 @@
 import { defineConfig } from 'astro/config'
 import cloudflare from '@astrojs/cloudflare'
-import tailwind from '@astrojs/tailwind'
 import sitemap from '@astrojs/sitemap'
 
 export default defineConfig({
@@ -8,11 +7,6 @@ export default defineConfig({
   adapter: cloudflare(),
   site: 'https://ekalliptus.com',
   integrations: [
-    tailwind({
-      configPath: './tailwind.config.ts',
-      cssPath: './src/styles/global.css',
-      applyBaseStyles: false
-    }),
     sitemap({
       i18n: {
         defaultLocale: 'id',
