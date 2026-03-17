@@ -1,0 +1,337 @@
+---
+import { Menu, X, Moon, Sun, ArrowUpRight, Languages } from 'lucide-astro'
+
+interface Props {
+  t: (key: string) => string
+  currentLang?: string
+}
+
+const { t, currentLang = 'id' } = Astro.props
+
+const sectionLinks = [
+  { key: 'home', hash: '#home' },
+  { key: 'services', hash: '#services' },
+  { key: 'about', hash: '#about' },
+  { key: 'contact', hash: '#contact' }
+]
+
+const languages = [
+  { code: 'id', name: 'Bahasa Indonesia', flag: '🇮🇩', nativeName: 'Indonesia' },
+  { code: 'en', name: 'English', flag: '🇺🇸', nativeName: 'English' },
+  { code: 'ja', name: '日本語', flag: '🇯🇵', nativeName: '日本語' },
+  { code: 'ko', name: '한국어', flag: '🇰🇷', nativeName: '한국어' },
+  { code: 'ru', name: 'Русский', flag: '🇷🇺', nativeName: 'Русский' },
+  { code: 'ar', name: 'العربية', flag: '🇸🇦', nativeName: 'العربية' },
+  { code: 'tr', name: 'Türkçe', flag: '🇹🇷', nativeName: 'Türkçe' }
+]
+
+const currentLanguage = languages.find(lang => lang.code === currentLang) || languages[0]
+---
+
+<header class="pointer-events-none fixed left-1/2 top-0 z-40 w-full max-w-4xl -translate-x-1/2 px-4 sm:px-6 lg:px-8 pt-2 sm:pt-3">
+  <nav
+    id="main-nav"
+    class="pointer-events-auto flex items-center justify-between rounded-full px-5 py-3 transition-all duration-300 border border-border/50 bg-background/80 backdrop-blur-sm"
+  >
+    <a
+      href="/"
+      class="cursor-interactive flex items-center space-x-3 rounded-full px-4 py-2 transition text-foreground"
+    >
+      <img
+        src="/ekalliptus_rounded.webp"
+        alt="Ekalliptus Digital Logo"
+        width="32"
+        height="32"
+        class="h-8 w-auto transition-opacity hover:opacity-90"
+        loading="eager"
+      />
+    </a>
+
+    <div class="hidden items-center gap-1 md:flex" id="desktop-nav">
+      {sectionLinks.map((item) => (
+        <button
+          type="button"
+          data-hash={item.hash}
+          class="nav-link cursor-interactive rounded-full px-4 py-2 text-sm font-medium text-foreground/80 transition hover:bg-foreground/10 hover:text-foreground"
+        >
+          {t(`nav.${item.key}`)}
+        </button>
+      ))}
+    </div>
+
+    <div class="flex items-center gap-2">
+      <button
+        id="theme-toggle"
+        class="cursor-interactive hidden h-10 w-10 items-center justify-center rounded-full transition hover:bg-card/20 md:flex"
+        aria-label="Toggle theme"
+      >
+        <Moon class="h-4 w-4 dark-icon" />
+        <Sun class="h-4 w-4 light-icon hidden" />
+      </button>
+
+      <button
+        id="lang-toggle"
+        class="cursor-interactive hidden items-center gap-2 rounded-full px-3 py-2 text-sm font-medium transition hover:bg-card/20 md:flex"
+        aria-label="Change language"
+      >
+        <span class="text-base">{currentLanguage.flag}</span>
+        <span class="hidden lg:inline text-xs">{currentLanguage.nativeName}</span>
+        <Languages class="h-4 w-4" />
+      </button>
+
+      <button
+        id="mobile-menu-toggle"
+        class="cursor-interactive flex h-10 w-10 items-center justify-center rounded-full glass-panel transition md:hidden"
+        aria-label="Toggle menu"
+      >
+        <Menu class="h-5 w-5 menu-icon" />
+        <X class="h-5 w-5 close-icon hidden" />
+      </button>
+    </div>
+  </nav>
+</header>
+
+<div id="mobile-backdrop" class="fixed inset-0 z-30 bg-background/80 backdrop-blur-sm md:hidden hidden"></div>
+
+<div id="mobile-menu" class="fixed inset-x-4 top-16 z-40 rounded-2xl border border-border bg-card p-4 shadow-lg md:hidden hidden">
+  <nav class="flex flex-col gap-1">
+    {sectionLinks.map((item) => (
+      <button
+        type="button"
+        data-hash={item.hash}
+        class="nav-link cursor-interactive rounded-lg px-4 py-3 text-left text-sm font-medium text-foreground/80 transition hover:bg-accent hover:text-foreground"
+      >
+        {t(`nav.${item.key}`)}
+      </button>
+    ))}
+    
+    <div class="my-2 border-t border-border"></div>
+    
+    <a
+      href="/privacy-policy"
+      class="cursor-interactive rounded-lg px-4 py-3 text-left text-sm font-medium text-muted-foreground transition hover:bg-accent hover:text-foreground"
+    >
+      {t('privacyPolicy.title')}
+    </a>
+    
+    <a
+      href="/terms-of-service"
+      class="cursor-interactive rounded-lg px-4 py-3 text-left text-sm font-medium text-muted-foreground transition hover:bg-accent hover:text-foreground"
+    >
+      {t('termsOfService.title')}
+    </a>
+  </nav>
+
+  <div class="my-3 border-t border-border"></div>
+
+  <div class="space-y-2">
+    <span class="px-4 text-xs font-medium uppercase tracking-wider text-muted-foreground">
+      {t('nav.language')}
+    </span>
+    <div class="grid grid-cols-2 gap-2 px-2">
+      {languages.map((lang) => (
+        <button
+          data-lang={lang.code}
+          class="lang-btn flex items-center gap-2 rounded-lg px-3 py-2 text-sm transition"
+          data:active={lang.code === currentLang}
+        >
+          <span class="text-base">{lang.flag}</span>
+          <span class="text-xs">{lang.name}</span>
+        </button>
+      ))}
+    </div>
+  </div>
+
+  <div class="my-3 border-t border-border"></div>
+
+  <a
+    href="/order"
+    class="flex w-full items-center justify-center gap-2 rounded-lg bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90"
+  >
+    {t('nav.consultation')}
+    <ArrowUpRight class="h-4 w-4" />
+  </a>
+
+  <button
+    id="mobile-theme-toggle"
+    class="mt-2 flex w-full items-center justify-center gap-2 rounded-lg border border-border py-3 text-sm font-medium transition cursor-interactive hover:bg-accent"
+  >
+    <Moon class="h-4 w-4 dark-icon" />
+    <Sun class="h-4 w-4 light-icon hidden" />
+    <span class="theme-text">{t('nav.darkMode')}</span>
+  </button>
+</div>
+
+<div id="language-backdrop" class="fixed inset-0 z-50 modal-backdrop hidden"></div>
+
+<div id="language-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 hidden">
+  <div class="w-full max-w-sm rounded-2xl language-modal p-6 shadow-2xl">
+    <div class="flex items-center justify-between mb-4">
+      <h3 class="text-lg font-semibold text-foreground">
+        {t('nav.selectLanguage')}
+      </h3>
+      <button
+        id="close-lang-modal"
+        class="h-8 w-8 rounded-full flex items-center justify-center cursor-interactive hover:bg-card/20"
+      >
+        <X class="h-4 w-4" />
+      </button>
+    </div>
+
+    <div class="grid grid-cols-2 gap-3">
+      {languages.map((lang) => (
+        <button
+          data-lang={lang.code}
+          class="lang-modal-btn language-button group flex flex-col items-center gap-2 rounded-xl px-3 py-4 text-center transition-all duration-300"
+          data:active={lang.code === currentLang}
+        >
+          <span class="text-3xl group-hover:scale-110 transition-transform duration-300">
+            {lang.flag}
+          </span>
+          <div class="flex flex-col items-center">
+            <span class="text-sm font-medium leading-tight">{lang.nativeName}</span>
+            <span class="text-xs text-muted-foreground leading-tight">{lang.name}</span>
+          </div>
+        </button>
+      ))}
+    </div>
+
+    <div class="mt-4 text-center">
+      <p class="text-xs text-muted-foreground">
+        {t('nav.languageHint')}
+      </p>
+    </div>
+  </div>
+</div>
+
+<script>
+  const nav = document.getElementById('main-nav')
+  const mobileToggle = document.getElementById('mobile-menu-toggle')
+  const mobileMenu = document.getElementById('mobile-menu')
+  const mobileBackdrop = document.getElementById('mobile-backdrop')
+  const langToggle = document.getElementById('lang-toggle')
+  const langModal = document.getElementById('language-modal')
+  const langBackdrop = document.getElementById('language-backdrop')
+  const closeLangModal = document.getElementById('close-lang-modal')
+  const themeToggle = document.getElementById('theme-toggle')
+  const mobileThemeToggle = document.getElementById('mobile-theme-toggle')
+  const menuIcon = document.querySelector('.menu-icon')
+  const closeIcon = document.querySelector('.close-icon')
+  
+  let menuOpen = false
+  let langModalOpen = false
+  
+  if (mobileToggle && mobileMenu && mobileBackdrop) {
+    mobileToggle.addEventListener('click', () => {
+      menuOpen = !menuOpen
+      mobileMenu.classList.toggle('hidden', !menuOpen)
+      mobileBackdrop.classList.toggle('hidden', !menuOpen)
+      menuIcon?.classList.toggle('hidden', menuOpen)
+      closeIcon?.classList.toggle('hidden', !menuOpen)
+    })
+    
+    mobileBackdrop.addEventListener('click', () => {
+      menuOpen = false
+      mobileMenu.classList.add('hidden')
+      mobileBackdrop.classList.add('hidden')
+      menuIcon?.classList.remove('hidden')
+      closeIcon?.classList.add('hidden')
+    })
+  }
+  
+  if (langToggle && langModal && langBackdrop && closeLangModal) {
+    langToggle.addEventListener('click', () => {
+      langModalOpen = true
+      langModal.classList.remove('hidden')
+      langBackdrop.classList.remove('hidden')
+    })
+    
+    const closeModal = () => {
+      langModalOpen = false
+      langModal.classList.add('hidden')
+      langBackdrop.classList.add('hidden')
+    }
+    
+    closeLangModal.addEventListener('click', closeModal)
+    langBackdrop.addEventListener('click', closeModal)
+  }
+  
+  function toggleTheme() {
+    const isDark = document.documentElement.classList.contains('dark')
+    document.documentElement.classList.toggle('dark', !isDark)
+    localStorage.setItem('ekal-theme', isDark ? 'light' : 'dark')
+    updateThemeIcons(!isDark)
+  }
+  
+  function updateThemeIcons(isDark: boolean) {
+    document.querySelectorAll('.dark-icon').forEach(el => {
+      (el as HTMLElement).classList.toggle('hidden', isDark)
+    })
+    document.querySelectorAll('.light-icon').forEach(el => {
+      (el asHTMLElement).classList.toggle('hidden', !isDark)
+    })
+  }
+  
+  themeToggle?.addEventListener('click', toggleTheme)
+  mobileThemeToggle?.addEventListener('click', toggleTheme)
+  
+  const savedTheme = localStorage.getItem('ekal-theme') || 'dark'
+  updateThemeIcons(savedTheme === 'dark')
+  
+  let scrolled = false
+  window.addEventListener('scroll', () => {
+    const newScrolled = window.scrollY > 32
+    if (newScrolled !== scrolled && nav) {
+      scrolled = newScrolled
+      nav.classList.toggle('bg-background/95', scrolled)
+      nav.classList.toggle('shadow-sm', scrolled)
+    }
+  }, { passive: true })
+  
+  document.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', (e) => {
+      const hash = (e.currentTarget as HTMLElement).dataset.hash
+      if (hash) {
+        const id = hash.replace('#', '')
+        const target = document.getElementById(id)
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        }
+        if (menuOpen && mobileMenu) {
+          menuOpen = false
+          mobileMenu.classList.add('hidden')
+          mobileBackdrop?.classList.add('hidden')
+          menuIcon?.classList.remove('hidden')
+          closeIcon?.classList.add('hidden')
+        }
+      }
+    })
+  })
+  
+  document.querySelectorAll('.lang-btn, .lang-modal-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const lang = (e.currentTarget as HTMLElement).dataset.lang
+      if (lang) {
+        localStorage.setItem('i18n_redirected', lang)
+        window.location.reload()
+      }
+    })
+  })
+  
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      if (langModalOpen && langModal && langBackdrop) {
+        langModalOpen = false
+        langModal.classList.add('hidden')
+        langBackdrop.classList.add('hidden')
+      }
+      if (menuOpen && mobileMenu && mobileBackdrop) {
+        menuOpen = false
+        mobileMenu.classList.add('hidden')
+        mobileBackdrop.classList.add('hidden')
+        menuIcon?.classList.remove('hidden')
+        closeIcon?.classList.add('hidden')
+      }
+    }
+  })
+</script>

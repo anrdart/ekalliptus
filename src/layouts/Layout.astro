@@ -1,0 +1,62 @@
+---
+import '../styles/global.css'
+
+interface Props {
+  title: string
+  description?: string
+  lang?: string
+  dir?: 'ltr' | 'rtl'
+}
+
+const { 
+  title, 
+  description = 'Digital agency Indonesia spesialis website development, WordPress, mobile app, dan multimedia editing.',
+  lang = 'id',
+  dir = 'ltr'
+} = Astro.props
+
+const siteUrl = 'https://ekalliptus.com'
+const canonical = new URL(Astro.url.pathname, siteUrl).toString()
+---
+
+<!DOCTYPE html>
+<html lang={lang} dir={dir} class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="format-detection" content="telephone=no" />
+    <meta http-equiv="content-language" content={lang} />
+    
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="canonical" href={canonical} />
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'" />
+    
+    <title>{title}</title>
+    
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content="Ekalliptus Digital" />
+    <meta property="og:image" content="/og-image.png" />
+    
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    
+    <script is:inline src="/vendor/three.min.js" defer></script>
+    <script is:inline src="/vendor/vanta.net.min.js" defer></script>
+    
+    <script is:inline>
+      const theme = localStorage.getItem('ekal-theme') || 'dark'
+      document.documentElement.classList.toggle('dark', theme === 'dark')
+    </script>
+  </head>
+  <body class="bg-background text-foreground antialiased min-h-screen">
+    <slot />
+  </body>
+</html>

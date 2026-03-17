@@ -1,0 +1,47 @@
+---
+---
+
+<div id="preloader" class="fixed inset-0 z-[100] flex items-center justify-center bg-background">
+  <div class="flex flex-col items-center gap-6">
+    <div class="relative">
+      <img
+        src="/ekalliptus_rounded.webp"
+        alt="ekalliptus - Loading"
+        width="80"
+        height="80"
+        loading="eager"
+        class="h-20 w-20 animate-pulse"
+      />
+      <div class="absolute inset-0 rounded-full bg-primary/20 blur-xl animate-pulse"></div>
+    </div>
+    
+    <div class="flex items-center gap-2 text-muted-foreground">
+      <span class="text-sm uppercase tracking-[0.3em]">Loading</span>
+      <div class="flex gap-1">
+        <span class="w-1.5 h-1.5 rounded-full bg-primary animate-bounce" style="animation-delay: 0ms"></span>
+        <span class="w-1.5 h-1.5 rounded-full bg-primary animate-bounce" style="animation-delay: 150ms"></span>
+        <span class="w-1.5 h-1.5 rounded-full bg-primary animate-bounce" style="animation-delay: 300ms"></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const preloader = document.getElementById('preloader')
+  
+  const hideLoader = () => {
+    if (preloader) {
+      preloader.style.opacity = '0'
+      preloader.style.transition = 'opacity 0.5s ease'
+      setTimeout(() => {
+        preloader.remove()
+      }, 500)
+    }
+  }
+  
+  const minTimeout = setTimeout(hideLoader, 1500)
+  
+  window.addEventListener('load', () => {
+    setTimeout(hideLoader, 500)
+  })
+</script>

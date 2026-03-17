@@ -1,0 +1,97 @@
+---
+import { ChevronDown, ArrowRight } from 'lucide-astro'
+
+interface Props {
+  t: (key: string) => string
+}
+
+const { t } = Astro.props
+
+const FAQ_COUNT = 8
+
+const faqItems = []
+for (let i = 0; i < FAQ_COUNT; i++) {
+  const question = t(`faq.items[${i}].question`)
+  const answer = t(`faq.items[${i}].answer`)
+  if (question && !question.includes('faq.items[')) {
+    faqItems.push({ question, answer })
+  }
+}
+---
+
+<section id="faq" class="content-vis relative px-4 py-24">
+  <div class="relative z-10 mx-auto max-w-3xl">
+    <div class="mx-auto mb-12 text-center">
+      <div class="inline-flex items-center gap-2 rounded-full bg-card/20 px-5 py-2 text-[0.65rem] font-semibold uppercase tracking-[0.6em] text-muted-foreground mb-6">
+        <span>{t('faq.pill')}</span>
+      </div>
+      <h2 class="text-3xl font-semibold text-foreground md:text-4xl">
+        {t('faq.title')}
+      </h2>
+    </div>
+
+    <div class="space-y-4" id="faq-accordion">
+      {faqItems.map((item, index) => (
+        <div class="glass-panel rounded-2xl overflow-hidden" data-faq-item>
+          <button
+            aria-expanded={index === 0 ? 'true' : 'false'}
+            aria-controls={`faq-content-${index}`}
+            class="faq-toggle flex w-full items-center justify-between px-6 py-4 text-left cursor-interactive"
+            data-index={index}
+          >
+            <span class="font-medium text-foreground pr-4">
+              {item.question}
+            </span>
+            <ChevronDown
+              class="h-5 w-5 text-muted-foreground transition-transform duration-300 flex-shrink-0"
+              data-chevron
+              style={index === 0 ? 'transform: rotate(180deg)' : ''}
+            />
+          </button>
+          
+          <div
+            id={`faq-content-${index}`}
+            class="faq-content px-6 overflow-hidden transition-all duration-300"
+            style={index === 0 ? 'max-height: 500px; padding-bottom: 1rem' : 'max-height: 0; padding-bottom: 0'}
+          >
+            <p class="text-muted-foreground text-sm leading-relaxed">
+              {item.answer}
+            </p>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <div class="mt-12 text-center">
+      <p class="text-muted-foreground mb-4">
+        {t('contactCTA.title')}
+      </p>
+      <a
+        href="/order"
+        class="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 font-semibold text-primary-foreground transition hover:bg-primary/90 cursor-interactive"
+      >
+        {t('footer.contact')}
+        <ArrowRight class="h-4 w-4" />
+      </a>
+    </div>
+  </div>
+</section>
+
+<script>
+  const faqItems = document.querySelectorAll('[data-faq-item]')
+  
+  faqItems.forEach((item) => {
+    const toggle = item.querySelector('.faq-toggle')
+    const content = item.querySelector('.faq-content') as HTMLElement
+    const chevron = item.querySelector('[data-chevron]') as HTMLElement
+    
+    toggle?.addEventListener('click', () => {
+      const isOpen = content.style.maxHeight !== '0px'
+      
+      content.style.maxHeight = isOpen ? '0' : '500px'
+      content.style.paddingBottom = isOpen ? '0' : '1rem'
+      chevron.style.transform = isOpen ? '' : 'rotate(180deg)'
+      toggle.setAttribute('aria-expanded', String(!isOpen))
+    })
+  })
+</script>

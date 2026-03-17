@@ -1,0 +1,254 @@
+---
+import Layout from '../layouts/Layout.astro'
+import Hero from '../components/Hero.astro'
+import Services from '../components/Services.astro'
+import FAQ from '../components/FAQ.astro'
+import ContactCTA from '../components/ContactCTA.astro'
+import Navigation from '../components/Navigation.astro'
+import VantaBackground from '../components/VantaBackground.astro'
+import PreLoader from '../components/PreLoader.astro'
+import { t, getLocaleFromRequest, getDir } from '../i18n'
+import { Sparkles, Info, Target, Layers, Check, Shield, Lock, FileText, ArrowRight, Zap, CheckCircle, Users } from 'lucide-astro'
+
+const locale = getLocaleFromRequest(Astro.request)
+const dir = getDir(locale)
+
+const words = [
+  t('hero.uiUxDesign', locale),
+  t('hero.digitalExperience', locale),
+  t('hero.web3d', locale),
+  t('hero.branding', locale)
+]
+---
+
+<Layout 
+  title="Ekalliptus Digital | Web & Mobile App" 
+  description={t('index.intro.subtitle', locale)}
+  lang={locale}
+  dir={dir}
+>
+  <VantaBackground />
+  <PreLoader />
+  <Navigation t={(key: string) => t(key, locale)} currentLang={locale} />
+  
+  <main class="relative z-0 flex min-h-screen flex-col pt-16 md:pt-20">
+    <div class="relative flex flex-col gap-24 pb-24">
+      <Hero t={(key: string) => t(key, locale)} />
+      
+      <div class="text-center py-8 px-4">
+        <div class="inline-flex items-center gap-2 rounded-full bg-card/20 px-5 py-2 text-xs uppercase tracking-[0.35em] text-foreground/70 shadow-lg shadow-primary/10 mb-6">
+          <Sparkles class="h-4 w-4" />
+          <span>{t('hero.solusiDigital', locale)}</span>
+        </div>
+        
+        <p class="text-lg leading-relaxed text-foreground/70 md:text-xl max-w-3xl mx-auto">
+          {t('hero.description', locale)}
+        </p>
+        
+        <p class="mt-3 text-base leading-relaxed text-primary font-medium md:text-lg max-w-2xl mx-auto">
+          {t('hero.subdescription', locale)}
+        </p>
+        
+        <p class="mt-4 text-sm font-medium uppercase tracking-[0.4em] text-foreground/50">
+          {t('hero.fokus', locale)}
+          <span id="typewriter" class="ml-3 rounded-full bg-card/20 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-foreground">
+            {words[0]}
+          </span>
+        </p>
+      </div>
+      
+      <section id="application-purpose" class="content-vis relative px-4 py-16 bg-card/5">
+        <div class="relative z-10 mx-auto max-w-5xl">
+          <div class="mx-auto mb-12 max-w-4xl text-center">
+            <div class="inline-flex items-center gap-2 rounded-full bg-primary/10 px-5 py-2 text-[0.65rem] font-semibold uppercase tracking-[0.6em] text-primary mb-6">
+              <Info class="h-4 w-4" />
+              <span>{t('appPurpose.badge', locale)}</span>
+            </div>
+            
+            <h2 class="text-3xl font-semibold text-foreground md:text-4xl mb-6">
+              {t('appPurpose.title', locale)}
+            </h2>
+            
+            <p class="text-lg text-muted-foreground leading-relaxed max-w-3xl mx-auto mb-8">
+              {t('appPurpose.description', locale)}
+            </p>
+          </div>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+            <div class="glass-panel rounded-2xl p-6 bg-card/10 border border-border/20">
+              <div class="rounded-full bg-primary/10 p-3 w-fit mb-4">
+                <Target class="h-6 w-6 text-primary" />
+              </div>
+              <h3 class="text-xl font-semibold text-foreground mb-3">{t('appPurpose.whatWeDo.title', locale)}</h3>
+              <p class="text-muted-foreground leading-relaxed text-sm">{t('appPurpose.whatWeDo.description', locale)}</p>
+            </div>
+            
+            <div class="glass-panel rounded-2xl p-6 bg-card/10 border border-border/20">
+              <div class="rounded-full bg-secondary/10 p-3 w-fit mb-4">
+                <Layers class="h-6 w-6 text-secondary" />
+              </div>
+              <h3 class="text-xl font-semibold text-foreground mb-3">{t('appPurpose.ourServices.title', locale)}</h3>
+              <ul class="text-muted-foreground text-sm space-y-1">
+                <li>{t('appPurpose.ourServices.service1', locale)}</li>
+                <li>{t('appPurpose.ourServices.service2', locale)}</li>
+                <li>{t('appPurpose.ourServices.service3', locale)}</li>
+                <li>{t('appPurpose.ourServices.service4', locale)}</li>
+              </ul>
+            </div>
+            
+            <div class="glass-panel rounded-2xl p-6 bg-card/10 border border-border/20">
+              <div class="rounded-full bg-accent/10 p-3 w-fit mb-4">
+                <Shield class="h-6 w-6 text-accent" />
+              </div>
+              <h3 class="text-xl font-semibold text-foreground mb-3">{t('appPurpose.dataUsage.title', locale)}</h3>
+              <p class="text-muted-foreground leading-relaxed text-sm">{t('appPurpose.dataUsage.description', locale)}</p>
+            </div>
+          </div>
+          
+          <div class="glass-panel neon-border rounded-3xl p-8 bg-card/5">
+            <h3 class="text-2xl font-semibold text-foreground mb-6 text-center">{t('appPurpose.howItWorks.title', locale)}</h3>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div>
+                <h4 class="text-lg font-semibold text-foreground mb-4">{t('appPurpose.howItWorks.orderProcess.title', locale)}</h4>
+                <ol class="space-y-3">
+                  <li class="flex gap-3 text-sm text-muted-foreground">
+                    <span class="flex-shrink-0 w-6 h-6 rounded-full bg-primary/10 text-primary text-xs flex items-center justify-center font-medium">1</span>
+                    {t('appPurpose.howItWorks.orderProcess.step1', locale)}
+                  </li>
+                  <li class="flex gap-3 text-sm text-muted-foreground">
+                    <span class="flex-shrink-0 w-6 h-6 rounded-full bg-primary/10 text-primary text-xs flex items-center justify-center font-medium">2</span>
+                    {t('appPurpose.howItWorks.orderProcess.step2', locale)}
+                  </li>
+                  <li class="flex gap-3 text-sm text-muted-foreground">
+                    <span class="flex-shrink-0 w-6 h-6 rounded-full bg-primary/10 text-primary text-xs flex items-center justify-center font-medium">3</span>
+                    {t('appPurpose.howItWorks.orderProcess.step3', locale)}
+                  </li>
+                  <li class="flex gap-3 text-sm text-muted-foreground">
+                    <span class="flex-shrink-0 w-6 h-6 rounded-full bg-primary/10 text-primary text-xs flex items-center justify-center font-medium">4</span>
+                    {t('appPurpose.howItWorks.orderProcess.step4', locale)}
+                  </li>
+                </ol>
+              </div>
+              
+              <div>
+                <h4 class="text-lg font-semibold text-foreground mb-4">{t('appPurpose.howItWorks.privacyCommitment.title', locale)}</h4>
+                <ul class="space-y-3">
+                  <li class="flex gap-3 text-sm text-muted-foreground">
+                    <Check class="flex-shrink-0 h-5 w-5 text-primary" />
+                    {t('appPurpose.howItWorks.privacyCommitment.point1', locale)}
+                  </li>
+                  <li class="flex gap-3 text-sm text-muted-foreground">
+                    <Check class="flex-shrink-0 h-5 w-5 text-primary" />
+                    {t('appPurpose.howItWorks.privacyCommitment.point2', locale)}
+                  </li>
+                  <li class="flex gap-3 text-sm text-muted-foreground">
+                    <Check class="flex-shrink-0 h-5 w-5 text-primary" />
+                    {t('appPurpose.howItWorks.privacyCommitment.point3', locale)}
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          
+          <div class="mt-8 text-center">
+            <p class="text-sm text-muted-foreground">{t('appPurpose.learnMore', locale)}</p>
+            <div class="flex gap-4 justify-center mt-3">
+              <a href="/privacy-policy" class="text-sm text-primary hover:underline">{t('privacyPolicy.title', locale)}</a>
+              <a href="/terms-of-service" class="text-sm text-primary hover:underline">{t('termsOfService.title', locale)}</a>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      <Services t={(key: string) => t(key, locale)} />
+      <FAQ t={(key: string) => t(key, locale)} />
+      <ContactCTA t={(key: string) => t(key, locale)} />
+      
+      <footer id="about" class="mt-12 border-t border-border/20 bg-card/5 py-12">
+        <div class="mx-auto max-w-6xl px-4">
+          <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
+            <div>
+              <div class="flex items-center gap-3 mb-4">
+                <img src="/ekalliptus_rounded.webp" alt="Ekalliptus" width="40" height="40" class="h-10 w-auto" />
+                <span class="font-semibold text-lg text-foreground">Ekalliptus</span>
+              </div>
+              <p class="text-sm text-muted-foreground">
+                {t('index.about.philosophyDesc', locale)}
+              </p>
+            </div>
+            
+            <div>
+              <h4 class="font-semibold text-foreground mb-4">{t('services.title', locale)}</h4>
+              <ul class="space-y-2 text-sm text-muted-foreground">
+                <li>{t('services.cards.websiteDevelopment.title', locale)}</li>
+                <li>{t('services.cards.mobileAppDevelopment.title', locale)}</li>
+                <li>{t('services.cards.wordpressDevelopment.title', locale)}</li>
+                <li>{t('services.cards.photoVideoEditing.title', locale)}</li>
+              </ul>
+            </div>
+            
+            <div>
+              <h4 class="font-semibold text-foreground mb-4">{t('footer.contact', locale)}</h4>
+              <ul class="space-y-2 text-sm text-muted-foreground">
+                <li>ekalliptus@gmail.com</li>
+                <li>+62 819-9990-0306</li>
+                <li>Jakarta, Indonesia</li>
+              </ul>
+            </div>
+          </div>
+          
+          <div class="mt-8 pt-8 border-t border-border/20 flex flex-col md:flex-row justify-between items-center gap-4">
+            <p class="text-sm text-muted-foreground">
+              © {new Date().getFullYear()} Ekalliptus Digital. All rights reserved.
+            </p>
+            <div class="flex gap-4">
+              <a href="/privacy-policy" class="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                {t('privacyPolicy.title', locale)}
+              </a>
+              <a href="/terms-of-service" class="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                {t('termsOfService.title', locale)}
+              </a>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </main>
+</Layout>
+
+<script define:vars={{ words }}>
+  const typewriterEl = document.getElementById('typewriter')
+  let currentWordIndex = 0
+  let charIndex = 0
+  let isDeleting = false
+  
+  function typeWriter() {
+    if (!typewriterEl) return
+    
+    const currentWord = words[currentWordIndex]
+    
+    if (isDeleting) {
+      typewriterEl.textContent = currentWord.substring(0, charIndex - 1)
+      charIndex--
+    } else {
+      typewriterEl.textContent = currentWord.substring(0, charIndex + 1)
+      charIndex++
+    }
+    
+    let timeout = isDeleting ? 40 : 80
+    
+    if (!isDeleting && charIndex === currentWord.length) {
+      timeout = 1400
+      isDeleting = true
+    } else if (isDeleting && charIndex === 0) {
+      isDeleting = false
+      currentWordIndex = (currentWordIndex + 1) % words.length
+      timeout = 500
+    }
+    
+    setTimeout(typeWriter, timeout)
+  }
+  
+  setTimeout(typeWriter, 1000)
+</script>
