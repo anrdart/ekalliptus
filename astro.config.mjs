@@ -6,6 +6,7 @@ export default defineConfig({
   output: 'server',
   adapter: cloudflare({
     imageService: false,
+    session: undefined,
   }),
   site: 'https://ekalliptus.com',
   integrations: [
@@ -21,8 +22,7 @@ export default defineConfig({
           ar: 'ar-SA',
           tr: 'tr-TR'
         }
-      },
-      exclude: ['/privacy-policy', '/terms-of-service', '/order-success']
+      }
     })
   ],
   vite: {
