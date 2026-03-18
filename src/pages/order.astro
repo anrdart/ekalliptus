@@ -1,0 +1,311 @@
+---
+import Layout from '../layouts/Layout.astro'
+import Navigation from '../components/Navigation.astro'
+import VantaBackground from '../components/VantaBackground.astro'
+import PreLoader from '../components/PreLoader.astro'
+import { t, getLocaleFromRequest, getDir } from '../i18n'
+import { ArrowRight } from 'lucide-astro'
+
+const locale = getLocaleFromRequest(Astro.request)
+const dir = getDir(locale)
+---
+
+<Layout 
+  title={`${t('order.title', locale)} | Ekalliptus Digital`}
+  description={t('order.subtitle', locale)}
+  lang={locale}
+  dir={dir}
+>
+  <VantaBackground />
+  <PreLoader />
+  <Navigation t={(key: string) => t(key, locale)} currentLang={locale} />
+  
+  <main class="relative z-0 flex min-h-screen flex-col pt-16 md:pt-20">
+    <div class="container mx-auto px-4 py-12 max-w-4xl">
+      <div class="glass-panel rounded-3xl p-8">
+        <div class="text-center mb-8">
+          <h1 class="text-3xl font-bold text-foreground mb-4">{t('order.title', locale)}</h1>
+          <p class="text-muted-foreground">{t('order.subtitle', locale)}</p>
+        </div>
+        
+        <form id="order-form" class="space-y-6">
+          <div>
+            <label class="block text-sm font-medium text-foreground mb-2">
+              {t('order.selectService', locale)}
+            </label>
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+              <button type="button" data-service="web" class="service-btn glass-panel rounded-xl p-4 text-center transition hover:scale-105">
+                <span class="block font-medium">{t('order.serviceCards.web.title', locale)}</span>
+                <span class="text-xs text-muted-foreground">{t('order.startingFrom', locale)} Rp 2.500.000</span>
+              </button>
+              <button type="button" data-service="mobile" class="service-btn glass-panel rounded-xl p-4 text-center transition hover:scale-105">
+                <span class="block font-medium">{t('order.serviceCards.mobile.title', locale)}</span>
+                <span class="text-xs text-muted-foreground">{t('order.startingFrom', locale)} Rp 5.000.000</span>
+              </button>
+              <button type="button" data-service="wordpress" class="service-btn glass-panel rounded-xl p-4 text-center transition hover:scale-105">
+                <span class="block font-medium">{t('order.serviceCards.wordpress.title', locale)}</span>
+                <span class="text-xs text-muted-foreground">{t('order.startingFrom', locale)} Rp 1.500.000</span>
+              </button>
+              <button type="button" data-service="video" class="service-btn glass-panel rounded-xl p-4 text-center transition hover:scale-105">
+                <span class="block font-medium">{t('order.serviceCards.video.title', locale)}</span>
+                <span class="text-xs text-muted-foreground">{t('order.startingFrom', locale)} Rp 500.000</span>
+              </button>
+              <button type="button" data-service="uiux" class="service-btn glass-panel rounded-xl p-4 text-center transition hover:scale-105">
+                <span class="block font-medium">{t('order.serviceCards.uiux.title', locale)}</span>
+                <span class="text-xs text-muted-foreground">{t('order.startingFrom', locale)} Rp 1.000.000</span>
+              </button>
+              <button type="button" data-service="maintenance" class="service-btn glass-panel rounded-xl p-4 text-center transition hover:scale-105">
+                <span class="block font-medium">{t('order.serviceCards.maintenance.title', locale)}</span>
+                <span class="text-xs text-muted-foreground">{t('order.startingFrom', locale)} Rp 100.000</span>
+              </button>
+            </div>
+            <input type="hidden" name="service" id="selected-service" />
+          </div>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-medium text-foreground mb-2">
+                {t('order.name', locale)} *
+              </label>
+              <input 
+                type="text" 
+                name="name" 
+                required
+                placeholder={t('order.namePlaceholder', locale)}
+                class="w-full glass-input rounded-lg px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
+              />
+            </div>
+            
+            <div>
+              <label class="block text-sm font-medium text-foreground mb-2">
+                {t('order.email', locale)} *
+              </label>
+              <input 
+                type="email" 
+                name="email" 
+                required
+                placeholder={t('order.emailPlaceholder', locale)}
+                class="w-full glass-input rounded-lg px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
+              />
+            </div>
+          </div>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-medium text-foreground mb-2">
+                {t('order.phone', locale)} *
+              </label>
+              <input 
+                type="tel" 
+                name="whatsapp" 
+                required
+                placeholder={t('order.phonePlaceholder', locale)}
+                class="w-full glass-input rounded-lg px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
+              />
+            </div>
+            
+            <div>
+              <label class="block text-sm font-medium text-foreground mb-2">
+                {t('order.company', locale)}
+              </label>
+              <input 
+                type="text" 
+                name="company"
+                placeholder={t('order.companyPlaceholder', locale)}
+                class="w-full glass-input rounded-lg px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
+              />
+            </div>
+          </div>
+          
+          <div>
+            <label class="block text-sm font-medium text-foreground mb-2">
+              {t('order.projectDescription', locale)} *
+            </label>
+            <textarea 
+              name="description" 
+              required
+              rows="4"
+              placeholder={t('order.descriptionPlaceholder', locale)}
+              class="w-full glass-input rounded-lg px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 resize-none"
+            ></textarea>
+          </div>
+          
+          <div id="service-details-container" class="hidden">
+            <h3 class="text-lg font-semibold text-foreground mb-4">{t('order.fields.serviceDetails.title', locale)}</h3>
+            <div id="service-details" class="space-y-4"></div>
+          </div>
+          
+          <div class="glass-panel rounded-xl p-6">
+            <h3 class="text-lg font-semibold text-foreground mb-4">{t('order.urgency.title', locale)}</h3>
+            <div class="grid grid-cols-3 gap-4">
+              <label class="urgency-option">
+                <input type="radio" name="urgency" value="normal" checked class="sr-only" />
+                <div class="glass-panel rounded-lg p-4 text-center cursor-pointer transition hover:scale-105">
+                  <span class="block font-medium">{t('order.urgency.normal', locale)}</span>
+                  <span class="text-xs text-muted-foreground">{t('order.urgency.normalDesc', locale)}</span>
+                </div>
+              </label>
+              <label class="urgency-option">
+                <input type="radio" name="urgency" value="express" class="sr-only" />
+                <div class="glass-panel rounded-lg p-4 text-center cursor-pointer transition hover:scale-105">
+                  <span class="block font-medium">{t('order.urgency.express', locale)}</span>
+                  <span class="text-xs text-primary">{t('order.urgency.expressPrice', locale)}</span>
+                </div>
+              </label>
+              <label class="urgency-option">
+                <input type="radio" name="urgency" value="priority" class="sr-only" />
+                <div class="glass-panel rounded-lg p-4 text-center cursor-pointer transition hover:scale-105">
+                  <span class="block font-medium">{t('order.urgency.priority', locale)}</span>
+                  <span class="text-xs text-primary">{t('order.urgency.priorityPrice', locale)}</span>
+                </div>
+              </label>
+            </div>
+          </div>
+          
+          <div class="glass-panel rounded-xl p-6">
+            <h3 class="text-lg font-semibold text-foreground mb-4">{t('order.summary.title', locale)}</h3>
+            <div class="space-y-2">
+              <div class="flex justify-between text-muted-foreground">
+                <span>{t('order.summary.subtotal', locale)}</span>
+                <span id="subtotal">Rp 0</span>
+              </div>
+              <div class="flex justify-between text-muted-foreground">
+                <span>{t('order.summary.discount', locale)}</span>
+                <span id="discount">- Rp 0</span>
+              </div>
+              <div class="flex justify-between text-muted-foreground">
+                <span>{t('order.summary.ppn', locale)}</span>
+                <span id="ppn">Rp 0</span>
+              </div>
+              <div class="border-t border-border pt-2 mt-2">
+                <div class="flex justify-between font-semibold text-foreground">
+                  <span>{t('order.summary.total', locale)}</span>
+                  <span id="grand-total">Rp 0</span>
+                </div>
+                <div class="flex justify-between text-sm text-primary mt-1">
+                  <span>{t('order.summary.deposit', locale)} (<span id="deposit-percent">50</span>%)</span>
+                  <span id="deposit">Rp 0</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <button 
+            type="submit" 
+            class="w-full flex items-center justify-center gap-2 rounded-lg bg-primary px-6 py-4 font-semibold text-primary-foreground transition hover:bg-primary/90"
+          >
+            {t('order.submit', locale)}
+            <ArrowRight class="h-5 w-5" />
+          </button>
+        </form>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<script>
+  const serviceBtns = document.querySelectorAll('.service-btn')
+  const selectedServiceInput = document.getElementById('selected-service') as HTMLInputElement
+  const serviceDetailsContainer = document.getElementById('service-details-container')
+  
+  const prices: Record<string, number> = {
+    web: 2500000,
+    mobile: 5000000,
+    wordpress: 1500000,
+    video: 500000,
+    uiux: 1000000,
+    maintenance: 100000
+  }
+  
+  const depositPercentages: Record<string, number> = {
+    web: 50,
+    mobile: 50,
+    wordpress: 50,
+    video: 50,
+    uiux: 50,
+    maintenance: 0
+  }
+  
+  let selectedService = ''
+  
+  serviceBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      serviceBtns.forEach(b => b.classList.remove('ring-2', 'ring-primary'))
+      btn.classList.add('ring-2', 'ring-primary')
+      selectedService = btn.getAttribute('data-service') || ''
+      selectedServiceInput.value = selectedService
+      updatePricing()
+      
+      if (serviceDetailsContainer) {
+        serviceDetailsContainer.classList.remove('hidden')
+      }
+    })
+  })
+  
+  function updatePricing() {
+    const urgencyInput = document.querySelector('input[name="urgency"]:checked') as HTMLInputElement
+    const urgency = urgencyInput?.value || 'normal'
+    
+    let price = prices[selectedService] || 0
+    const depositPct = depositPercentages[selectedService] ?? 50
+    
+    if (urgency === 'express') price *= 1.25
+    if (urgency === 'priority') price *= 1.5
+    
+    const subtotal = Math.round(price)
+    const ppn = Math.round(subtotal * 0.11)
+    const grandTotal = subtotal + ppn
+    const deposit = Math.round(grandTotal * (depositPct / 100))
+    
+    const formatCurrency = (n: number) => `Rp ${n.toLocaleString('id-ID')}`
+    
+    document.getElementById('subtotal').textContent = formatCurrency(subtotal)
+    document.getElementById('ppn').textContent = formatCurrency(ppn)
+    document.getElementById('grand-total').textContent = formatCurrency(grandTotal)
+    document.getElementById('deposit').textContent = formatCurrency(deposit)
+    document.getElementById('deposit-percent').textContent = String(depositPct)
+  }
+  
+  document.querySelectorAll('input[name="urgency"]').forEach(input => {
+    input.addEventListener('change', updatePricing)
+  })
+  
+  document.getElementById('order-form')?.addEventListener('submit', async (e) => {
+    e.preventDefault()
+    
+    if (!selectedService) {
+      alert('Pilih layanan terlebih dahulu')
+      return
+    }
+    
+    const form = e.target as HTMLFormElement
+    const formData = new FormData(form)
+    
+    const orderData = {
+      service_type: selectedService,
+      customer_name: formData.get('name'),
+      email: formData.get('email'),
+      whatsapp: formData.get('whatsapp'),
+      company: formData.get('company'),
+      scope: { description: formData.get('description') },
+      urgency: formData.get('urgency')
+    }
+    
+    try {
+      const response = await fetch('/api/order', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(orderData)
+      })
+      
+      if (response.ok) {
+        window.location.href = '/order-success'
+      } else {
+        alert('Terjadi kesalahan. Silakan coba lagi.')
+      }
+    } catch (error) {
+      console.error('Order error:', error)
+      alert('Terjadi kesalahan. Silakan coba lagi.')
+    }
+  })
+</script>

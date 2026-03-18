@@ -1,0 +1,113 @@
+---
+interface Props {
+  isDark?: boolean
+}
+
+const { isDark = true } = Astro.props
+---
+
+<div id="vanta-container" class="fixed inset-0 transition-opacity duration-1000" style="width: 100vw; height: 100vh; z-index: -10">
+  <div id="vanta-loading" class="absolute inset-0 flex items-center justify-center" style={`background-color: ${isDark ? '#0c1222' : '#f1f5f9'}`}>
+    <div class="animate-pulse text-sm opacity-30" style={`color: ${isDark ? '#38bdf8' : '#2dd4bf'}`}>
+      Loading background...
+    </div>
+  </div>
+  <div id="vanta-canvas" class="absolute inset-0"></div>
+</div>
+
+<script>
+  declare global {
+    interface Window {
+      VANTA?: {
+        NET: (options: Record<string, unknown>) => { destroy: () => void; setOptions: (options: Record<string, unknown>) => void }
+      }
+      THREE?: unknown
+    }
+  }
+  
+  const isMobile = window.matchMedia('(pointer: coarse)').matches || window.matchMedia('(max-width: 768px)').matches
+  
+  if (isMobile) {
+    const container = document.getElementById('vanta-container')
+    const loading = document.getElementById('vanta-loading')
+    const isDark = document.documentElement.classList.contains('dark')
+    
+    if (container) {
+      container.style.background = isDark
+        ? 'radial-gradient(ellipse 120% 80% at 50% -20%, #1e293b 0%, #0c1222 50%, #020617 100%)'
+        : 'radial-gradient(ellipse 120% 80% at 50% -20%, #ffffff 0%, #f1f5f9 50%, #e2e8f0 100%)'
+      container.style.backgroundAttachment = 'fixed'
+    }
+    loading?.remove()
+  } else {
+    let vantaEffect: { destroy: () => void; setOptions: (options: Record<string, unknown>) => void } | null = null
+    
+    const darkConfig = {
+      color: 0x38bdf8,
+      backgroundColor: 0x0c1222,
+      maxDistance: 17.0,
+      spacing: 22.0
+    }
+    
+    const lightConfig = {
+      color: 0x2dd4bf,
+      backgroundColor: 0xf1f5f9,
+      maxDistance: 17.0,
+      spacing: 24.0
+    }
+    
+    const initVanta = () => {
+      const el = document.getElementById('vanta-canvas')
+      if (!el || !window.VANTA || !window.THREE) return
+      
+      const isDark = document.documentElement.classList.contains('dark')
+      
+      vantaEffect = window.VANTA.NET({
+        el: el,
+        THREE: window.THREE,
+        mouseControls: true,
+        touchControls: true,
+        gyroControls: false,
+        minHeight: 200.0,
+        minWidth: 200.0,
+        scale: 1.0,
+        scaleMobile: 1.0,
+        ...(isDark ? darkConfig : lightConfig)
+      })
+      
+      document.getElementById('vanta-loading')?.remove()
+    }
+    
+    const checkScripts = (attempts = 0) => {
+      if (window.VANTA && window.THREE) {
+        initVanta()
+      } else if (attempts < 50) {
+        setTimeout(() => checkScripts(attempts + 1), 100)
+      } else {
+        document.getElementById('vanta-loading')?.remove()
+      }
+    }
+    
+    if ('requestIdleCallback' in window) {
+      window.requestIdleCallback(() => checkScripts(), { timeout: 5000 })
+    } else {
+      setTimeout(checkScripts, 200)
+    }
+    
+    const observer = new MutationObserver(() => {
+      if (vantaEffect) {
+        const isDark = document.documentElement.classList.contains('dark')
+        vantaEffect.setOptions(isDark ? darkConfig : lightConfig)
+      }
+    })
+    
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['class']
+    })
+    
+    document.addEventListener('astro:before-swap', () => {
+      vantaEffect?.destroy()
+    })
+  }
+</script>

@@ -1,0 +1,55 @@
+---
+import Layout from '../layouts/Layout.astro'
+import Navigation from '../components/Navigation.astro'
+import VantaBackground from '../components/VantaBackground.astro'
+import PreLoader from '../components/PreLoader.astro'
+import { t, getLocaleFromRequest, getDir } from '../i18n'
+
+const locale = getLocaleFromRequest(Astro.request)
+const dir = getDir(locale)
+---
+
+<Layout 
+  title={`${t('privacyPolicy.title', locale)} | Ekalliptus Digital`}
+  lang={locale}
+  dir={dir}
+>
+  <VantaBackground />
+  <PreLoader />
+  <Navigation t={(key: string) => t(key, locale)} currentLang={locale} />
+  
+  <main class="relative z-0 flex min-h-screen flex-col pt-16 md:pt-20">
+    <div class="container mx-auto px-4 py-12 max-w-4xl">
+      <article class="glass-panel rounded-3xl p-8 prose prose-invert max-w-none">
+        <h1 class="text-3xl font-bold text-foreground mb-2">{t('privacyPolicy.title', locale)}</h1>
+        <p class="text-muted-foreground mb-8">
+          {t('privacyPolicy.lastUpdated', locale).replace('{date}', '17 Maret 2026')}
+        </p>
+        
+        <section class="space-y-6">
+          <h2 class="text-xl font-semibold text-foreground">{t('privacyPolicy.sections.introduction.title', locale)}</h2>
+          <p class="text-muted-foreground">{t('privacyPolicy.sections.introduction.content', locale)}</p>
+          <p class="text-muted-foreground">{t('privacyPolicy.sections.introduction.content2', locale)}</p>
+          
+          <h2 class="text-xl font-semibold text-foreground">{t('privacyPolicy.sections.informationWeCollect.title', locale)}</h2>
+          <h3 class="text-lg font-medium text-foreground">{t('privacyPolicy.sections.informationWeCollect.personalInfo.title', locale)}</h3>
+          <p class="text-muted-foreground">{t('privacyPolicy.sections.informationWeCollect.personalInfo.content', locale)}</p>
+          
+          <h2 class="text-xl font-semibold text-foreground">{t('privacyPolicy.sections.howWeUseInformation.title', locale)}</h2>
+          <p class="text-muted-foreground">{t('privacyPolicy.sections.howWeUseInformation.content', locale)}</p>
+          
+          <h2 class="text-xl font-semibold text-foreground">{t('privacyPolicy.sections.dataSecurity.title', locale)}</h2>
+          <p class="text-muted-foreground">{t('privacyPolicy.sections.dataSecurity.content', locale)}</p>
+          
+          <h2 class="text-xl font-semibold text-foreground">{t('privacyPolicy.sections.yourRights.title', locale)}</h2>
+          <p class="text-muted-foreground">{t('privacyPolicy.sections.yourRights.gdpr.content', locale)}</p>
+          
+          <h2 class="text-xl font-semibold text-foreground">{t('privacyPolicy.sections.contact.title', locale)}</h2>
+          <p class="text-muted-foreground">{t('privacyPolicy.sections.contact.content', locale)}</p>
+          <p class="text-muted-foreground">{t('privacyPolicy.sections.contact.email', locale)}</p>
+          <p class="text-muted-foreground">{t('privacyPolicy.sections.contact.website', locale)}</p>
+        </section>
+      </article>
+    </div>
+  </main>
+</Layout>

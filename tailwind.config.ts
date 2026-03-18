@@ -4,15 +4,12 @@ import tailwindAnimate from 'tailwindcss-animate'
 export default {
     darkMode: 'class',
     content: [
-        './components/**/*.{js,vue,ts}',
-        './layouts/**/*.vue',
-        './pages/**/*.vue',
-        './plugins/**/*.{js,ts}',
-        './composables/**/*.{js,ts}',
-        './config/**/*.ts',
-        './utils/**/*.{js,vue,ts}',
-        './app.vue',
-        './error.vue'
+        './src/components/**/*.{js,ts,astro}',
+        './src/layouts/**/*.astro',
+        './src/pages/**/*.astro',
+        './src/config/**/*.ts',
+        './src/utils/**/*.{js,ts}',
+        './src/**/*.astro'
     ],
     theme: {
         extend: {

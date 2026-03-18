@@ -1,0 +1,83 @@
+---
+import Layout from '../layouts/Layout.astro'
+import Navigation from '../components/Navigation.astro'
+import VantaBackground from '../components/VantaBackground.astro'
+import PreLoader from '../components/PreLoader.astro'
+import { t, getLocaleFromRequest, getDir } from '../i18n'
+import { Phone, Mail, Building } from 'lucide-astro'
+
+const locale = getLocaleFromRequest(Astro.request)
+const dir = getDir(locale)
+
+const banks = [
+  { name: 'BCA', number: '1234567890', holder: 'Ekalliptus Digital' },
+  { name: 'Mandiri', number: '0987654321', holder: 'Ekalliptus Digital' },
+  { name: 'BNI', number: '1122334455', holder: 'Ekalliptus Digital' },
+  { name: 'BRI', number: '5566778899', holder: 'Ekalliptus Digital' },
+  { name: 'CIMB Niaga', number: '9988776655', holder: 'Ekalliptus Digital' },
+  { name: 'Sea Bank', number: '4433221100', holder: 'Ekalliptus Digital' }
+]
+---
+
+<Layout 
+  title={`Payment | Ekalliptus Digital`}
+  description="Instruksi pembayaran untuk layanan Ekalliptus Digital"
+  lang={locale}
+  dir={dir}
+>
+  <VantaBackground />
+  <PreLoader />
+  <Navigation t={(key: string) => t(key, locale)} currentLang={locale} />
+  
+  <main class="relative z-0 flex min-h-screen flex-col pt-16 md:pt-20">
+    <div class="container mx-auto px-4 py-12 max-w-4xl">
+      <div class="glass-panel rounded-3xl p-8">
+        <h1 class="text-3xl font-bold text-foreground mb-6 text-center">Instruksi Pembayaran</h1>
+        
+        <div class="mb-8">
+          <p class="text-muted-foreground text-center mb-4">
+            Silakan transfer pembayaran ke salah satu rekening berikut:
+          </p>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {banks.map((bank) => (
+              <div class="glass-panel rounded-xl p-4">
+                <div class="flex items-center gap-3 mb-3">
+                  <Building class="h-5 w-5 text-primary" />
+                  <span class="font-semibold text-foreground">{bank.name}</span>
+                </div>
+                <p class="text-sm text-muted-foreground mb-1">No. Rekening:</p>
+                <p class="font-mono text-lg text-foreground mb-2">{bank.number}</p>
+                <p class="text-sm text-muted-foreground">a.n. {bank.holder}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+        
+        <div class="glass-panel rounded-xl p-6 mb-8">
+          <h2 class="text-lg font-semibold text-foreground mb-4">Konfirmasi Pembayaran</h2>
+          <p class="text-muted-foreground mb-4">
+            Setelah melakukan pembayaran, silakan konfirmasi melalui WhatsApp:
+          </p>
+          <a 
+            href="https://wa.me/6281999900306"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-lg bg-green-500 px-6 py-3 font-semibold text-white transition hover:bg-green-600"
+          >
+            <Phone class="h-5 w-5" />
+            WhatsApp Konfirmasi
+          </a>
+        </div>
+        
+        <div class="text-center text-sm text-muted-foreground">
+          <p>Untuk pertanyaan lebih lanjut, hubungi kami di:</p>
+          <p class="mt-2">
+            <Mail class="inline h-4 w-4 mr-1" />
+            ekalliptus@gmail.com
+          </p>
+        </div>
+      </div>
+    </div>
+  </main>
+</Layout>
