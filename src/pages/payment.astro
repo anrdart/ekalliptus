@@ -29,10 +29,10 @@ const banks = [
   <PreLoader />
   <Navigation t={(key: string) => t(key, locale)} currentLang={locale} />
   
-  <main class="relative z-0 flex min-h-screen flex-col pt-16 md:pt-20">
-    <div class="container mx-auto px-4 py-12 max-w-4xl">
-      <div class="glass-panel rounded-3xl p-8">
-        <h1 class="text-3xl font-bold text-foreground mb-6 text-center">Instruksi Pembayaran</h1>
+  <main class="relative z-0 flex min-h-screen flex-col pt-14 sm:pt-16 md:pt-20">
+    <div class="container mx-auto px-4 py-8 sm:py-12 max-w-4xl">
+      <div class="glass-panel rounded-2xl sm:rounded-3xl p-5 sm:p-8">
+        <h1 class="text-2xl sm:text-3xl font-bold text-foreground mb-4 sm:mb-6 text-center">Instruksi Pembayaran</h1>
         
         <div class="mb-8">
           <p class="text-muted-foreground text-center mb-4">
@@ -63,7 +63,7 @@ const banks = [
             href="https://wa.me/6281999900306"
             target="_blank"
             rel="noopener noreferrer"
-            class="inline-flex items-center gap-2 rounded-lg bg-green-500 px-6 py-3 font-semibold text-white transition hover:bg-green-600"
+            class="inline-flex items-center justify-center gap-2 rounded-lg bg-green-500 px-6 py-3.5 font-semibold text-white transition hover:bg-green-600 active:bg-green-700 min-h-[44px]"
           >
             <Phone class="h-5 w-5" />
             WhatsApp Konfirmasi

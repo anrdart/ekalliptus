@@ -36,10 +36,10 @@ for (let i = 0; i < FAQ_COUNT; i++) {
           <button
             aria-expanded={index === 0 ? 'true' : 'false'}
             aria-controls={`faq-content-${index}`}
-            class="faq-toggle flex w-full items-center justify-between px-6 py-4 text-left cursor-interactive"
+            class="faq-toggle flex w-full items-center justify-between px-5 sm:px-6 py-4 text-left cursor-interactive min-h-[44px]"
             data-index={index}
           >
-            <span class="font-medium text-foreground pr-4">
+            <span class="font-medium text-foreground pr-4 text-sm sm:text-base">
               {item.question}
             </span>
             <ChevronDown
@@ -62,13 +62,13 @@ for (let i = 0; i < FAQ_COUNT; i++) {
       ))}
     </div>
 
-    <div class="mt-12 text-center">
+    <div class="mt-10 sm:mt-12 text-center">
       <p class="text-muted-foreground mb-4">
         {t('contactCTA.title')}
       </p>
       <a
         href="/order"
-        class="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 font-semibold text-primary-foreground transition hover:bg-primary/90 cursor-interactive"
+        class="inline-flex items-center justify-center gap-2 rounded-full bg-primary px-6 py-3.5 font-semibold text-primary-foreground transition hover:bg-primary/90 active:bg-primary/80 cursor-interactive min-h-[44px]"
       >
         {t('footer.contact')}
         <ArrowRight class="h-4 w-4" />

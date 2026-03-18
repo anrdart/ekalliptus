@@ -8,21 +8,21 @@ interface Props {
 const { t } = Astro.props
 ---
 
-<section id="home" class="relative flex min-h-[calc(100vh-6rem)] items-center overflow-hidden px-4 scroll-mt-28 lg:scroll-mt-32">
-  <div class="relative z-10 mx-auto flex w-full max-w-4xl flex-col items-center gap-12 py-16">
+<section id="home" class="relative flex min-h-[calc(100svh-5rem)] items-center overflow-hidden px-4 scroll-mt-20 lg:scroll-mt-32">
+  <div class="relative z-10 mx-auto flex w-full max-w-4xl flex-col items-center gap-8 py-12 sm:py-16">
     <div class="w-full text-center transition-all duration-700 ease-smooth hero-content opacity-0 translate-y-8" style="transition-delay: 120ms">
-      <h1 class="font-bold text-foreground mb-6" style="font-size: clamp(1.5rem, 5vw, 3.5rem)">
+      <h1 class="font-bold text-foreground mb-4 sm:mb-6" style="font-size: clamp(1.75rem, 6vw, 3.5rem)">
         Ekalliptus Digital
       </h1>
 
-      <p class="text-lg md:text-xl leading-relaxed text-foreground/70 max-w-3xl mx-auto">
+      <p class="text-base sm:text-lg md:text-xl leading-relaxed text-foreground/70 max-w-3xl mx-auto px-2">
         {t('index.intro.subtitle')}
       </p>
 
-      <div class="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
+      <div class="mt-8 sm:mt-10 flex flex-col items-stretch gap-3 sm:flex-row sm:justify-center sm:items-center sm:gap-4">
         <a
           href="/order"
-          class="group inline-flex items-center gap-3 rounded-full bg-primary px-8 py-4 text-base font-semibold uppercase tracking-wide text-primary-foreground transition-all duration-300 hover:bg-primary/90 hover:shadow-lg hover:shadow-primary/25 hover:scale-105 cursor-interactive"
+          class="group inline-flex items-center justify-center gap-3 rounded-full bg-primary px-6 sm:px-8 py-3.5 sm:py-4 text-sm sm:text-base font-semibold uppercase tracking-wide text-primary-foreground transition-all duration-300 hover:bg-primary/90 hover:shadow-lg hover:shadow-primary/25 hover:scale-105 active:scale-[0.98] cursor-interactive min-h-[44px]"
         >
           {t('hero.startProject')}
           <ArrowRight class="h-5 w-5 transition-transform group-hover:translate-x-1" />
@@ -32,7 +32,7 @@ const { t } = Astro.props
           href="https://me.ekalliptus.com/"
           target="_blank"
           rel="noopener noreferrer"
-          class="group inline-flex items-center gap-2 rounded-full border border-border/30 bg-card/20 px-6 py-4 text-base font-semibold text-foreground/80 transition hover:border-border/50 hover:bg-card/30 cursor-interactive"
+          class="group inline-flex items-center justify-center gap-2 rounded-full border border-border/30 bg-card/20 px-5 sm:px-6 py-3.5 sm:py-4 text-sm sm:text-base font-semibold text-foreground/80 transition hover:border-border/50 hover:bg-card/30 active:bg-card/40 cursor-interactive min-h-[44px]"
         >
           <Play class="h-4 w-4" />
           {t('hero.profile')}

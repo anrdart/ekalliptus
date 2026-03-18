@@ -31,10 +31,10 @@ const currentPath = Astro.url.pathname
 const isHomePage = currentPath === '/'
 ---
 
-<header class="pointer-events-none fixed left-1/2 top-0 z-40 w-full max-w-4xl -translate-x-1/2 px-4 sm:px-6 lg:px-8 pt-2 sm:pt-3">
+<header class="pointer-events-none fixed left-1/2 top-0 z-40 w-full max-w-4xl -translate-x-1/2 px-3 sm:px-6 lg:px-8 pt-2 sm:pt-3 safe-top">
   <nav
     id="main-nav"
-    class="pointer-events-auto flex items-center justify-between rounded-full px-5 py-3 transition-all duration-300 border border-border/50 bg-background/80 backdrop-blur-sm"
+    class="pointer-events-auto flex items-center justify-between rounded-full px-4 sm:px-5 py-2.5 sm:py-3 transition-all duration-300 border border-border/50 bg-background/80 backdrop-blur-sm"
   >
     <a
       href="/"
@@ -77,13 +77,13 @@ const isHomePage = currentPath === '/'
         class="cursor-interactive hidden h-10 w-10 items-center justify-center rounded-full transition hover:bg-card/20 md:flex"
         aria-label="Toggle theme"
       >
-        <Moon class="h-4 w-4 dark-icon" />
-        <Sun class="h-4 w-4 light-icon hidden" />
+        <Moon class="h-[18px] w-[18px] dark-icon" />
+        <Sun class="h-[18px] w-[18px] light-icon hidden" />
       </button>
 
       <button
         id="lang-toggle"
-        class="cursor-interactive hidden items-center gap-2 rounded-full px-3 py-2 text-sm font-medium transition hover:bg-card/20 md:flex"
+        class="cursor-interactive hidden items-center gap-2 rounded-full px-3 py-2.5 text-sm font-medium transition hover:bg-card/20 md:flex"
         aria-label="Change language"
       >
         <span class="text-base">{currentLanguage.flag}</span>
@@ -105,21 +105,21 @@ const isHomePage = currentPath === '/'
 
 <div id="mobile-backdrop" class="fixed inset-0 z-30 bg-background/80 backdrop-blur-sm md:hidden hidden"></div>
 
-<div id="mobile-menu" class="fixed inset-x-4 top-16 z-40 rounded-2xl border border-border bg-card p-4 shadow-lg md:hidden hidden">
-  <nav class="flex flex-col gap-1">
+<div id="mobile-menu" class="fixed inset-x-3 top-16 z-40 max-h-[calc(100vh-5rem)] overflow-y-auto rounded-2xl border border-border bg-card p-4 shadow-lg md:hidden hidden custom-scrollbar">
+    <nav class="flex flex-col gap-1">
     {sectionLinks.map((item) => (
       isHomePage ? (
         <button
           type="button"
           data-hash={item.hash}
-          class="nav-link cursor-interactive rounded-lg px-4 py-3 text-left text-sm font-medium text-foreground/80 transition hover:bg-accent hover:text-foreground"
+          class="nav-link cursor-interactive rounded-lg px-4 py-3.5 text-left text-sm font-medium text-foreground/80 transition hover:bg-accent hover:text-foreground active:bg-accent/80"
         >
           {t(`nav.${item.key}`)}
         </button>
       ) : (
         <a
           href={`/${item.hash}`}
-          class="nav-link cursor-interactive rounded-lg px-4 py-3 text-left text-sm font-medium text-foreground/80 transition hover:bg-accent hover:text-foreground"
+          class="nav-link cursor-interactive rounded-lg px-4 py-3.5 text-left text-sm font-medium text-foreground/80 transition hover:bg-accent hover:text-foreground active:bg-accent/80"
         >
           {t(`nav.${item.key}`)}
         </a>
@@ -130,14 +130,14 @@ const isHomePage = currentPath === '/'
     
     <a
       href="/privacy-policy"
-      class="cursor-interactive rounded-lg px-4 py-3 text-left text-sm font-medium text-muted-foreground transition hover:bg-accent hover:text-foreground"
+      class="cursor-interactive rounded-lg px-4 py-3.5 text-left text-sm font-medium text-muted-foreground transition hover:bg-accent hover:text-foreground active:bg-accent/80"
     >
       {t('privacyPolicy.title')}
     </a>
     
     <a
       href="/terms-of-service"
-      class="cursor-interactive rounded-lg px-4 py-3 text-left text-sm font-medium text-muted-foreground transition hover:bg-accent hover:text-foreground"
+      class="cursor-interactive rounded-lg px-4 py-3.5 text-left text-sm font-medium text-muted-foreground transition hover:bg-accent hover:text-foreground active:bg-accent/80"
     >
       {t('termsOfService.title')}
     </a>
@@ -145,19 +145,19 @@ const isHomePage = currentPath === '/'
 
   <div class="my-3 border-t border-border"></div>
 
-  <div class="space-y-2">
+    <div class="space-y-2">
     <span class="px-4 text-xs font-medium uppercase tracking-wider text-muted-foreground">
       {t('nav.language')}
     </span>
-    <div class="grid grid-cols-2 gap-2 px-2">
+    <div class="grid grid-cols-2 gap-2 px-1">
       {languages.map((lang) => (
         <button
           data-lang={lang.code}
-          class="lang-btn flex items-center gap-2 rounded-lg px-3 py-2 text-sm transition"
+          class="lang-btn flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm transition active:scale-[0.98]"
           data:active={lang.code === currentLang}
         >
           <span class="text-base">{lang.flag}</span>
-          <span class="text-xs">{lang.name}</span>
+          <span class="text-xs truncate">{lang.name}</span>
         </button>
       ))}
     </div>
@@ -167,7 +167,7 @@ const isHomePage = currentPath === '/'
 
   <a
     href="/order"
-    class="flex w-full items-center justify-center gap-2 rounded-lg bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90"
+    class="flex w-full items-center justify-center gap-2 rounded-lg bg-primary px-6 py-3.5 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90 active:bg-primary/80 min-h-[44px]"
   >
     {t('nav.consultation')}
     <ArrowUpRight class="h-4 w-4" />
@@ -175,7 +175,7 @@ const isHomePage = currentPath === '/'
 
   <button
     id="mobile-theme-toggle"
-    class="mt-2 flex w-full items-center justify-center gap-2 rounded-lg border border-border py-3 text-sm font-medium transition cursor-interactive hover:bg-accent"
+    class="mt-2 flex w-full items-center justify-center gap-2 rounded-lg border border-border py-3.5 text-sm font-medium transition cursor-interactive hover:bg-accent active:bg-accent/80 min-h-[44px]"
   >
     <Moon class="h-4 w-4 dark-icon" />
     <Sun class="h-4 w-4 light-icon hidden" />

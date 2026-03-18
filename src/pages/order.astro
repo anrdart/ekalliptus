@@ -20,12 +20,12 @@ const dir = getDir(locale)
   <PreLoader />
   <Navigation t={(key: string) => t(key, locale)} currentLang={locale} />
   
-  <main class="relative z-0 flex min-h-screen flex-col pt-16 md:pt-20">
-    <div class="container mx-auto px-4 py-12 max-w-4xl">
-      <div class="glass-panel rounded-3xl p-8">
-        <div class="text-center mb-8">
-          <h1 class="text-3xl font-bold text-foreground mb-4">{t('order.title', locale)}</h1>
-          <p class="text-muted-foreground">{t('order.subtitle', locale)}</p>
+  <main class="relative z-0 flex min-h-screen flex-col pt-14 sm:pt-16 md:pt-20">
+    <div class="container mx-auto px-4 py-8 sm:py-12 max-w-4xl">
+      <div class="glass-panel rounded-2xl sm:rounded-3xl p-5 sm:p-8">
+        <div class="text-center mb-6 sm:mb-8">
+          <h1 class="text-2xl sm:text-3xl font-bold text-foreground mb-3 sm:mb-4">{t('order.title', locale)}</h1>
+          <p class="text-muted-foreground text-sm sm:text-base">{t('order.subtitle', locale)}</p>
         </div>
         
         <form id="order-form" class="space-y-6">
@@ -33,30 +33,30 @@ const dir = getDir(locale)
             <label class="block text-sm font-medium text-foreground mb-2">
               {t('order.selectService', locale)}
             </label>
-            <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
-              <button type="button" data-service="web" class="service-btn glass-panel rounded-xl p-4 text-center transition hover:scale-105">
-                <span class="block font-medium">{t('order.serviceCards.web.title', locale)}</span>
-                <span class="text-xs text-muted-foreground">{t('order.startingFrom', locale)} Rp 2.500.000</span>
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
+              <button type="button" data-service="web" class="service-btn glass-panel rounded-xl p-3 sm:p-4 text-center transition hover:scale-105 active:scale-[0.98] min-h-[44px]">
+                <span class="block font-medium text-sm sm:text-base">{t('order.serviceCards.web.title', locale)}</span>
+                <span class="text-[0.65rem] sm:text-xs text-muted-foreground">{t('order.startingFrom', locale)} Rp 2.500.000</span>
               </button>
-              <button type="button" data-service="mobile" class="service-btn glass-panel rounded-xl p-4 text-center transition hover:scale-105">
-                <span class="block font-medium">{t('order.serviceCards.mobile.title', locale)}</span>
-                <span class="text-xs text-muted-foreground">{t('order.startingFrom', locale)} Rp 5.000.000</span>
+              <button type="button" data-service="mobile" class="service-btn glass-panel rounded-xl p-3 sm:p-4 text-center transition hover:scale-105 active:scale-[0.98] min-h-[44px]">
+                <span class="block font-medium text-sm sm:text-base">{t('order.serviceCards.mobile.title', locale)}</span>
+                <span class="text-[0.65rem] sm:text-xs text-muted-foreground">{t('order.startingFrom', locale)} Rp 5.000.000</span>
               </button>
-              <button type="button" data-service="wordpress" class="service-btn glass-panel rounded-xl p-4 text-center transition hover:scale-105">
-                <span class="block font-medium">{t('order.serviceCards.wordpress.title', locale)}</span>
-                <span class="text-xs text-muted-foreground">{t('order.startingFrom', locale)} Rp 1.500.000</span>
+              <button type="button" data-service="wordpress" class="service-btn glass-panel rounded-xl p-3 sm:p-4 text-center transition hover:scale-105 active:scale-[0.98] min-h-[44px]">
+                <span class="block font-medium text-sm sm:text-base">{t('order.serviceCards.wordpress.title', locale)}</span>
+                <span class="text-[0.65rem] sm:text-xs text-muted-foreground">{t('order.startingFrom', locale)} Rp 1.500.000</span>
               </button>
-              <button type="button" data-service="video" class="service-btn glass-panel rounded-xl p-4 text-center transition hover:scale-105">
-                <span class="block font-medium">{t('order.serviceCards.video.title', locale)}</span>
-                <span class="text-xs text-muted-foreground">{t('order.startingFrom', locale)} Rp 500.000</span>
+              <button type="button" data-service="video" class="service-btn glass-panel rounded-xl p-3 sm:p-4 text-center transition hover:scale-105 active:scale-[0.98] min-h-[44px]">
+                <span class="block font-medium text-sm sm:text-base">{t('order.serviceCards.video.title', locale)}</span>
+                <span class="text-[0.65rem] sm:text-xs text-muted-foreground">{t('order.startingFrom', locale)} Rp 500.000</span>
               </button>
-              <button type="button" data-service="uiux" class="service-btn glass-panel rounded-xl p-4 text-center transition hover:scale-105">
-                <span class="block font-medium">{t('order.serviceCards.uiux.title', locale)}</span>
-                <span class="text-xs text-muted-foreground">{t('order.startingFrom', locale)} Rp 1.000.000</span>
+              <button type="button" data-service="uiux" class="service-btn glass-panel rounded-xl p-3 sm:p-4 text-center transition hover:scale-105 active:scale-[0.98] min-h-[44px]">
+                <span class="block font-medium text-sm sm:text-base">{t('order.serviceCards.uiux.title', locale)}</span>
+                <span class="text-[0.65rem] sm:text-xs text-muted-foreground">{t('order.startingFrom', locale)} Rp 1.000.000</span>
               </button>
-              <button type="button" data-service="maintenance" class="service-btn glass-panel rounded-xl p-4 text-center transition hover:scale-105">
-                <span class="block font-medium">{t('order.serviceCards.maintenance.title', locale)}</span>
-                <span class="text-xs text-muted-foreground">{t('order.startingFrom', locale)} Rp 100.000</span>
+              <button type="button" data-service="maintenance" class="service-btn glass-panel rounded-xl p-3 sm:p-4 text-center transition hover:scale-105 active:scale-[0.98] min-h-[44px]">
+                <span class="block font-medium text-sm sm:text-base">{t('order.serviceCards.maintenance.title', locale)}</span>
+                <span class="text-[0.65rem] sm:text-xs text-muted-foreground">{t('order.startingFrom', locale)} Rp 100.000</span>
               </button>
             </div>
             <input type="hidden" name="service" id="selected-service" />
@@ -137,26 +137,26 @@ const dir = getDir(locale)
           
           <div class="glass-panel rounded-xl p-6">
             <h3 class="text-lg font-semibold text-foreground mb-4">{t('order.urgency.title', locale)}</h3>
-            <div class="grid grid-cols-3 gap-4">
+            <div class="grid grid-cols-3 gap-2 sm:gap-4">
               <label class="urgency-option">
                 <input type="radio" name="urgency" value="normal" checked class="sr-only" />
-                <div class="glass-panel rounded-lg p-4 text-center cursor-pointer transition hover:scale-105">
-                  <span class="block font-medium">{t('order.urgency.normal', locale)}</span>
-                  <span class="text-xs text-muted-foreground">{t('order.urgency.normalDesc', locale)}</span>
+                <div class="glass-panel rounded-lg p-3 sm:p-4 text-center cursor-pointer transition hover:scale-105 active:scale-[0.98] min-h-[44px] flex flex-col items-center justify-center">
+                  <span class="block font-medium text-xs sm:text-sm">{t('order.urgency.normal', locale)}</span>
+                  <span class="text-[0.6rem] sm:text-xs text-muted-foreground mt-0.5">{t('order.urgency.normalDesc', locale)}</span>
                 </div>
               </label>
               <label class="urgency-option">
                 <input type="radio" name="urgency" value="express" class="sr-only" />
-                <div class="glass-panel rounded-lg p-4 text-center cursor-pointer transition hover:scale-105">
-                  <span class="block font-medium">{t('order.urgency.express', locale)}</span>
-                  <span class="text-xs text-primary">{t('order.urgency.expressPrice', locale)}</span>
+                <div class="glass-panel rounded-lg p-3 sm:p-4 text-center cursor-pointer transition hover:scale-105 active:scale-[0.98] min-h-[44px] flex flex-col items-center justify-center">
+                  <span class="block font-medium text-xs sm:text-sm">{t('order.urgency.express', locale)}</span>
+                  <span class="text-[0.6rem] sm:text-xs text-primary mt-0.5">{t('order.urgency.expressPrice', locale)}</span>
                 </div>
               </label>
               <label class="urgency-option">
                 <input type="radio" name="urgency" value="priority" class="sr-only" />
-                <div class="glass-panel rounded-lg p-4 text-center cursor-pointer transition hover:scale-105">
-                  <span class="block font-medium">{t('order.urgency.priority', locale)}</span>
-                  <span class="text-xs text-primary">{t('order.urgency.priorityPrice', locale)}</span>
+                <div class="glass-panel rounded-lg p-3 sm:p-4 text-center cursor-pointer transition hover:scale-105 active:scale-[0.98] min-h-[44px] flex flex-col items-center justify-center">
+                  <span class="block font-medium text-xs sm:text-sm">{t('order.urgency.priority', locale)}</span>
+                  <span class="text-[0.6rem] sm:text-xs text-primary mt-0.5">{t('order.urgency.priorityPrice', locale)}</span>
                 </div>
               </label>
             </div>
@@ -192,7 +192,7 @@ const dir = getDir(locale)
           
           <button 
             type="submit" 
-            class="w-full flex items-center justify-center gap-2 rounded-lg bg-primary px-6 py-4 font-semibold text-primary-foreground transition hover:bg-primary/90"
+            class="w-full flex items-center justify-center gap-2 rounded-lg bg-primary px-6 py-3.5 sm:py-4 font-semibold text-primary-foreground transition hover:bg-primary/90 active:bg-primary/80 min-h-[44px]"
           >
             {t('order.submit', locale)}
             <ArrowRight class="h-5 w-5" />
