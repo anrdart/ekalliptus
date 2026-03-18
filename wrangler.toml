@@ -1,7 +1,13 @@
 name = "ekalliptus-astro"
+main = "./dist/server/entry.mjs"
 compatibility_date = "2026-03-12"
 compatibility_flags = ["nodejs_compat"]
-pages_build_output_dir = "./dist"
+pages_build_output_dir = "./dist/client"
+no_bundle = true
+
+[[rules]]
+type = "ESModule"
+globs = ["**/*.js", "**/*.mjs"]
 
 [observability]
 enabled = true
