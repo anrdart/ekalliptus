@@ -129,13 +129,11 @@
 
   html {
     scroll-behavior: smooth;
-    overflow-x: hidden;
+    overflow-x: clip;
     -webkit-tap-highlight-color: transparent;
-    touch-action: manipulation;
   }
 
   body {
-    overflow-x: hidden;
     overscroll-behavior-y: contain;
   }
 
