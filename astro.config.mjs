@@ -6,7 +6,6 @@ export default defineConfig({
   output: 'server',
   adapter: cloudflare({
     imageService: false,
-    session: undefined,
   }),
   site: 'https://ekalliptus.com',
   integrations: [

@@ -5,7 +5,7 @@
     "packageManager": "bun@1.3.10",
     "scripts": {
         "dev": "astro dev",
-        "build": "astro build && rm -rf .wrangler/deploy",
+        "build": "astro build && node -e \"const f=require('fs'),p='dist/server/wrangler.json',c=JSON.parse(f.readFileSync(p,'utf8'));delete c.triggers;c.kv_namespaces=[];if(c.assets?.binding==='ASSETS')delete c.assets.binding;f.writeFileSync(p,JSON.stringify(c))\"",
         "preview": "astro preview",
         "astro": "astro"
     },
