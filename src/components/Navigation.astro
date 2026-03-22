@@ -31,21 +31,21 @@ const currentPath = Astro.url.pathname
 const isHomePage = currentPath === '/'
 ---
 
-<header class="pointer-events-none fixed left-1/2 top-0 z-40 w-full max-w-4xl -translate-x-1/2 px-3 sm:px-6 lg:px-8 pt-2 sm:pt-3 safe-top">
+<header class="pointer-events-none fixed left-1/2 top-0 z-40 w-full max-w-md sm:max-w-4xl -translate-x-1/2 px-2 sm:px-6 lg:px-8 pt-2 sm:pt-3 safe-top">
   <nav
     id="main-nav"
-    class="pointer-events-auto flex items-center justify-between rounded-full px-4 sm:px-5 py-2.5 sm:py-3 transition-all duration-300 border border-border/50 bg-background/80 backdrop-blur-sm"
+    class="pointer-events-auto flex items-center justify-between rounded-full px-3 sm:px-4 py-1.5 sm:py-2 transition-all duration-300 border border-border/50 bg-background/80 backdrop-blur-sm"
   >
     <a
       href="/"
-      class="cursor-interactive flex items-center space-x-3 rounded-full px-4 py-2 transition text-foreground"
+      class="cursor-interactive flex items-center space-x-3 rounded-full px-2 py-1 transition text-foreground"
     >
       <img
         src="/logo_mobile.png"
         alt="Ekalliptus Digital Logo"
         width="32"
         height="32"
-        class="h-10 w-auto transition-opacity hover:opacity-90 invert dark:invert-0"
+        class="h-[60px] w-auto transition-opacity hover:opacity-90 invert dark:invert-0"
         loading="eager"
       />
     </a>
@@ -105,45 +105,34 @@ const isHomePage = currentPath === '/'
 
 <div id="mobile-backdrop" class="fixed inset-0 z-30 bg-background/80 backdrop-blur-sm md:hidden hidden"></div>
 
-<div id="mobile-menu" class="fixed inset-x-3 top-16 z-40 max-h-[calc(100vh-5rem)] overflow-y-auto rounded-2xl border border-border bg-card p-4 shadow-lg md:hidden hidden custom-scrollbar">
+<div id="mobile-menu" class="fixed inset-x-2 top-2 z-40 max-h-[calc(100vh-1rem)] overflow-y-auto rounded-2xl border border-border bg-card p-3 shadow-lg md:hidden hidden custom-scrollbar safe-top">
+    <div class="flex items-center justify-end mb-1">
+      <button id="mobile-menu-close" class="cursor-interactive flex h-8 w-8 items-center justify-center rounded-full transition hover:bg-accent" aria-label="Close menu">
+        <X class="h-4 w-4" />
+      </button>
+    </div>
     <nav class="flex flex-col gap-1">
     {sectionLinks.map((item) => (
       isHomePage ? (
         <button
           type="button"
           data-hash={item.hash}
-          class="nav-link cursor-interactive rounded-lg px-4 py-3.5 text-left text-sm font-medium text-foreground/80 transition hover:bg-accent hover:text-foreground active:bg-accent/80"
+          class="nav-link cursor-interactive rounded-lg px-4 py-3 text-left text-sm font-medium text-foreground/80 transition hover:bg-accent hover:text-foreground active:bg-accent/80"
         >
           {t(`nav.${item.key}`)}
         </button>
       ) : (
         <a
           href={`/${item.hash}`}
-          class="nav-link cursor-interactive rounded-lg px-4 py-3.5 text-left text-sm font-medium text-foreground/80 transition hover:bg-accent hover:text-foreground active:bg-accent/80"
+          class="nav-link cursor-interactive rounded-lg px-4 py-3 text-left text-sm font-medium text-foreground/80 transition hover:bg-accent hover:text-foreground active:bg-accent/80"
         >
           {t(`nav.${item.key}`)}
         </a>
       )
     ))}
-    
-    <div class="my-2 border-t border-border"></div>
-    
-    <a
-      href="/privacy-policy"
-      class="cursor-interactive rounded-lg px-4 py-3.5 text-left text-sm font-medium text-muted-foreground transition hover:bg-accent hover:text-foreground active:bg-accent/80"
-    >
-      {t('privacyPolicy.title')}
-    </a>
-    
-    <a
-      href="/terms-of-service"
-      class="cursor-interactive rounded-lg px-4 py-3.5 text-left text-sm font-medium text-muted-foreground transition hover:bg-accent hover:text-foreground active:bg-accent/80"
-    >
-      {t('termsOfService.title')}
-    </a>
   </nav>
 
-  <div class="my-3 border-t border-border"></div>
+  <div class="my-2 border-t border-border"></div>
 
     <div class="space-y-2">
     <span class="px-4 text-xs font-medium uppercase tracking-wider text-muted-foreground">
@@ -163,11 +152,11 @@ const isHomePage = currentPath === '/'
     </div>
   </div>
 
-  <div class="my-3 border-t border-border"></div>
+  <div class="my-2 border-t border-border"></div>
 
   <a
     href="/order"
-    class="flex w-full items-center justify-center gap-2 rounded-lg bg-primary px-6 py-3.5 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90 active:bg-primary/80 min-h-[44px]"
+    class="flex w-full items-center justify-center gap-2 rounded-lg bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90 active:bg-primary/80 min-h-[44px]"
   >
     {t('nav.consultation')}
     <ArrowUpRight class="h-4 w-4" />
@@ -175,7 +164,7 @@ const isHomePage = currentPath === '/'
 
   <button
     id="mobile-theme-toggle"
-    class="mt-2 flex w-full items-center justify-center gap-2 rounded-lg border border-border py-3.5 text-sm font-medium transition cursor-interactive hover:bg-accent active:bg-accent/80 min-h-[44px]"
+    class="mt-2 flex w-full items-center justify-center gap-2 rounded-lg border border-border py-3 text-sm font-medium transition cursor-interactive hover:bg-accent active:bg-accent/80 min-h-[44px]"
   >
     <Moon class="h-4 w-4 dark-icon" />
     <Sun class="h-4 w-4 light-icon hidden" />
@@ -258,6 +247,17 @@ const isHomePage = currentPath === '/'
       if (menuIcon) menuIcon.classList.remove('hidden')
       if (closeIcon) closeIcon.classList.add('hidden')
     })
+    
+    var mobileMenuClose = document.getElementById('mobile-menu-close')
+    if (mobileMenuClose) {
+      mobileMenuClose.addEventListener('click', function() {
+        menuOpen = false
+        mobileMenu.classList.add('hidden')
+        mobileBackdrop.classList.add('hidden')
+        if (menuIcon) menuIcon.classList.remove('hidden')
+        if (closeIcon) closeIcon.classList.add('hidden')
+      })
+    }
   }
   
   if (langToggle && langModal && langBackdrop && closeLangModal) {
