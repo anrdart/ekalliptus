@@ -40,7 +40,7 @@ const dir = getDir(locale)
     }
   </style>
 
-  <main class="relative z-0 flex min-h-screen flex-col pt-14 sm:pt-16 md:pt-20">
+  <main class="relative z-0 flex min-h-screen flex-col pt-20 sm:pt-16 md:pt-20">
     <div class="container mx-auto px-4 py-8 sm:py-12 max-w-4xl">
       <div class="glass-panel rounded-2xl sm:rounded-3xl p-5 sm:p-8">
         <div class="text-center mb-6 sm:mb-8">
@@ -84,26 +84,30 @@ const dir = getDir(locale)
           
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <label class="block text-sm font-medium text-foreground mb-2">
+              <label for="order-name" class="block text-sm font-medium text-foreground mb-2">
                 {t('order.name', locale)} *
               </label>
               <input 
+                id="order-name"
                 type="text" 
                 name="name" 
                 required
+                autocomplete="name"
                 placeholder={t('order.namePlaceholder', locale)}
                 class="w-full glass-input rounded-lg px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
               />
             </div>
             
             <div>
-              <label class="block text-sm font-medium text-foreground mb-2">
+              <label for="order-email" class="block text-sm font-medium text-foreground mb-2">
                 {t('order.email', locale)} *
               </label>
               <input 
+                id="order-email"
                 type="email" 
                 name="email" 
                 required
+                autocomplete="email"
                 placeholder={t('order.emailPlaceholder', locale)}
                 class="w-full glass-input rounded-lg px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
               />
@@ -112,25 +116,29 @@ const dir = getDir(locale)
           
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <label class="block text-sm font-medium text-foreground mb-2">
+              <label for="order-whatsapp" class="block text-sm font-medium text-foreground mb-2">
                 {t('order.phone', locale)} *
               </label>
               <input 
+                id="order-whatsapp"
                 type="tel" 
                 name="whatsapp" 
                 required
+                autocomplete="tel"
                 placeholder={t('order.phonePlaceholder', locale)}
                 class="w-full glass-input rounded-lg px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
               />
             </div>
             
             <div>
-              <label class="block text-sm font-medium text-foreground mb-2">
+              <label for="order-company" class="block text-sm font-medium text-foreground mb-2">
                 {t('order.company', locale)}
               </label>
               <input 
+                id="order-company"
                 type="text" 
                 name="company"
+                autocomplete="organization"
                 placeholder={t('order.companyPlaceholder', locale)}
                 class="w-full glass-input rounded-lg px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
               />
@@ -138,10 +146,11 @@ const dir = getDir(locale)
           </div>
           
           <div>
-            <label class="block text-sm font-medium text-foreground mb-2">
+            <label for="order-description" class="block text-sm font-medium text-foreground mb-2">
               {t('order.projectDescription', locale)} *
             </label>
             <textarea 
+              id="order-description"
               name="description" 
               required
               rows="4"
@@ -151,11 +160,13 @@ const dir = getDir(locale)
           </div>
           
           <div id="service-details-container" class="hidden">
+            <h2 class="sr-only">{t('order.fields.serviceDetails.title', locale)}</h2>
             <h3 class="text-lg font-semibold text-foreground mb-4">{t('order.fields.serviceDetails.title', locale)}</h3>
             <div id="service-details" class="space-y-4"></div>
           </div>
           
           <div class="glass-panel rounded-xl p-6">
+            <h2 class="sr-only">{t('order.urgency.title', locale)}</h2>
             <h3 class="text-lg font-semibold text-foreground mb-4">{t('order.urgency.title', locale)}</h3>
             <div class="grid grid-cols-3 gap-2 sm:gap-4">
               <label class="urgency-option contents">
@@ -183,6 +194,7 @@ const dir = getDir(locale)
           </div>
           
           <div class="glass-panel rounded-xl p-6">
+            <h2 class="sr-only">{t('order.summary.title', locale)}</h2>
             <h3 class="text-lg font-semibold text-foreground mb-4">{t('order.summary.title', locale)}</h3>
             <div class="space-y-2">
               <div class="flex justify-between text-muted-foreground">

@@ -1,0 +1,11 @@
+# Robots.txt for ekalliptus.com
+
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /order-success
+Disallow: /payment
+Disallow: /*.json$
+Disallow: /*.md$
+
+Sitemap: https://ekalliptus.com/sitemap.xml

@@ -7,6 +7,7 @@ import ContactCTA from '../components/ContactCTA.astro'
 import Navigation from '../components/Navigation.astro'
 import VantaBackground from '../components/VantaBackground.astro'
 import PreLoader from '../components/PreLoader.astro'
+import JsonLd from '../components/JsonLd.astro'
 import { t, getLocaleFromRequest, getDir } from '../i18n'
 import { Sparkles, Info, Target, Layers, Check, Shield, Lock, FileText, ArrowRight, Zap, CheckCircle, Users } from 'lucide-astro'
 
@@ -19,6 +20,16 @@ const words = [
   t('hero.web3d', locale),
   t('hero.branding', locale)
 ]
+
+const FAQ_COUNT = 8
+const faqItems = []
+for (let i = 0; i < FAQ_COUNT; i++) {
+  const question = t(`faq.items[${i}].question`)
+  const answer = t(`faq.items[${i}].answer`)
+  if (question && !question.includes('faq.items[')) {
+    faqItems.push({ question, answer })
+  }
+}
 ---
 
 <Layout 
@@ -27,6 +38,7 @@ const words = [
   lang={locale}
   dir={dir}
 >
+  <JsonLd locale={locale} page="home" faqItems={faqItems} />
   <VantaBackground />
   <PreLoader />
   <Navigation t={(key: string) => t(key, locale)} currentLang={locale} />
@@ -170,7 +182,7 @@ const words = [
           <div class="grid grid-cols-1 gap-6 sm:gap-8 md:grid-cols-3">
             <div>
               <div class="flex items-center gap-3 mb-3 sm:mb-4">
-                <img src="/ekalliptus_rounded.webp" alt="Ekalliptus" width="40" height="40" class="h-9 w-auto sm:h-10" />
+                <img src="/ekalliptus_rounded.webp" alt="Ekalliptus" width="40" height="40" class="h-9 w-auto sm:h-10" loading="lazy" decoding="async" />
                 <span class="font-semibold text-base sm:text-lg text-foreground">Ekalliptus</span>
               </div>
               <p class="text-sm text-muted-foreground">
@@ -179,7 +191,7 @@ const words = [
             </div>
             
             <div>
-              <h4 class="font-semibold text-foreground mb-4">{t('services.title', locale)}</h4>
+              <h3 class="font-semibold text-foreground mb-4">{t('services.title', locale)}</h3>
               <ul class="space-y-2 text-sm text-muted-foreground">
                 <li>{t('services.cards.websiteDevelopment.title', locale)}</li>
                 <li>{t('services.cards.mobileAppDevelopment.title', locale)}</li>
@@ -189,7 +201,7 @@ const words = [
             </div>
             
             <div>
-              <h4 class="font-semibold text-foreground mb-4">{t('footer.contact', locale)}</h4>
+              <h3 class="font-semibold text-foreground mb-4">{t('footer.contact', locale)}</h3>
               <ul class="space-y-2 text-sm text-muted-foreground">
                 <li>ekalliptus@gmail.com</li>
                 <li>+62 819-9990-0306</li>

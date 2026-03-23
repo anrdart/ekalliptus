@@ -1,0 +1,135 @@
+---
+interface Props {
+  locale?: string
+  page?: 'home' | 'faq' | 'service'
+  faqItems?: Array<{ question: string; answer: string }>
+}
+
+const { locale = 'id', page = 'home', faqItems = [] } = Astro.props
+
+const siteUrl = 'https://ekalliptus.com'
+
+const organization = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'Ekalliptus Digital',
+  url: siteUrl,
+  logo: `${siteUrl}/ekalliptus_rounded.webp`,
+  description: 'Digital agency Indonesia spesialis website development, WordPress, mobile app, dan multimedia editing.',
+  email: 'ekalliptus@gmail.com',
+  telephone: '+6281999900306',
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Jakarta',
+    addressCountry: 'ID'
+  },
+  sameAs: []
+}
+
+const localBusiness = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfessionalService',
+  name: 'Ekalliptus Digital',
+  url: siteUrl,
+  image: `${siteUrl}/ekalliptus_rounded.webp`,
+  telephone: '+6281999900306',
+  email: 'ekalliptus@gmail.com',
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Jakarta',
+    addressRegion: 'DKI Jakarta',
+    addressCountry: 'ID'
+  },
+  priceRange: '$$',
+  areaServed: {
+    '@type': 'Country',
+    name: 'Indonesia'
+  },
+  serviceType: [
+    'Web Development',
+    'Mobile App Development',
+    'WordPress Development',
+    'Photo & Video Editing',
+    'UI/UX Design'
+  ]
+}
+
+const webSite = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'Ekalliptus Digital',
+  url: siteUrl,
+  description: 'Digital agency Indonesia spesialis website development, WordPress, mobile app, dan multimedia editing.',
+  inLanguage: locale
+}
+
+const services = [
+  {
+    '@type': 'Service',
+    name: 'Website Development',
+    description: 'Layanan pembuatan website company profile, e-commerce, dan aplikasi web custom dengan teknologi modern.',
+    url: `${siteUrl}/#services`,
+    provider: { '@type': 'Organization', name: 'Ekalliptus Digital' }
+  },
+  {
+    '@type': 'Service',
+    name: 'Mobile App Development',
+    description: 'Pengembangan aplikasi mobile cross-platform dengan React Native dan Flutter untuk iOS dan Android.',
+    url: `${siteUrl}/#services`,
+    provider: { '@type': 'Organization', name: 'Ekalliptus Digital' }
+  },
+  {
+    '@type': 'Service',
+    name: 'WordPress Development',
+    description: 'Pembuatan dan customisasi website WordPress dengan plugin custom, optimasi performa, dan integrasi sistem.',
+    url: `${siteUrl}/#services`,
+    provider: { '@type': 'Organization', name: 'Ekalliptus Digital' }
+  },
+  {
+    '@type': 'Service',
+    name: 'Photo & Video Editing',
+    description: 'Layanan editing foto dan video profesional untuk kebutuhan bisnis, social media, dan marketing.',
+    url: `${siteUrl}/#services`,
+    provider: { '@type': 'Organization', name: 'Ekalliptus Digital' }
+  },
+  {
+    '@type': 'Service',
+    name: 'UI/UX Design',
+    description: 'Desain antarmuka pengguna dan pengalaman pengguna yang intuitif, modern, dan user-centric.',
+    url: `${siteUrl}/#services`,
+    provider: { '@type': 'Organization', name: 'Ekalliptus Digital' }
+  },
+  {
+    '@type': 'Service',
+    name: 'Maintenance Website',
+    description: 'Paket maintenance website rutin meliputi update, backup, monitoring keamanan, dan technical support.',
+    url: `${siteUrl}/#services`,
+    provider: { '@type': 'Organization', name: 'Ekalliptus Digital' }
+  }
+]
+
+const faqSchema = faqItems.length > 0 ? {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqItems.map(item => ({
+    '@type': 'Question',
+    name: item.question,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: item.answer
+    }
+  }))
+} : null
+
+const schemas = [
+  JSON.stringify(organization),
+  JSON.stringify(localBusiness),
+  JSON.stringify(webSite),
+  JSON.stringify({ '@context': 'https://schema.org', '@type': 'ItemList', name: 'Layanan Ekalliptus Digital', itemListElement: services.map((s, i) => ({ ...s, position: i + 1 })) }),
+  ...(faqSchema ? [JSON.stringify(faqSchema)] : [])
+]
+---
+
+{schemas.map(schema => (
+  <script type="application/ld+json" set:html={schema} />
+))}

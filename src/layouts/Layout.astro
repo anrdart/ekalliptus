@@ -6,17 +6,31 @@ interface Props {
   description?: string
   lang?: string
   dir?: 'ltr' | 'rtl'
+  noindex?: boolean
+  image?: string
 }
 
 const { 
   title, 
   description = 'Digital agency Indonesia spesialis website development, WordPress, mobile app, dan multimedia editing.',
   lang = 'id',
-  dir = 'ltr'
+  dir = 'ltr',
+  noindex = false,
+  image = '/og-image.png'
 } = Astro.props
 
 const siteUrl = 'https://ekalliptus.com'
 const canonical = new URL(Astro.url.pathname, siteUrl).toString()
+const ogImage = new URL(image, siteUrl).toString()
+
+const locales = ['id', 'en', 'ja', 'ko', 'ru', 'ar', 'tr']
+const path = Astro.url.pathname
+
+function localePath(l: string) {
+  const pathWithoutSlash = path.replace(/^\//, '')
+  if (l === 'id') return `${siteUrl}/${pathWithoutSlash}`
+  return `${siteUrl}/${l}/${pathWithoutSlash}`
+}
 ---
 
 <!DOCTYPE html>
@@ -27,13 +41,23 @@ const canonical = new URL(Astro.url.pathname, siteUrl).toString()
     <meta name="description" content={description} />
     <meta name="format-detection" content="telephone=no" />
     <meta http-equiv="content-language" content={lang} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
     <meta name="theme-color" content="#0c1222" media="(prefers-color-scheme: dark)" />
     <meta name="theme-color" content="#f1f5f9" media="(prefers-color-scheme: light)" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
     <link rel="canonical" href={canonical} />
+    
+    {locales.map(l => (
+      <link rel="alternate" hreflang={l} href={localePath(l)} />
+    ))}
+    <link rel="alternate" hreflang="x-default" href={localePath('id')} />
     
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -46,11 +70,15 @@ const canonical = new URL(Astro.url.pathname, siteUrl).toString()
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonical} />
     <meta property="og:site_name" content="Ekalliptus Digital" />
-    <meta property="og:image" content="/og-image.png" />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content={`${lang.replace('-', '_')}_${lang === 'id' ? 'ID' : lang.toUpperCase()}`} />
     
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
     
     <script is:inline src="/vendor/three.min.js" defer></script>
     <script is:inline src="/vendor/vanta.net.min.js" defer></script>
@@ -61,6 +89,14 @@ const canonical = new URL(Astro.url.pathname, siteUrl).toString()
     </script>
   </head>
   <body class="bg-background text-foreground antialiased min-h-screen">
+    <noscript>
+      <div style="padding:2rem;text-align:center;font-family:system-ui,sans-serif;">
+        <h1>Ekalliptus Digital</h1>
+        <p>Javascript diperlukan untuk melihat website ini dengan baik.</p>
+        <p>Hubungi kami: <a href="mailto:ekalliptus@gmail.com">ekalliptus@gmail.com</a> | <a href="https://wa.me/6281999900306">WhatsApp</a></p>
+        <p><a href="/">Kembali ke Beranda</a> | <a href="/order">Order Layanan</a></p>
+      </div>
+    </noscript>
     <slot />
   </body>
 </html>

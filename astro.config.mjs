@@ -5,7 +5,10 @@ import sitemap from '@astrojs/sitemap'
 export default defineConfig({
   output: 'server',
   adapter: cloudflare({
-    imageService: false,
+    imageService: 'passthrough',
+    platformProxy: {
+      enabled: true,
+    },
   }),
   site: 'https://ekalliptus.com',
   integrations: [

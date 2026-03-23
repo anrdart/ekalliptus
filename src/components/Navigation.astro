@@ -41,12 +41,14 @@ const isHomePage = currentPath === '/'
       class="cursor-interactive flex items-center space-x-3 rounded-full px-2 py-1 transition text-foreground"
     >
       <img
-        src="/logo_mobile.png"
+        src="/logo_mobile.webp"
         alt="Ekalliptus Digital Logo"
-        width="32"
-        height="32"
+        width="60"
+        height="40"
         class="h-[60px] w-auto transition-opacity hover:opacity-90 invert dark:invert-0"
         loading="eager"
+        fetchpriority="high"
+        decoding="async"
       />
     </a>
 
