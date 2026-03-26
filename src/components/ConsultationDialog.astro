@@ -12,7 +12,7 @@ const { t } = Astro.props
   <div id="consult-backdrop" class="fixed inset-0 modal-backdrop transition-opacity duration-300"></div>
   
   <div class="fixed inset-0 flex items-end sm:items-center justify-center p-0 sm:p-4">
-    <div id="consult-panel" class="relative w-full sm:max-w-lg h-[100dvh] sm:h-auto sm:max-h-[75vh] flex flex-col bg-card border border-border rounded-t-3xl sm:rounded-2xl shadow-2xl overflow-hidden transition-transform duration-300 translate-y-full sm:translate-y-8 opacity-0">
+    <div id="consult-panel" class="relative w-full sm:max-w-lg h-[calc(100dvh-2rem)] sm:h-auto sm:max-h-[75vh] flex flex-col bg-card border border-border rounded-t-3xl sm:rounded-2xl shadow-2xl overflow-hidden transition-transform duration-300 translate-y-full sm:translate-y-8 opacity-0 mb-safe">
       
       <div class="flex items-center justify-between p-4 border-b border-border bg-card/80 backdrop-blur-xl">
         <div class="flex items-center gap-3">
