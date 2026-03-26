@@ -41,10 +41,10 @@
 
 # Hashed Assets - Long-term caching with immutable (Requirements 6.1, 8.4)
 # These files have content hashes in their names, so they can be cached forever
-/_nuxt/*
+/_astro/*
   Cache-Control: public, max-age=31536000, immutable
 
-/assets/*
+/chunks/*
   Cache-Control: public, max-age=31536000, immutable
 
 # Static Assets - 1 day caching (Requirements 6.1)
