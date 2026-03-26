@@ -191,6 +191,13 @@
     },
     "learnMore": "Untuk detail lebih lanjut tentang bagaimana kami menangani informasi Anda, silakan tinjau kebijakan kami:"
   },
+  "consultation": {
+    "statusOnline": "Online",
+    "greeting": "Halo! Saya eBot, asisten AI Ekalliptus. Ada yang bisa saya bantu? Tanyakan tentang layanan kami, harga, atau ketik \"chat admin\" untuk bicara langsung dengan tim kami.",
+    "placeholder": "Ketik pesan Anda...",
+    "disclaimer": "Didukung AI - untuk respons lebih personal, ketik \"chat admin\"",
+    "adminConnected": "Terhubung dengan Admin Ekalliptus"
+  },
   "footer": {
     "contact": "Hubungi Kami",
     "services": "Lihat Layanan Kami"

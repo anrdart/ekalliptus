@@ -191,6 +191,13 @@
     },
     "learnMore": "For more details about how we handle your information, please review our policies:"
   },
+  "consultation": {
+    "statusOnline": "Online",
+    "greeting": "Hi! I'm eBot, Ekalliptus AI assistant. How can I help you? Ask about our services, pricing, or type \"chat admin\" to speak directly with our team.",
+    "placeholder": "Type your message...",
+    "disclaimer": "Powered by AI - for a more personal response, type \"chat admin\"",
+    "adminConnected": "Connected to Ekalliptus Admin"
+  },
   "footer": {
     "contact": "Contact Us",
     "services": "View Our Services"

@@ -154,6 +154,13 @@
     "interactive": "Etkileşimli",
     "support": "Tam Destek"
   },
+  "consultation": {
+    "statusOnline": "Çevrimiçi",
+    "greeting": "Merhaba! Ben Ekalliptus AI asistanı. Size nasıl yardımcı olabilirim? Hizmetlerimiz, fiyatlarımız hakkında sorularınızı yanıtlayabilir veya doğrudan ekibimizle konuşmak için 'chat admin' yazabilirsiniz.",
+    "placeholder": "Mesajınızı yazın...",
+    "disclaimer": "AI destekli - daha kişisel bir yanıt için 'chat admin' yazın",
+    "adminConnected": "Ekalliptus Yöneticisine bağlanıldı"
+  },
   "footer": {
     "contact": "Bize Ulaşın",
     "services": "Hizmetlerimizi Görüntüleyin"

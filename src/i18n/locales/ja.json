@@ -154,6 +154,13 @@
     "interactive": "インタラクティブ",
     "support": "フルサポート"
   },
+  "consultation": {
+    "statusOnline": "オンライン",
+    "greeting": "こんにちは！Ekalliptus AIアシスタントです。何かお手伝いできることはありますか？サービスや料金について質問したり、「chat admin」と入力してチームと直接お話しいただけます。",
+    "placeholder": "メッセージを入力...",
+    "disclaimer": "AI搭載 - よりパーソナルな回答をご希望の場合は「chat admin」と入力してください",
+    "adminConnected": "Ekalliptus管理者に接続しました"
+  },
   "footer": {
     "contact": "お問い合わせ",
     "services": "サービスを見る"

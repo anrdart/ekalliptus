@@ -154,6 +154,13 @@
     "interactive": "تفاعلي",
     "support": "دعم كامل"
   },
+  "consultation": {
+    "statusOnline": "متصل",
+    "greeting": "مرحبًا! أنا مساعد Ekalliptus الذكي. كيف يمكنني مساعدتك؟ اسأل عن خدماتنا أو أسعارنا، أو اكتب 'chat admin' للتحدث مباشرة مع فريقنا.",
+    "placeholder": "اكتب رسالتك...",
+    "disclaimer": "مدعوم بالذكاء الاصطناعي - للحصول على رد أكثر شخصية، اكتب 'chat admin'",
+    "adminConnected": "تم الاتصال بإدارة Ekalliptus"
+  },
   "footer": {
     "contact": "اتصل بنا",
     "services": "عرض خدماتنا"

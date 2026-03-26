@@ -58,13 +58,13 @@ const { t } = Astro.props
         </div>
       </div>
 
-      <a
-        href="/order"
+      <button
+        data-consult-open
         class="group inline-flex items-center justify-center gap-3 rounded-full bg-primary px-8 sm:px-10 py-4 sm:py-5 text-base sm:text-lg font-semibold text-primary-foreground transition-all duration-300 hover:bg-primary/90 hover:shadow-lg hover:shadow-primary/25 md:hover:scale-105 active:scale-[0.98] cursor-interactive min-h-[44px]"
       >
         {t('contactCTA.buttons.whatsapp')}
         <ArrowRight class="h-5 w-5 transition-transform group-hover:translate-x-1" />
-      </a>
+      </button>
 
       <p class="mt-4 sm:mt-6 text-xs sm:text-sm text-muted-foreground">
         Tersedia 24/7 untuk konsultasi

@@ -4,6 +4,7 @@ import Hero from '../components/Hero.astro'
 import Services from '../components/Services.astro'
 import FAQ from '../components/FAQ.astro'
 import ContactCTA from '../components/ContactCTA.astro'
+import ConsultationDialog from '../components/ConsultationDialog.astro'
 import Navigation from '../components/Navigation.astro'
 import VantaBackground from '../components/VantaBackground.astro'
 import PreLoader from '../components/PreLoader.astro'
@@ -176,6 +177,7 @@ for (let i = 0; i < FAQ_COUNT; i++) {
       <Services t={(key: string) => t(key, locale)} />
       <FAQ t={(key: string) => t(key, locale)} />
       <ContactCTA t={(key: string) => t(key, locale)} />
+      <ConsultationDialog t={(key: string) => t(key, locale)} />
       
       <footer id="about" class="mt-8 sm:mt-12 border-t border-border/20 bg-card/5 py-8 sm:py-12 safe-bottom">
         <div class="mx-auto max-w-6xl px-4">
@@ -205,7 +207,7 @@ for (let i = 0; i < FAQ_COUNT; i++) {
               <ul class="space-y-2 text-sm text-muted-foreground">
                 <li>ekalliptus@gmail.com</li>
                 <li>+62 819-9990-0306</li>
-                <li>Jakarta, Indonesia</li>
+                <li>Tegal, Indonesia</li>
               </ul>
             </div>
           </div>
