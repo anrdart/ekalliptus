@@ -390,7 +390,7 @@
   /* Content visibility for lazy loading */
   .content-vis {
     content-visibility: auto;
-    contain-intrinsic-size: 0 500px;
+    contain-intrinsic-size: auto 800px;
   }
 
   /* Floating animation */

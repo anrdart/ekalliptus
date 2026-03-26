@@ -47,7 +47,7 @@
           <!-- Location -->
           <div class="glass-panel rounded-2xl p-6">
             <div class="h-12 w-12 rounded-xl bg-secondary/20 flex items-center justify-center mx-auto mb-4">
-              <MapPin class="h-6 w-6 text-secondary" />
+              <Navigation class="h-6 w-6 text-secondary" />
             </div>
             <h3 class="font-semibold text-foreground mb-1">Lokasi</h3>
             <p class="text-sm text-muted-foreground">Tegal, Indonesia</p>
@@ -73,5 +73,5 @@
 </template>
 
 <script setup lang="ts">
-import { MessageCircle, Phone, Mail, MapPin, ArrowRight } from 'lucide-vue-next'
+import { MessageCircle, Phone, Mail, Navigation, ArrowRight } from 'lucide-vue-next'
 </script>
