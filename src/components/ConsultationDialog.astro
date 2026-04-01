@@ -93,8 +93,18 @@ const { t } = Astro.props
   let isOpen = false
   let isAdmin = false
   let isSending = false
+  let sessionId = sessionStorage.getItem('consult-session-id') || null
   let conversationHistory: Array<{role: string; content: string}> = []
+  let realtimeSubscription: RealtimeChannel | null = null
   const CONSULT_TOKEN = 'ekalliptus-consult-2026'
+
+  function getSessionId(): string {
+    if (!sessionId) {
+      sessionId = crypto.randomUUID()
+      sessionStorage.setItem('consult-session-id', sessionId)
+    }
+    return sessionId!
+  }
 
   const SYSTEM_PROMPT = `Kamu adalah eBot, asisten AI untuk Ekalliptus Digital, sebuah digital agency profesional berbasis di Indonesia.
 
@@ -142,13 +152,17 @@ ATURAN:
     setTimeout(() => {
       dialog.classList.add('hidden')
     }, 300)
+    if (realtimeSubscription) {
+      realtimeSubscription.unsubscribe()
+      realtimeSubscription = null
+    }
   }
 
   function scrollToBottom() {
     messagesEl.scrollTop = messagesEl.scrollHeight
   }
 
-  function addMessage(content: string, isUser: boolean) {
+  function addMessage(content: string, isUser: boolean, senderLabel?: string) {
     const wrapper = document.createElement('div')
     wrapper.className = isUser ? 'flex gap-2.5 justify-end' : 'flex gap-2.5'
 
@@ -161,11 +175,16 @@ ATURAN:
           <svg xmlns="http://www.w3.org/2000/svg" stroke-width="2" width="16" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" fill="none" viewBox="0 0 24 24" class="text-foreground/60"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
         </div>`
     } else {
+      const label = senderLabel || ''
+      const isBot = !senderLabel
+      const avatarHtml = isBot
+        ? `<div class="flex-shrink-0 h-7 w-7 rounded-full bg-primary/15 flex items-center justify-center mt-0.5 overflow-hidden"><img src="/ekalliptus_rounded.webp" alt="eBot" class="h-5 w-5 object-cover" /></div>`
+        : `<div class="flex-shrink-0 h-7 w-7 rounded-full bg-foreground/10 flex items-center justify-center mt-0.5"><svg xmlns="http://www.w3.org/2000/svg" stroke-width="2" width="16" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" fill="none" viewBox="0 0 24 24" class="text-foreground/60"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></div>`
+      const bgClass = isBot ? 'glass-panel rounded-2xl rounded-tl-md' : 'rounded-2xl rounded-tl-md border border-border bg-card'
       wrapper.innerHTML = `
-        <div class="flex-shrink-0 h-7 w-7 rounded-full bg-primary/15 flex items-center justify-center mt-0.5 overflow-hidden">
-          <img src="/ekalliptus_rounded.webp" alt="eBot" class="h-5 w-5 object-cover" />
-        </div>
-        <div class="glass-panel rounded-2xl rounded-tl-md px-4 py-3 max-w-[80%]">
+        ${avatarHtml}
+        <div class="${bgClass} px-4 py-3 max-w-[80%]">
+          ${label ? `<p class="text-[11px] font-medium text-muted-foreground mb-1">${escapeHtml(label)}</p>` : ''}
           <p class="text-sm text-foreground leading-relaxed">${formatResponse(content)}</p>
         </div>`
     }
@@ -283,20 +302,30 @@ ATURAN:
     isAdmin = true
     adminBanner?.classList.remove('hidden')
     input.placeholder = 'Menulis ke Admin Ekalliptus...'
+    subscribeToAdminReplies()
   }
 
   async function sendToAdmin(message: string) {
+    const sid = getSessionId()
+
     try {
-      await fetch('/api/consult/admin', {
+      const response = await fetch('/api/consult/admin', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           message,
-          history: conversationHistory.slice(-10)
+          history: conversationHistory.slice(-10),
+          session_id: sid,
         })
       })
+
+      const data = await response.json()
+      if (data.session_id) {
+        sessionId = data.session_id
+        sessionStorage.setItem('consult-session-id', sessionId)
+      }
     } catch {
-      // silently fail - admin notification is best effort
+      // silently fail
     }
 
     addTypingIndicator()
@@ -304,7 +333,73 @@ ATURAN:
       removeTypingIndicator()
       const autoReply = 'Terima kasih, pesan Anda telah diterima admin. Admin akan membalas segera. Jika mendesak, silakan hubungi WhatsApp kami di +62 819-9990-0306.'
       addMessage(autoReply, false)
+      conversationHistory.push({ role: 'assistant', content: autoReply })
     }, 1500)
+  }
+
+  async function sendVisitorMessage(message: string) {
+    const sid = getSessionId()
+
+    try {
+      await fetch('/api/consult/send', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-consult-token': CONSULT_TOKEN
+        },
+        body: JSON.stringify({
+          session_id: sid,
+          message,
+        })
+      })
+    } catch {
+      // silently fail
+    }
+  }
+
+  function subscribeToAdminReplies() {
+    if (typeof window === 'undefined') return
+
+    const supabaseUrl = (document.querySelector('meta[name="supabase-url"]')?.getAttribute('content'))
+      || ''
+    const supabaseKey = (document.querySelector('meta[name="supabase-anon-key"]')?.getAttribute('content'))
+      || ''
+
+    if (!supabaseUrl || !supabaseKey || !sessionId) return
+
+    try {
+      const script = document.createElement('script')
+      script.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js'
+      script.onload = () => {
+        try {
+          const client = (window as any).supabase.createClient(supabaseUrl, supabaseKey)
+
+          realtimeSubscription = client
+            .channel(`consultation-${sessionId}`)
+            .on(
+              'postgres_changes',
+              {
+                event: 'INSERT',
+                schema: 'public',
+                table: 'consultation_messages',
+                filter: `consultation_id=eq.${sessionId}`,
+              },
+              (payload: any) => {
+                const msg = payload.new
+                if (msg && msg.sender_type === 'admin') {
+                  addMessage(msg.content, false, 'Admin')
+                }
+              }
+            )
+            .subscribe()
+        } catch (e) {
+          console.error('Failed to subscribe to realtime:', e)
+        }
+      }
+      document.head.appendChild(script)
+    } catch {
+      // realtime is best effort
+    }
   }
 
   form.addEventListener('submit', async (e) => {
@@ -317,7 +412,7 @@ ATURAN:
     addMessage(cleanMessage, true)
 
     if (isAdmin) {
-      await sendToAdmin(cleanMessage)
+      await sendVisitorMessage(cleanMessage)
     } else {
       isSending = true
       sendBtn?.setAttribute('disabled', '')
@@ -349,6 +444,11 @@ ATURAN:
   declare global {
     interface Window {
       consultDialog?: { open: () => void; close: () => void }
+      supabase?: any
     }
+  }
+
+  interface RealtimeChannel {
+    unsubscribe(): void
   }
 </script>
