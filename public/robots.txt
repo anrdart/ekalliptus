@@ -8,4 +8,4 @@ Disallow: /payment
 Disallow: /*.json$
 Disallow: /*.md$
 
-Sitemap: https://ekalliptus.com/sitemap.xml
+Sitemap: https://ekalliptus.com/sitemap-index.xml

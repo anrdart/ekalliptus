@@ -20,10 +20,15 @@ const organization = {
   telephone: '+6281999900306',
   address: {
     '@type': 'PostalAddress',
-    addressLocality: 'Jakarta',
+    addressLocality: 'Tegal',
+    addressRegion: 'Jawa Tengah',
     addressCountry: 'ID'
   },
-  sameAs: []
+  sameAs: [
+    'https://www.linkedin.com/company/ekalliptus',
+    'https://github.com/ekalliptus',
+    'https://www.instagram.com/ekalliptus'
+  ]
 }
 
 const localBusiness = {
@@ -36,11 +41,17 @@ const localBusiness = {
   email: 'ekalliptus@gmail.com',
   address: {
     '@type': 'PostalAddress',
-    addressLocality: 'Jakarta',
-    addressRegion: 'DKI Jakarta',
+    addressLocality: 'Tegal',
+    addressRegion: 'Jawa Tengah',
+    postalCode: '52100',
     addressCountry: 'ID'
   },
   priceRange: '$$',
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: -6.8707,
+    longitude: 109.1250
+  },
   areaServed: {
     '@type': 'Country',
     name: 'Indonesia'
