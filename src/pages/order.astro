@@ -296,25 +296,29 @@ const dir = getDir(locale)
   function updatePricing() {
     const urgencyInput = document.querySelector('input[name="urgency"]:checked') as HTMLInputElement
     const urgency = urgencyInput?.value || 'normal'
-    
+
     let price = prices[selectedService] || 0
-    const depositPct = depositPercentages[selectedService] ?? 50
-    
+    const serviceDepositPct = depositPercentages[selectedService] ?? 50
+
     if (urgency === 'express') price *= 1.25
     if (urgency === 'priority') price *= 1.5
-    
+
     const subtotal = Math.round(price)
     const ppn = Math.round(subtotal * 0.11)
     const grandTotal = subtotal + ppn
-    const deposit = Math.round(grandTotal * (depositPct / 100))
-    
+
+    // Calculate deposit based on payment option
+    // Full = 100%, DP = service deposit percentage (50% for most services)
+    const actualDepositPct = selectedPaymentOption === 'dp' ? serviceDepositPct : 100
+    const deposit = Math.round(grandTotal * (actualDepositPct / 100))
+
     const formatCurrency = (n: number) => `Rp ${n.toLocaleString('id-ID')}`
-    
+
     document.getElementById('subtotal').textContent = formatCurrency(subtotal)
     document.getElementById('ppn').textContent = formatCurrency(ppn)
     document.getElementById('grand-total').textContent = formatCurrency(grandTotal)
     document.getElementById('deposit').textContent = formatCurrency(deposit)
-    document.getElementById('deposit-percent').textContent = String(depositPct)
+    document.getElementById('deposit-percent').textContent = String(actualDepositPct)
   }
   
   document.querySelectorAll('input[name="urgency"]').forEach(input => {
@@ -324,6 +328,7 @@ const dir = getDir(locale)
   document.querySelectorAll('input[name="payment_option"]').forEach(input => {
     input.addEventListener('change', (e) => {
       selectedPaymentOption = (e.target as HTMLInputElement).value
+      updatePricing() // Update pricing when payment option changes
     })
   })
 
