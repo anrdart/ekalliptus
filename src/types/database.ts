@@ -478,3 +478,53 @@ export type VoucherType = 'percent' | 'nominal'
 
 // User role enum
 export type UserRole = 'owner' | 'admin' | 'finance' | 'cs' | 'tech' | 'editor'
+
+// Payment gateway enum
+export type PaymentGateway = 'midtrans' | 'pakasir' | 'qiospay' | 'sanpay' | 'tripay'
+export type PaymentStatusNew = 'pending' | 'processing' | 'paid' | 'failed' | 'expired' | 'refunded'
+export type PaymentTypeNew = 'full' | 'dp' | 'remaining'
+export type ConsultationStatus = 'scheduled' | 'completed' | 'cancelled'
+
+// Interface definitions for new tables
+export interface Payment {
+  id: string
+  order_id: string
+  gateway: PaymentGateway
+  gateway_transaction_id: string | null
+  amount: number
+  payment_type: PaymentTypeNew
+  status: PaymentStatusNew
+  payment_url: string | null
+  qr_string: string | null
+  expires_at: string | null
+  paid_at: string | null
+  webhook_received_at: string | null
+  metadata: Json
+  created_at: string
+  updated_at: string
+}
+
+export interface PaymentGatewayConfig {
+  id: string
+  name: PaymentGateway
+  display_name: string
+  is_active: boolean
+  priority: number
+  config: Json
+  fee_percent: number
+  fee_flat: number
+  supports_qr: boolean
+}
+
+export interface Consultation {
+  id: string
+  order_id: string
+  payment_id: string | null
+  scheduled_date: string | null
+  scheduled_time: string | null
+  meeting_link: string | null
+  status: ConsultationStatus
+  notes: string | null
+  created_at: string
+  updated_at: string
+}
