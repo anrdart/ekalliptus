@@ -4,18 +4,14 @@ export const SERVICE_TYPE_MAP: Record<string, ServiceType> = {
   'web': 'website',
   'wordpress': 'wordpress',
   'mobile': 'mobile',
-  'video': 'editing',
-  'uiux': 'editing',
-  'maintenance': 'service_device'
+  'uiux': 'editing'
 }
 
 export const SERVICE_PRICES: Record<string, number> = {
   'web': 2500000,
   'wordpress': 1500000,
   'mobile': 5000000,
-  'video': 500000,
-  'uiux': 1000000,
-  'maintenance': 100000
+  'uiux': 1000000
 }
 
 export interface ServiceDetails {
@@ -242,19 +238,6 @@ export function calculateDynamicPrice(serviceId: string, details: ServiceDetails
       }
       break
 
-    case 'video':
-      if (details.mediaType) {
-        price = MEDIA_TYPE_PRICES[details.mediaType] || price
-      }
-      if (details.videoDuration) {
-        price += VIDEO_DURATION_PRICES[details.videoDuration] || 0
-      }
-      const qty = typeof details.quantity === 'string' ? parseInt(details.quantity, 10) : details.quantity
-      if (qty && qty > 1) {
-        price = price * qty
-      }
-      break
-
     case 'uiux':
       if (details.screenCount) {
         price = UIUX_SCREEN_PRICES[details.screenCount] || price
@@ -262,17 +245,6 @@ export function calculateDynamicPrice(serviceId: string, details: ServiceDetails
       if (details.deliverables?.length) {
         details.deliverables.forEach(d => {
           price += UIUX_DELIVERABLE_PRICES[d] || 0
-        })
-      }
-      break
-
-    case 'maintenance':
-      if (details.deviceType) {
-        price = DEVICE_TYPE_PRICES[details.deviceType] || price
-      }
-      if (details.problemTypes?.length) {
-        details.problemTypes.forEach(p => {
-          price += PROBLEM_TYPE_PRICES[p] || 0
         })
       }
       break
@@ -285,7 +257,7 @@ export const DEPOSIT_PERCENTAGES: Record<ServiceType, number> = {
   'website': 50,
   'wordpress': 50,
   'mobile': 50,
-  'editing': 50,
+  'editing': 30,
   'service_device': 0
 }
 
@@ -307,6 +279,7 @@ export interface OrderCalculation {
   deposit: number
   remaining: number
   depositPercentage: number
+  paymentOption: 'full' | 'deposit'
 }
 
 export interface CalculateOrderParams {
@@ -316,6 +289,7 @@ export interface CalculateOrderParams {
   urgency?: Urgency
   shippingCost?: number
   additionalFee?: number
+  paymentOption?: 'full' | 'deposit'
 }
 
 export function calculateOrder(params: CalculateOrderParams): OrderCalculation {
@@ -325,7 +299,8 @@ export function calculateOrder(params: CalculateOrderParams): OrderCalculation {
     voucherDiscount = 0,
     urgency = 'normal',
     shippingCost = 0,
-    additionalFee = 0
+    additionalFee = 0,
+    paymentOption = 'full'
   } = params
 
   const serviceType = SERVICE_TYPE_MAP[serviceId] || 'website'
@@ -340,7 +315,7 @@ export function calculateOrder(params: CalculateOrderParams): OrderCalculation {
   const depositPercentage = DEPOSIT_PERCENTAGES[serviceType]
   const deposit = Math.round(grandTotal * (depositPercentage / 100))
   const remaining = grandTotal - deposit
-  
+
   return {
     subtotal,
     discount,
@@ -350,7 +325,8 @@ export function calculateOrder(params: CalculateOrderParams): OrderCalculation {
     grandTotal,
     deposit,
     remaining,
-    depositPercentage
+    depositPercentage,
+    paymentOption
   }
 }
 
