@@ -1,0 +1,500 @@
+---
+import Layout from '../../layouts/Layout.astro'
+import Navigation from '../../components/Navigation.astro'
+import VantaBackground from '../../components/VantaBackground.astro'
+import PreLoader from '../../components/PreLoader.astro'
+import { t, getLocaleFromRequest, getDir } from '../../i18n'
+import { ArrowLeft, RefreshCw, Clock, CheckCircle, XCircle, AlertCircle } from 'lucide-astro'
+
+const locale = getLocaleFromRequest(Astro.request)
+const dir = getDir(locale)
+
+// Get order ID from URL parameter
+const { id } = Astro.params
+---
+<Layout
+  title={`${t('payment.title', locale)} - ${id} | Ekalliptus Digital`}
+  description={t('payment.heading', locale)}
+  lang={locale}
+  dir={dir}
+  noindex={true}
+>
+  <VantaBackground />
+  <PreLoader />
+  <Navigation t={(key: string) => t(key, locale)} currentLang={locale} />
+
+  <main class="relative z-0 flex min-h-screen flex-col pt-14 sm:pt-16 md:pt-20">
+    <div class="container mx-auto px-4 py-8 sm:py-12 max-w-2xl">
+      <div class="glass-panel rounded-2xl sm:rounded-3xl p-5 sm:p-8">
+        <!-- Back Button -->
+        <a
+          href="/order"
+          class="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition mb-6 group"
+        >
+          <ArrowLeft class="h-4 w-4 group-hover:-translate-x-1 transition-transform" />
+          <span class="text-sm">{t('payment.backToOrder', locale)}</span>
+        </a>
+
+        <!-- Loading State -->
+        <div id="loading-state" class="text-center py-12">
+          <div class="inline-block animate-spin rounded-full h-12 w-12 sm:h-16 sm:w-16 border-4 border-primary/20 border-t-primary mb-4"></div>
+          <p class="text-muted-foreground">{t('payment.loading', locale) || 'Loading payment details...'}</p>
+        </div>
+
+        <!-- Error State -->
+        <div id="error-state" class="hidden text-center py-12">
+          <div class="inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-destructive/20 mb-4">
+            <XCircle class="h-8 w-8 sm:h-10 sm:w-10 text-destructive" />
+          </div>
+          <h2 class="text-xl sm:text-2xl font-bold text-foreground mb-2">
+            {t('payment.errorTitle', locale) || 'Payment Not Found'}
+          </h2>
+          <p class="text-muted-foreground mb-6" id="error-message">
+            {t('payment.errorDescription', locale) || 'Unable to load payment details. Please check your order ID.'}
+          </p>
+          <a
+            href="/order"
+            class="inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-6 py-3.5 font-semibold text-primary-foreground transition hover:bg-primary/90 active:bg-primary/80 min-h-[44px]"
+          >
+            {t('payment.backToOrder', locale)}
+          </a>
+        </div>
+
+        <!-- Payment Content -->
+        <div id="payment-content" class="hidden">
+          <!-- Order ID -->
+          <div class="text-center mb-6">
+            <h1 class="text-2xl sm:text-3xl font-bold text-foreground mb-2">
+              {t('payment.title', locale)}
+            </h1>
+            <p class="text-sm text-muted-foreground">
+              {t('qrPayment.orderId', locale)} <span id="order-id" class="font-mono font-semibold"></span>
+            </p>
+          </div>
+
+          <!-- Status Indicator -->
+          <div id="status-container" class="glass-panel rounded-xl p-4 mb-6">
+            <div class="flex items-center justify-center gap-2">
+              <div id="status-icon" class="h-5 w-5"></div>
+              <span id="status-text" class="font-semibold text-foreground"></span>
+            </div>
+          </div>
+
+          <!-- QR Code Display -->
+          <div id="qr-container" class="glass-panel rounded-xl p-6 mb-6">
+            <h2 class="text-lg font-semibold text-foreground mb-4 text-center">
+              {t('qrPayment.title', locale)}
+            </h2>
+            <p class="text-sm text-muted-foreground text-center mb-6">
+              {t('qrPayment.description', locale)}
+            </p>
+
+            <!-- QR Code Image -->
+            <div class="flex justify-center mb-6">
+              <div class="bg-white p-4 rounded-xl shadow-lg">
+                <img
+                  id="qr-code"
+                  src=""
+                  alt="QR Code"
+                  class="w-48 h-48 sm:w-64 sm:h-64"
+                  loading="lazy"
+                />
+              </div>
+            </div>
+
+            <!-- Amount Display -->
+            <div class="text-center mb-6">
+              <p class="text-sm text-muted-foreground mb-2">{t('qrPayment.totalPayment', locale)}</p>
+              <p id="payment-amount" class="text-3xl sm:text-4xl font-bold text-foreground"></p>
+              <button
+                id="copy-amount-btn"
+                class="mt-3 inline-flex items-center gap-2 text-sm text-primary hover:text-primary/80 transition"
+              >
+                {t('qrPayment.copyAmount', locale)}
+              </button>
+            </div>
+
+            <!-- Payment Steps -->
+            <div class="glass-panel rounded-lg p-4">
+              <h3 class="font-semibold text-foreground mb-3">{t('qrPayment.paymentSteps.title', locale)}</h3>
+              <ol class="text-sm text-muted-foreground space-y-2">
+                <li class="flex gap-2">
+                  <span class="font-semibold text-primary min-w-[1.5rem]">1.</span>
+                  <span>{t('qrPayment.paymentSteps.step1', locale)}</span>
+                </li>
+                <li class="flex gap-2">
+                  <span class="font-semibold text-primary min-w-[1.5rem]">2.</span>
+                  <span>{t('qrPayment.paymentSteps.step2', locale)}</span>
+                </li>
+                <li class="flex gap-2">
+                  <span class="font-semibold text-primary min-w-[1.5rem]">3.</span>
+                  <span>{t('qrPayment.paymentSteps.step3', locale)}</span>
+                </li>
+                <li class="flex gap-2">
+                  <span class="font-semibold text-primary min-w-[1.5rem]">4.</span>
+                  <span>{t('qrPayment.paymentSteps.step4', locale)} <span id="amount-hint" class="font-semibold text-foreground"></span></span>
+                </li>
+                <li class="flex gap-2">
+                  <span class="font-semibold text-primary min-w-[1.5rem]">5.</span>
+                  <span>{t('qrPayment.paymentSteps.step5', locale)}</span>
+                </li>
+                <li class="flex gap-2">
+                  <span class="font-semibold text-primary min-w-[1.5rem]">6.</span>
+                  <span>{t('qrPayment.paymentSteps.step6', locale)}</span>
+                </li>
+              </ol>
+            </div>
+          </div>
+
+          <!-- Countdown Timer -->
+          <div id="timer-container" class="glass-panel rounded-xl p-4 mb-6">
+            <div class="flex items-center justify-center gap-3">
+              <Clock class="h-5 w-5 text-primary" />
+              <div>
+                <p class="text-sm text-muted-foreground">{t('payment.expiresIn', locale) || 'Expires in'}</p>
+                <p id="countdown" class="text-xl font-bold text-foreground font-mono"></p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Manual Check Button -->
+          <button
+            id="manual-check-btn"
+            class="w-full inline-flex items-center justify-center gap-2 rounded-lg border border-border px-6 py-3.5 font-semibold text-foreground transition hover:bg-card active:bg-card/80 min-h-[44px] mb-4"
+          >
+            <RefreshCw class="h-5 w-5" />
+            <span>{t('payment.checkStatus', locale) || 'Check Payment Status'}</span>
+          </button>
+
+          <!-- Confirmation Note -->
+          <p class="text-center text-sm text-muted-foreground">
+            {t('qrPayment.confirmationNote', locale)}
+          </p>
+        </div>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<style>
+  /* Status Icon Styles */
+  #status-icon.status-paid {
+    background-color: hsl(var(--green-500) / 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='2' stroke='currentColor'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z' /%3E%3C/svg%3E") no-repeat center;
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='2' stroke='currentColor'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z' /%3E%3C/svg%3E") no-repeat center;
+    background-color: hsl(var(--green-500));
+  }
+  
+  #status-icon.status-failed,
+  #status-icon.status-expired {
+    background-color: hsl(var(--destructive) / 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  #status-icon.status-pending,
+  #status-icon.status-processing {
+    background-color: hsl(var(--yellow-500) / 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+</style>
+
+<script define:vars={{ id }}>
+  const orderId = new URLSearchParams(window.location.search).get('orderId') || id
+
+  // Format currency
+  function formatCurrency(amount: number): string {
+    return new Intl.NumberFormat('id-ID', {
+      style: 'currency',
+      currency: 'IDR',
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0
+    }).format(amount)
+  }
+
+  // Format time remaining
+  function formatTimeRemaining(expiresAt: string): string {
+    const now = new Date()
+    const expiry = new Date(expiresAt)
+    const diff = expiry.getTime() - now.getTime()
+
+    if (diff <= 0) {
+      return '00:00:00'
+    }
+
+    const hours = Math.floor(diff / (1000 * 60 * 60))
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))
+    const seconds = Math.floor((diff % (1000 * 60)) / 1000)
+
+    return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`
+  }
+
+  // Update countdown timer
+  let countdownInterval: number | null = null
+  function startCountdown(expiresAt: string): void {
+    function updateTimer() {
+      const countdownEl = document.getElementById('countdown')
+      if (!countdownEl) return
+
+      const timeStr = formatTimeRemaining(expiresAt)
+      countdownEl.textContent = timeStr
+
+      // Check if expired
+      const now = new Date()
+      const expiry = new Date(expiresAt)
+      if (now >= expiry) {
+        if (countdownInterval) {
+          clearInterval(countdownInterval)
+          countdownInterval = null
+        }
+        // Reload payment to check status
+        loadPayment()
+      }
+    }
+
+    updateTimer()
+    countdownInterval = window.setInterval(updateTimer, 1000)
+  }
+
+  // Create SVG icon element
+  function createStatusIcon(status: string): HTMLElement {
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg')
+    svg.setAttribute('class', 'h-5 w-5')
+    svg.setAttribute('fill', 'none')
+    svg.setAttribute('viewBox', '0 0 24 24')
+    svg.setAttribute('stroke-width', '2')
+    svg.setAttribute('stroke', 'currentColor')
+
+    if (status === 'paid') {
+      svg.setAttribute('stroke', 'hsl(var(--green-500))')
+      const path = document.createElementNS('http://www.w3.org/2000/svg', 'path')
+      path.setAttribute('stroke-linecap', 'round')
+      path.setAttribute('stroke-linejoin', 'round')
+      path.setAttribute('d', 'M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z')
+      svg.appendChild(path)
+    } else if (status === 'failed' || status === 'expired') {
+      svg.setAttribute('stroke', 'hsl(var(--destructive))')
+      const path = document.createElementNS('http://www.w3.org/2000/svg', 'path')
+      path.setAttribute('stroke-linecap', 'round')
+      path.setAttribute('stroke-linejoin', 'round')
+      path.setAttribute('d', 'M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z')
+      svg.appendChild(path)
+    } else {
+      svg.setAttribute('stroke', 'hsl(var(--yellow-500))')
+      svg.classList.add('animate-spin')
+      const path1 = document.createElementNS('http://www.w3.org/2000/svg', 'path')
+      path1.setAttribute('stroke-linecap', 'round')
+      path1.setAttribute('stroke-linejoin', 'round')
+      path1.setAttribute('d', 'M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636')
+      svg.appendChild(path1)
+      const path2 = document.createElementNS('http://www.w3.org/2000/svg', 'path')
+      path2.setAttribute('stroke-linecap', 'round')
+      path2.setAttribute('stroke-linejoin', 'round')
+      path2.setAttribute('d', 'M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z')
+      svg.appendChild(path2)
+    }
+
+    return svg
+  }
+
+  // Update status display
+  function updateStatus(status: string): void {
+    const statusIcon = document.getElementById('status-icon')
+    const statusText = document.getElementById('status-text')
+    const qrContainer = document.getElementById('qr-container')
+    const timerContainer = document.getElementById('timer-container')
+
+    if (!statusIcon || !statusText) return
+
+    const translations: Record<string, { text: string }> = {
+      pending: { text: 'Menunggu Pembayaran' },
+      processing: { text: 'Sedang Diproses' },
+      paid: { text: 'Pembayaran Berhasil' },
+      failed: { text: 'Pembayaran Gagal' },
+      expired: { text: 'Pembayaran Kadaluarsa' }
+    }
+
+    const statusInfo = translations[status] || translations.pending
+
+    // Clear and append new icon
+    while (statusIcon.firstChild) {
+      statusIcon.removeChild(statusIcon.firstChild)
+    }
+    statusIcon.appendChild(createStatusIcon(status))
+    statusText.textContent = statusInfo.text
+
+    // Hide QR and timer if paid/failed/expired
+    if (status === 'paid' || status === 'failed' || status === 'expired') {
+      if (qrContainer) qrContainer.classList.add('hidden')
+      if (timerContainer) timerContainer.classList.add('hidden')
+    } else {
+      if (qrContainer) qrContainer.classList.remove('hidden')
+      if (timerContainer) timerContainer.classList.remove('hidden')
+    }
+  }
+
+  // Poll payment status
+  let pollInterval: number | null = null
+  function startPolling(paymentId: string): void {
+    pollInterval = window.setInterval(async () => {
+      try {
+        const response = await fetch(`/api/payment/${paymentId}`)
+        const result = await response.json()
+
+        if (result.success && result.data) {
+          const payment = result.data
+          updateStatus(payment.status)
+
+          // Stop polling if payment is complete
+          if (payment.status === 'paid') {
+            if (pollInterval) {
+              clearInterval(pollInterval)
+              pollInterval = null
+            }
+
+            // Redirect to success page after 2 seconds
+            setTimeout(() => {
+              window.location.href = `/order-success/${payment.orderId}`
+            }, 2000)
+          } else if (payment.status === 'failed' || payment.status === 'expired') {
+            if (pollInterval) {
+              clearInterval(pollInterval)
+              pollInterval = null
+            }
+          }
+        }
+      } catch (error) {
+        console.error('Polling error:', error)
+      }
+    }, 5000) // Poll every 5 seconds
+  }
+
+  // Load payment details
+  async function loadPayment(): Promise<void> {
+    const loadingState = document.getElementById('loading-state')
+    const errorState = document.getElementById('error-state')
+    const paymentContent = document.getElementById('payment-content')
+
+    if (!orderId) {
+      if (loadingState) loadingState.classList.add('hidden')
+      if (errorState) {
+        errorState.classList.remove('hidden')
+        const errorMsg = document.getElementById('error-message')
+        if (errorMsg) errorMsg.textContent = 'Order ID is required'
+      }
+      return
+    }
+
+    try {
+      const response = await fetch(`/api/payment/by-order/${orderId}`)
+      const result = await response.json()
+
+      if (loadingState) loadingState.classList.add('hidden')
+
+      if (!result.success || !result.data || result.data.length === 0) {
+        if (errorState) errorState.classList.remove('hidden')
+        return
+      }
+
+      // Get the latest payment
+      const payment = result.data[0]
+
+      if (paymentContent) paymentContent.classList.remove('hidden')
+
+      // Update order ID
+      const orderIdEl = document.getElementById('order-id')
+      if (orderIdEl) orderIdEl.textContent = payment.orderId
+
+      // Update status
+      updateStatus(payment.status)
+
+      // Update QR code if available
+      if (payment.qrString) {
+        const qrCodeEl = document.getElementById('qr-code')
+        if (qrCodeEl) {
+          // Use api.qrserver.com for QR code generation
+          const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(payment.qrString)}`
+          qrCodeEl.src = qrUrl
+        }
+      }
+
+      // Update amount
+      const amountEl = document.getElementById('payment-amount')
+      const amountHintEl = document.getElementById('amount-hint')
+      if (amountEl) amountEl.textContent = formatCurrency(payment.amount)
+      if (amountHintEl) amountHintEl.textContent = formatCurrency(payment.amount)
+
+      // Copy amount button
+      const copyBtn = document.getElementById('copy-amount-btn')
+      if (copyBtn) {
+        copyBtn.addEventListener('click', async () => {
+          try {
+            await navigator.clipboard.writeText(String(payment.amount))
+            const originalText = copyBtn.textContent
+            if (copyBtn.textContent) {
+              copyBtn.textContent = 'Copied!'
+              setTimeout(() => {
+                copyBtn.textContent = originalText
+              }, 2000)
+            }
+          } catch (error) {
+            console.error('Failed to copy:', error)
+          }
+        })
+      }
+
+      // Start countdown if pending/processing
+      if (payment.expiresAt && (payment.status === 'pending' || payment.status === 'processing')) {
+        if (countdownInterval) {
+          clearInterval(countdownInterval)
+        }
+        startCountdown(payment.expiresAt)
+      }
+
+      // Start polling if pending/processing
+      if (payment.status === 'pending' || payment.status === 'processing') {
+        if (pollInterval) {
+          clearInterval(pollInterval)
+        }
+        startPolling(payment.id)
+      } else if (payment.status === 'paid') {
+        // Redirect to success page immediately if already paid
+        setTimeout(() => {
+          window.location.href = `/order-success/${payment.orderId}`
+        }, 1000)
+      }
+
+    } catch (error) {
+      console.error('Load payment error:', error)
+      if (loadingState) loadingState.classList.add('hidden')
+      if (errorState) errorState.classList.remove('hidden')
+    }
+  }
+
+  // Manual check button
+  document.getElementById('manual-check-btn')?.addEventListener('click', () => {
+    loadPayment()
+  })
+
+  // Load payment on page load
+  loadPayment()
+
+  // Cleanup on page unload
+  window.addEventListener('beforeunload', () => {
+    if (pollInterval) {
+      clearInterval(pollInterval)
+    }
+    if (countdownInterval) {
+      clearInterval(countdownInterval)
+    }
+  })
+</script>

@@ -2,6 +2,7 @@
   "nav": {
     "home": "Home",
     "services": "Services",
+    "blog": "Blog",
     "about": "About",
     "contact": "Contact",
     "consultation": "Get Consultation",
@@ -12,6 +13,44 @@
     "selectLanguage": "Select Language",
     "closeModal": "Close language selection",
     "languageHint": "Language preference will be saved automatically"
+  },
+  "blog": {
+    "metaTitle": "Ekalliptus Digital Blog - Web Development & Technology Articles",
+    "metaDescription": "Discover the latest articles about web development, mobile apps, WordPress, and multimedia editing. Get insights and tech tips for your business.",
+    "badge": "Articles & Insights",
+    "title": "Blog & Insights",
+    "description": "Collection of articles about web development, mobile apps, WordPress, and multimedia editing to help your business grow in the digital era.",
+    "readMore": "Read More",
+    "badges": {
+      "featured": "Featured"
+    },
+    "breadcrumb": {
+      "home": "Home",
+      "blog": "Blog"
+    },
+    "meta": {
+      "updated": "Updated",
+      "readTime": "5 min read"
+    },
+    "share": {
+      "title": "Share Article"
+    },
+    "author": {
+      "title": "Digital Team",
+      "description": "Ekalliptus Digital professional team experienced in web development, mobile apps, and multimedia editing."
+    },
+    "related": {
+      "title": "Related Articles"
+    },
+    "backToBlog": "Back to Blog",
+    "categories": {
+      "web-development": "Web Development",
+      "mobile-app": "Mobile App",
+      "wordpress": "WordPress",
+      "multimedia": "Multimedia",
+      "tips": "Tips & Tutorials",
+      "news": "News"
+    }
   },
   "hero": {
     "solusiDigital": "Digital Solutions",
@@ -1504,7 +1543,13 @@
     "deposit": "{percentage}% Deposit",
     "cash": "Pay on Site",
     "full": "Full Payment",
-    "depositLabel": "Deposit"
+    "depositLabel": "Deposit",
+    "backToOrder": "Back to Order",
+    "loading": "Loading payment details...",
+    "errorTitle": "Payment Not Found",
+    "errorDescription": "Unable to load payment details. Please check your order ID.",
+    "expiresIn": "Expires in",
+    "checkStatus": "Check Payment Status"
   },
   "qrPayment": {
     "title": "QR Code Payment",

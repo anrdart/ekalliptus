@@ -1,0 +1,65 @@
+---
+import Layout from '../../layouts/Layout.astro'
+import Navigation from '../../components/Navigation.astro'
+import VantaBackground from '../../components/VantaBackground.astro'
+import PreLoader from '../../components/PreLoader.astro'
+import { t, getLocaleFromRequest, getDir } from '../../i18n'
+import { CheckCircle, ArrowRight, Home, FileText } from 'lucide-astro'
+
+const locale = getLocaleFromRequest(Astro.request)
+const dir = getDir(locale)
+
+// Get order ID from URL parameter
+const { id } = Astro.params
+---
+<Layout
+  title={`${t('order.success.title', locale)} | Ekalliptus Digital`}
+  lang={locale}
+  dir={dir}
+  noindex={true}
+>
+  <VantaBackground />
+  <PreLoader />
+  <Navigation t={(key: string) => t(key, locale)} currentLang={locale} />
+
+  <main class="relative z-0 flex min-h-screen flex-col pt-14 sm:pt-16 md:pt-20">
+    <div class="container mx-auto px-4 py-8 sm:py-12 max-w-2xl">
+      <div class="glass-panel rounded-2xl sm:rounded-3xl p-6 sm:p-8 text-center">
+        <div class="inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-primary/20 mb-4 sm:mb-6">
+          <CheckCircle class="h-8 w-8 sm:h-10 sm:w-10 text-primary" />
+        </div>
+
+        <h1 class="text-2xl sm:text-3xl font-bold text-foreground mb-3 sm:mb-4">
+          {t('order.success.title', locale)}
+        </h1>
+
+        <p class="text-muted-foreground mb-4 sm:mb-6 text-sm sm:text-base">
+          {t('order.success.description', locale)}
+        </p>
+
+        <div id="order-info" class="glass-panel rounded-xl p-4 mb-6 sm:mb-8">
+          <p class="text-sm text-muted-foreground mb-2">{t('payment.orderId', locale) || 'Order ID'}</p>
+          <p id="order-id" class="font-mono font-semibold text-foreground text-lg">{id}</p>
+        </div>
+
+        <div class="space-y-3 sm:space-y-4">
+          <a
+            href="/"
+            class="inline-flex items-center justify-center gap-2 w-full rounded-lg bg-primary px-6 py-3.5 sm:py-4 font-semibold text-primary-foreground transition hover:bg-primary/90 active:bg-primary/80 min-h-[44px]"
+          >
+            <Home class="h-5 w-5" />
+            {t('notFound.backHome', locale)}
+          </a>
+
+          <a
+            href="/order"
+            class="inline-flex items-center justify-center gap-2 w-full rounded-lg border border-border px-6 py-3.5 sm:py-4 font-semibold text-foreground transition hover:bg-card active:bg-card/80 min-h-[44px]"
+          >
+            <FileText class="h-5 w-5" />
+            {t('footer.services', locale)}
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+</Layout>

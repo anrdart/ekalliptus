@@ -2,6 +2,7 @@
   "nav": {
     "home": "Beranda",
     "services": "Layanan",
+    "blog": "Blog",
     "about": "Tentang",
     "contact": "Kontak",
     "consultation": "Konsultasi Sekarang",
@@ -12,6 +13,44 @@
     "selectLanguage": "Pilih Bahasa",
     "closeModal": "Tutup pilihan bahasa",
     "languageHint": "Preferensi bahasa akan disimpan secara otomatis"
+  },
+  "blog": {
+    "metaTitle": "Blog Ekalliptus Digital - Artikel Web Development & Teknologi",
+    "metaDescription": "Temukan artikel terbaru tentang web development, mobile app, WordPress, dan multimedia editing. Dapatkan insight dan tips teknologi untuk bisnis Anda.",
+    "badge": "Artikel & Insight",
+    "title": "Blog & Insight",
+    "description": "Kumpulan artikel tentang web development, mobile app, WordPress, dan multimedia editing untuk membantu bisnis Anda berkembang di era digital.",
+    "readMore": "Baca Selengkapnya",
+    "badges": {
+      "featured": "Unggulan"
+    },
+    "breadcrumb": {
+      "home": "Beranda",
+      "blog": "Blog"
+    },
+    "meta": {
+      "updated": "Diperbarui",
+      "readTime": "5 menit baca"
+    },
+    "share": {
+      "title": "Bagikan Artikel"
+    },
+    "author": {
+      "title": "Tim Digital",
+      "description": "Tim profesional Ekalliptus Digital berpengalaman dalam web development, mobile app, dan multimedia editing."
+    },
+    "related": {
+      "title": "Artikel Terkait"
+    },
+    "backToBlog": "Kembali ke Blog",
+    "categories": {
+      "web-development": "Web Development",
+      "mobile-app": "Mobile App",
+      "wordpress": "WordPress",
+      "multimedia": "Multimedia",
+      "tips": "Tips & Tutorial",
+      "news": "Berita"
+    }
   },
   "hero": {
     "solusiDigital": "Solusi Digital",
@@ -1241,7 +1280,13 @@
     "deposit": "{percentage}% Uang Muka",
     "cash": "Bayar Tempat",
     "full": "Pembayaran Penuh",
-    "depositLabel": "Uang Muka"
+    "depositLabel": "Uang Muka",
+    "backToOrder": "Kembali ke Pesanan",
+    "loading": "Memuat detail pembayaran...",
+    "errorTitle": "Pembayaran Tidak Ditemukan",
+    "errorDescription": "Tidak dapat memuat detail pembayaran. Silakan periksa ID pesanan Anda.",
+    "expiresIn": "Kadaluarsa dalam",
+    "checkStatus": "Cek Status Pembayaran"
   },
   "seo": {
     "home": {
