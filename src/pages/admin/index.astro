@@ -1,0 +1,268 @@
+---
+import AdminLayout from './layout.astro'
+import { TrendingUp, TrendingDown, Package, DollarSign, Activity, ArrowUpRight } from 'lucide-astro'
+
+// Mock data - will be replaced with real API calls
+const stats = {
+  todayRevenue: {
+    value: '$2,450',
+    change: '+12.5%',
+    trend: 'up'
+  },
+  monthlyOrders: {
+    value: '148',
+    change: '+8.2%',
+    trend: 'up'
+  },
+  pendingPayments: {
+    value: '12',
+    change: '-3.1%',
+    trend: 'down'
+  },
+  conversionRate: {
+    value: '4.2%',
+    change: '+0.8%',
+    trend: 'up'
+  }
+}
+
+const recentOrders = [
+  { id: 'ORD-001', customer: 'John Doe', service: 'Web Development', amount: '$1,200', status: 'completed' },
+  { id: 'ORD-002', customer: 'Jane Smith', service: 'UI/UX Design', amount: '$800', status: 'pending' },
+  { id: 'ORD-003', customer: 'Bob Johnson', service: 'SEO Optimization', amount: '$450', status: 'processing' },
+  { id: 'ORD-004', customer: 'Alice Williams', service: 'Content Writing', amount: '$300', status: 'completed' },
+  { id: 'ORD-005', customer: 'Charlie Brown', service: 'Web Development', amount: '$1,500', status: 'pending' }
+]
+
+const topServices = [
+  { name: 'Web Development', orders: 45, revenue: '$18,500' },
+  { name: 'UI/UX Design', orders: 32, revenue: '$9,600' },
+  { name: 'SEO Optimization', orders: 28, revenue: '$6,300' },
+  { name: 'Content Writing', orders: 22, revenue: '$4,400' },
+  { name: 'Mobile App', orders: 15, revenue: '$12,000' }
+]
+---
+
+<AdminLayout title="Dashboard">
+  <!-- Stats Grid -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+    <!-- Today's Revenue -->
+    <div class="glass-card rounded-2xl p-6">
+      <div class="flex items-center justify-between mb-4">
+        <div class="h-12 w-12 rounded-xl bg-primary/10 flex items-center justify-center">
+          <DollarSign class="h-6 w-6 text-primary" />
+        </div>
+        <div class="flex items-center gap-1 text-sm">
+          {stats.todayRevenue.trend === 'up' ? (
+            <>
+              <TrendingUp class="h-4 w-4 text-green-500" />
+              <span class="text-green-500 font-medium">{stats.todayRevenue.change}</span>
+            </>
+          ) : (
+            <>
+              <TrendingDown class="h-4 w-4 text-red-500" />
+              <span class="text-red-500 font-medium">{stats.todayRevenue.change}</span>
+            </>
+          )}
+        </div>
+      </div>
+      <h3 class="text-2xl font-bold mb-1" id="stat-revenue">{stats.todayRevenue.value}</h3>
+      <p class="text-sm text-muted-foreground">Today's Revenue</p>
+    </div>
+
+    <!-- Monthly Orders -->
+    <div class="glass-card rounded-2xl p-6">
+      <div class="flex items-center justify-between mb-4">
+        <div class="h-12 w-12 rounded-xl bg-accent/10 flex items-center justify-center">
+          <Package class="h-6 w-6 text-accent" />
+        </div>
+        <div class="flex items-center gap-1 text-sm">
+          {stats.monthlyOrders.trend === 'up' ? (
+            <>
+              <TrendingUp class="h-4 w-4 text-green-500" />
+              <span class="text-green-500 font-medium">{stats.monthlyOrders.change}</span>
+            </>
+          ) : (
+            <>
+              <TrendingDown class="h-4 w-4 text-red-500" />
+              <span class="text-red-500 font-medium">{stats.monthlyOrders.change}</span>
+            </>
+          )}
+        </div>
+      </div>
+      <h3 class="text-2xl font-bold mb-1" id="stat-orders">{stats.monthlyOrders.value}</h3>
+      <p class="text-sm text-muted-foreground">Monthly Orders</p>
+    </div>
+
+    <!-- Pending Payments -->
+    <div class="glass-card rounded-2xl p-6">
+      <div class="flex items-center justify-between mb-4">
+        <div class="h-12 w-12 rounded-xl bg-orange-500/10 flex items-center justify-center">
+          <Activity class="h-6 w-6 text-orange-500" />
+        </div>
+        <div class="flex items-center gap-1 text-sm">
+          {stats.pendingPayments.trend === 'up' ? (
+            <>
+              <TrendingUp class="h-4 w-4 text-green-500" />
+              <span class="text-green-500 font-medium">{stats.pendingPayments.change}</span>
+            </>
+          ) : (
+            <>
+              <TrendingDown class="h-4 w-4 text-red-500" />
+              <span class="text-red-500 font-medium">{stats.pendingPayments.change}</span>
+            </>
+          )}
+        </div>
+      </div>
+      <h3 class="text-2xl font-bold mb-1" id="stat-pending">{stats.pendingPayments.value}</h3>
+      <p class="text-sm text-muted-foreground">Pending Payments</p>
+    </div>
+
+    <!-- Conversion Rate -->
+    <div class="glass-card rounded-2xl p-6">
+      <div class="flex items-center justify-between mb-4">
+        <div class="h-12 w-12 rounded-xl bg-purple-500/10 flex items-center justify-center">
+          <TrendingUp class="h-6 w-6 text-purple-500" />
+        </div>
+        <div class="flex items-center gap-1 text-sm">
+          {stats.conversionRate.trend === 'up' ? (
+            <>
+              <TrendingUp class="h-4 w-4 text-green-500" />
+              <span class="text-green-500 font-medium">{stats.conversionRate.change}</span>
+            </>
+          ) : (
+            <>
+              <TrendingDown class="h-4 w-4 text-red-500" />
+              <span class="text-red-500 font-medium">{stats.conversionRate.change}</span>
+            </>
+          )}
+        </div>
+      </div>
+      <h3 class="text-2xl font-bold mb-1" id="stat-conversion">{stats.conversionRate.value}</h3>
+      <p class="text-sm text-muted-foreground">Conversion Rate</p>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <!-- Recent Orders -->
+    <div class="lg:col-span-2 glass-card rounded-2xl p-6">
+      <div class="flex items-center justify-between mb-6">
+        <h2 class="text-lg font-semibold">Recent Orders</h2>
+        <a
+          href="/admin/orders"
+          class="flex items-center gap-1 text-sm text-primary hover:underline cursor-pointer"
+        >
+          View All
+          <ArrowUpRight class="h-4 w-4" />
+        </a>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full">
+          <thead>
+            <tr class="border-b border-border">
+              <th class="text-left pb-3 text-sm font-medium text-muted-foreground">Order ID</th>
+              <th class="text-left pb-3 text-sm font-medium text-muted-foreground">Customer</th>
+              <th class="text-left pb-3 text-sm font-medium text-muted-foreground hidden sm:table-cell">Service</th>
+              <th class="text-left pb-3 text-sm font-medium text-muted-foreground">Amount</th>
+              <th class="text-left pb-3 text-sm font-medium text-muted-foreground">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {recentOrders.map((order) => (
+              <tr class="border-b border-border/50 hover:bg-accent/50 transition">
+                <td class="py-3 text-sm font-medium">{order.id}</td>
+                <td class="py-3 text-sm">{order.customer}</td>
+                <td class="py-3 text-sm hidden sm:table-cell">{order.service}</td>
+                <td class="py-3 text-sm font-medium">{order.amount}</td>
+                <td class="py-3">
+                  <span class="status-badge inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium" data-status={order.status}>
+                    {order.status}
+                  </span>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Top Services -->
+    <div class="glass-card rounded-2xl p-6">
+      <h2 class="text-lg font-semibold mb-6">Top Services</h2>
+
+      <div class="space-y-4">
+        {topServices.map((service, index) => (
+          <div class="flex items-center justify-between p-3 rounded-xl hover:bg-accent/50 transition">
+            <div class="flex items-center gap-3">
+              <div class="h-8 w-8 rounded-lg bg-primary/10 flex items-center justify-center text-sm font-bold text-primary">
+                {index + 1}
+              </div>
+              <div>
+                <p class="text-sm font-medium">{service.name}</p>
+                <p class="text-xs text-muted-foreground">{service.orders} orders</p>
+              </div>
+            </div>
+            <p class="text-sm font-semibold">{service.revenue}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</AdminLayout>
+
+<style>
+  .status-badge {
+    background: hsl(var(--muted) / 0.3);
+    color: hsl(var(--muted-foreground));
+    border: 1px solid hsl(var(--border));
+  }
+
+  .status-badge[data-status="completed"] {
+    background: hsl(142 76% 36% / 0.15);
+    color: hsl(142 76% 36%);
+    border-color: hsl(142 76% 36% / 0.3);
+  }
+
+  .status-badge[data-status="pending"] {
+    background: hsl(38 92% 50% / 0.15);
+    color: hsl(38 92% 50%);
+    border-color: hsl(38 92% 50% / 0.3);
+  }
+
+  .status-badge[data-status="processing"] {
+    background: hsl(199 89% 48% / 0.15);
+    color: hsl(199 89% 48%);
+    border-color: hsl(199 89% 48% / 0.3);
+  }
+
+  @media (max-width: 639px) {
+    th, td {
+      padding: 0.75rem 0.5rem;
+    }
+  }
+</style>
+
+<script define:vars={{ recentOrders }}>
+  // This would fetch real data from the API
+  async function loadDashboardData() {
+    try {
+      const response = await fetch('/api/admin/dashboard')
+      if (response.ok) {
+        const data = await response.json()
+        // Update stats
+        if (data.stats) {
+          document.getElementById('stat-revenue').textContent = data.stats.todayRevenue
+          document.getElementById('stat-orders').textContent = data.stats.monthlyOrders
+          document.getElementById('stat-pending').textContent = data.stats.pendingPayments
+          document.getElementById('stat-conversion').textContent = data.stats.conversionRate
+        }
+      }
+    } catch (error) {
+      console.error('Failed to load dashboard data:', error)
+    }
+  }
+
+  // Load data when page is ready
+  loadDashboardData()
+</script>

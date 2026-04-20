@@ -1,0 +1,410 @@
+---
+import AdminLayout from '../layout.astro'
+import { Search, Filter, ChevronLeft, ChevronRight, Eye, ArrowUpDown } from 'lucide-astro'
+
+// Mock data - will be replaced with real API calls
+const orders = [
+  { id: 'ORD-001', customer: 'John Doe', email: 'john@example.com', service: 'Web Development', amount: '$1,200', status: 'completed', date: '2026-04-20' },
+  { id: 'ORD-002', customer: 'Jane Smith', email: 'jane@example.com', service: 'UI/UX Design', amount: '$800', status: 'pending', date: '2026-04-19' },
+  { id: 'ORD-003', customer: 'Bob Johnson', email: 'bob@example.com', service: 'SEO Optimization', amount: '$450', status: 'processing', date: '2026-04-19' },
+  { id: 'ORD-004', customer: 'Alice Williams', email: 'alice@example.com', service: 'Content Writing', amount: '$300', status: 'completed', date: '2026-04-18' },
+  { id: 'ORD-005', customer: 'Charlie Brown', email: 'charlie@example.com', service: 'Web Development', amount: '$1,500', status: 'pending', date: '2026-04-18' },
+  { id: 'ORD-006', customer: 'Diana Prince', email: 'diana@example.com', service: 'Mobile App', amount: '$2,500', status: 'processing', date: '2026-04-17' },
+  { id: 'ORD-007', customer: 'Eve Anderson', email: 'eve@example.com', service: 'Web Development', amount: '$1,800', status: 'completed', date: '2026-04-17' },
+  { id: 'ORD-008', customer: 'Frank Miller', email: 'frank@example.com', service: 'UI/UX Design', amount: '$950', status: 'pending', date: '2026-04-16' }
+]
+
+const services = ['All Services', 'Web Development', 'UI/UX Design', 'SEO Optimization', 'Content Writing', 'Mobile App']
+
+const statuses = ['All Status', 'completed', 'pending', 'processing', 'cancelled']
+
+const currentPage = 1
+const totalPages = 5
+---
+
+<AdminLayout title="Orders">
+  <!-- Filters -->
+  <div class="glass-card rounded-2xl p-4 mb-6">
+    <div class="flex flex-col lg:flex-row gap-4">
+      <!-- Search -->
+      <div class="flex-1">
+        <div class="relative">
+          <Search class="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          <input
+            type="text"
+            id="search-input"
+            placeholder="Search orders..."
+            class="glass-input w-full rounded-xl pl-10 pr-4 py-2.5 text-sm outline-none cursor-interactive"
+          />
+        </div>
+      </div>
+
+      <!-- Filters -->
+      <div class="flex flex-col sm:flex-row gap-3">
+        <!-- Status filter -->
+        <div class="relative">
+          <select
+            id="status-filter"
+            class="glass-input appearance-none rounded-xl pl-4 pr-10 py-2.5 text-sm outline-none cursor-interactive"
+          >
+            {statuses.map((status) => (
+              <option value={status === 'All Status' ? '' : status}>{status}</option>
+            ))}
+          </select>
+          <Filter class="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+        </div>
+
+        <!-- Service filter -->
+        <div class="relative">
+          <select
+            id="service-filter"
+            class="glass-input appearance-none rounded-xl pl-4 pr-10 py-2.5 text-sm outline-none cursor-interactive"
+          >
+            {services.map((service) => (
+              <option value={service === 'All Services' ? '' : service}>{service}</option>
+            ))}
+          </select>
+          <ArrowUpDown class="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Orders Table -->
+  <div class="glass-card rounded-2xl overflow-hidden">
+    <div class="overflow-x-auto">
+      <table class="w-full">
+        <thead>
+          <tr class="border-b border-border bg-accent/5">
+            <th class="text-left p-4 text-sm font-semibold">Order ID</th>
+            <th class="text-left p-4 text-sm font-semibold">Customer</th>
+            <th class="text-left p-4 text-sm font-semibold hidden md:table-cell">Email</th>
+            <th class="text-left p-4 text-sm font-semibold hidden sm:table-cell">Service</th>
+            <th class="text-left p-4 text-sm font-semibold">Amount</th>
+            <th class="text-left p-4 text-sm font-semibold hidden sm:table-cell">Date</th>
+            <th class="text-left p-4 text-sm font-semibold">Status</th>
+            <th class="text-left p-4 text-sm font-semibold">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="orders-table-body">
+          {orders.map((order) => (
+            <tr class="border-b border-border/50 hover:bg-accent/50 transition">
+              <td class="p-4 text-sm font-medium">{order.id}</td>
+              <td class="p-4">
+                <div class="flex flex-col">
+                  <span class="text-sm font-medium">{order.customer}</span>
+                  <span class="text-xs text-muted-foreground md:hidden">{order.email}</span>
+                </div>
+              </td>
+              <td class="p-4 text-sm hidden md:table-cell">{order.email}</td>
+              <td class="p-4 text-sm hidden sm:table-cell">{order.service}</td>
+              <td class="p-4 text-sm font-semibold">{order.amount}</td>
+              <td class="p-4 text-sm text-muted-foreground hidden sm:table-cell">{order.date}</td>
+              <td class="p-4">
+                <span class="status-badge inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium" data-status={order.status}>
+                  {order.status}
+                </span>
+              </td>
+              <td class="p-4">
+                <a
+                  href={`/admin/orders/${order.id}`}
+                  class="inline-flex items-center gap-1 text-sm text-primary hover:underline cursor-pointer"
+                >
+                  <Eye class="h-4 w-4" />
+                  <span class="hidden sm:inline">View</span>
+                </a>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Empty state -->
+    <div id="empty-state" class="hidden p-12 text-center">
+      <div class="inline-flex h-16 w-16 items-center justify-center rounded-full bg-accent/10 mb-4">
+        <Search class="h-8 w-8 text-muted-foreground" />
+      </div>
+      <h3 class="text-lg font-semibold mb-2">No orders found</h3>
+      <p class="text-sm text-muted-foreground">Try adjusting your filters or search query</p>
+    </div>
+
+    <!-- Pagination -->
+    <div class="flex items-center justify-between p-4 border-t border-border">
+      <p class="text-sm text-muted-foreground" id="pagination-info">
+        Showing <span class="font-medium">1</span> to <span class="font-medium">8</span> of <span class="font-medium">40</span> orders
+      </p>
+
+      <div class="flex items-center gap-2">
+        <button
+          id="prev-page"
+          class="inline-flex items-center gap-1 px-3 py-2 text-sm font-medium rounded-xl glass-panel hover:bg-accent disabled:opacity-50 disabled:cursor-not-allowed cursor-interactive"
+          disabled={currentPage === 1}
+        >
+          <ChevronLeft class="h-4 w-4" />
+          Previous
+        </button>
+
+        <div class="hidden sm:flex items-center gap-1" id="page-numbers">
+          {Array.from({ length: Math.min(totalPages, 5) }, (_, i) => i + 1).map((page) => (
+            <button
+              class="page-btn w-10 h-10 rounded-xl text-sm font-medium transition cursor-interactive"
+              class:active={currentPage === page}
+              data-page={page}
+            >
+              {page}
+            </button>
+          ))}
+        </div>
+
+        <button
+          id="next-page"
+          class="inline-flex items-center gap-1 px-3 py-2 text-sm font-medium rounded-xl glass-panel hover:bg-accent disabled:opacity-50 disabled:cursor-not-allowed cursor-interactive"
+          disabled={currentPage === totalPages}
+        >
+          Next
+          <ChevronRight class="h-4 w-4" />
+        </button>
+      </div>
+    </div>
+  </div>
+</AdminLayout>
+
+<style>
+  .status-badge {
+    background: hsl(var(--muted) / 0.3);
+    color: hsl(var(--muted-foreground));
+    border: 1px solid hsl(var(--border));
+  }
+
+  .status-badge[data-status="completed"] {
+    background: hsl(142 76% 36% / 0.15);
+    color: hsl(142 76% 36%);
+    border-color: hsl(142 76% 36% / 0.3);
+  }
+
+  .status-badge[data-status="pending"] {
+    background: hsl(38 92% 50% / 0.15);
+    color: hsl(38 92% 50%);
+    border-color: hsl(38 92% 50% / 0.3);
+  }
+
+  .status-badge[data-status="processing"] {
+    background: hsl(199 89% 48% / 0.15);
+    color: hsl(199 89% 48%);
+    border-color: hsl(199 89% 48% / 0.3);
+  }
+
+  .status-badge[data-status="cancelled"] {
+    background: hsl(0 84% 60% / 0.15);
+    color: hsl(0 84% 60%);
+    border-color: hsl(0 84% 60% / 0.3);
+  }
+
+  .page-btn {
+    background: hsl(var(--card) / 0.5);
+    color: hsl(var(--muted-foreground));
+    border: 1px solid hsl(var(--border));
+  }
+
+  .page-btn:hover {
+    background: hsl(var(--accent) / 0.2);
+    color: hsl(var(--foreground));
+  }
+
+  .page-btn.active {
+    background: hsl(var(--primary) / 0.15);
+    color: hsl(var(--primary));
+    border-color: hsl(var(--primary) / 0.3);
+    box-shadow: 0 0 15px hsl(var(--primary) / 0.1);
+  }
+
+  select option {
+    background: hsl(var(--card));
+    color: hsl(var(--foreground));
+  }
+
+  @media (max-width: 639px) {
+    th, td {
+      padding: 0.75rem 0.5rem;
+    }
+  }
+</style>
+
+<script>
+  const searchInput = document.getElementById('search-input')
+  const statusFilter = document.getElementById('status-filter')
+  const serviceFilter = document.getElementById('service-filter')
+  const ordersTableBody = document.getElementById('orders-table-body')
+  const emptyState = document.getElementById('empty-state')
+  const prevPageBtn = document.getElementById('prev-page')
+  const nextPageBtn = document.getElementById('next-page')
+  const paginationInfo = document.getElementById('pagination-info')
+  const pageNumbers = document.getElementById('page-numbers')
+
+  let currentFilters = {
+    search: '',
+    status: '',
+    service: '',
+    page: 1
+  }
+
+  async function fetchOrders() {
+    try {
+      const params = new URLSearchParams()
+      if (currentFilters.search) params.append('search', currentFilters.search)
+      if (currentFilters.status) params.append('status', currentFilters.status)
+      if (currentFilters.service) params.append('service', currentFilters.service)
+      params.append('page', currentFilters.page.toString())
+      params.append('limit', '10')
+
+      const response = await fetch(`/api/admin/orders?${params.toString()}`)
+      if (response.ok) {
+        const data = await response.json()
+        renderOrders(data.orders || [])
+        updatePagination(data.pagination || { currentPage: 1, totalPages: 1, total: 0 })
+      }
+    } catch (error) {
+      console.error('Failed to fetch orders:', error)
+    }
+  }
+
+  function createRow(order) {
+    const tr = document.createElement('tr')
+    tr.className = 'border-b border-border/50 hover:bg-accent/50 transition'
+
+    tr.innerHTML = `
+      <td class="p-4 text-sm font-medium"></td>
+      <td class="p-4">
+        <div class="flex flex-col">
+          <span class="text-sm font-medium"></span>
+          <span class="text-xs text-muted-foreground md:hidden"></span>
+        </div>
+      </td>
+      <td class="p-4 text-sm hidden md:table-cell"></td>
+      <td class="p-4 text-sm hidden sm:table-cell"></td>
+      <td class="p-4 text-sm font-semibold"></td>
+      <td class="p-4 text-sm text-muted-foreground hidden sm:table-cell"></td>
+      <td class="p-4"></td>
+      <td class="p-4">
+        <a href="/admin/orders/${order.id}" class="inline-flex items-center gap-1 text-sm text-primary hover:underline">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+          <span class="hidden sm:inline">View</span>
+        </a>
+      </td>
+    `
+
+    // Use textContent for safe text insertion
+    const cells = tr.querySelectorAll('td')
+    cells[0].textContent = order.id || order.order_id
+    cells[1].querySelector('.font-medium').textContent = order.customer_name || order.customer || 'N/A'
+    cells[1].querySelector('.text-muted-foreground').textContent = order.email || 'N/A'
+    cells[2].textContent = order.email || 'N/A'
+    cells[3].textContent = order.service || 'N/A'
+    cells[4].textContent = '$' + (order.amount || '0')
+    cells[5].textContent = new Date(order.created_at).toLocaleDateString()
+
+    // Status badge
+    const statusBadge = document.createElement('span')
+    statusBadge.className = 'status-badge inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium'
+    statusBadge.dataset.status = order.status
+    statusBadge.textContent = order.status
+    cells[6].appendChild(statusBadge)
+
+    return tr
+  }
+
+  function renderOrders(orders) {
+    ordersTableBody.innerHTML = ''
+
+    if (orders.length === 0) {
+      emptyState.classList.remove('hidden')
+      return
+    }
+
+    emptyState.classList.add('hidden')
+    orders.forEach(order => {
+      ordersTableBody.appendChild(createRow(order))
+    })
+  }
+
+  function updatePagination(pagination) {
+    if (prevPageBtn) prevPageBtn.disabled = pagination.currentPage === 1
+    if (nextPageBtn) nextPageBtn.disabled = pagination.currentPage === pagination.totalPages
+
+    // Update pagination info
+    const start = (pagination.currentPage - 1) * 10 + 1
+    const end = Math.min(pagination.currentPage * 10, pagination.total)
+    if (paginationInfo) {
+      paginationInfo.innerHTML = `Showing <span class="font-medium">${start}</span> to <span class="font-medium">${end}</span> of <span class="font-medium">${pagination.total}</span> orders`
+    }
+
+    // Update page numbers
+    if (pageNumbers) {
+      pageNumbers.innerHTML = ''
+      const totalPagesToShow = Math.min(pagination.totalPages, 5)
+      for (let i = 1; i <= totalPagesToShow; i++) {
+        const btn = document.createElement('button')
+        btn.className = 'page-btn w-10 h-10 rounded-xl text-sm font-medium transition cursor-interactive'
+        if (i === pagination.currentPage) {
+          btn.classList.add('active')
+        }
+        btn.textContent = i
+        btn.addEventListener('click', () => {
+          currentFilters.page = i
+          fetchOrders()
+        })
+        pageNumbers.appendChild(btn)
+      }
+    }
+  }
+
+  // Event listeners for filters
+  if (searchInput) {
+    let debounceTimer
+    searchInput.addEventListener('input', (e) => {
+      clearTimeout(debounceTimer)
+      debounceTimer = setTimeout(() => {
+        currentFilters.search = e.target.value
+        currentFilters.page = 1
+        fetchOrders()
+      }, 300)
+    })
+  }
+
+  if (statusFilter) {
+    statusFilter.addEventListener('change', (e) => {
+      currentFilters.status = e.target.value
+      currentFilters.page = 1
+      fetchOrders()
+    })
+  }
+
+  if (serviceFilter) {
+    serviceFilter.addEventListener('change', (e) => {
+      currentFilters.service = e.target.value
+      currentFilters.page = 1
+      fetchOrders()
+    })
+  }
+
+  // Pagination controls
+  if (prevPageBtn) {
+    prevPageBtn.addEventListener('click', () => {
+      if (currentFilters.page > 1) {
+        currentFilters.page--
+        fetchOrders()
+      }
+    })
+  }
+
+  if (nextPageBtn) {
+    nextPageBtn.addEventListener('click', () => {
+      currentFilters.page++
+      fetchOrders()
+    })
+  }
+
+  // Initial fetch
+  fetchOrders()
+</script>
