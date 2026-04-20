@@ -38,6 +38,15 @@ const dir = getDir(locale)
         0 0 16px hsl(var(--primary) / 0.12),
         inset 0 1px 0 hsl(0 0% 100% / 0.1) !important;
     }
+
+    input[name="payment_option"]:checked + div {
+      border-color: hsl(var(--primary) / 0.6) !important;
+      box-shadow:
+        0 8px 32px hsl(var(--glass-shadow)),
+        0 0 0 1px hsl(var(--primary) / 0.6),
+        0 0 16px hsl(var(--primary) / 0.12),
+        inset 0 1px 0 hsl(0 0% 100% / 0.1) !important;
+    }
   </style>
 
   <main class="relative z-0 flex min-h-screen flex-col pt-20 sm:pt-16 md:pt-20">
@@ -66,17 +75,9 @@ const dir = getDir(locale)
                 <span class="block font-medium text-sm sm:text-base">{t('order.serviceCards.wordpress.title', locale)}</span>
                 <span class="text-[0.65rem] sm:text-xs text-muted-foreground">{t('order.startingFrom', locale)} Rp 1.500.000</span>
               </button>
-              <button type="button" data-service="video" class="service-btn glass-panel rounded-xl p-3 sm:p-4 text-center transition hover:scale-105 active:scale-[0.98] min-h-[44px]">
-                <span class="block font-medium text-sm sm:text-base">{t('order.serviceCards.video.title', locale)}</span>
-                <span class="text-[0.65rem] sm:text-xs text-muted-foreground">{t('order.startingFrom', locale)} Rp 500.000</span>
-              </button>
               <button type="button" data-service="uiux" class="service-btn glass-panel rounded-xl p-3 sm:p-4 text-center transition hover:scale-105 active:scale-[0.98] min-h-[44px]">
                 <span class="block font-medium text-sm sm:text-base">{t('order.serviceCards.uiux.title', locale)}</span>
                 <span class="text-[0.65rem] sm:text-xs text-muted-foreground">{t('order.startingFrom', locale)} Rp 1.000.000</span>
-              </button>
-              <button type="button" data-service="maintenance" class="service-btn glass-panel rounded-xl p-3 sm:p-4 text-center transition hover:scale-105 active:scale-[0.98] min-h-[44px]">
-                <span class="block font-medium text-sm sm:text-base">{t('order.serviceCards.maintenance.title', locale)}</span>
-                <span class="text-[0.65rem] sm:text-xs text-muted-foreground">{t('order.startingFrom', locale)} Rp 100.000</span>
               </button>
             </div>
             <input type="hidden" name="service" id="selected-service" />
@@ -192,7 +193,28 @@ const dir = getDir(locale)
               </label>
             </div>
           </div>
-          
+
+          <div class="glass-panel rounded-xl p-6">
+            <h2 class="sr-only">{t('order.paymentOption.title', locale)}</h2>
+            <h3 class="text-lg font-semibold text-foreground mb-4">{t('order.paymentOption.title', locale)}</h3>
+            <div class="grid grid-cols-2 gap-4">
+              <label class="cursor-pointer">
+                <input type="radio" name="payment_option" value="full" checked class="sr-only" />
+                <div class="glass-panel rounded-lg p-4 text-center">
+                  <span class="font-medium">{t('order.paymentOption.full', locale)}</span>
+                  <span class="text-xs text-muted-foreground">{t('order.paymentOption.fullDesc', locale)}</span>
+                </div>
+              </label>
+              <label class="cursor-pointer">
+                <input type="radio" name="payment_option" value="dp" class="sr-only" />
+                <div class="glass-panel rounded-lg p-4 text-center">
+                  <span class="font-medium">{t('order.paymentOption.dp', locale)}</span>
+                  <span class="text-xs text-primary">{t('order.paymentOption.dpDesc', locale)}</span>
+                </div>
+              </label>
+            </div>
+          </div>
+
           <div class="glass-panel rounded-xl p-6">
             <h2 class="sr-only">{t('order.summary.title', locale)}</h2>
             <h3 class="text-lg font-semibold text-foreground mb-4">{t('order.summary.title', locale)}</h3>
@@ -244,22 +266,19 @@ const dir = getDir(locale)
     web: 2500000,
     mobile: 5000000,
     wordpress: 1500000,
-    video: 500000,
-    uiux: 1000000,
-    maintenance: 100000
+    uiux: 1000000
   }
-  
+
   const depositPercentages: Record<string, number> = {
     web: 50,
     mobile: 50,
     wordpress: 50,
-    video: 50,
-    uiux: 50,
-    maintenance: 0
+    uiux: 50
   }
-  
+
   let selectedService = ''
-  
+  let selectedPaymentOption = 'full'
+
   serviceBtns.forEach(btn => {
     btn.addEventListener('click', () => {
       serviceBtns.forEach(b => b.classList.remove('selected'))
@@ -301,7 +320,13 @@ const dir = getDir(locale)
   document.querySelectorAll('input[name="urgency"]').forEach(input => {
     input.addEventListener('change', updatePricing)
   })
-  
+
+  document.querySelectorAll('input[name="payment_option"]').forEach(input => {
+    input.addEventListener('change', (e) => {
+      selectedPaymentOption = (e.target as HTMLInputElement).value
+    })
+  })
+
   document.getElementById('order-form')?.addEventListener('submit', async (e) => {
     e.preventDefault()
     
@@ -320,7 +345,8 @@ const dir = getDir(locale)
       whatsapp: formData.get('whatsapp'),
       company: formData.get('company'),
       scope: { description: formData.get('description') },
-      urgency: formData.get('urgency')
+      urgency: formData.get('urgency'),
+      payment_option: selectedPaymentOption
     }
     
     try {

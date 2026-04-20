@@ -391,6 +391,13 @@
       "expressPrice": "+25%",
       "priorityPrice": "+50%"
     },
+    "paymentOption": {
+      "title": "Payment Option",
+      "full": "Full Payment",
+      "fullDesc": "Pay 100% upfront",
+      "dp": "Down Payment (DP)",
+      "dpDesc": "Pay 50% now + consultation"
+    },
     "voucher": {
       "title": "Voucher Code",
       "description": "Enter your voucher code if you have one to get a discount.",

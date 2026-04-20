@@ -391,6 +391,13 @@
       "expressPrice": "+25%",
       "priorityPrice": "+50%"
     },
+    "paymentOption": {
+      "title": "Opsi Pembayaran",
+      "full": "Full Payment",
+      "fullDesc": "Bayar 100% di awal",
+      "dp": "Down Payment (DP)",
+      "dpDesc": "Bayar 50% sekarang"
+    },
     "voucher": {
       "title": "Kode Voucher",
       "description": "Masukkan kode voucher jika Anda memilikinya untuk mendapatkan diskon.",
