@@ -70,7 +70,7 @@ export const POST: APIRoute = async ({ request }) => {
       remaining: calculation.remaining,
       schedule_date: tomorrow.toISOString().split('T')[0],
       schedule_time: '10:00',
-      delivery_method: 'online',
+      delivery_method: 'pickup',
       payment_option: payment_option,
       consultation_required: payment_option === 'dp'
     }
