@@ -1,0 +1,113 @@
+---
+import Layout from '../../../layouts/Layout.astro'
+import Navigation from '../../../components/Navigation.astro'
+import VantaBackground from '../../../components/VantaBackground.astro'
+import PreLoader from '../../../components/PreLoader.astro'
+import { fetchPostsByTag } from '../../../lib/supabase'
+import { t, getLocaleFromRequest, getDir } from '../../../i18n'
+import { Calendar, User, ArrowLeft } from 'lucide-astro'
+
+export const prerender = false
+
+const locale = getLocaleFromRequest(Astro.request)
+const dir = getDir(locale)
+const tag = decodeURIComponent(Astro.params.tag as string)
+const posts = await fetchPostsByTag(tag, 'id')
+
+const siteUrl = 'https://ekalliptus.com'
+const canonical = new URL(Astro.url.pathname, siteUrl).toString()
+
+const collectionSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: `Artikel dengan tag "${tag}"`,
+  url: canonical,
+  description: `Daftar artikel di blog Ekalliptus Digital dengan tag ${tag}.`,
+  isPartOf: { '@type': 'Blog', name: 'Ekalliptus Digital Blog', url: `${siteUrl}/blog` }
+}
+---
+
+<Layout
+  title={`Artikel Tag "${tag}" | Ekalliptus Digital Blog`}
+  description={`Kumpulan artikel dengan tag ${tag} di Ekalliptus Digital. Web development, mobile app, WordPress, dan multimedia editing.`}
+  lang={locale}
+  dir={dir}
+  keywords={tag}
+>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(collectionSchema)} />
+  </Fragment>
+
+  <VantaBackground />
+  <PreLoader />
+  <Navigation t={(key: string) => t(key, locale)} currentLang={locale} />
+
+  <main class="relative z-0 flex min-h-screen flex-col pt-14 sm:pt-16 md:pt-20">
+    <div class="container mx-auto max-w-6xl px-4 py-8 sm:py-12">
+      <nav class="text-sm mb-6" aria-label="Breadcrumb">
+        <a href="/" class="text-muted-foreground hover:text-foreground">Home</a>
+        <span class="mx-2 text-muted-foreground">/</span>
+        <a href="/blog" class="text-muted-foreground hover:text-foreground">Blog</a>
+        <span class="mx-2 text-muted-foreground">/</span>
+        <span class="text-foreground">Tag: {tag}</span>
+      </nav>
+
+      <header class="mb-8">
+        <h1 class="text-3xl sm:text-4xl font-bold text-foreground mb-3">
+          Artikel dengan tag <span class="text-primary">#{tag}</span>
+        </h1>
+        <p class="text-muted-foreground">
+          Ditemukan {posts.length} artikel dengan tag ini.
+        </p>
+      </header>
+
+      {posts.length === 0 ? (
+        <div class="glass-panel rounded-2xl p-8 text-center">
+          <p class="text-muted-foreground mb-4">Belum ada artikel dengan tag ini.</p>
+          <a href="/blog" class="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-primary/80">
+            <ArrowLeft class="h-4 w-4" /> Kembali ke Blog
+          </a>
+        </div>
+      ) : (
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+          {posts.map((post: any) => (
+            <article class="group rounded-2xl glass-panel bg-card/10 border border-border/20 overflow-hidden transition-all hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 hover:-translate-y-1">
+              {post.image && (
+                <a href={`/blog/${post.slug}`} class="block aspect-video overflow-hidden">
+                  <img src={post.image} alt={post.image_alt || post.title} class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" decoding="async" />
+                </a>
+              )}
+              <div class="p-5 sm:p-6">
+                <span class="glass-pill rounded-full px-3 py-1 text-[0.65rem] font-semibold uppercase tracking-wider text-primary border-primary/30">
+                  {post.category}
+                </span>
+                <h2 class="text-lg sm:text-xl font-semibold text-foreground mt-3 mb-2 group-hover:text-primary transition-colors leading-snug">
+                  <a href={`/blog/${post.slug}`}>{post.title}</a>
+                </h2>
+                <p class="text-sm text-muted-foreground mb-4 line-clamp-2">{post.description}</p>
+                <div class="flex items-center justify-between text-xs text-muted-foreground pt-3 border-t border-border/10">
+                  <div class="flex items-center gap-1.5">
+                    <Calendar class="h-3.5 w-3.5" />
+                    <time datetime={new Date(post.publish_date).toISOString()}>
+                      {new Date(post.publish_date).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })}
+                    </time>
+                  </div>
+                  <div class="flex items-center gap-1.5">
+                    <User class="h-3.5 w-3.5" />
+                    <span>{post.author}</span>
+                  </div>
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+      )}
+
+      <div class="mt-10">
+        <a href="/blog" class="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-primary/80">
+          <ArrowLeft class="h-4 w-4" /> Kembali ke Blog
+        </a>
+      </div>
+    </div>
+  </main>
+</Layout>
