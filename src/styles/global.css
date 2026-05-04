@@ -2,15 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Font display optimization (Requirements 3.1) */
-/* Ensures text remains visible during font loading with fallback fonts */
-/* font-display: swap shows fallback font immediately, then swaps to Inter when loaded */
+/* Self-hosted Inter — eliminates Google Fonts CDN round-trip */
 @font-face {
   font-family: 'Inter';
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: local('Inter Regular'), local('Inter-Regular'), local('Inter');
+  src: local('Inter Regular'), local('Inter-Regular'),
+       url('/fonts/inter-latin-400-normal.woff2') format('woff2');
 }
 
 @font-face {
@@ -18,7 +17,8 @@
   font-style: normal;
   font-weight: 500;
   font-display: swap;
-  src: local('Inter Medium'), local('Inter-Medium');
+  src: local('Inter Medium'), local('Inter-Medium'),
+       url('/fonts/inter-latin-500-normal.woff2') format('woff2');
 }
 
 @font-face {
@@ -26,7 +26,8 @@
   font-style: normal;
   font-weight: 600;
   font-display: swap;
-  src: local('Inter SemiBold'), local('Inter-SemiBold');
+  src: local('Inter SemiBold'), local('Inter-SemiBold'),
+       url('/fonts/inter-latin-600-normal.woff2') format('woff2');
 }
 
 @font-face {
@@ -34,7 +35,8 @@
   font-style: normal;
   font-weight: 700;
   font-display: swap;
-  src: local('Inter Bold'), local('Inter-Bold');
+  src: local('Inter Bold'), local('Inter-Bold'),
+       url('/fonts/inter-latin-700-normal.woff2') format('woff2');
 }
 
 @layer base {
@@ -736,4 +738,40 @@
 
 .prose a:hover {
   background-size: 100% 1px;
+}
+
+/* Lazy-load skeleton: shimmering placeholder for image containers */
+.skel-shimmer {
+  background-image: linear-gradient(
+    90deg,
+    hsl(var(--card) / 0.3) 0%,
+    hsl(var(--card) / 0.6) 50%,
+    hsl(var(--card) / 0.3) 100%
+  );
+  background-size: 200% 100%;
+  animation: skel-shimmer-anim 1.6s ease-in-out infinite;
+}
+
+.skel-shimmer:has(.img-loaded) {
+  background-image: none;
+  animation: none;
+}
+
+@keyframes skel-shimmer-anim {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.img-skel {
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.img-skel.img-loaded {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skel-shimmer { animation: none; }
+  .img-skel { transition: none; opacity: 1; }
 }

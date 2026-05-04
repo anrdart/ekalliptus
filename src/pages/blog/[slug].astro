@@ -45,10 +45,10 @@ const canonical = new URL(Astro.url.pathname, siteUrl).toString()
 
 const metaTitle = post.data.seo?.metaTitle || post.data.title
 const metaDescription = post.data.seo?.metaDescription || post.data.description
-// SVG images don't work as og:image. Fallback to /og-image.png for SVGs.
+// SVG images don't work as og:image. Fallback to /og-image.webp for SVGs.
 const ogImage = post.data.image && !post.data.image.endsWith('.svg')
   ? post.data.image
-  : '/og-image.png'
+  : '/og-image.webp'
 const ogImageAlt = post.data.imageAlt || post.data.title
 
 const articleKeywords = (post.data.tags || []).join(', ')

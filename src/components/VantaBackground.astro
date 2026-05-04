@@ -6,12 +6,7 @@ interface Props {
 const { isDark = true } = Astro.props
 ---
 
-<div id="vanta-container" class="fixed inset-0 transition-opacity duration-1000" style="width: 100vw; height: 100vh; z-index: -10">
-  <div id="vanta-loading" class="absolute inset-0 flex items-center justify-center" style={`background-color: ${isDark ? '#0c1222' : '#f1f5f9'}`}>
-    <div class="animate-pulse text-sm opacity-30" style={`color: ${isDark ? '#38bdf8' : '#2dd4bf'}`}>
-      Loading background...
-    </div>
-  </div>
+<div id="vanta-container" class="fixed inset-0" style="width: 100vw; height: 100vh; z-index: -10">
   <div id="vanta-canvas" class="absolute inset-0"></div>
 </div>
 
@@ -24,65 +19,46 @@ const { isDark = true } = Astro.props
       THREE?: unknown
     }
   }
-  
-  const isMobile = window.matchMedia('(pointer: coarse)').matches || window.matchMedia('(max-width: 768px)').matches
-  
-  if (isMobile) {
-    const container = document.getElementById('vanta-container')
-    const loading = document.getElementById('vanta-loading')
-    
-    const updateMobileBackground = () => {
+
+  const container = document.getElementById('vanta-container')
+  if (container) {
+    const setGradient = () => {
       const isDark = document.documentElement.classList.contains('dark')
-      if (container) {
-        container.style.background = isDark
-          ? 'radial-gradient(ellipse 120% 80% at 50% -20%, #1e293b 0%, #0c1222 50%, #020617 100%)'
-          : 'radial-gradient(ellipse 120% 80% at 50% -20%, #ffffff 0%, #f1f5f9 50%, #e2e8f0 100%)'
-      }
+      container.style.background = isDark
+        ? 'radial-gradient(ellipse 120% 80% at 50% -20%, #1e293b 0%, #0c1222 50%, #020617 100%)'
+        : 'radial-gradient(ellipse 120% 80% at 50% -20%, #ffffff 0%, #f1f5f9 50%, #e2e8f0 100%)'
     }
-    
-    updateMobileBackground()
-    loading?.remove()
-    
-    const observer = new MutationObserver(() => {
-      updateMobileBackground()
-    })
-    
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ['class']
-    })
-    
-    document.addEventListener('astro:before-swap', () => {
-      observer.disconnect()
-    })
-  } else {
+    setGradient()
+
+    const isTouchOnly = window.matchMedia('(pointer: coarse)').matches && window.innerWidth < 1024
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const willLoadVanta = !isTouchOnly && !reducedMotion
+
     let vantaEffect: { destroy: () => void; setOptions: (options: Record<string, unknown>) => void } | null = null
-    
+
     const darkConfig = {
       color: 0x38bdf8,
       backgroundColor: 0x0c1222,
       maxDistance: 17.0,
       spacing: 22.0
     }
-    
     const lightConfig = {
       color: 0x2dd4bf,
       backgroundColor: 0xf1f5f9,
       maxDistance: 17.0,
       spacing: 24.0
     }
-    
+
     const initVanta = () => {
+      if (vantaEffect) return
       const el = document.getElementById('vanta-canvas')
       if (!el || !window.VANTA || !window.THREE) return
-      
       const isDark = document.documentElement.classList.contains('dark')
-      
       vantaEffect = window.VANTA.NET({
-        el: el,
+        el,
         THREE: window.THREE,
         mouseControls: true,
-        touchControls: true,
+        touchControls: false,
         gyroControls: false,
         minHeight: 200.0,
         minWidth: 200.0,
@@ -90,40 +66,33 @@ const { isDark = true } = Astro.props
         scaleMobile: 1.0,
         ...(isDark ? darkConfig : lightConfig)
       })
-      
-      document.getElementById('vanta-loading')?.remove()
     }
-    
-    const checkScripts = (attempts = 0) => {
+
+    if (willLoadVanta) {
       if (window.VANTA && window.THREE) {
         initVanta()
-      } else if (attempts < 50) {
-        setTimeout(() => checkScripts(attempts + 1), 100)
       } else {
-        document.getElementById('vanta-loading')?.remove()
+        window.addEventListener('vanta-ready', initVanta, { once: true })
       }
     }
-    
-    if ('requestIdleCallback' in window) {
-      window.requestIdleCallback(() => checkScripts(), { timeout: 5000 })
-    } else {
-      setTimeout(checkScripts, 200)
-    }
-    
+
+    let themeDebounce: number | undefined
     const observer = new MutationObserver(() => {
-      if (vantaEffect) {
-        const isDark = document.documentElement.classList.contains('dark')
-        vantaEffect.setOptions(isDark ? darkConfig : lightConfig)
-      }
+      window.clearTimeout(themeDebounce)
+      themeDebounce = window.setTimeout(() => {
+        setGradient()
+        if (vantaEffect) {
+          const isDark = document.documentElement.classList.contains('dark')
+          vantaEffect.setOptions(isDark ? darkConfig : lightConfig)
+        }
+      }, 80)
     })
-    
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ['class']
-    })
-    
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] })
+
     document.addEventListener('astro:before-swap', () => {
+      observer.disconnect()
       vantaEffect?.destroy()
+      vantaEffect = null
     })
   }
 </script>

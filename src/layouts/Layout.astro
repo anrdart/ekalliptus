@@ -22,7 +22,7 @@ const {
   lang = 'id',
   dir = 'ltr',
   noindex = false,
-  image = '/og-image.png',
+  image = '/og-image.webp',
   imageAlt = 'Ekalliptus Digital — Indonesian Web & Mobile App Agency',
   type = 'website',
   publishedTime,
@@ -83,9 +83,8 @@ const publishedYMD = publishedTime ? publishedTime.slice(0, 10).replace(/-/g, '/
     ))}
     <link rel="alternate" hreflang="x-default" href={localePath('id')} />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'" />
+    <link rel="preload" as="font" type="font/woff2" href="/fonts/inter-latin-400-normal.woff2" crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href="/fonts/inter-latin-600-normal.woff2" crossorigin />
 
     <title>{title}</title>
 
@@ -117,21 +116,76 @@ const publishedYMD = publishedTime ? publishedTime.slice(0, 10).replace(/-/g, '/
 
     <slot name="head" />
 
-    <!-- Google Analytics 4 -->
-    <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-HQL55M3RTK"></script>
+    <!-- Google Analytics 4 — deferred to idle to avoid blocking critical render -->
     <script is:inline>
       window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-HQL55M3RTK');
+      window.gtag = function(){ dataLayer.push(arguments); };
+      const loadGA = () => {
+        if (window.__gaLoaded) return;
+        window.__gaLoaded = true;
+        const s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=G-HQL55M3RTK';
+        document.head.appendChild(s);
+        gtag('js', new Date());
+        gtag('config', 'G-HQL55M3RTK', { 'send_page_view': true });
+      };
+      if ('requestIdleCallback' in window) {
+        requestIdleCallback(loadGA, { timeout: 4000 });
+      } else {
+        window.addEventListener('load', () => setTimeout(loadGA, 1500), { once: true });
+      }
     </script>
 
-    <script is:inline src="/vendor/three.min.js" defer></script>
-    <script is:inline src="/vendor/vanta.net.min.js" defer></script>
+    <!-- Vanta 3D background — desktop only, lazy-loaded on idle -->
+    <script is:inline>
+      (function () {
+        const isTouchOnly = window.matchMedia('(pointer: coarse)').matches && window.innerWidth < 1024;
+        const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const lowMemory = (navigator.deviceMemory && navigator.deviceMemory < 4);
+        const saveData = (navigator.connection && navigator.connection.saveData);
+        if (isTouchOnly || reducedMotion || lowMemory || saveData) return;
+
+        const inject = (src) => new Promise((resolve, reject) => {
+          const s = document.createElement('script');
+          s.src = src;
+          s.defer = true;
+          s.onload = resolve;
+          s.onerror = reject;
+          document.head.appendChild(s);
+        });
+
+        const loadVanta = async () => {
+          try {
+            await inject('/vendor/three.min.js');
+            await inject('/vendor/vanta.net.min.js');
+            window.dispatchEvent(new CustomEvent('vanta-ready'));
+          } catch (_) {}
+        };
+
+        if ('requestIdleCallback' in window) {
+          requestIdleCallback(loadVanta, { timeout: 3000 });
+        } else {
+          window.addEventListener('load', () => setTimeout(loadVanta, 800), { once: true });
+        }
+      })();
+    </script>
 
     <script is:inline>
       const theme = localStorage.getItem('ekal-theme') || 'dark'
       document.documentElement.classList.toggle('dark', theme === 'dark')
+    </script>
+
+    <!-- Service worker — runtime cache for fonts, vendor scripts, images -->
+    <script is:inline>
+      if ('serviceWorker' in navigator && location.protocol === 'https:') {
+        const register = () => navigator.serviceWorker.register('/sw.js').catch(() => {});
+        if ('requestIdleCallback' in window) {
+          requestIdleCallback(register, { timeout: 5000 });
+        } else {
+          window.addEventListener('load', register, { once: true });
+        }
+      }
     </script>
   </head>
   <body class="bg-background text-foreground antialiased min-h-screen">
