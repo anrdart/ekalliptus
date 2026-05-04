@@ -1,5 +1,5 @@
 ---
-import { MessageCircle, X, Send, User, ArrowRight, Loader2 } from 'lucide-astro'
+import { X, Send } from 'lucide-astro'
 
 interface Props {
   t: (key: string) => string
@@ -83,19 +83,29 @@ const { t } = Astro.props
   const panel = document.getElementById('consult-panel')
   const closeBtn = document.getElementById('consult-close')
   const messagesEl = document.getElementById('consult-messages')
-  const form = document.getElementById('consult-form') as HTMLFormElement
-  const input = document.getElementById('consult-input') as HTMLInputElement
+  const form = document.getElementById('consult-form') as HTMLFormElement | null
+  const input = document.getElementById('consult-input') as HTMLInputElement | null
   const sendBtn = document.getElementById('consult-send')
   const adminBanner = document.getElementById('consult-admin-banner')
 
   if (!dialog || !panel || !messagesEl || !form || !input) return
+
+  const dialogEl = dialog
+  const panelEl = panel
+  const messagesContainer = messagesEl
+  const formEl = form
+  const inputEl = input
+
+  type RealtimeSubscription = {
+    unsubscribe(): void
+  }
 
   let isOpen = false
   let isAdmin = false
   let isSending = false
   let sessionId = sessionStorage.getItem('consult-session-id') || null
   let conversationHistory: Array<{role: string; content: string}> = []
-  let realtimeSubscription: RealtimeChannel | null = null
+  let realtimeSubscription: RealtimeSubscription | null = null
   const CONSULT_TOKEN = 'ekalliptus-consult-2026'
 
   function getSessionId(): string {
@@ -103,7 +113,7 @@ const { t } = Astro.props
       sessionId = crypto.randomUUID()
       sessionStorage.setItem('consult-session-id', sessionId)
     }
-    return sessionId!
+    return sessionId
   }
 
   const SYSTEM_PROMPT = `Kamu adalah eBot, asisten AI untuk Ekalliptus Digital, sebuah digital agency profesional berbasis di Indonesia.
@@ -135,22 +145,22 @@ ATURAN:
   function open() {
     if (isOpen) return
     isOpen = true
-    dialog.classList.remove('hidden')
+    dialogEl.classList.remove('hidden')
     requestAnimationFrame(() => {
-      panel.classList.remove('translate-y-full', 'sm:translate-y-8', 'opacity-0')
-      panel.classList.add('translate-y-0', 'opacity-100')
+      panelEl.classList.remove('translate-y-full', 'sm:translate-y-8', 'opacity-0')
+      panelEl.classList.add('translate-y-0', 'opacity-100')
     })
-    input.focus()
+    inputEl.focus()
     document.body.style.overflow = 'hidden'
   }
 
   function close() {
     isOpen = false
-    panel.classList.remove('translate-y-0', 'opacity-100')
-    panel.classList.add('translate-y-full', 'sm:translate-y-8', 'opacity-0')
+    panelEl.classList.remove('translate-y-0', 'opacity-100')
+    panelEl.classList.add('translate-y-full', 'sm:translate-y-8', 'opacity-0')
     document.body.style.overflow = ''
     setTimeout(() => {
-      dialog.classList.add('hidden')
+      dialogEl.classList.add('hidden')
     }, 300)
     if (realtimeSubscription) {
       realtimeSubscription.unsubscribe()
@@ -159,7 +169,7 @@ ATURAN:
   }
 
   function scrollToBottom() {
-    messagesEl.scrollTop = messagesEl.scrollHeight
+    messagesContainer.scrollTop = messagesContainer.scrollHeight
   }
 
   function addMessage(content: string, isUser: boolean, senderLabel?: string) {
@@ -189,7 +199,7 @@ ATURAN:
         </div>`
     }
 
-    messagesEl.appendChild(wrapper)
+    messagesContainer.appendChild(wrapper)
     scrollToBottom()
   }
 
@@ -208,7 +218,7 @@ ATURAN:
           <span class="h-1.5 w-1.5 rounded-full bg-muted-foreground/50 animate-bounce" style="animation-delay:300ms"></span>
         </div>
       </div>`
-    messagesEl.appendChild(wrapper)
+    messagesContainer.appendChild(wrapper)
     scrollToBottom()
   }
 
@@ -251,6 +261,7 @@ ATURAN:
       const handoffMsg = 'Baik, saya akan menghubungkan Anda dengan admin Ekalliptus. Mohon tunggu sebentar...'
       addMessage(handoffMsg, false)
       conversationHistory.push({ role: 'assistant', content: handoffMsg })
+      await sendToAdmin(message)
       switchToAdmin()
       return
     }
@@ -301,7 +312,7 @@ ATURAN:
   function switchToAdmin() {
     isAdmin = true
     adminBanner?.classList.remove('hidden')
-    input.placeholder = 'Menulis ke Admin Ekalliptus...'
+    inputEl.placeholder = 'Menulis ke Admin Ekalliptus...'
     subscribeToAdminReplies()
   }
 
@@ -320,9 +331,9 @@ ATURAN:
       })
 
       const data = await response.json()
-      if (data.session_id) {
+      if (typeof data.session_id === 'string') {
         sessionId = data.session_id
-        sessionStorage.setItem('consult-session-id', sessionId)
+        sessionStorage.setItem('consult-session-id', data.session_id)
       }
     } catch {
       // silently fail
@@ -382,7 +393,7 @@ ATURAN:
                 event: 'INSERT',
                 schema: 'public',
                 table: 'consultation_messages',
-                filter: `consultation_id=eq.${sessionId}`,
+                filter: `session_id=eq.${sessionId}`,
               },
               (payload: any) => {
                 const msg = payload.new
@@ -402,13 +413,13 @@ ATURAN:
     }
   }
 
-  form.addEventListener('submit', async (e) => {
+  formEl.addEventListener('submit', async (e) => {
     e.preventDefault()
-    const message = input.value.trim()
+    const message = inputEl.value.trim()
     if (!message || isSending) return
 
     const cleanMessage = message.substring(0, 500)
-    input.value = ''
+    inputEl.value = ''
     addMessage(cleanMessage, true)
 
     if (isAdmin) {
@@ -436,19 +447,28 @@ ATURAN:
     })
   })
 
-  window.consultDialog = { open, close }
+  ;(window as any).consultDialog = { open, close }
 })()
-</script>
 
-<script>
-  declare global {
-    interface Window {
-      consultDialog?: { open: () => void; close: () => void }
-      supabase?: any
-    }
+// GA4 Custom Events
+function trackEvent(eventName, params) {
+  if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
+    window.gtag('event', eventName, params || {})
   }
+}
 
-  interface RealtimeChannel {
-    unsubscribe(): void
-  }
+// Track consultation button clicks
+document.querySelectorAll('[data-track="consultation"]').forEach(function(btn) {
+  btn.addEventListener('click', function() { trackEvent('consultation_click', { source: 'button' }) })
+})
+
+// Track WhatsApp link clicks (global, covers all pages)
+document.querySelectorAll('a[data-track="whatsapp"]').forEach(function(link) {
+  link.addEventListener('click', function() { trackEvent('whatsapp_click', { source: window.location.pathname }) })
+})
+
+// Track order button clicks (global)
+document.querySelectorAll('a[data-track="order"], button[data-track="order"]').forEach(function(el) {
+  el.addEventListener('click', function() { trackEvent('order_click', { source: window.location.pathname }) })
+})
 </script>

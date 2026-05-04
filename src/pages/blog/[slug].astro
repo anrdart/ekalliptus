@@ -307,6 +307,24 @@ while ((tocMatch = tocRe.exec(processedHtml)) !== null) {
           if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' })
         })
       })
+
+      // GA4 Blog Scroll Depth Tracking
+      var _scrollMilestone = 0;
+      var _scrollThresholds = [25, 50, 75, 90];
+      window.addEventListener('scroll', function() {
+        var max = document.documentElement.scrollHeight - window.innerHeight;
+        if (max <= 0) return;
+        var pct = (window.scrollY / max) * 100;
+        for (var i = 0; i < _scrollThresholds.length; i++) {
+          var threshold = _scrollThresholds[i];
+          if (pct >= threshold && _scrollMilestone < threshold) {
+            _scrollMilestone = threshold;
+            if (typeof window.gtag === 'function') {
+              window.gtag('event', 'blog_scroll', { percent: threshold, slug: window.location.pathname });
+            }
+          }
+        }
+      }, { passive: true });
     </script>
   </main>
   
