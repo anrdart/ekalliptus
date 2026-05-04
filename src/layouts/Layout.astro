@@ -9,21 +9,38 @@ interface Props {
   noindex?: boolean
   image?: string
   imageAlt?: string
+  type?: 'website' | 'article'
+  publishedTime?: string
+  modifiedTime?: string
+  author?: string
+  keywords?: string
 }
 
-const { 
-  title, 
+const {
+  title,
   description = 'Digital agency Indonesia spesialis website development, WordPress, mobile app, dan multimedia editing.',
   lang = 'id',
   dir = 'ltr',
   noindex = false,
   image = '/og-image.png',
-  imageAlt = 'Ekalliptus Digital — Indonesian Web & Mobile App Agency'
+  imageAlt = 'Ekalliptus Digital — Indonesian Web & Mobile App Agency',
+  type = 'website',
+  publishedTime,
+  modifiedTime,
+  author,
+  keywords
 } = Astro.props
 
 const siteUrl = 'https://ekalliptus.com'
 const canonical = new URL(Astro.url.pathname, siteUrl).toString()
 const ogImage = new URL(image, siteUrl).toString()
+
+const ogLocaleMap: Record<string, string> = {
+  id: 'id_ID', en: 'en_US', ja: 'ja_JP',
+  ko: 'ko_KR', ru: 'ru_RU', ar: 'ar_SA', tr: 'tr_TR'
+}
+const ogLocale = ogLocaleMap[lang] ?? 'id_ID'
+const ogLocaleAlternates = Object.values(ogLocaleMap).filter(l => l !== ogLocale)
 
 const locales = ['id', 'en', 'ja', 'ko', 'ru', 'ar', 'tr']
 const path = Astro.url.pathname
@@ -33,6 +50,8 @@ function localePath(l: string) {
   if (l === 'id') return `${siteUrl}/${pathWithoutSlash}`
   return `${siteUrl}/${l}/${pathWithoutSlash}`
 }
+
+const publishedYMD = publishedTime ? publishedTime.slice(0, 10).replace(/-/g, '/') : undefined
 ---
 
 <!DOCTYPE html>
@@ -41,6 +60,8 @@ function localePath(l: string) {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="description" content={description} />
+    {keywords && <meta name="keywords" content={keywords} />}
+    {author && <meta name="author" content={author} />}
     <meta name="format-detection" content="telephone=no" />
     <meta http-equiv="content-language" content={lang} />
     {noindex && <meta name="robots" content="noindex, nofollow" />}
@@ -48,45 +69,66 @@ function localePath(l: string) {
     <meta name="theme-color" content="#f1f5f9" media="(prefers-color-scheme: light)" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    
+
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
     <link rel="canonical" href={canonical} />
-    
+    <link rel="sitemap" type="application/xml" href="/sitemap-index.xml" />
+
     {locales.map(l => (
       <link rel="alternate" hreflang={l} href={localePath(l)} />
     ))}
     <link rel="alternate" hreflang="x-default" href={localePath('id')} />
-    
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'" />
-    
+
     <title>{title}</title>
-    
+
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={type} />
     <meta property="og:url" content={canonical} />
     <meta property="og:site_name" content="Ekalliptus Digital" />
     <meta property="og:image" content={ogImage} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content={imageAlt} />
-    <meta property="og:locale" content={`${lang.replace('-', '_')}_${lang === 'id' ? 'ID' : lang.toUpperCase()}`} />
-    
+    <meta property="og:locale" content={ogLocale} />
+    {ogLocaleAlternates.map(l => <meta property="og:locale:alternate" content={l} />)}
+
+    {type === 'article' && publishedTime && <meta property="article:published_time" content={publishedTime} />}
+    {type === 'article' && modifiedTime && <meta property="article:modified_time" content={modifiedTime} />}
+    {type === 'article' && author && <meta property="article:author" content={author} />}
+
+    {type === 'article' && publishedYMD && <meta name="citation_title" content={title} />}
+    {type === 'article' && author && <meta name="citation_author" content={author} />}
+    {type === 'article' && publishedYMD && <meta name="citation_publication_date" content={publishedYMD} />}
+
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
     <meta name="twitter:image:alt" content={imageAlt} />
-    
+
+    <slot name="head" />
+
+    <!-- Google Analytics 4 -->
+    <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-HQL55M3RTK"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-HQL55M3RTK');
+    </script>
+
     <script is:inline src="/vendor/three.min.js" defer></script>
     <script is:inline src="/vendor/vanta.net.min.js" defer></script>
-    
+
     <script is:inline>
       const theme = localStorage.getItem('ekal-theme') || 'dark'
       document.documentElement.classList.toggle('dark', theme === 'dark')
