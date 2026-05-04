@@ -10,9 +10,19 @@ const { t, currentLang = 'id' } = Astro.props
 
 const sectionLinks = [
   { key: 'home', hash: '#home' },
-  { key: 'services', hash: '#services' },
-  { key: 'about', hash: '#about' },
+  { key: 'services', hash: '#services', dropdown: true },
+  { key: 'blog', href: '/blog', external: true },
+  { key: 'about', href: '/about', external: true },
   { key: 'contact', hash: '#contact' }
+]
+
+const serviceItems = [
+  { name: 'Website Development', href: '/services/website' },
+  { name: 'Mobile App', href: '/services/mobile-app' },
+  { name: 'WordPress', href: '/services/wordpress' },
+  { name: 'UI/UX Design', href: '/services/ui-ux' },
+  { name: 'Photo & Video', href: '/services/multimedia' },
+  { name: 'Maintenance', href: '/services/maintenance' }
 ]
 
 const languages = [
@@ -54,7 +64,31 @@ const isHomePage = currentPath === '/'
 
     <div class="hidden items-center gap-1 md:flex" id="desktop-nav">
       {sectionLinks.map((item) => (
-        isHomePage ? (
+        item.dropdown ? (
+          <div class="relative group">
+            <button
+              type="button"
+              class="nav-link cursor-interactive rounded-full px-4 py-2 text-sm font-medium text-foreground/80 transition hover:bg-foreground/10 hover:text-foreground"
+              data-hash={item.hash}
+            >
+              {t(`nav.${item.key}`)}
+            </button>
+            <div class="absolute left-1/2 top-full -translate-x-1/2 mt-2 w-56 rounded-2xl glass-panel border border-border/20 p-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+              {serviceItems.map(s => (
+                <a href={s.href} class="block rounded-lg px-3 py-2 text-sm text-foreground/80 hover:bg-foreground/10 hover:text-foreground transition">
+                  {s.name}
+                </a>
+              ))}
+            </div>
+          </div>
+        ) : item.external ? (
+          <a
+            href={item.href}
+            class="nav-link cursor-interactive rounded-full px-4 py-2 text-sm font-medium text-foreground/80 transition hover:bg-foreground/10 hover:text-foreground"
+          >
+            {t(`nav.${item.key}`)}
+          </a>
+        ) : isHomePage ? (
           <button
             type="button"
             data-hash={item.hash}
@@ -115,7 +149,40 @@ const isHomePage = currentPath === '/'
     </div>
     <nav class="flex flex-col gap-1">
     {sectionLinks.map((item) => (
-      isHomePage ? (
+      item.dropdown ? (
+        <>
+          {isHomePage ? (
+            <button
+              type="button"
+              data-hash={item.hash}
+              class="nav-link cursor-interactive rounded-lg px-4 py-3 text-left text-sm font-medium text-foreground/80 transition hover:bg-accent hover:text-foreground active:bg-accent/80"
+            >
+              {t(`nav.${item.key}`)}
+            </button>
+          ) : (
+            <a
+              href={`/${item.hash}`}
+              class="nav-link cursor-interactive rounded-lg px-4 py-3 text-left text-sm font-medium text-foreground/80 transition hover:bg-accent hover:text-foreground active:bg-accent/80"
+            >
+              {t(`nav.${item.key}`)}
+            </a>
+          )}
+          <div class="ml-4 flex flex-col gap-1 mb-1">
+            {serviceItems.map(s => (
+              <a href={s.href} class="rounded-lg px-3 py-2 text-xs text-foreground/70 hover:bg-accent hover:text-foreground transition">
+                {s.name}
+              </a>
+            ))}
+          </div>
+        </>
+      ) : item.external ? (
+        <a
+          href={item.href}
+          class="nav-link cursor-interactive rounded-lg px-4 py-3 text-left text-sm font-medium text-foreground/80 transition hover:bg-accent hover:text-foreground active:bg-accent/80"
+        >
+          {t(`nav.${item.key}`)}
+        </a>
+      ) : isHomePage ? (
         <button
           type="button"
           data-hash={item.hash}
@@ -144,8 +211,11 @@ const isHomePage = currentPath === '/'
       {languages.map((lang) => (
         <button
           data-lang={lang.code}
-          class="lang-btn flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm transition active:scale-[0.98]"
-          data:active={lang.code === currentLang}
+          class:list={[
+            'lang-btn flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm transition active:scale-[0.98]',
+            { 'language-active': lang.code === currentLang }
+          ]}
+          data-active={lang.code === currentLang}
         >
           <span class="text-base">{lang.flag}</span>
           <span class="text-xs truncate">{lang.name}</span>
@@ -194,8 +264,11 @@ const isHomePage = currentPath === '/'
       {languages.map((lang) => (
         <button
           data-lang={lang.code}
-          class="lang-modal-btn language-button group flex flex-col items-center gap-2 rounded-xl px-3 py-4 text-center transition-all duration-300"
-          data:active={lang.code === currentLang}
+          class:list={[
+            'lang-modal-btn language-button group flex flex-col items-center gap-2 rounded-xl px-3 py-4 text-center transition-all duration-300',
+            { 'language-active': lang.code === currentLang }
+          ]}
+          data-active={lang.code === currentLang}
         >
           <span class="text-3xl group-hover:scale-110 transition-transform duration-300">
             {lang.flag}
