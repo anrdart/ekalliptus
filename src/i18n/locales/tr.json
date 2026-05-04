@@ -122,6 +122,28 @@
           "Ses Miksi",
           "4K Kalite"
         ]
+      },
+      "uiUxDesign": {
+        "category": "Tasarım",
+        "title": "UI/UX Tasarım",
+        "description": "Dijital ürünleriniz için zarif arayüz tasarımı ve sezgisel kullanıcı deneyimi.",
+        "features": [
+          "Wireframe & Prototip",
+          "Kullanıcı Araştırması",
+          "Tasarım Sistemi",
+          "Figma Uyumlu"
+        ]
+      },
+      "websiteMaintenance": {
+        "category": "Bakım",
+        "title": "Website Bakım",
+        "description": "Düzenli güncellemeler, yedeklemeler ve güvenlik izleme ile siteniz her zaman zirvede.",
+        "features": [
+          "Güvenlik İzleme",
+          "Düzenli Yedekleme",
+          "Plugin Güncellemesi",
+          "Teknik Destek"
+        ]
       }
     }
   },

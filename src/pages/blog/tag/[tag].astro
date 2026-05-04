@@ -3,7 +3,7 @@ import Layout from '../../../layouts/Layout.astro'
 import Navigation from '../../../components/Navigation.astro'
 import VantaBackground from '../../../components/VantaBackground.astro'
 import PreLoader from '../../../components/PreLoader.astro'
-import { fetchPostsByTag } from '../../../lib/supabase'
+import { fetchPostsByTag, normalizeBlogImage } from '../../../lib/supabase'
 import { t, getLocaleFromRequest, getDir } from '../../../i18n'
 import { Calendar, User, ArrowLeft } from 'lucide-astro'
 
@@ -72,11 +72,9 @@ const collectionSchema = {
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
           {posts.map((post: any) => (
             <article class="group rounded-2xl glass-panel bg-card/10 border border-border/20 overflow-hidden transition-all hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 hover:-translate-y-1">
-              {post.image && (
-                <a href={`/blog/${post.slug}`} class="block aspect-video overflow-hidden">
-                  <img src={post.image} alt={post.image_alt || post.title} class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" decoding="async" />
-                </a>
-              )}
+              <a href={`/blog/${post.slug}`} class="block aspect-video overflow-hidden bg-card/30">
+                <img src={normalizeBlogImage(post.image)} alt={post.image_alt || post.title} class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" decoding="async" onerror="this.src='/blog/placeholder.svg'" />
+              </a>
               <div class="p-5 sm:p-6">
                 <span class="glass-pill rounded-full px-3 py-1 text-[0.65rem] font-semibold uppercase tracking-wider text-primary border-primary/30">
                   {post.category}

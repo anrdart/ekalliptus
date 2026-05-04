@@ -161,6 +161,28 @@
           "Audio Mixing",
           "4K Quality"
         ]
+      },
+      "uiUxDesign": {
+        "category": "Desain",
+        "title": "UI/UX Design",
+        "description": "Desain antarmuka yang elegan dan pengalaman pengguna yang intuitif untuk produk digital Anda.",
+        "features": [
+          "Wireframe & Prototype",
+          "User Research",
+          "Design System",
+          "Figma Ready"
+        ]
+      },
+      "websiteMaintenance": {
+        "category": "Pemeliharaan",
+        "title": "Website Maintenance",
+        "description": "Update rutin, backup berkala, dan monitoring keamanan untuk menjaga website tetap prima.",
+        "features": [
+          "Security Monitoring",
+          "Backup Berkala",
+          "Update Plugin",
+          "Technical Support"
+        ]
       }
     }
   },

@@ -140,17 +140,15 @@ const breadcrumbSchema = {
 
       <section class="mb-12">
         <h2 class="text-2xl sm:text-3xl font-semibold text-foreground mb-6 text-center">Layanan Kami</h2>
-        <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl mx-auto">
           {[
-            { name: 'Website Development', href: '/services/website' },
-            { name: 'Mobile App', href: '/services/mobile-app' },
-            { name: 'WordPress', href: '/services/wordpress' },
-            { name: 'UI/UX Design', href: '/services/ui-ux' },
-            { name: 'Photo & Video', href: '/services/multimedia' },
-            { name: 'Maintenance', href: '/services/maintenance' }
+            { key: 'websiteDevelopment', href: '/services/website' },
+            { key: 'mobileAppDevelopment', href: '/services/mobile-app' },
+            { key: 'wordpressDevelopment', href: '/services/wordpress' },
+            { key: 'uiUxDesign', href: '/services/ui-ux' }
           ].map(service => (
             <a href={service.href} class="glass-panel rounded-xl p-4 bg-card/10 border border-border/20 hover:border-primary/30 transition text-center group">
-              <span class="text-sm font-medium text-foreground group-hover:text-primary transition">{service.name}</span>
+              <span class="text-sm font-medium text-foreground group-hover:text-primary transition">{t(`services.cards.${service.key}.title`, locale)}</span>
             </a>
           ))}
         </div>

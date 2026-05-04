@@ -8,10 +8,10 @@ interface Props {
 const { t } = Astro.props
 
 const services = [
-  { key: 'websiteDevelopment', icon: 'Globe' },
-  { key: 'mobileAppDevelopment', icon: 'Smartphone' },
-  { key: 'wordpressDevelopment', icon: 'Palette' },
-  { key: 'berduPlatform', icon: 'Monitor' }
+  { key: 'websiteDevelopment', icon: 'Globe', href: '/services/website' },
+  { key: 'mobileAppDevelopment', icon: 'Smartphone', href: '/services/mobile-app' },
+  { key: 'wordpressDevelopment', icon: 'Monitor', href: '/services/wordpress' },
+  { key: 'uiUxDesign', icon: 'PenTool', href: '/services/ui-ux' }
 ]
 
 function getFeatures(key: string): string[] {
@@ -47,7 +47,7 @@ function getFeatures(key: string): string[] {
       </p>
     </div>
 
-    <div class="grid grid-cols-1 gap-4 sm:gap-6 md:grid-cols-2 lg:grid-cols-3">
+    <div class="grid grid-cols-1 gap-4 sm:gap-6 md:grid-cols-2 max-w-4xl mx-auto">
       {services.map((service, index) => (
         <ServiceCard
           icon={service.icon}
@@ -55,6 +55,7 @@ function getFeatures(key: string): string[] {
           description={t(`services.cards.${service.key}.description`)}
           features={getFeatures(service.key)}
           delay={index * 100}
+          href={service.href}
         />
       ))}
     </div>

@@ -30,17 +30,23 @@ export function getLocaleFromRequest(request: Request): string {
 }
 
 export function t(key: string, locale: string = defaultLocale): string {
-  const keys = key.split('.')
+  const normalized = key.replace(/\[(\d+)\]/g, '.$1')
+  const keys = normalized.split('.')
   let value: any = locales[locale] || locales[defaultLocale]
-  
+
   for (const k of keys) {
-    if (value && typeof value === 'object' && k in value) {
+    if (value === null || value === undefined) return key
+    if (Array.isArray(value)) {
+      const idx = Number(k)
+      if (!Number.isInteger(idx) || idx < 0 || idx >= value.length) return key
+      value = value[idx]
+    } else if (typeof value === 'object' && k in value) {
       value = value[k]
     } else {
       return key
     }
   }
-  
+
   return typeof value === 'string' ? value : key
 }
 

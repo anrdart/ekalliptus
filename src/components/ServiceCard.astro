@@ -1,5 +1,5 @@
 ---
-import { Globe, Smartphone, Palette, Video, Monitor, Wrench, Check, ArrowRight } from 'lucide-astro'
+import { Globe, Smartphone, Palette, Video, Monitor, Wrench, PenTool, Check, ArrowRight } from 'lucide-astro'
 
 interface Props {
   icon: string
@@ -7,9 +7,10 @@ interface Props {
   description: string
   features?: string[]
   delay?: number
+  href?: string
 }
 
-const { icon, title, description, features = [], delay = 0 } = Astro.props
+const { icon, title, description, features = [], delay = 0, href = '/order' } = Astro.props
 
 const iconMap: Record<string, any> = {
   Globe,
@@ -17,7 +18,8 @@ const iconMap: Record<string, any> = {
   Palette,
   Video,
   Monitor,
-  Wrench
+  Wrench,
+  PenTool
 }
 
 const IconComponent = iconMap[icon] || Globe
@@ -51,8 +53,8 @@ const IconComponent = iconMap[icon] || Globe
   )}
 
   <a
-    href="/order"
-    class="mt-5 sm:mt-6 inline-flex items-center gap-2 text-sm font-medium text-primary hover:text-primary/80 transition-colors cursor-interactive min-h-[44px] items-center"
+    href={href}
+    class="mt-5 sm:mt-6 inline-flex items-center gap-2 text-sm font-medium text-primary hover:text-primary/80 transition-colors cursor-interactive min-h-[44px]"
   >
     Pesan Sekarang
     <ArrowRight class="h-4 w-4" />

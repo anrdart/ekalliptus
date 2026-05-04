@@ -161,6 +161,28 @@
           "Audio Mixing",
           "4K Quality"
         ]
+      },
+      "uiUxDesign": {
+        "category": "Design",
+        "title": "UI/UX Design",
+        "description": "Elegant interface design and intuitive user experience for your digital products.",
+        "features": [
+          "Wireframe & Prototype",
+          "User Research",
+          "Design System",
+          "Figma Ready"
+        ]
+      },
+      "websiteMaintenance": {
+        "category": "Maintenance",
+        "title": "Website Maintenance",
+        "description": "Routine updates, regular backups, and security monitoring to keep your website running optimally.",
+        "features": [
+          "Security Monitoring",
+          "Regular Backups",
+          "Plugin Updates",
+          "Technical Support"
+        ]
       }
     }
   },

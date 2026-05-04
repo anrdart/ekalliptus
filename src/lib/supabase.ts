@@ -231,6 +231,16 @@ export async function validateVoucher(code: string, subtotal: number): Promise<{
 }
 
 // Blog-related types and helpers
+export function normalizeBlogImage(img: string | null | undefined): string {
+  if (!img || typeof img !== 'string') return '/blog/placeholder.svg'
+  const trimmed = img.trim()
+  if (!trimmed) return '/blog/placeholder.svg'
+  if (trimmed.startsWith('http://') || trimmed.startsWith('https://') || trimmed.startsWith('/')) {
+    return trimmed
+  }
+  return `/blog/${trimmed.replace(/^blog\//, '')}`
+}
+
 export interface BlogPost {
   id: string
   slug: string
