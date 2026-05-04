@@ -51,7 +51,7 @@
       Website <tspan fill="url(#accent1)">Tegal</tspan>
     </text>
     <text x="0" y="155" font-family="system-ui, sans-serif" font-size="28" font-weight="400" fill="#94a3b8">
-      Harga & Portfolio 2026
+      Harga &amp; Portfolio 2026
     </text>
 
     <!-- Features -->
