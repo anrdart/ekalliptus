@@ -1,0 +1,167 @@
+---
+import Layout from '../layouts/Layout.astro'
+import Navigation from '../components/Navigation.astro'
+import VantaBackground from '../components/VantaBackground.astro'
+import PreLoader from '../components/PreLoader.astro'
+import JsonLd from '../components/JsonLd.astro'
+import { t, getLocaleFromRequest, getDir } from '../i18n'
+import { ArrowRight, Award, Users, Clock, Heart } from 'lucide-astro'
+
+export const prerender = false
+
+const locale = getLocaleFromRequest(Astro.request)
+const dir = getDir(locale)
+
+const siteUrl = 'https://ekalliptus.com'
+const canonical = new URL(Astro.url.pathname, siteUrl).toString()
+
+const aboutSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'AboutPage',
+  url: canonical,
+  name: 'Tentang Ekalliptus Digital',
+  description: 'Cerita dan profil Ekalliptus Digital — digital agency Indonesia yang berbasis di Tegal, Jawa Tengah.',
+  mainEntity: { '@id': `${siteUrl}#organization` }
+}
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: siteUrl },
+    { '@type': 'ListItem', position: 2, name: 'Tentang', item: canonical }
+  ]
+}
+---
+
+<Layout
+  title="Tentang Ekalliptus Digital | Digital Agency Indonesia Berbasis Tegal"
+  description="Profil Ekalliptus Digital — digital agency Indonesia spesialis web, mobile app, WordPress, UI/UX. Berbasis di Tegal, Jawa Tengah, melayani klien seluruh Indonesia."
+  lang={locale}
+  dir={dir}
+  keywords="tentang ekalliptus, profil digital agency Indonesia, agency Tegal, web developer Tegal"
+>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(aboutSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+  </Fragment>
+
+  <JsonLd locale={locale} page="home" />
+  <VantaBackground />
+  <PreLoader />
+  <Navigation t={(key: string) => t(key, locale)} currentLang={locale} />
+
+  <main class="relative z-0 flex min-h-screen flex-col pt-14 sm:pt-16 md:pt-20">
+    <div class="container mx-auto max-w-5xl px-4 py-8 sm:py-12">
+
+      <nav class="text-sm mb-6" aria-label="Breadcrumb">
+        <a href="/" class="text-muted-foreground hover:text-foreground">Home</a>
+        <span class="mx-2 text-muted-foreground">/</span>
+        <span class="text-foreground">Tentang</span>
+      </nav>
+
+      <header class="text-center mb-12">
+        <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4">Tentang Ekalliptus Digital</h1>
+        <p class="article-intro text-base sm:text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+          <strong>Ekalliptus Digital</strong> adalah digital agency Indonesia yang berbasis di <strong>Tegal, Jawa Tengah</strong>, didirikan pada tahun 2023. Kami spesialis dalam pembuatan website, aplikasi mobile, WordPress development, UI/UX design, dan multimedia editing untuk bisnis di seluruh Indonesia.
+        </p>
+      </header>
+
+      <section class="mb-12">
+        <h2 class="text-2xl sm:text-3xl font-semibold text-foreground mb-6 text-center">Misi Kami</h2>
+        <div class="glass-panel rounded-2xl p-6 sm:p-8 bg-card/10 border border-border/20">
+          <p class="text-muted-foreground leading-relaxed text-base sm:text-lg">
+            Membantu UMKM dan bisnis Indonesia bertransformasi digital dengan teknologi modern yang <strong>terjangkau, berkualitas, dan reliable</strong>. Kami percaya setiap bisnis — besar atau kecil — pantas memiliki kehadiran digital profesional tanpa harus membayar harga selangit.
+          </p>
+        </div>
+      </section>
+
+      <section class="mb-12">
+        <h2 class="text-2xl sm:text-3xl font-semibold text-foreground mb-6 text-center">Apa yang Membedakan Kami</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="glass-panel rounded-2xl p-5 bg-card/10 border border-border/20">
+            <div class="rounded-full bg-primary/10 p-3 w-fit mb-3"><Award class="h-5 w-5 text-primary" /></div>
+            <h3 class="text-lg font-semibold text-foreground mb-2">Tim Lokal Tegal</h3>
+            <p class="text-sm text-muted-foreground">Berbasis di Tegal — bisa meeting offline, memahami pasar lokal, support cepat dalam Bahasa Indonesia.</p>
+          </div>
+          <div class="glass-panel rounded-2xl p-5 bg-card/10 border border-border/20">
+            <div class="rounded-full bg-primary/10 p-3 w-fit mb-3"><Users class="h-5 w-5 text-primary" /></div>
+            <h3 class="text-lg font-semibold text-foreground mb-2">Layanan Nasional</h3>
+            <p class="text-sm text-muted-foreground">Klien dari seluruh Indonesia. Komunikasi via WhatsApp, Zoom, Google Meet — kerja remote tanpa kompromi kualitas.</p>
+          </div>
+          <div class="glass-panel rounded-2xl p-5 bg-card/10 border border-border/20">
+            <div class="rounded-full bg-primary/10 p-3 w-fit mb-3"><Clock class="h-5 w-5 text-primary" /></div>
+            <h3 class="text-lg font-semibold text-foreground mb-2">Garansi 30 Hari</h3>
+            <p class="text-sm text-muted-foreground">Setiap project dilengkapi garansi 30 hari untuk bug fixing dan free maintenance 3 bulan pertama.</p>
+          </div>
+          <div class="glass-panel rounded-2xl p-5 bg-card/10 border border-border/20">
+            <div class="rounded-full bg-primary/10 p-3 w-fit mb-3"><Heart class="h-5 w-5 text-primary" /></div>
+            <h3 class="text-lg font-semibold text-foreground mb-2">Harga Transparan</h3>
+            <p class="text-sm text-muted-foreground">Tidak ada biaya tersembunyi. Semua scope, timeline, dan deliverable di-blackitam-putih sejak awal.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="mb-12">
+        <h2 class="text-2xl sm:text-3xl font-semibold text-foreground mb-6 text-center">Keahlian Kami</h2>
+        <div class="glass-panel rounded-2xl p-6 bg-card/10 border border-border/20">
+          <p class="text-muted-foreground mb-4">Stack teknologi yang kami kuasai dan gunakan:</p>
+          <div class="flex flex-wrap gap-2">
+            {['Astro', 'Next.js', 'React', 'Vue.js', 'React Native', 'Flutter', 'TypeScript', 'Node.js', 'PHP Laravel', 'WordPress', 'WooCommerce', 'Tailwind CSS', 'Figma', 'Supabase', 'PostgreSQL', 'MySQL', 'Cloudflare Workers', 'Vercel', 'Adobe Premiere', 'After Effects'].map(tech => (
+              <span class="rounded-full bg-primary/10 px-4 py-1.5 text-xs font-medium text-primary">{tech}</span>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section class="mb-12">
+        <h2 class="text-2xl sm:text-3xl font-semibold text-foreground mb-6 text-center">Hubungi Kami</h2>
+        <div class="glass-panel rounded-2xl p-6 bg-card/10 border border-border/20">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <h3 class="font-semibold text-foreground mb-3">Alamat</h3>
+              <p class="text-sm text-muted-foreground">
+                Ekalliptus Digital<br />
+                Tegal, Jawa Tengah 52100<br />
+                Indonesia
+              </p>
+            </div>
+            <div>
+              <h3 class="font-semibold text-foreground mb-3">Kontak</h3>
+              <ul class="space-y-1 text-sm text-muted-foreground">
+                <li><strong>Email:</strong> <a href="mailto:ekalliptus@gmail.com" class="text-primary hover:underline">ekalliptus@gmail.com</a></li>
+                <li><strong>WhatsApp:</strong> <a href="https://wa.me/6281999900306" class="text-primary hover:underline">+62 819-9990-0306</a></li>
+                <li><strong>Jam Kerja:</strong> Senin-Jumat 09:00-17:00 WIB</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="mb-12">
+        <h2 class="text-2xl sm:text-3xl font-semibold text-foreground mb-6 text-center">Layanan Kami</h2>
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+          {[
+            { name: 'Website Development', href: '/services/website' },
+            { name: 'Mobile App', href: '/services/mobile-app' },
+            { name: 'WordPress', href: '/services/wordpress' },
+            { name: 'UI/UX Design', href: '/services/ui-ux' },
+            { name: 'Photo & Video', href: '/services/multimedia' },
+            { name: 'Maintenance', href: '/services/maintenance' }
+          ].map(service => (
+            <a href={service.href} class="glass-panel rounded-xl p-4 bg-card/10 border border-border/20 hover:border-primary/30 transition text-center group">
+              <span class="text-sm font-medium text-foreground group-hover:text-primary transition">{service.name}</span>
+            </a>
+          ))}
+        </div>
+      </section>
+
+      <section class="text-center">
+        <a href="/order" class="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90">
+          Mulai Project Anda <ArrowRight class="h-4 w-4" />
+        </a>
+      </section>
+
+    </div>
+  </main>
+</Layout>
