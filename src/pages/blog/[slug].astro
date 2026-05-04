@@ -1,0 +1,313 @@
+---
+import Layout from '../../layouts/Layout.astro'
+import { fetchPostBySlug } from '../../lib/supabase'
+import { getLocaleFromRequest, getDir } from '../../i18n'
+import Navigation from '../../components/Navigation.astro'
+import VantaBackground from '../../components/VantaBackground.astro'
+import PreLoader from '../../components/PreLoader.astro'
+import SocialShare from '../../components/SocialShare.astro'
+import { Calendar, User, Tag, ArrowLeft, Clock, List } from 'lucide-astro'
+import { t } from '../../i18n'
+
+export const prerender = false
+
+const locale = getLocaleFromRequest(Astro.request)
+const dir = getDir(locale)
+const postData = await fetchPostBySlug(Astro.params.slug as string, 'id')
+if (!postData) return Astro.redirect('/blog')
+
+const post = {
+  id: postData.slug,
+  slug: postData.slug,
+  locale: postData.locale,
+  data: {
+    title: postData.title,
+    description: postData.description,
+    publishDate: new Date(postData.publish_date),
+    updateDate: postData.update_date ? new Date(postData.update_date) : null,
+    category: postData.category,
+    tags: postData.tags ?? [],
+    author: postData.author,
+    image: postData.image,
+    imageAlt: postData.image_alt,
+    featured: postData.featured ?? false,
+    seo: {
+      metaTitle: postData.seo_meta_title ?? null,
+      metaDescription: postData.seo_meta_description ?? null,
+      noindex: postData.seo_noindex ?? null
+    }
+  },
+  body_html: postData.body_html
+}
+
+const siteUrl = 'https://ekalliptus.com'
+const canonical = new URL(Astro.url.pathname, siteUrl).toString()
+
+const metaTitle = post.data.seo?.metaTitle || post.data.title
+const metaDescription = post.data.seo?.metaDescription || post.data.description
+// SVG images don't work as og:image. Fallback to /og-image.png for SVGs.
+const ogImage = post.data.image && !post.data.image.endsWith('.svg')
+  ? post.data.image
+  : '/og-image.png'
+const ogImageAlt = post.data.imageAlt || post.data.title
+
+const articleKeywords = (post.data.tags || []).join(', ')
+
+// JSON-LD structured data
+const blogPostSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: post.data.title,
+  description: post.data.description,
+  image: post.data.image ? `${siteUrl}${post.data.image}` : undefined,
+  url: canonical,
+  datePublished: post.data.publishDate.toISOString(),
+  dateModified: (post.data.updateDate || post.data.publishDate).toISOString(),
+  author: {
+    '@type': 'Person',
+    name: post.data.author
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: 'Ekalliptus Digital',
+    logo: {
+      '@type': 'ImageObject',
+      url: `${siteUrl}/ekalliptus_rounded.webp`
+    }
+  },
+  mainEntityOfPage: { '@type': 'WebPage', '@id': canonical },
+  inLanguage: locale,
+  keywords: articleKeywords,
+  wordCount: (post.body_html || '').replace(/<[^>]*>/g, '').trim().split(/\s+/).length,
+  articleSection: post.data.category,
+  speakable: {
+    '@type': 'SpeakableSpecification',
+    cssSelector: ['.article-intro', 'h1', 'h2']
+  },
+}
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: siteUrl },
+    { '@type': 'ListItem', position: 2, name: 'Blog', item: `${siteUrl}/blog` },
+    { '@type': 'ListItem', position: 3, name: post.data.title, item: canonical }
+  ]
+}
+
+const headingIdRe = /<(h[2-4])([^>]*)>([\s\S]*?)<\/\1>/gi
+const processedHtml = (post.body_html || '').replace(headingIdRe, (match, tag, attrs, inner) => {
+  if (/\bid\s*=/.test(attrs)) return match
+  const text = inner.replace(/<[^>]*>/g, '').trim()
+  const id = text.toLowerCase().replace(/[^a-z0-9\u00C0-\u024F\s-]/g, '').replace(/\s+/g, '-').replace(/(^-|-$)/g, '')
+  return `<${tag}${attrs} id="${id}">${inner}</${tag}>`
+})
+
+const processedTocHeadings: Array<{ depth: number; slug: string; text: string }> = []
+const tocRe = /<(h[2-4])\s[^>]*id="([^"]+)"[^>]*>([\s\S]*?)<\/\1>/gi
+let tocMatch: RegExpExecArray | null
+while ((tocMatch = tocRe.exec(processedHtml)) !== null) {
+  const text = tocMatch[3].replace(/<[^>]*>/g, '').trim()
+  processedTocHeadings.push({ depth: parseInt(tocMatch[1]), slug: tocMatch[2], text })
+}
+---
+<Layout
+  title={metaTitle}
+  description={metaDescription}
+  lang={locale}
+  dir={dir}
+  noindex={post.data.seo?.noindex ?? false}
+  image={ogImage}
+  imageAlt={ogImageAlt}
+  type="article"
+  publishedTime={post.data.publishDate.toISOString()}
+  modifiedTime={(post.data.updateDate || post.data.publishDate).toISOString()}
+  author={post.data.author}
+  keywords={articleKeywords}
+>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(blogPostSchema)}></script>
+    <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)}></script>
+  </Fragment>
+  <div id="reading-progress-bar" class="fixed top-0 left-0 h-1 bg-primary z-[100] transition-all duration-150" style="width:0%"></div>
+  <VantaBackground />
+  <PreLoader />
+  <Navigation t={(key: string) => t(key, locale)} currentLang={locale} />
+
+  <main class="container mx-auto px-4 pt-24 pb-6">
+    <!-- Article Header -->
+    <section class="px-4 py-6 sm:py-8 md:py-10">
+      <div class="mx-auto max-w-5xl">
+        <!-- Breadcrumb -->
+        <nav class="text-sm mb-3" aria-label="Breadcrumb">
+          <a href="/" class="text-muted-foreground hover:text-foreground">Home</a>
+          <span class="mx-2 text-muted-foreground">/</span>
+          <a href="/blog" class="text-muted-foreground hover:text-foreground">Blog</a>
+          <span class="mx-2 text-muted-foreground">/</span>
+          <span aria-current="page" class="text-foreground">{post.data.title}</span>
+        </nav>
+
+        <!-- Badges -->
+        <div class="flex flex-wrap items-center gap-2 mb-4">
+          {post.data.category && (
+            <span class="glass-pill rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-wider text-primary border-primary/30">{post.data.category}</span>
+          )}
+          {processedTocHeadings.length > 0 && (
+            <span class="glass-pill rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-wider text-accent border-accent/30">TOC</span>
+          )}
+        </div>
+
+        <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4">{post.data.title}</h1>
+        {post.data.description && (
+          <p class="article-intro text-base sm:text-lg text-muted-foreground mb-6">{post.data.description}</p>
+        )}
+
+        <!-- Meta info card -->
+        <div class="glass-panel p-4 mb-6">
+          <div class="flex items-center gap-4 text-xs text-muted-foreground">
+            <div class="flex items-center gap-2">
+              <User class="h-4 w-4" />
+              <span>{post.data.author}</span>
+            </div>
+            <span aria-hidden="true">•</span>
+            <div class="flex items-center gap-2">
+              <Calendar class="h-4 w-4" />
+              <time datetime={post.data.publishDate.toISOString()}>
+                {post.data.publishDate.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}
+              </time>
+            </div>
+            {post.data.updateDate && (
+              <>
+                <span aria-hidden="true">•</span>
+                <div class="flex items-center gap-2">
+                  <Calendar class="h-4 w-4" />
+                  <time datetime={post.data.updateDate.toISOString()}>
+                    Updated {post.data.updateDate.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}
+                  </time>
+                </div>
+              </>
+            )}
+            <span aria-hidden="true">•</span>
+            <div class="flex items-center gap-2">
+              <Clock class="h-4 w-4" />
+              <span>{Math.ceil((post.body_html?.length || 0) / 1500)} min read</span>
+            </div>
+          </div>
+        </div>
+
+        {post.data.image && (
+          <div class="mb-6">
+            <img src={post.data.image} alt={post.data.imageAlt || post.data.title} class="w-full rounded-xl object-cover" />
+          </div>
+        )}
+
+        {post.data.tags?.length > 0 && (
+          <div class="flex flex-wrap gap-2 mb-6">
+            {post.data.tags.map((tag: string) => (
+              <a href={`/blog/tag/${encodeURIComponent(tag)}`} class="glass-pill rounded-full px-2 py-0.5 text-xs font-semibold uppercase tracking-wider text-muted-foreground border-border/10">#{tag}</a>
+            ))}
+          </div>
+        )}
+      </div>
+    </section>
+
+    <!-- Main content with TOC sidebar and article body -->
+    <section class="px-4 pb-12">
+      <div class="mx-auto max-w-6xl grid grid-cols-12 gap-8">
+        <!-- Desktop TOC -->
+        {processedTocHeadings.length > 0 && (
+          <aside class="hidden lg:block col-span-3 w-64">
+            <div class="glass-panel p-4 sticky top-32 h-full">
+              <nav aria-label="Table of contents">
+                <ul class="space-y-2">
+                  {processedTocHeadings.map((h) => (
+                    <li>
+                      <a href={`#${h.slug}`} class="toc-link">{h.text}</a>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+            </div>
+          </aside>
+        )}
+
+        <article class="col-span-12 lg:col-span-9 prose prose-lg prose-invert max-w-none" set:html={processedHtml}></article>
+      </div>
+    </section>
+
+    <!-- Share section -->
+    <section class="px-4 pb-6">
+      <SocialShare title={post.data.title} url={canonical} description={post.data.description} image={post.data.image ?? undefined} showLabels={true} />
+    </section>
+
+    <!-- Author box -->
+    <section class="px-4 pb-6">
+      <div class="glass-panel p-6">
+        <div class="flex items-center gap-3">
+          <div class="h-12 w-12 rounded-full bg-card/30 flex items-center justify-center">A</div>
+          <div>
+            <div class="font-semibold">{post.data.author}</div>
+            <div class="text-xs text-muted-foreground">Author</div>
+          </div>
+        </div>
+        <p class="mt-3 text-sm">{post.data.description}</p>
+      </div>
+    </section>
+
+    <!-- Back to blog CTA -->
+    <section class="px-4 pb-12">
+      <a href="/blog" class="text-sm font-semibold text-primary hover:text-primary/80">← {t('blog.backToBlog', locale) || 'Back to Blog'}</a>
+    </section>
+
+    <!-- Mobile TOC floating button & panel -->
+    <button id="mobile-toc-toggle" class="fixed bottom-20 left-4 rounded-full px-4 py-2 glass-panel shadow"> <List class="h-5 w-5" /> </button>
+    <div id="mobile-toc-panel" class="hidden fixed bottom-14 left-4 right-4 bg-card border border-border rounded-xl p-3 shadow-lg overflow-auto max-h-60">
+      <nav aria-label="Table of contents mobile">
+        <ul class="space-y-2">
+          {processedTocHeadings.map(h => (
+            <li><a href={`#${h.slug}`} class="toc-link">{h.text}</a></li>
+          ))}
+        </ul>
+      </nav>
+    </div>
+
+    <!-- Mobile WhatsApp CTA -->
+    <a href="https://wa.me/6281999900306" class="fixed bottom-6 right-6 rounded-full bg-green-500 text-white p-3 shadow-lg" aria-label="WhatsApp">
+      <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.52 3.48C18.83 1.78 16.53 1 14 1 6.92 1 1 6.92 1 14s5.92 13 13 13c6.07 0 11-4.03 11-11 0-2.54-.78-4.83-2.48-6.53l-.02-.01zM12 22c-4.97 0-9-4.03-9-9 0-4.97 4.03-9 9-9 4.97 0 9 4.03 9 9 0 4.97-4.03 9-9 9z"/></svg>
+    </a>
+
+    <!-- Client-side script -->
+    <script is:inline>
+      const progressBar = document.getElementById('reading-progress-bar')
+      const onScroll = () => {
+        const max = document.documentElement.scrollHeight - window.innerHeight
+        const px = Math.max(0, Math.min(100, (window.scrollY / max) * 100))
+        if (progressBar) progressBar.style.width = px + '%'
+      }
+      window.addEventListener('scroll', onScroll, { passive: true })
+      onScroll()
+
+      const mobileToggle = document.getElementById('mobile-toc-toggle')
+      const mobilePanel = document.getElementById('mobile-toc-panel')
+      if (mobileToggle && mobilePanel) {
+        let open = false
+        mobileToggle.addEventListener('click', () => {
+          open = !open
+          mobilePanel.style.display = open ? 'block' : 'none'
+        })
+      }
+
+      const tocLinks = document.querySelectorAll('.toc-link')
+      tocLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+          e.preventDefault()
+          const id = link.getAttribute('href')?.slice(1)
+          const target = id ? document.getElementById(id) : null
+          if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        })
+      })
+    </script>
+  </main>
+  
+</Layout>
