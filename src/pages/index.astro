@@ -33,11 +33,12 @@ for (let i = 0; i < FAQ_COUNT; i++) {
 }
 ---
 
-<Layout 
-  title="Ekalliptus Digital | Web & Mobile App" 
-  description={t('index.intro.subtitle', locale)}
+<Layout
+  title="Ekalliptus Digital | Jasa Website & Aplikasi Mobile Terbaik Indonesia"
+  description="Jasa pembuatan website profesional, aplikasi mobile, WordPress & UI/UX design. Berbasis Tegal, melayani seluruh Indonesia. Konsultasi GRATIS!"
   lang={locale}
   dir={dir}
+  keywords="jasa pembuatan website, jasa aplikasi mobile, web developer Indonesia, digital agency Tegal, jasa wordpress, ui ux design Indonesia"
 >
   <JsonLd locale={locale} page="home" faqItems={faqItems} />
   <VantaBackground />
@@ -178,6 +179,104 @@ for (let i = 0; i < FAQ_COUNT; i++) {
       <FAQ t={(key: string) => t(key, locale)} />
       <ContactCTA t={(key: string) => t(key, locale)} />
       <ConsultationDialog t={(key: string) => t(key, locale)} />
+
+      <!-- Blog Section -->
+      <section id="blog" class="px-4 py-12 sm:py-16 bg-card/5">
+        <div class="mx-auto max-w-6xl">
+          <div class="text-center mb-8 sm:mb-12">
+            <div class="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 sm:px-5 py-2 text-[0.6rem] sm:text-[0.65rem] font-semibold uppercase tracking-[0.5em] sm:tracking-[0.6em] text-primary mb-4">
+              <span>📝</span>
+              <span>{t('blog.badge', locale)}</span>
+            </div>
+
+            <h2 class="text-2xl sm:text-3xl font-semibold text-foreground mb-4">
+              {t('blog.title', locale)}
+            </h2>
+
+            <p class="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto">
+              {t('blog.description', locale)}
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 mb-8">
+            <!-- Blog Post 1 -->
+            <a href="/blog/jasa-pembuatan-website-tegal" class="group rounded-2xl glass-panel bg-card/10 border border-border/20 overflow-hidden transition-all hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5">
+              <div class="aspect-video overflow-hidden">
+                <img src="/blog/jasa-website-tegal.svg" alt="Jasa Pembuatan Website Tegal" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" loading="lazy" decoding="async" />
+              </div>
+              <div class="p-5 sm:p-6">
+                <span class="rounded-full bg-primary/10 px-3 py-1 text-[0.65rem] font-semibold uppercase tracking-wider text-primary">
+                  {t('blog.categories.web-development', locale)}
+                </span>
+                <h3 class="text-lg sm:text-xl font-semibold text-foreground mt-3 mb-2 group-hover:text-primary transition-colors">
+                  Jasa Pembuatan Website Tegal: Harga & Portfolio 2026
+                </h3>
+                <p class="text-sm text-muted-foreground line-clamp-2 mb-4">
+                  Temukan layanan pembuatan website profesional di Tegal dengan harga terjangkau. Mulai dari Rp 1,5 juta untuk company profile.
+                </p>
+                <span class="inline-flex items-center gap-2 text-sm font-medium text-primary">
+                  {t('blog.readMore', locale)}
+                  <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                </span>
+              </div>
+            </a>
+
+            <!-- Blog Post 2 -->
+            <a href="/blog/biaya-pembuatan-aplikasi-android-ios" class="group rounded-2xl glass-panel bg-card/10 border border-border/20 overflow-hidden transition-all hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5">
+              <div class="aspect-video overflow-hidden">
+                <img src="/blog/biaya-aplikasi-mobile.svg" alt="Biaya Pembuatan Aplikasi Mobile" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" loading="lazy" decoding="async" />
+              </div>
+              <div class="p-5 sm:p-6">
+                <span class="rounded-full bg-accent/10 px-3 py-1 text-[0.65rem] font-semibold uppercase tracking-wider text-accent">
+                  {t('blog.categories.mobile-app', locale)}
+                </span>
+                <h3 class="text-lg sm:text-xl font-semibold text-foreground mt-3 mb-2 group-hover:text-primary transition-colors">
+                  Biaya Pembuatan Aplikasi Android & iOS di Indonesia
+                </h3>
+                <p class="text-sm text-muted-foreground line-clamp-2 mb-4">
+                  Panduan lengkap estimasi biaya pembuatan aplikasi mobile cross-platform dengan React Native dan Flutter.
+                </p>
+                <span class="inline-flex items-center gap-2 text-sm font-medium text-primary">
+                  {t('blog.readMore', locale)}
+                  <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                </span>
+              </div>
+            </a>
+
+            <!-- Blog Post 3 -->
+            <a href="/blog/wordpress-custom-vs-template" class="group rounded-2xl glass-panel bg-card/10 border border-border/20 overflow-hidden transition-all hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5">
+              <div class="aspect-video overflow-hidden">
+                <img src="/blog/wordpress-custom-vs-template.svg" alt="WordPress Custom vs Template" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" loading="lazy" decoding="async" />
+              </div>
+              <div class="p-5 sm:p-6">
+                <span class="rounded-full bg-primary/10 px-3 py-1 text-[0.65rem] font-semibold uppercase tracking-wider text-primary">
+                  {t('blog.categories.wordpress', locale)}
+                </span>
+                <h3 class="text-lg sm:text-xl font-semibold text-foreground mt-3 mb-2 group-hover:text-primary transition-colors">
+                  WordPress Custom vs Template: Mana yang Lebih Baik?
+                </h3>
+                <p class="text-sm text-muted-foreground line-clamp-2 mb-4">
+                  Perbandingan lengkap antara WordPress custom development dengan tema premium. Pilih sesuai kebutuhan bisnis Anda.
+                </p>
+                <span class="inline-flex items-center gap-2 text-sm font-medium text-primary">
+                  {t('blog.readMore', locale)}
+                  <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                </span>
+              </div>
+            </a>
+          </div>
+
+          <div class="text-center">
+            <a
+              href="/blog"
+              class="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90"
+            >
+              {t('blog.readMore', locale)}
+              <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+            </a>
+          </div>
+        </div>
+      </section>
       
       <footer id="about" class="mt-8 sm:mt-12 border-t border-border/20 bg-card/5 py-8 sm:py-12 safe-bottom">
         <div class="mx-auto max-w-6xl px-4">
