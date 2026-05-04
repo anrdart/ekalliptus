@@ -1,0 +1,46 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0c1222;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#1a2332;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0f172a;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="accent1" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#a855f7;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ec4899;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg1)"/>
+  <!-- Wireframe phone -->
+  <rect x="480" y="100" width="240" height="420" rx="24" fill="none" stroke="#a855f7" stroke-width="2" opacity="0.6"/>
+  <rect x="490" y="130" width="220" height="360" rx="4" fill="#0f172a" opacity="0.8"/>
+  <circle cx="600" cy="116" r="8" fill="#334155" opacity="0.6"/>
+  <!-- UI elements inside phone -->
+  <rect x="510" y="150" width="180" height="80" rx="6" fill="#1e293b" opacity="0.8"/>
+  <rect x="520" y="165" width="100" height="10" rx="4" fill="#a855f7" opacity="0.7"/>
+  <rect x="520" y="183" width="140" height="8" rx="4" fill="#64748b" opacity="0.5"/>
+  <rect x="520" y="199" width="80" height="8" rx="4" fill="#64748b" opacity="0.4"/>
+  <rect x="510" y="244" width="82" height="82" rx="8" fill="#1e3a5f" opacity="0.6"/>
+  <rect x="604" y="244" width="82" height="38" rx="8" fill="#2d1b4e" opacity="0.6"/>
+  <rect x="604" y="288" width="82" height="38" rx="8" fill="#1e293b" opacity="0.6"/>
+  <rect x="510" y="340" width="176" height="30" rx="6" fill="#a855f7" opacity="0.4"/>
+  <rect x="520" y="350" width="80" height="10" rx="4" fill="#a855f7" opacity="0.7"/>
+  <rect x="510" y="382" width="82" height="60" rx="6" fill="#1e293b" opacity="0.5"/>
+  <rect x="604" y="382" width="82" height="60" rx="6" fill="#1e293b" opacity="0.5"/>
+  <!-- Design tools left -->
+  <circle cx="280" cy="220" r="60" fill="none" stroke="#a855f7" stroke-width="2" opacity="0.3"/>
+  <circle cx="280" cy="220" r="40" fill="none" stroke="#ec4899" stroke-width="1.5" opacity="0.25"/>
+  <line x1="240" y1="220" x2="320" y2="220" stroke="#a855f7" stroke-width="1.5" opacity="0.4"/>
+  <line x1="280" y1="180" x2="280" y2="260" stroke="#a855f7" stroke-width="1.5" opacity="0.4"/>
+  <!-- Color palette right -->
+  <circle cx="900" cy="200" r="30" fill="#3b82f6" opacity="0.5"/>
+  <circle cx="950" cy="200" r="30" fill="#a855f7" opacity="0.5"/>
+  <circle cx="925" cy="250" r="30" fill="#ec4899" opacity="0.5"/>
+  <!-- Typography lines -->
+  <rect x="820" y="310" width="200" height="16" rx="4" fill="#a855f7" opacity="0.4"/>
+  <rect x="820" y="336" width="160" height="10" rx="4" fill="#64748b" opacity="0.3"/>
+  <rect x="820" y="354" width="180" height="10" rx="4" fill="#64748b" opacity="0.25"/>
+  <rect x="820" y="372" width="120" height="10" rx="4" fill="#64748b" opacity="0.2"/>
+  <!-- Glow -->
+  <ellipse cx="600" cy="315" rx="300" ry="180" fill="#a855f7" opacity="0.04"/>
+</svg>
