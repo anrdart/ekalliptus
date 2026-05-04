@@ -1,0 +1,28 @@
+---
+import '../../styles/global.css'
+import { LayoutDashboard } from 'lucide-astro'
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Login | Ekalliptus Digital</title>
+</head>
+<body class="min-h-screen bg-background text-foreground flex items-center justify-center p-4">
+  <main class="glass-card w-full max-w-sm rounded-2xl p-6 text-center">
+    <div class="mx-auto mb-4 h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center">
+      <LayoutDashboard class="h-6 w-6 text-primary" />
+    </div>
+    <h1 class="text-xl font-bold mb-2">Admin</h1>
+    <p class="text-sm text-muted-foreground mb-6">Authentication is not enforced in this build.</p>
+    <a
+      href="/admin"
+      class="inline-flex w-full items-center justify-center rounded-xl bg-primary px-4 py-3 text-sm font-semibold text-primary-foreground hover:bg-primary/90"
+    >
+      Open Dashboard
+    </a>
+  </main>
+</body>
+</html>

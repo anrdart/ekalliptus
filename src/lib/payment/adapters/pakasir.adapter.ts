@@ -2,12 +2,12 @@ import { BaseAdapter } from './base.adapter'
 import type {
   CreatePaymentRequest,
   CreatePaymentResponse,
+  GatewayConfig,
   PaymentStatusResponse,
   WebhookPayload
 } from '../types'
-import type { PaymentGateway } from '../../../types/database'
+import type { PaymentGateway, PaymentStatus } from '../../../types/database'
 
-// Pakasir status enum
 type PakasirStatus =
   | 'pending'
   | 'completed'
@@ -15,17 +15,21 @@ type PakasirStatus =
   | 'expired'
   | 'processing'
 
-// Pakasir API response types
+interface PakasirPaymentItem {
+  project: string
+  order_id: string
+  amount: number
+  fee: number
+  total_payment: number
+  payment_method: string
+  payment_number: string | null
+  payment_url: string | null
+  redirect_url: string | null
+  expired_at: string
+}
+
 interface PakasirCreateResponse {
-  status: boolean
-  message: string
-  data?: {
-    order_id: string
-    qr_string: string
-    amount: number
-    expiry_date: string
-    payment_url?: string
-  }
+  payment: PakasirPaymentItem
 }
 
 interface PakasirStatusResponse {
@@ -45,14 +49,12 @@ export class PakasirAdapter extends BaseAdapter {
   displayName = 'Pakasir'
   supportsQr = true
 
-  constructor(config: Record<string, any>) {
+  constructor(config: GatewayConfig) {
     super(config)
   }
 
   private get apiUrl(): string {
-    return this.config.isProduction
-      ? 'https://api.pakasir.com'
-      : 'https://sandbox.pakasir.com'
+    return 'https://app.pakasir.com'
   }
 
   private get apiKey(): string {
@@ -63,14 +65,20 @@ export class PakasirAdapter extends BaseAdapter {
     return this.config.merchantCode || ''
   }
 
+  protected generateTransactionId(_orderId: string): string {
+    const timestamp = Date.now().toString(36).toUpperCase()
+    const random = Math.random().toString(36).substring(2, 6).toUpperCase()
+    return `ORD-${timestamp}-${random}`
+  }
+
   async createPayment(request: CreatePaymentRequest): Promise<CreatePaymentResponse> {
     try {
       const transactionId = this.generateTransactionId(request.orderId)
       const expiryDate = this.calculateExpiryDate(request.expiryHours || 24)
 
-      // Pakasir API request payload
       const payload = {
-        merchant_code: this.merchantCode,
+        project: this.merchantCode,
+        api_key: this.apiKey,
         order_id: transactionId,
         amount: this.formatAmount(request.amount),
         customer_name: request.customerName,
@@ -78,18 +86,14 @@ export class PakasirAdapter extends BaseAdapter {
         customer_phone: request.customerPhone,
         description: request.description,
         expiry_hours: request.expiryHours || 24,
-        // Custom fields for tracking
-        custom_order_id: request.orderId,
         payment_type: request.paymentType
       }
 
-      // Call Pakasir API
       const response = await fetch(`${this.apiUrl}/api/transactioncreate/qris`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Accept': 'application/json',
-          'Authorization': `Bearer ${this.apiKey}`
+          'Accept': 'application/json'
         },
         body: JSON.stringify(payload)
       })
@@ -101,17 +105,22 @@ export class PakasirAdapter extends BaseAdapter {
 
       const data: PakasirCreateResponse = await response.json()
 
-      if (!data.status || !data.data) {
-        throw new Error(data.message || 'Failed to create payment')
+      if (!data.payment) {
+        throw new Error('Failed to create payment: ' + JSON.stringify(data))
       }
+
+      const payment = data.payment
+      const baseUrl = `${this.apiUrl}/pay/${this.merchantCode}/${payload.amount}?order_id=${payment.order_id}`
+      const redirectUrl = request.returnUrl || '/order-success'
+      const paymentUrl = `${baseUrl}&redirect=${encodeURIComponent(redirectUrl)}`
 
       return {
         success: true,
-        paymentId: data.data.order_id,
-        transactionId: data.data.order_id,
-        paymentUrl: data.data.payment_url,
-        qrString: data.data.qr_string,
-        expiresAt: data.data.expiry_date || expiryDate.toISOString()
+        paymentId: payment.order_id,
+        transactionId: payment.order_id,
+        paymentUrl,
+        qrString: payment.payment_number || undefined,
+        expiresAt: payment.expired_at || expiryDate.toISOString()
       }
     } catch (error) {
       console.error('Pakasir createPayment error:', error)
@@ -122,16 +131,24 @@ export class PakasirAdapter extends BaseAdapter {
     }
   }
 
-  async checkStatus(transactionId: string): Promise<PaymentStatusResponse> {
+  async checkStatus(transactionId: string, amount?: number): Promise<PaymentStatusResponse> {
     try {
+      const params = new URLSearchParams({
+        order_id: transactionId,
+        project: this.merchantCode,
+        api_key: this.apiKey
+      })
+      if (amount !== undefined) {
+        params.set('amount', String(amount))
+      }
+
       const response = await fetch(
-        `${this.apiUrl}/api/transactiondetail?order_id=${transactionId}&merchant_code=${this.merchantCode}`,
+        `${this.apiUrl}/api/transactiondetail?${params.toString()}`,
         {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
-            'Accept': 'application/json',
-            'Authorization': `Bearer ${this.apiKey}`
+            'Accept': 'application/json'
           }
         }
       )
@@ -158,36 +175,16 @@ export class PakasirAdapter extends BaseAdapter {
     }
   }
 
-  async verifyWebhook(payload: WebhookPayload, signature: string): Promise<boolean> {
+  async verifyWebhook(payload: WebhookPayload, _signature: string): Promise<boolean> {
     try {
-      // Basic validation for Pakasir webhook
-      // Check required fields
       if (!payload.order_id || !payload.amount || !payload.status) {
         console.error('Pakasir webhook missing required fields')
         return false
       }
 
-      // Verify signature if provided (Pakasir may use HMAC signature)
-      if (signature && this.config.webhookSecret) {
-        const crypto = await import('crypto')
+      const txStatus = await this.checkStatus(payload.order_id, payload.amount)
 
-        // Create signature string based on Pakasir webhook format
-        // Adjust this based on actual Pakasir signature format
-        const signatureString = `${payload.order_id}${payload.amount}${payload.status}${this.config.webhookSecret}`
-        const calculatedSignature = crypto
-          .createHmac('sha256', this.config.webhookSecret)
-          .update(signatureString)
-          .digest('hex')
-
-        return calculatedSignature === signature
-      }
-
-      // If no signature verification, do basic validation
-      return (
-        typeof payload.order_id === 'string' &&
-        typeof payload.amount === 'number' &&
-        typeof payload.status === 'string'
-      )
+      return txStatus.status === this.mapPakasirStatus(payload.status)
     } catch (error) {
       console.error('Pakasir verifyWebhook error:', error)
       return false
@@ -198,12 +195,12 @@ export class PakasirAdapter extends BaseAdapter {
     return payload.order_id || ''
   }
 
-  extractStatus(payload: WebhookPayload): string {
+  extractStatus(payload: WebhookPayload): PaymentStatus {
     return this.mapPakasirStatus(payload.status)
   }
 
-  private mapPakasirStatus(status: PakasirStatus): string {
-    const statusMap: Record<PakasirStatus, string> = {
+  private mapPakasirStatus(status?: string): PaymentStatus {
+    const statusMap: Record<PakasirStatus, PaymentStatus> = {
       pending: 'pending',
       completed: 'paid',
       failed: 'failed',
@@ -211,6 +208,6 @@ export class PakasirAdapter extends BaseAdapter {
       processing: 'processing'
     }
 
-    return statusMap[status] || 'pending'
+    return statusMap[status as PakasirStatus] || 'pending'
   }
 }

@@ -3,25 +3,26 @@ import type {
   CreatePaymentRequest,
   CreatePaymentResponse,
   PaymentStatusResponse,
-  WebhookPayload
+  WebhookPayload,
+  GatewayConfig
 } from '../types'
 
 export abstract class BaseAdapter implements PaymentAdapter {
-  abstract name: string
+  abstract name: PaymentAdapter['name']
   abstract displayName: string
   abstract supportsQr: boolean
 
-  protected config: Record<string, any>
+  protected config: GatewayConfig
 
-  constructor(config: Record<string, any>) {
+  constructor(config: GatewayConfig) {
     this.config = config
   }
 
   abstract createPayment(request: CreatePaymentRequest): Promise<CreatePaymentResponse>
-  abstract checkStatus(transactionId: string): Promise<PaymentStatusResponse>
+  abstract checkStatus(transactionId: string, amount?: number): Promise<PaymentStatusResponse>
   abstract verifyWebhook(payload: WebhookPayload, signature: string): Promise<boolean>
   abstract extractTransactionId(payload: WebhookPayload): string
-  abstract extractStatus(payload: WebhookPayload): any
+  abstract extractStatus(payload: WebhookPayload): ReturnType<PaymentAdapter['extractStatus']>
 
   // Common utility methods
   protected generateTransactionId(orderId: string): string {

@@ -1,7 +1,7 @@
-import { getSupabase } from '../../lib/supabase'
+import { getSupabase } from '../../supabase'
 import { AdapterFactory, dbConfigToGatewayConfig } from '../adapters'
 import type { WebhookPayload, DbGatewayConfig } from '../types'
-import type { Payment, PaymentGateway as PaymentGatewayType, PaymentStatusNew, Order } from '../../types/database'
+import type { Payment, PaymentGateway as PaymentGatewayType, PaymentStatus, OrderStatus } from '../../../types/database'
 
 /**
  * Webhook Service
@@ -24,7 +24,7 @@ export class WebhookService {
     message: string
     payment?: Payment
   }> {
-    const supabase = getSupabase()
+    const supabase = getSupabase(true)
 
     if (!supabase) {
       const error = 'Supabase client not initialized'
@@ -152,7 +152,7 @@ export class WebhookService {
       }
 
       // Extract status from payload
-      const newStatus = adapter.extractStatus(payload) as PaymentStatusNew
+      const newStatus = adapter.extractStatus(payload) as PaymentStatus
 
       // Update payment status
       const { data: updatedPayment, error: updateError } = await supabase
@@ -230,7 +230,7 @@ export class WebhookService {
    * Private method - updates order status and creates consultation if needed
    */
   private async handlePaymentSuccess(paymentId: string): Promise<void> {
-    const supabase = getSupabase()
+    const supabase = getSupabase(true)
 
     if (!supabase) {
       console.error('Supabase client not initialized')
@@ -245,8 +245,6 @@ export class WebhookService {
           *,
           orders (
             id,
-            payment_option,
-            consultation_required,
             status
           )
         `)
@@ -265,11 +263,11 @@ export class WebhookService {
       }
 
       // Update order status based on payment_type
-      let newOrderStatus: string
+      let newOrderStatus: OrderStatus
       const paymentType = payment.payment_type
 
       if (paymentType === 'full') {
-        newOrderStatus = 'dp_paid'
+        newOrderStatus = 'onsite_paid'
       } else if (paymentType === 'dp') {
         newOrderStatus = 'dp_paid'
       } else if (paymentType === 'remaining') {
@@ -282,8 +280,7 @@ export class WebhookService {
       const { error: orderUpdateError } = await supabase
         .from('orders')
         .update({
-          status: newOrderStatus,
-          updated_at: new Date().toISOString()
+          status: newOrderStatus
         })
         .eq('id', order.id)
 
@@ -293,7 +290,7 @@ export class WebhookService {
       }
 
       // Create consultation if DP payment
-      if (paymentType === 'dp' && order.consultation_required) {
+      if (paymentType === 'dp') {
         await this.createConsultation(order.id, paymentId)
       }
     } catch (err) {
@@ -306,7 +303,7 @@ export class WebhookService {
    * Private method - inserts consultation record with status 'scheduled'
    */
   private async createConsultation(orderId: string, paymentId: string): Promise<void> {
-    const supabase = getSupabase()
+    const supabase = getSupabase(true)
 
     if (!supabase) {
       console.error('Supabase client not initialized')
@@ -351,7 +348,7 @@ export class WebhookService {
     ipAddress?: string
     userAgent?: string
   }): Promise<void> {
-    const supabase = getSupabase()
+    const supabase = getSupabase(true)
 
     if (!supabase) {
       console.error('Supabase client not initialized')
@@ -360,15 +357,18 @@ export class WebhookService {
 
     try {
       await supabase
-        .from('payment_logs')
+        .from('audit_logs')
         .insert({
-          payment_id: params.paymentId || null,
-          gateway: params.gateway,
-          event_type: params.eventType,
-          request_data: params.requestData as any,
-          response_data: params.responseData as any,
-          status: params.status,
-          error_message: params.errorMessage,
+          action: `webhook:${params.eventType}`,
+          table_name: 'payments',
+          record_id: params.paymentId || null,
+          new_values: {
+            gateway: params.gateway,
+            request_data: params.requestData,
+            response_data: params.responseData,
+            status: params.status,
+            error_message: params.errorMessage
+          } as any,
           ip_address: params.ipAddress || null,
           user_agent: params.userAgent || null,
           created_at: new Date().toISOString()
@@ -383,7 +383,7 @@ export class WebhookService {
    * Private helper method
    */
   private async getGateway(name: PaymentGatewayType): Promise<DbGatewayConfig | null> {
-    const supabase = getSupabase()
+    const supabase = getSupabase(true)
 
     if (!supabase) {
       return null
@@ -391,7 +391,7 @@ export class WebhookService {
 
     try {
       const { data, error } = await supabase
-        .from('payment_gateway_configs')
+        .from('payment_gateways')
         .select('*')
         .eq('name', name)
         .single()
@@ -406,7 +406,7 @@ export class WebhookService {
         display_name: data.display_name,
         is_active: data.is_active,
         priority: data.priority,
-        config: data.config as DbGatewayConfig['config'],
+        config: data.config as unknown as DbGatewayConfig['config'],
         fee_percent: data.fee_percent,
         fee_flat: data.fee_flat,
         supports_qr: data.supports_qr

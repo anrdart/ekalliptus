@@ -1,0 +1,79 @@
+---
+import AdminLayout from '../layout.astro'
+import { ArrowLeft } from 'lucide-astro'
+
+const { id } = Astro.params
+---
+
+<AdminLayout title="Order Detail">
+  <div class="glass-card rounded-2xl p-5">
+    <a href="/admin/orders" class="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground mb-6">
+      <ArrowLeft class="h-4 w-4" />
+      Back to orders
+    </a>
+
+    <div id="order-loading" class="py-12 text-center text-muted-foreground">Loading order...</div>
+    <div id="order-error" class="hidden py-12 text-center text-destructive">Order not found.</div>
+    <dl id="order-detail" class="hidden grid grid-cols-1 md:grid-cols-2 gap-4"></dl>
+  </div>
+</AdminLayout>
+
+<script define:vars={{ id }}>
+  const loadingEl = document.getElementById('order-loading')
+  const errorEl = document.getElementById('order-error')
+  const detailEl = document.getElementById('order-detail')
+
+  function formatCurrency(amount) {
+    return new Intl.NumberFormat('id-ID', {
+      style: 'currency',
+      currency: 'IDR',
+      maximumFractionDigits: 0
+    }).format(Number(amount || 0))
+  }
+
+  function addField(label, value) {
+    if (!detailEl) return
+    const item = document.createElement('div')
+    item.className = 'rounded-xl border border-border bg-card/40 p-4'
+
+    const dt = document.createElement('dt')
+    dt.className = 'text-xs uppercase tracking-wide text-muted-foreground'
+    dt.textContent = label
+
+    const dd = document.createElement('dd')
+    dd.className = 'mt-1 text-sm font-medium break-words'
+    dd.textContent = value || 'N/A'
+
+    item.appendChild(dt)
+    item.appendChild(dd)
+    detailEl.appendChild(item)
+  }
+
+  async function loadOrder() {
+    try {
+      const response = await fetch(`/api/order/${id}`)
+      const result = await response.json()
+      if (!response.ok || !result.success) throw new Error(result.error || 'Failed')
+
+      const order = result.data
+      loadingEl?.classList.add('hidden')
+      detailEl?.classList.remove('hidden')
+      addField('Order ID', order.id)
+      addField('Customer', order.customerName)
+      addField('Email', order.email)
+      addField('WhatsApp', order.whatsapp)
+      addField('Service', order.serviceType)
+      addField('Status', order.status)
+      addField('Urgency', order.urgency)
+      addField('Grand Total', formatCurrency(order.pricing?.grand_total))
+      addField('Deposit', formatCurrency(order.pricing?.deposit))
+      addField('Schedule', `${order.scheduleDate || ''} ${order.scheduleTime || ''}`.trim())
+      addField('Created', order.createdAt ? new Date(order.createdAt).toLocaleString('id-ID') : '')
+    } catch {
+      loadingEl?.classList.add('hidden')
+      errorEl?.classList.remove('hidden')
+    }
+  }
+
+  loadOrder()
+</script>

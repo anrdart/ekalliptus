@@ -1,0 +1,324 @@
+---
+import Layout from '../layouts/Layout.astro'
+import Navigation from '../components/Navigation.astro'
+import VantaBackground from '../components/VantaBackground.astro'
+import PreLoader from '../components/PreLoader.astro'
+import { fetchPublishedPosts } from '../lib/supabase'
+import { t, getLocaleFromRequest, getDir } from '../i18n'
+import { Calendar, User, Tag, ArrowRight, Clock } from 'lucide-astro'
+
+// Server-side rendering by default (no prerendering)
+export const prerender = false
+
+const locale = getLocaleFromRequest(Astro.request)
+const dir = getDir(locale)
+const postsData = await fetchPublishedPosts('id')
+// Map to template-friendly shape: { id, data: { ... } }
+const posts = postsData.map(p => ({
+  id: p.slug,
+  data: {
+    title: p.title,
+    description: p.description,
+    publishDate: new Date(p.publish_date),
+    updateDate: p.update_date ? new Date(p.update_date) : null,
+    category: p.category,
+    tags: p.tags,
+    author: p.author,
+    image: p.image,
+    imageAlt: p.image_alt,
+    featured: p.featured,
+    seo: {
+      metaTitle: p.seo_meta_title,
+      metaDescription: p.seo_meta_description,
+      noindex: p.seo_noindex
+    }
+  }
+}))
+
+const categories = [...new Set(posts.map(p => p.data.category))]
+
+const siteUrl = 'https://ekalliptus.com'
+const canonical = new URL(Astro.url.pathname, siteUrl).toString()
+
+// Schema.org for Blog page
+const blogSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Blog',
+  name: 'Ekalliptus Digital Blog',
+  description: `Artikel & insight tentang web development, mobile app, WordPress, dan multimedia editing oleh ${t('blog.title', locale)}.`,
+  url: canonical,
+  publisher: {
+    '@type': 'Organization',
+    name: 'Ekalliptus Digital',
+    logo: `${siteUrl}/ekalliptus_rounded.webp`
+  },
+  blogPost: posts.slice(0, 10).map(post => ({
+    '@type': 'BlogPosting',
+    headline: post.data.title,
+    url: `${siteUrl}/blog/${post.id}`,
+    datePublished: post.data.publishDate.toISOString(),
+    dateModified: post.data.updateDate ? post.data.updateDate.toISOString() : post.data.publishDate.toISOString(),
+    author: {
+      '@type': 'Person',
+      name: post.data.author
+    },
+    description: post.data.description
+  }))
+}
+---
+
+<Layout
+  title={t('blog.metaTitle', locale)}
+  description={t('blog.metaDescription', locale)}
+  lang={locale}
+  dir={dir}
+  image="/blog-og.png"
+  imageAlt="Ekalliptus Digital Blog"
+>
+  <script type="application/ld+json" set:html={JSON.stringify(blogSchema)} />
+
+  <VantaBackground />
+  <PreLoader />
+  <Navigation t={(key: string) => t(key, locale)} currentLang={locale} />
+
+  <main class="relative z-0 flex min-h-screen flex-col pt-14 sm:pt-16 md:pt-20">
+    <div class="relative flex flex-col pb-16">
+      <!-- Hero Section -->
+      <section class="px-4 py-12 sm:py-16 md:py-20">
+        <div class="mx-auto max-w-5xl text-center">
+          <div class="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 sm:px-5 py-2 text-[0.6rem] sm:text-[0.65rem] font-semibold uppercase tracking-[0.5em] sm:tracking-[0.6em] text-primary mb-6">
+            <Clock class="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+            <span>{t('blog.badge', locale)}</span>
+          </div>
+
+          <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 sm:mb-6">
+            {t('blog.title', locale)}
+          </h1>
+
+          <p class="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto mb-8">
+            {t('blog.description', locale)}
+          </p>
+
+          <!-- Category Filter -->
+          <div class="flex flex-wrap justify-center gap-2 sm:gap-3 mb-6">
+            <button
+              data-category="all"
+              class="category-btn active rounded-full px-4 py-2 text-xs font-medium transition-all bg-primary text-primary-foreground hover:bg-primary/90"
+            >
+              Semua
+            </button>
+            {categories.map(category => (
+              <button
+                data-category={category}
+                class="category-btn rounded-full px-4 py-2 text-xs font-medium transition-all bg-card/30 text-foreground hover:bg-card/50 border border-border/20"
+              >
+                {category}
+              </button>
+            ))}
+          </div>
+
+          <!-- RSS Feed Link -->
+          <div class="flex items-center justify-center gap-4">
+            <a
+              href="/blog/rss.xml"
+              class="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
+              title="Subscribe via RSS"
+            >
+              <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24"><path d="M6.18 15.64a2.18 2.18 0 0 1 2.18 2.18C8.36 19 7.38 20 6.18 20C5 20 4 19 4 17.82a2.18 2.18 0 0 1 2.18-2.18M4 4.44A15.56 15.56 0 0 1 19.56 20h-2.83A12.73 12.73 0 0 0 4 6.83V4.44m0 5.66a9.9 9.9 0 0 1 9.9 9.9h-2.83A7.07 7.07 0 0 0 4 12.93V10.1Z"/></svg>
+              RSS Feed
+            </a>
+            <a
+              href="/blog/feed.json"
+              class="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
+              title="Subscribe via JSON Feed"
+            >
+              <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8zm-1-13a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-3 7a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm8 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-4 4a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/></svg>
+              JSON Feed
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Featured Post (first post, full-width) -->
+      {posts.length > 0 && posts[0].data.featured && (
+        <section class="px-4 pb-8">
+          <div class="mx-auto max-w-6xl">
+            <article class="blog-card group rounded-2xl glass-panel neon-border overflow-hidden transition-all hover:border-primary/40" data-category={posts[0].data.category}>
+              <div class="flex flex-col lg:flex-row">
+                {posts[0].data.image && (
+                  <a href={`/blog/${posts[0].id}`} class="block lg:w-1/2 aspect-video lg:aspect-auto overflow-hidden">
+                    <img
+                      src={posts[0].data.image}
+                      alt={posts[0].data.imageAlt || posts[0].data.title}
+                      class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      loading="eager"
+                      decoding="async"
+                    />
+                  </a>
+                )}
+                <div class="flex-1 p-6 sm:p-8 lg:p-10 flex flex-col justify-center">
+                  <div class="flex items-center gap-2 mb-4">
+                    <span class="glass-pill rounded-full px-4 py-1.5 text-[0.65rem] font-semibold uppercase tracking-wider text-primary border-primary/30">
+                      {posts[0].data.category}
+                    </span>
+                    <span class="glass-pill rounded-full px-4 py-1.5 text-[0.65rem] font-semibold uppercase tracking-wider text-accent border-accent/30">
+                      {t('blog.badges.featured', locale)}
+                    </span>
+                  </div>
+                  <h2 class="text-xl sm:text-2xl lg:text-3xl font-bold text-foreground mb-4 group-hover:text-primary transition-colors leading-tight">
+                    <a href={`/blog/${posts[0].id}`}>{posts[0].data.title}</a>
+                  </h2>
+                  <p class="text-sm sm:text-base text-muted-foreground mb-6 line-clamp-3 leading-relaxed">
+                    {posts[0].data.description}
+                  </p>
+                  <div class="flex items-center gap-4 text-xs text-muted-foreground mb-6">
+                    <div class="flex items-center gap-1.5">
+                      <Calendar class="h-3.5 w-3.5" />
+                      <time datetime={posts[0].data.publishDate.toISOString()}>
+                        {posts[0].data.publishDate.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}
+                      </time>
+                    </div>
+                    <div class="flex items-center gap-1.5">
+                      <User class="h-3.5 w-3.5" />
+                      <span>{posts[0].data.author}</span>
+                    </div>
+                  </div>
+                  <a
+                    href={`/blog/${posts[0].id}`}
+                    class="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-primary/80 transition-colors group/link"
+                  >
+                    {t('blog.readMore', locale)}
+                    <ArrowRight class="h-4 w-4 transition-transform group-hover/link:translate-x-1" />
+                  </a>
+                </div>
+              </div>
+            </article>
+          </div>
+        </section>
+      )}
+
+      <!-- Blog Posts Grid -->
+      <section class="px-4 pb-12">
+        <div class="mx-auto max-w-6xl">
+          {posts.length === 0 ? (
+            <div class="text-center py-16">
+              <p class="text-muted-foreground mb-4">Belum ada artikel yang tersedia.</p>
+              <a href="/" class="text-primary hover:underline">Kembali ke Beranda</a>
+            </div>
+          ) : (
+            <div id="posts-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+              {posts.map((post, index) => (
+                <article
+                  class="blog-card group rounded-2xl glass-panel bg-card/10 border border-border/20 overflow-hidden transition-all duration-300 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 hover:-translate-y-1"
+                  data-category={post.data.category}
+                >
+                  {post.data.image && (
+                    <a href={`/blog/${post.id}`} class="block aspect-video overflow-hidden">
+                      <img
+                        src={post.data.image}
+                        alt={post.data.imageAlt || post.data.title}
+                        class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        loading={index < 3 ? 'eager' : 'lazy'}
+                        decoding="async"
+                      />
+                    </a>
+                  )}
+
+                  <div class="p-5 sm:p-6">
+                    <div class="flex items-center gap-2 mb-3">
+                      <span class="glass-pill rounded-full px-3 py-1 text-[0.65rem] font-semibold uppercase tracking-wider text-primary border-primary/30">
+                        {post.data.category}
+                      </span>
+                      {post.data.featured && (
+                        <span class="glass-pill rounded-full px-3 py-1 text-[0.65rem] font-semibold uppercase tracking-wider text-accent border-accent/30">
+                          {t('blog.badges.featured', locale)}
+                        </span>
+                      )}
+                    </div>
+
+                    <h2 class="text-lg sm:text-xl font-semibold text-foreground mb-3 line-clamp-2 group-hover:text-primary transition-colors leading-snug">
+                      <a href={`/blog/${post.id}`} class="cursor-pointer">
+                        {post.data.title}
+                      </a>
+                    </h2>
+
+                    <p class="text-sm text-muted-foreground mb-4 line-clamp-2 leading-relaxed">
+                      {post.data.description}
+                    </p>
+
+                    <div class="flex items-center justify-between text-xs text-muted-foreground pt-4 border-t border-border/10">
+                      <div class="flex items-center gap-1.5">
+                        <Calendar class="h-3.5 w-3.5" />
+                        <time datetime={post.data.publishDate.toISOString()}>
+                          {post.data.publishDate.toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })}
+                        </time>
+                      </div>
+                      <div class="flex items-center gap-1.5">
+                        <User class="h-3.5 w-3.5" />
+                        <span>{post.data.author}</span>
+                      </div>
+                    </div>
+
+                    {post.data.tags.length > 0 && (
+                      <div class="flex flex-wrap gap-1.5 mt-4">
+                        {post.data.tags.slice(0, 3).map(tag => (
+                          <span class="glass-pill rounded-full px-2 py-0.5 text-[0.6rem] text-muted-foreground border-border/10">
+                            #{tag}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </article>
+              ))}
+            </div>
+          )}
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- Category Filter Script -->
+  <script define:vars={{ isHomePage: false }}>
+    const categoryBtns = document.querySelectorAll('.category-btn')
+    const cards = document.querySelectorAll('.blog-card')
+
+    categoryBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        categoryBtns.forEach(b => {
+          b.classList.remove('bg-primary', 'text-primary-foreground')
+          b.classList.add('bg-card/30', 'text-foreground')
+        })
+        btn.classList.remove('bg-card/30', 'text-foreground')
+        btn.classList.add('bg-primary', 'text-primary-foreground')
+
+        const category = btn.dataset.category
+        cards.forEach(card => {
+          if (category === 'all' || card.dataset.category === category) {
+            card.style.display = ''
+            card.style.opacity = '0'
+            card.style.transform = 'translateY(8px)'
+            requestAnimationFrame(() => {
+              card.style.transition = 'opacity 0.3s ease, transform 0.3s ease'
+              card.style.opacity = '1'
+              card.style.transform = 'translateY(0)'
+            })
+          } else {
+            card.style.opacity = '0'
+            card.style.transform = 'translateY(8px)'
+            setTimeout(() => { card.style.display = 'none' }, 300)
+          }
+        })
+      })
+    })
+  </script>
+</Layout>
+
+<style>
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+</style>

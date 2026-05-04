@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "publishDate": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updateDate": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "category": {
+      "type": "string"
+    },
+    "tags": {
+      "default": [],
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "author": {
+      "default": "Tim Ekalliptus",
+      "type": "string"
+    },
+    "image": {
+      "type": "string"
+    },
+    "imageAlt": {
+      "type": "string"
+    },
+    "locale": {
+      "default": "id",
+      "type": "string",
+      "enum": [
+        "id",
+        "en",
+        "ja",
+        "ko",
+        "ru",
+        "ar",
+        "tr"
+      ]
+    },
+    "featured": {
+      "default": false,
+      "type": "boolean"
+    },
+    "seo": {
+      "type": "object",
+      "properties": {
+        "metaTitle": {
+          "type": "string"
+        },
+        "metaDescription": {
+          "type": "string"
+        },
+        "noindex": {
+          "default": false,
+          "type": "boolean"
+        }
+      }
+    },
+    "$schema": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "title",
+    "description",
+    "publishDate",
+    "category"
+  ]
+}

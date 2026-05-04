@@ -29,7 +29,7 @@ export const POST: APIRoute = async ({ request }) => {
     }
 
     // Validate gateway
-    const validGateways: PaymentGateway[] = ['midtrans', 'pakasir']
+    const validGateways: PaymentGateway[] = ['midtrans', 'pakasir', 'qiospay', 'sanpay', 'tripay']
     if (!validGateways.includes(gateway as PaymentGateway)) {
       return new Response(JSON.stringify({
         error: `Invalid gateway. Must be one of: ${validGateways.join(', ')}`
@@ -89,14 +89,15 @@ export const POST: APIRoute = async ({ request }) => {
 
     // Validate payment amount matches order
     const typedOrder = order as Order
+    const pricing = typedOrder.pricing as Record<string, number> | null
     let expectedAmount = 0
 
     if (paymentType === 'full') {
-      expectedAmount = typedOrder.grand_total
+      expectedAmount = pricing?.grand_total ?? 0
     } else if (paymentType === 'dp') {
-      expectedAmount = typedOrder.deposit
+      expectedAmount = pricing?.deposit ?? 0
     } else if (paymentType === 'remaining') {
-      expectedAmount = typedOrder.remaining
+      expectedAmount = pricing?.remaining ?? 0
     }
 
     // Allow small difference for gateway fee variations
@@ -129,11 +130,11 @@ export const POST: APIRoute = async ({ request }) => {
       return new Response(JSON.stringify({
         success: true,
         data: {
-          paymentId: payment.id,
-          transactionId: payment.gateway_transaction_id,
-          paymentUrl: payment.payment_url,
-          qrString: payment.qr_string,
-          expiresAt: payment.expires_at
+          paymentId: payment.paymentId,
+          transactionId: payment.transactionId,
+          paymentUrl: payment.paymentUrl,
+          qrString: payment.qrString,
+          expiresAt: payment.expiresAt
         }
       }), {
         status: 200,

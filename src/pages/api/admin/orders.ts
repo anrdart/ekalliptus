@@ -1,5 +1,22 @@
 import type { APIRoute } from 'astro'
-import { getSupabase } from '../../lib/supabase'
+import { getSupabase } from '../../../lib/supabase'
+import type { OrderStatus, ServiceType } from '../../../types/database'
+
+const validOrderStatuses: OrderStatus[] = [
+  'waiting_dp',
+  'dp_paid',
+  'waiting_onsite_payment',
+  'onsite_paid',
+  'cancelled'
+]
+
+const validServiceTypes: ServiceType[] = [
+  'website',
+  'wordpress',
+  'mobile',
+  'editing',
+  'service_device'
+]
 
 /**
  * GET /api/admin/orders
@@ -13,7 +30,7 @@ import { getSupabase } from '../../lib/supabase'
  */
 export const GET: APIRoute = async ({ url }) => {
   try {
-    const supabase = getSupabase()
+    const supabase = getSupabase(true)
     if (!supabase) {
       return new Response(JSON.stringify({
         error: 'Database connection failed'
@@ -38,12 +55,12 @@ export const GET: APIRoute = async ({ url }) => {
       .select('*', { count: 'exact' })
 
     // Apply filters
-    if (status) {
-      query = query.eq('status', status)
+    if (status && validOrderStatuses.includes(status as OrderStatus)) {
+      query = query.eq('status', status as OrderStatus)
     }
 
-    if (service) {
-      query = query.eq('service_type', service)
+    if (service && validServiceTypes.includes(service as ServiceType)) {
+      query = query.eq('service_type', service as ServiceType)
     }
 
     if (search) {

@@ -2,10 +2,11 @@ import { BaseAdapter } from './base.adapter'
 import type {
   CreatePaymentRequest,
   CreatePaymentResponse,
+  GatewayConfig,
   PaymentStatusResponse,
   WebhookPayload
 } from '../types'
-import type { PaymentGateway } from '../../../types/database'
+import type { PaymentGateway, PaymentStatus } from '../../../types/database'
 
 // Midtrans status enum
 type MidtransStatus =
@@ -24,7 +25,7 @@ export class MidtransAdapter extends BaseAdapter {
   displayName = 'Midtrans'
   supportsQr = true
 
-  constructor(config: Record<string, any>) {
+  constructor(config: GatewayConfig) {
     super(config)
   }
 
@@ -32,6 +33,12 @@ export class MidtransAdapter extends BaseAdapter {
     return this.config.isProduction
       ? 'https://app.midtrans.com/snap/v1'
       : 'https://app.sandbox.midtrans.com/snap/v1'
+  }
+
+  private get coreApiUrl(): string {
+    return this.config.isProduction
+      ? 'https://api.midtrans.com/v2'
+      : 'https://api.sandbox.midtrans.com/v2'
   }
 
   private get serverKey(): string {
@@ -111,10 +118,10 @@ export class MidtransAdapter extends BaseAdapter {
     }
   }
 
-  async checkStatus(transactionId: string): Promise<PaymentStatusResponse> {
+  async checkStatus(transactionId: string, _amount?: number): Promise<PaymentStatusResponse> {
     try {
       const response = await fetch(
-        `${this.apiUrl}/transactions/${transactionId}/status`,
+        `${this.coreApiUrl}/${transactionId}/status`,
         {
           method: 'GET',
           headers: {
@@ -170,12 +177,12 @@ export class MidtransAdapter extends BaseAdapter {
     return payload.order_id || ''
   }
 
-  extractStatus(payload: WebhookPayload): string {
+  extractStatus(payload: WebhookPayload): PaymentStatus {
     return this.mapMidtransStatus(payload.transaction_status || payload.status)
   }
 
-  private mapMidtransStatus(status: MidtransStatus): string {
-    const statusMap: Record<MidtransStatus, string> = {
+  private mapMidtransStatus(status?: string): PaymentStatus {
+    const statusMap: Record<MidtransStatus, PaymentStatus> = {
       pending: 'pending',
       settlement: 'paid',
       capture: 'paid',
@@ -187,6 +194,6 @@ export class MidtransAdapter extends BaseAdapter {
       partial_refund: 'refunded'
     }
 
-    return statusMap[status] || 'pending'
+    return statusMap[status as MidtransStatus] || 'pending'
   }
 }

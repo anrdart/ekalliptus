@@ -1,6 +1,6 @@
 import type { APIRoute } from 'astro'
-import { getSupabase } from '../../lib/supabase'
-import type { PaymentGateway, PaymentGatewayConfig } from '../../types/database'
+import { getSupabase } from '../../../lib/supabase'
+import type { PaymentGateway } from '../../../types/database'
 
 /**
  * GET /api/admin/gateways
@@ -8,7 +8,7 @@ import type { PaymentGateway, PaymentGatewayConfig } from '../../types/database'
  */
 export const GET: APIRoute = async () => {
   try {
-    const supabase = getSupabase()
+    const supabase = getSupabase(true)
     if (!supabase) {
       return new Response(JSON.stringify({
         error: 'Database connection failed'
@@ -91,7 +91,7 @@ export const POST: APIRoute = async ({ request }) => {
       })
     }
 
-    const supabase = getSupabase()
+    const supabase = getSupabase(true)
     if (!supabase) {
       return new Response(JSON.stringify({
         error: 'Database connection failed'

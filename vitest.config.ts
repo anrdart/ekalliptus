@@ -10,7 +10,7 @@ export default defineConfig({
     globals: true,
     environment: 'happy-dom',
     include: ['**/*.{test,spec}.{js,ts}'],
-    exclude: ['node_modules', '.nuxt', 'dist'],
+    exclude: ['**/node_modules/**', '.opencode/**', '.nuxt/**', 'dist/**', '.astro/**'],
     testTimeout: 10000
   },
   resolve: {

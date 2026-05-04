@@ -313,12 +313,16 @@ const dir = getDir(locale)
     const deposit = Math.round(grandTotal * (actualDepositPct / 100))
 
     const formatCurrency = (n: number) => `Rp ${n.toLocaleString('id-ID')}`
+    const setText = (id: string, value: string) => {
+      const el = document.getElementById(id)
+      if (el) el.textContent = value
+    }
 
-    document.getElementById('subtotal').textContent = formatCurrency(subtotal)
-    document.getElementById('ppn').textContent = formatCurrency(ppn)
-    document.getElementById('grand-total').textContent = formatCurrency(grandTotal)
-    document.getElementById('deposit').textContent = formatCurrency(deposit)
-    document.getElementById('deposit-percent').textContent = String(actualDepositPct)
+    setText('subtotal', formatCurrency(subtotal))
+    setText('ppn', formatCurrency(ppn))
+    setText('grand-total', formatCurrency(grandTotal))
+    setText('deposit', formatCurrency(deposit))
+    setText('deposit-percent', String(actualDepositPct))
   }
   
   document.querySelectorAll('input[name="urgency"]').forEach(input => {
@@ -362,7 +366,15 @@ const dir = getDir(locale)
       })
       
       if (response.ok) {
-        window.location.href = '/order-success'
+        const result = await response.json()
+        console.log('[Order] API response:', JSON.stringify(result, null, 2))
+        if (result.data && result.data.payment && result.data.payment.paymentUrl) {
+          console.log('[Order] Redirecting to payment gateway:', result.data.payment.paymentUrl)
+          window.location.href = result.data.payment.paymentUrl
+        } else {
+          console.warn('[Order] No payment URL in response. Payment data:', result.data?.payment)
+          window.location.href = '/order-success'
+        }
       } else {
         alert('Terjadi kesalahan. Silakan coba lagi.')
       }

@@ -552,3 +552,188 @@
     transform: scale(0.98);
   }
 }
+
+/* ============================================
+   BLOG PROSE — Custom styles for Markdown content
+   Extends @tailwindcss/typography for glassmorphism theme
+   ============================================ */
+
+/* Table styling — matches glass aesthetic */
+.prose table {
+  border-collapse: separate;
+  border-spacing: 0;
+  overflow: hidden;
+  border-radius: 0.75rem;
+  border: 1px solid hsl(var(--border) / 0.2);
+}
+
+.prose thead {
+  background: hsl(var(--card) / 0.5);
+}
+
+.prose thead th {
+  font-weight: 600;
+  color: hsl(var(--foreground));
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 2px solid hsl(var(--primary) / 0.2);
+}
+
+.prose tbody tr {
+  transition: background-color 0.15s ease;
+}
+
+.prose tbody tr:hover {
+  background: hsl(var(--primary) / 0.05);
+}
+
+.prose tbody tr:nth-child(even) {
+  background: hsl(var(--card) / 0.3);
+}
+
+.prose tbody tr:nth-child(even):hover {
+  background: hsl(var(--primary) / 0.08);
+}
+
+.prose td,
+.prose th {
+  padding: 0.75rem 1rem;
+  border-color: hsl(var(--border) / 0.15);
+}
+
+.prose td {
+  font-size: 0.9rem;
+}
+
+/* Strong text in tables */
+.prose td strong {
+  color: hsl(var(--foreground));
+  font-weight: 600;
+}
+
+/* Blockquote — glass panel style */
+.prose blockquote {
+  border-left: 3px solid hsl(var(--primary) / 0.4);
+  background: hsl(var(--card) / 0.3);
+  border-radius: 0 0.5rem 0.5rem 0;
+  padding: 1rem 1.25rem;
+  font-style: normal;
+}
+
+.prose blockquote p {
+  color: hsl(var(--muted-foreground));
+}
+
+/* Lists — custom markers */
+.prose ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.prose ul li {
+  position: relative;
+  padding-left: 1.5rem;
+}
+
+.prose ul li::before {
+  content: '';
+  position: absolute;
+  left: 0.25rem;
+  top: 0.65rem;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: hsl(var(--primary) / 0.5);
+}
+
+.prose ol {
+  counter-reset: list-counter;
+  list-style: none;
+  padding-left: 0;
+}
+
+.prose ol li {
+  position: relative;
+  padding-left: 2rem;
+  counter-increment: list-counter;
+}
+
+.prose ol li::before {
+  content: counter(list-counter);
+  position: absolute;
+  left: 0;
+  top: 0.15rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  background: hsl(var(--primary) / 0.1);
+  color: hsl(var(--primary));
+  font-size: 0.75rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Code blocks */
+.prose code {
+  font-family: 'SF Mono', 'Fira Code', 'JetBrains Mono', monospace;
+  font-size: 0.85em;
+}
+
+.prose pre {
+  border-radius: 0.75rem;
+}
+
+.prose pre code {
+  font-size: 0.85rem;
+  line-height: 1.7;
+}
+
+/* Horizontal rule — subtle glass line */
+.prose hr {
+  border: none;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    hsl(var(--border) / 0.3),
+    hsl(var(--primary) / 0.2),
+    hsl(var(--border) / 0.3),
+    transparent
+  );
+  margin: 2.5rem 0;
+}
+
+/* Headings — anchor link styling */
+.prose h2,
+.prose h3,
+.prose h4 {
+  scroll-margin-top: 6rem;
+}
+
+.prose h2:hover .icon-link,
+.prose h3:hover .icon-link,
+.prose h4:hover .icon-link {
+  opacity: 1;
+}
+
+/* Image in prose — glass frame */
+.prose img {
+  border: 1px solid hsl(var(--border) / 0.15);
+}
+
+/* Links — subtle underline animation */
+.prose a {
+  text-decoration: none;
+  background-image: linear-gradient(hsl(var(--primary) / 0.3), hsl(var(--primary) / 0.3));
+  background-size: 0% 1px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 0.2s ease;
+}
+
+.prose a:hover {
+  background-size: 100% 1px;
+}

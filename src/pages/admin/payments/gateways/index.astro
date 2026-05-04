@@ -1,6 +1,6 @@
 ---
 import AdminLayout from '../../layout.astro'
-import { CreditCard, Settings, ToggleLeft, ToggleRight, Plus, Settings2 } from 'lucide-astro'
+import { CreditCard } from 'lucide-astro'
 ---
 
 <AdminLayout title="Payment Gateways">
@@ -104,6 +104,17 @@ import { CreditCard, Settings, ToggleLeft, ToggleRight, Plus, Settings2 } from '
 </style>
 
 <script>
+  type GatewayRow = {
+    id: string
+    name: string
+    display_name?: string | null
+    is_active: boolean
+    priority?: number | null
+    fee_percent?: number | null
+    fee_flat?: number | null
+    supports_qr?: boolean | null
+  }
+
   const gatewaysContainer = document.getElementById('gateways-container')
   const emptyState = document.getElementById('empty-state')
   const loadingState = document.getElementById('loading-state')
@@ -111,7 +122,7 @@ import { CreditCard, Settings, ToggleLeft, ToggleRight, Plus, Settings2 } from '
   const modalTitle = document.getElementById('modal-title')
   const modalContent = document.getElementById('modal-content')
 
-  let gateways = []
+  let gateways: GatewayRow[] = []
 
   async function fetchGateways() {
     try {
@@ -156,13 +167,13 @@ import { CreditCard, Settings, ToggleLeft, ToggleRight, Plus, Settings2 } from '
 
     if (emptyState) emptyState.classList.add('hidden')
 
-    gateways.forEach(gateway => {
+    gateways.forEach((gateway) => {
       const card = createGatewayCard(gateway)
       gatewaysContainer.appendChild(card)
     })
   }
 
-  function createGatewayCard(gateway) {
+  function createGatewayCard(gateway: GatewayRow) {
     const card = document.createElement('div')
     card.className = 'gateway-card glass-card rounded-2xl p-6'
 
@@ -274,7 +285,7 @@ import { CreditCard, Settings, ToggleLeft, ToggleRight, Plus, Settings2 } from '
     return card
   }
 
-  async function toggleGateway(gatewayId, newState) {
+  async function toggleGateway(gatewayId: string, newState: boolean) {
     try {
       const response = await fetch(`/api/admin/gateways/${gatewayId}`, {
         method: 'PATCH',
@@ -292,7 +303,7 @@ import { CreditCard, Settings, ToggleLeft, ToggleRight, Plus, Settings2 } from '
     }
   }
 
-  function openConfigureModal(gateway) {
+  function openConfigureModal(gateway: GatewayRow) {
     if (!configureModal || !modalTitle || !modalContent) return
 
     modalTitle.textContent = `Configure ${gateway.display_name || gateway.name}`
@@ -326,7 +337,7 @@ import { CreditCard, Settings, ToggleLeft, ToggleRight, Plus, Settings2 } from '
     checkbox.type = 'checkbox'
     checkbox.name = 'supports_qr'
     checkbox.id = 'supports_qr'
-    checkbox.checked = gateway.supports_qr
+    checkbox.checked = Boolean(gateway.supports_qr)
     checkbox.className = 'rounded cursor-pointer'
 
     const checkboxLabel = document.createElement('label')
@@ -363,11 +374,12 @@ import { CreditCard, Settings, ToggleLeft, ToggleRight, Plus, Settings2 } from '
     form.addEventListener('submit', async (e) => {
       e.preventDefault()
       const formData = new FormData(form)
+      const getString = (key: string, fallback = '') => String(formData.get(key) ?? fallback)
       const updates = {
-        display_name: formData.get('display_name'),
-        priority: parseInt(formData.get('priority')),
-        fee_percent: parseFloat(formData.get('fee_percent')),
-        fee_flat: parseInt(formData.get('fee_flat')),
+        display_name: getString('display_name', gateway.display_name || gateway.name),
+        priority: parseInt(getString('priority', '0'), 10),
+        fee_percent: parseFloat(getString('fee_percent', '0')),
+        fee_flat: parseInt(getString('fee_flat', '0'), 10),
         supports_qr: formData.get('supports_qr') === 'on'
       }
 
@@ -395,7 +407,14 @@ import { CreditCard, Settings, ToggleLeft, ToggleRight, Plus, Settings2 } from '
     configureModal.classList.add('flex')
   }
 
-  function createFormField(label, type, name, value, required = false, step = null) {
+  function createFormField(
+    label: string,
+    type: string,
+    name: string,
+    value: string,
+    required = false,
+    step: string | null = null
+  ) {
     const div = document.createElement('div')
 
     const labelEl = document.createElement('label')

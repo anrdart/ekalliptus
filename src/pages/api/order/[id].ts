@@ -48,6 +48,7 @@ export const GET: APIRoute = async ({ params }) => {
     }
 
     const typedOrder = order as Order
+    const pricing = typedOrder.pricing as Record<string, number> | null
 
     return new Response(JSON.stringify({
       success: true,
@@ -60,20 +61,11 @@ export const GET: APIRoute = async ({ params }) => {
         serviceType: typedOrder.service_type,
         scope: typedOrder.scope,
         urgency: typedOrder.urgency,
-        subtotal: typedOrder.subtotal,
-        discount: typedOrder.discount,
-        dpp: typedOrder.dpp,
-        ppn: typedOrder.ppn,
-        fee: typedOrder.fee,
-        grandTotal: typedOrder.grand_total,
-        deposit: typedOrder.deposit,
-        remaining: typedOrder.remaining,
+        pricing: pricing || {},
         scheduleDate: typedOrder.schedule_date,
         scheduleTime: typedOrder.schedule_time,
         deliveryMethod: typedOrder.delivery_method,
         status: typedOrder.status,
-        paymentRef: typedOrder.payment_ref,
-        paymentUrl: typedOrder.payment_url,
         createdAt: typedOrder.created_at
       }
     }), {

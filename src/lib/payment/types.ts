@@ -21,6 +21,7 @@ export interface CreatePaymentRequest {
   customerPhone: string
   description: string
   expiryHours?: number
+  returnUrl?: string
 }
 
 // Payment response interface
@@ -36,7 +37,7 @@ export interface CreatePaymentResponse {
 
 // Payment status response
 export interface PaymentStatusResponse {
-  status: PaymentStatus | 'pending' | 'processing' | 'paid' | 'failed' | 'expired' | 'refunded'
+  status: PaymentStatus
   amount: number
   paidAt?: string
   expiryAt?: string
@@ -54,10 +55,10 @@ export interface PaymentAdapter {
   supportsQr: boolean
 
   createPayment(request: CreatePaymentRequest): Promise<CreatePaymentResponse>
-  checkStatus(transactionId: string): Promise<PaymentStatusResponse>
+  checkStatus(transactionId: string, amount?: number): Promise<PaymentStatusResponse>
   verifyWebhook(payload: WebhookPayload, signature: string): Promise<boolean>
   extractTransactionId(payload: WebhookPayload): string
-  extractStatus(payload: WebhookPayload): PaymentStatus | string
+  extractStatus(payload: WebhookPayload): PaymentStatus
 }
 
 // Gateway configuration from database

@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro'
-import { getSupabase } from '../../../lib/supabase'
+import { getSupabase } from '../../../../lib/supabase'
 
 /**
  * GET /api/admin/gateways/[id]
@@ -9,7 +9,16 @@ export const GET: APIRoute = async ({ params }) => {
   try {
     const { id } = params
 
-    const supabase = getSupabase()
+    if (!id) {
+      return new Response(JSON.stringify({
+        error: 'Gateway ID is required'
+      }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' }
+      })
+    }
+
+    const supabase = getSupabase(true)
     if (!supabase) {
       return new Response(JSON.stringify({
         error: 'Database connection failed'
@@ -60,6 +69,15 @@ export const PATCH: APIRoute = async ({ params, request }) => {
     const { id } = params
     const body = await request.json()
 
+    if (!id) {
+      return new Response(JSON.stringify({
+        error: 'Gateway ID is required'
+      }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' }
+      })
+    }
+
     const {
       display_name,
       is_active,
@@ -70,7 +88,7 @@ export const PATCH: APIRoute = async ({ params, request }) => {
       supports_qr
     } = body
 
-    const supabase = getSupabase()
+    const supabase = getSupabase(true)
     if (!supabase) {
       return new Response(JSON.stringify({
         error: 'Database connection failed'
@@ -92,7 +110,7 @@ export const PATCH: APIRoute = async ({ params, request }) => {
 
     // Update gateway configuration
     const { data: gateway, error } = await supabase
-      .from('payment_gateway_configs')
+      .from('payment_gateways')
       .update(updateData)
       .eq('id', id)
       .select()
@@ -133,7 +151,16 @@ export const DELETE: APIRoute = async ({ params }) => {
   try {
     const { id } = params
 
-    const supabase = getSupabase()
+    if (!id) {
+      return new Response(JSON.stringify({
+        error: 'Gateway ID is required'
+      }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' }
+      })
+    }
+
+    const supabase = getSupabase(true)
     if (!supabase) {
       return new Response(JSON.stringify({
         error: 'Database connection failed'
@@ -145,7 +172,7 @@ export const DELETE: APIRoute = async ({ params }) => {
 
     // Check if gateway exists
     const { data: existing } = await supabase
-      .from('payment_gateway_configs')
+      .from('payment_gateways')
       .select('id')
       .eq('id', id)
       .single()
@@ -161,7 +188,7 @@ export const DELETE: APIRoute = async ({ params }) => {
 
     // Delete gateway configuration
     const { error } = await supabase
-      .from('payment_gateway_configs')
+      .from('payment_gateways')
       .delete()
       .eq('id', id)
 

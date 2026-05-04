@@ -1,7 +1,3 @@
-// Auto-generated Supabase Database Types
-// Generated from project: ekalliptus (muyzxygtlwsfegzyvgcm)
-// Last updated: 2025-12-11
-
 export type Json =
   | string
   | number
@@ -52,6 +48,183 @@ export type Database = {
         }
         Relationships: []
       }
+      blog_posts: {
+        Row: {
+          author: string | null
+          body_html: string | null
+          category: string | null
+          created_at: string
+          description: string | null
+          featured: boolean
+          id: string
+          image: string | null
+          image_alt: string | null
+          locale: string
+          publish_date: string | null
+          seo_meta_description: string | null
+          seo_meta_title: string | null
+          seo_noindex: boolean
+          slug: string
+          status: Database['public']['Enums']['blog_post_status']
+          tags: string[]
+          title: string
+          update_date: string | null
+          updated_at: string
+        }
+        Insert: {
+          author?: string | null
+          body_html?: string | null
+          category?: string | null
+          created_at?: string
+          featured?: boolean
+          id?: string
+          image?: string | null
+          image_alt?: string | null
+          locale: string
+          publish_date?: string | null
+          seo_meta_description?: string | null
+          seo_meta_title?: string | null
+          seo_noindex?: boolean
+          slug: string
+          status?: Database['public']['Enums']['blog_post_status']
+          tags?: string[]
+          title: string
+          update_date?: string | null
+          updated_at?: string
+        }
+        Update: {
+          author?: string | null
+          body_html?: string | null
+          category?: string | null
+          created_at?: string
+          featured?: boolean
+          id?: string
+          image?: string | null
+          image_alt?: string | null
+          locale?: string
+          publish_date?: string | null
+          seo_meta_description?: string | null
+          seo_meta_title?: string | null
+          seo_noindex?: boolean
+          slug?: string
+          status?: Database['public']['Enums']['blog_post_status']
+          tags?: string[]
+          title?: string
+          update_date?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      consultations: {
+        Row: {
+          created_at: string
+          id: string
+          last_message: string | null
+          last_message_at: string | null
+          meeting_link: string | null
+          notes: string | null
+          order_id: string | null
+          payment_id: string | null
+          scheduled_date: string | null
+          scheduled_time: string | null
+          session_id: string | null
+          status: Database['public']['Enums']['consultation_status']
+          unread_count: number
+          updated_at: string
+          visitor_name: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          last_message?: string | null
+          last_message_at?: string | null
+          meeting_link?: string | null
+          notes?: string | null
+          order_id?: string | null
+          payment_id?: string | null
+          scheduled_date?: string | null
+          scheduled_time?: string | null
+          session_id?: string | null
+          status?: Database['public']['Enums']['consultation_status']
+          unread_count?: number
+          updated_at?: string
+          visitor_name?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          last_message?: string | null
+          last_message_at?: string | null
+          meeting_link?: string | null
+          notes?: string | null
+          order_id?: string | null
+          payment_id?: string | null
+          scheduled_date?: string | null
+          scheduled_time?: string | null
+          session_id?: string | null
+          status?: Database['public']['Enums']['consultation_status']
+          unread_count?: number
+          updated_at?: string
+          visitor_name?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "consultations_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "consultations_payment_id_fkey"
+            columns: ["payment_id"]
+            isOneToOne: false
+            referencedRelation: "payments"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      consultation_messages: {
+        Row: {
+          consultation_id: string
+          content: string
+          created_at: string
+          id: string
+          is_read: boolean
+          sender_name: string | null
+          sender_type: 'visitor' | 'bot' | 'admin'
+          session_id: string | null
+        }
+        Insert: {
+          consultation_id: string
+          content: string
+          created_at?: string
+          id?: string
+          is_read?: boolean
+          sender_name?: string | null
+          sender_type: 'visitor' | 'bot' | 'admin'
+          session_id?: string | null
+        }
+        Update: {
+          consultation_id?: string
+          content?: string
+          created_at?: string
+          id?: string
+          is_read?: boolean
+          sender_name?: string | null
+          sender_type?: 'visitor' | 'bot' | 'admin'
+          session_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "consultation_messages_consultation_id_fkey"
+            columns: ["consultation_id"]
+            isOneToOne: false
+            referencedRelation: "consultations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       order_attachments: {
         Row: {
           bucket: string
@@ -93,189 +266,166 @@ export type Database = {
           },
         ]
       }
-      order_items: {
-        Row: {
-          id: string
-          line_total: number
-          name: string
-          order_id: string
-          qty: number
-          unit_price: number
-        }
-        Insert: {
-          id?: string
-          line_total: number
-          name: string
-          order_id: string
-          qty: number
-          unit_price: number
-        }
-        Update: {
-          id?: string
-          line_total?: number
-          name?: string
-          order_id?: string
-          qty?: number
-          unit_price?: number
-        }
-        Relationships: [
-          {
-            foreignKeyName: "order_items_order_id_fkey"
-            columns: ["order_id"]
-            isOneToOne: false
-            referencedRelation: "orders"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      order_stats_cache: {
-        Row: {
-          cache_key: string
-          created_at: string
-          expires_at: string
-          result: Json
-        }
-        Insert: {
-          cache_key: string
-          created_at?: string
-          expires_at: string
-          result: Json
-        }
-        Update: {
-          cache_key?: string
-          created_at?: string
-          expires_at?: string
-          result?: Json
-        }
-        Relationships: []
-      }
       orders: {
         Row: {
           company: string | null
+          consultation_required: boolean
           created_at: string
           customer_name: string
-          delivery_method: string
-          deposit: number
-          discount: number
-          dpp: number
+          delivery_method: Database['public']['Enums']['delivery_method']
           email: string | null
-          fee: number
-          grand_total: number
           id: string
-          payment_ref: string | null
-          payment_url: string | null
-          ppn: number
-          remaining: number
+          payment_option: string | null
+          pricing: Json
           schedule_date: string
           schedule_time: string
           scope: Json
-          service_type: string
-          shipping_cost: number
-          status: string
-          subtotal: number
-          urgency: string
+          service_type: Database['public']['Enums']['service_type']
+          status: Database['public']['Enums']['order_status']
+          urgency: Database['public']['Enums']['urgency_level']
           user_id: string | null
           voucher_code: string | null
           whatsapp: string
         }
         Insert: {
           company?: string | null
+          consultation_required?: boolean
           created_at?: string
           customer_name: string
-          delivery_method: string
-          deposit: number
-          discount?: number
-          dpp: number
+          delivery_method?: Database['public']['Enums']['delivery_method']
           email?: string | null
-          fee?: number
-          grand_total: number
           id?: string
-          payment_ref?: string | null
-          payment_url?: string | null
-          ppn: number
-          remaining: number
+          payment_option?: string | null
+          pricing: Json
           schedule_date: string
           schedule_time: string
           scope: Json
-          service_type: string
-          shipping_cost?: number
-          status?: string
-          subtotal: number
-          urgency?: string
+          service_type: Database['public']['Enums']['service_type']
+          status?: Database['public']['Enums']['order_status']
+          urgency?: Database['public']['Enums']['urgency_level']
           user_id?: string | null
           voucher_code?: string | null
           whatsapp: string
         }
         Update: {
           company?: string | null
+          consultation_required?: boolean
           created_at?: string
           customer_name?: string
-          delivery_method?: string
-          deposit?: number
-          discount?: number
-          dpp?: number
+          delivery_method?: Database['public']['Enums']['delivery_method']
           email?: string | null
-          fee?: number
-          grand_total?: number
           id?: string
-          payment_ref?: string | null
-          payment_url?: string | null
-          ppn?: number
-          remaining?: number
+          payment_option?: string | null
+          pricing?: Json
           schedule_date?: string
           schedule_time?: string
           scope?: Json
-          service_type?: string
-          shipping_cost?: number
-          status?: string
-          subtotal?: number
-          urgency?: string
+          service_type?: Database['public']['Enums']['service_type']
+          status?: Database['public']['Enums']['order_status']
+          urgency?: Database['public']['Enums']['urgency_level']
           user_id?: string | null
           voucher_code?: string | null
           whatsapp?: string
         }
         Relationships: []
       }
-      payment_transactions: {
+      payment_gateways: {
+        Row: {
+          config: Json
+          created_at: string
+          display_name: string
+          fee_flat: number
+          fee_percent: number
+          id: string
+          is_active: boolean
+          name: Database['public']['Enums']['payment_gateway']
+          priority: number
+          supports_qr: boolean
+          updated_at: string
+        }
+        Insert: {
+          config: Json
+          created_at?: string
+          display_name: string
+          fee_flat?: number
+          fee_percent?: number
+          id?: string
+          is_active?: boolean
+          name: Database['public']['Enums']['payment_gateway']
+          priority?: number
+          supports_qr?: boolean
+          updated_at?: string
+        }
+        Update: {
+          config?: Json
+          created_at?: string
+          display_name?: string
+          fee_flat?: number
+          fee_percent?: number
+          id?: string
+          is_active?: boolean
+          name?: Database['public']['Enums']['payment_gateway']
+          priority?: number
+          supports_qr?: boolean
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      payments: {
         Row: {
           amount: number
-          completed_at: string | null
           created_at: string
-          gateway_response: Json | null
+          expires_at: string | null
+          gateway: Database['public']['Enums']['payment_gateway']
+          gateway_transaction_id: string | null
           id: string
-          method: string
+          metadata: Json
           order_id: string
-          reference: string | null
-          status: string
-          type: string
+          paid_at: string | null
+          payment_type: Database['public']['Enums']['payment_type']
+          payment_url: string | null
+          qr_string: string | null
+          status: Database['public']['Enums']['payment_status']
+          updated_at: string
+          webhook_received_at: string | null
         }
         Insert: {
           amount: number
-          completed_at?: string | null
           created_at?: string
-          gateway_response?: Json | null
+          expires_at?: string | null
+          gateway: Database['public']['Enums']['payment_gateway']
+          gateway_transaction_id?: string | null
           id?: string
-          method: string
+          metadata?: Json
           order_id: string
-          reference?: string | null
-          status?: string
-          type: string
+          paid_at?: string | null
+          payment_type: Database['public']['Enums']['payment_type']
+          payment_url?: string | null
+          qr_string?: string | null
+          status?: Database['public']['Enums']['payment_status']
+          updated_at?: string
+          webhook_received_at?: string | null
         }
         Update: {
           amount?: number
-          completed_at?: string | null
           created_at?: string
-          gateway_response?: Json | null
+          expires_at?: string | null
+          gateway?: Database['public']['Enums']['payment_gateway']
+          gateway_transaction_id?: string | null
           id?: string
-          method?: string
+          metadata?: Json
           order_id?: string
-          reference?: string | null
-          status?: string
-          type?: string
+          paid_at?: string | null
+          payment_type?: Database['public']['Enums']['payment_type']
+          payment_url?: string | null
+          qr_string?: string | null
+          status?: Database['public']['Enums']['payment_status']
+          updated_at?: string
+          webhook_received_at?: string | null
         }
         Relationships: [
           {
-            foreignKeyName: "payment_transactions_order_id_fkey"
+            foreignKeyName: "payments_order_id_fkey"
             columns: ["order_id"]
             isOneToOne: false
             referencedRelation: "orders"
@@ -357,72 +507,18 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      batch_update_order_status: {
-        Args: {
-          p_new_status: string
-          p_order_ids: string[]
-          p_updated_by?: string
-        }
-        Returns: {
-          error_message: string
-          result_order_id: string
-          success: boolean
-        }[]
-      }
-      cleanup_expired_cache: { Args: never; Returns: undefined }
-      create_order_with_attachments: {
-        Args: {
-          p_attachments?: Json
-          p_company: string
-          p_customer_name: string
-          p_delivery_method: string
-          p_deposit: number
-          p_discount: number
-          p_dpp: number
-          p_email: string
-          p_fee: number
-          p_grand_total: number
-          p_ppn: number
-          p_remaining: number
-          p_schedule_date: string
-          p_schedule_time: string
-          p_scope: Json
-          p_service_type: string
-          p_shipping_cost: number
-          p_status?: string
-          p_subtotal: number
-          p_urgency: string
-          p_user_id: string
-          p_voucher_code: string
-          p_whatsapp: string
-        }
-        Returns: string
-      }
-      get_transaction_statistics: {
-        Args: { end_date?: string; start_date?: string }
-        Returns: {
-          failed_transactions: number
-          pending_transactions: number
-          refunded_transactions: number
-          success_rate: number
-          successful_transactions: number
-          total_amount: number
-          total_transactions: number
-        }[]
-      }
-      is_admin: { Args: never; Returns: boolean }
-      log_sensitive_data_access: {
-        Args: { operation: string; record_id: string; table_name: string }
-        Returns: undefined
-      }
-      log_webhook_event: {
-        Args: { p_event_type: string; p_order_id: string; p_payload: Json }
-        Returns: string
-      }
-      sanitize_payment_data: { Args: { payment_data: Json }; Returns: Json }
+      [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      blog_post_status: 'draft' | 'published' | 'archived'
+      consultation_status: 'scheduled' | 'completed' | 'cancelled'
+      delivery_method: 'pickup' | 'delivery'
+      order_status: 'waiting_dp' | 'dp_paid' | 'waiting_onsite_payment' | 'onsite_paid' | 'cancelled'
+      payment_gateway: 'midtrans' | 'pakasir' | 'qiospay' | 'sanpay' | 'tripay'
+      payment_status: 'pending' | 'processing' | 'paid' | 'failed' | 'expired' | 'refunded'
+      payment_type: 'full' | 'dp' | 'remaining'
+      service_type: 'website' | 'wordpress' | 'mobile' | 'editing' | 'service_device'
+      urgency_level: 'normal' | 'express' | 'priority'
     }
     CompositeTypes: {
       [_ in never]: never
@@ -430,24 +526,36 @@ export type Database = {
   }
 }
 
-// Helper types for easier usage
 export type Tables<T extends keyof Database['public']['Tables']> = Database['public']['Tables'][T]['Row']
 export type TablesInsert<T extends keyof Database['public']['Tables']> = Database['public']['Tables'][T]['Insert']
 export type TablesUpdate<T extends keyof Database['public']['Tables']> = Database['public']['Tables'][T]['Update']
 
-// Convenience type aliases
 export type Order = Tables<'orders'>
 export type OrderInsert = TablesInsert<'orders'>
 export type OrderUpdate = TablesUpdate<'orders'>
 
-export type OrderItem = Tables<'order_items'>
-export type OrderItemInsert = TablesInsert<'order_items'>
-
 export type OrderAttachment = Tables<'order_attachments'>
 export type OrderAttachmentInsert = TablesInsert<'order_attachments'>
 
-export type PaymentTransaction = Tables<'payment_transactions'>
-export type PaymentTransactionInsert = TablesInsert<'payment_transactions'>
+export type Payment = Tables<'payments'>
+export type PaymentInsert = TablesInsert<'payments'>
+export type PaymentUpdate = TablesUpdate<'payments'>
+
+export type PaymentGatewayConfig = Tables<'payment_gateways'>
+export type PaymentGatewayConfigInsert = TablesInsert<'payment_gateways'>
+export type PaymentGatewayConfigUpdate = TablesUpdate<'payment_gateways'>
+
+export type Consultation = Tables<'consultations'>
+export type ConsultationInsert = TablesInsert<'consultations'>
+export type ConsultationUpdate = TablesUpdate<'consultations'>
+
+export type ConsultationMessage = Tables<'consultation_messages'>
+export type ConsultationMessageInsert = TablesInsert<'consultation_messages'>
+export type ConsultationMessageUpdate = TablesUpdate<'consultation_messages'>
+
+export type BlogPost = Tables<'blog_posts'>
+export type BlogPostInsert = TablesInsert<'blog_posts'>
+export type BlogPostUpdate = TablesUpdate<'blog_posts'>
 
 export type Voucher = Tables<'vouchers'>
 export type VoucherInsert = TablesInsert<'vouchers'>
@@ -458,73 +566,14 @@ export type ProfileInsert = TablesInsert<'profiles'>
 export type AuditLog = Tables<'audit_logs'>
 export type AuditLogInsert = TablesInsert<'audit_logs'>
 
-// Service type enum
-export type ServiceType = 'website' | 'wordpress' | 'mobile' | 'editing' | 'service_device'
-
-// Order status enum
-export type OrderStatus = 'waiting_dp' | 'dp_paid' | 'waiting_onsite_payment' | 'onsite_paid' | 'cancelled'
-
-// Payment status enum
-export type PaymentStatus = 'pending' | 'completed' | 'failed' | 'refunded'
-
-// Payment type enum
-export type PaymentType = 'dp' | 'full' | 'onsite' | 'refund'
-
-// Urgency enum
-export type Urgency = 'normal' | 'express' | 'priority'
-
-// Voucher type enum
-export type VoucherType = 'percent' | 'nominal'
-
-// User role enum
+export type ServiceType = Database['public']['Enums']['service_type']
+export type OrderStatus = Database['public']['Enums']['order_status']
+export type Urgency = Database['public']['Enums']['urgency_level']
+export type PaymentGateway = Database['public']['Enums']['payment_gateway']
+export type PaymentStatus = Database['public']['Enums']['payment_status']
+export type PaymentType = Database['public']['Enums']['payment_type']
+export type ConsultationStatus = Database['public']['Enums']['consultation_status']
+export type DeliveryMethod = Database['public']['Enums']['delivery_method']
+export type BlogPostStatus = Database['public']['Enums']['blog_post_status']
 export type UserRole = 'owner' | 'admin' | 'finance' | 'cs' | 'tech' | 'editor'
-
-// Payment gateway enum
-export type PaymentGateway = 'midtrans' | 'pakasir' | 'qiospay' | 'sanpay' | 'tripay'
-export type PaymentStatusNew = 'pending' | 'processing' | 'paid' | 'failed' | 'expired' | 'refunded'
-export type PaymentTypeNew = 'full' | 'dp' | 'remaining'
-export type ConsultationStatus = 'scheduled' | 'completed' | 'cancelled'
-
-// Interface definitions for new tables
-export interface Payment {
-  id: string
-  order_id: string
-  gateway: PaymentGateway
-  gateway_transaction_id: string | null
-  amount: number
-  payment_type: PaymentTypeNew
-  status: PaymentStatusNew
-  payment_url: string | null
-  qr_string: string | null
-  expires_at: string | null
-  paid_at: string | null
-  webhook_received_at: string | null
-  metadata: Json
-  created_at: string
-  updated_at: string
-}
-
-export interface PaymentGatewayConfig {
-  id: string
-  name: PaymentGateway
-  display_name: string
-  is_active: boolean
-  priority: number
-  config: Json
-  fee_percent: number
-  fee_flat: number
-  supports_qr: boolean
-}
-
-export interface Consultation {
-  id: string
-  order_id: string
-  payment_id: string | null
-  scheduled_date: string | null
-  scheduled_time: string | null
-  meeting_link: string | null
-  status: ConsultationStatus
-  notes: string | null
-  created_at: string
-  updated_at: string
-}
+export type VoucherType = 'percent' | 'nominal'

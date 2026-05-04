@@ -1,12 +1,23 @@
-import { getSupabase } from '../../lib/supabase'
+import { getSupabase } from '../../supabase'
+function generateUUID(): string {
+  // globalThis.crypto is available in Cloudflare Workers/workerd, Node.js 19+, and browsers
+  if (typeof globalThis.crypto !== 'undefined' && typeof globalThis.crypto.randomUUID === 'function') {
+    return globalThis.crypto.randomUUID()
+  }
+  // Fallback: manual UUID v4 generation
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+    const r = (Math.random() * 16) | 0
+    const v = c === 'x' ? r : (r & 0x3) | 0x8
+    return v.toString(16)
+  })
+}
 import { AdapterFactory, dbConfigToGatewayConfig } from '../adapters'
 import type {
-  PaymentAdapter,
   CreatePaymentRequest,
   CreatePaymentResponse,
   DbGatewayConfig
 } from '../types'
-import type { Payment, PaymentGateway as PaymentGatewayType, PaymentStatusNew, PaymentTypeNew } from '../../types/database'
+import type { Payment, PaymentGateway as PaymentGatewayType, PaymentStatus, PaymentType } from '../../../types/database'
 
 /**
  * Payment Service
@@ -17,7 +28,7 @@ export class PaymentService {
    * Get all active payment gateways ordered by priority
    */
   async getActiveGateways(): Promise<DbGatewayConfig[]> {
-    const supabase = getSupabase()
+    const supabase = getSupabase(true)
 
     if (!supabase) {
       throw new Error('Supabase client not initialized')
@@ -25,7 +36,7 @@ export class PaymentService {
 
     try {
       const { data, error } = await supabase
-        .from('payment_gateway_configs')
+        .from('payment_gateways')
         .select('*')
         .eq('is_active', true)
         .order('priority', { ascending: true })
@@ -41,7 +52,7 @@ export class PaymentService {
         display_name: config.display_name,
         is_active: config.is_active,
         priority: config.priority,
-        config: config.config as DbGatewayConfig['config'],
+        config: config.config as unknown as DbGatewayConfig['config'],
         fee_percent: config.fee_percent,
         fee_flat: config.fee_flat,
         supports_qr: config.supports_qr
@@ -56,7 +67,7 @@ export class PaymentService {
    * Get specific gateway configuration by name
    */
   async getGateway(name: PaymentGatewayType): Promise<DbGatewayConfig | null> {
-    const supabase = getSupabase()
+    const supabase = getSupabase(true)
 
     if (!supabase) {
       throw new Error('Supabase client not initialized')
@@ -64,7 +75,7 @@ export class PaymentService {
 
     try {
       const { data, error } = await supabase
-        .from('payment_gateway_configs')
+        .from('payment_gateways')
         .select('*')
         .eq('name', name)
         .single()
@@ -79,7 +90,7 @@ export class PaymentService {
         display_name: data.display_name,
         is_active: data.is_active,
         priority: data.priority,
-        config: data.config as DbGatewayConfig['config'],
+        config: data.config as unknown as DbGatewayConfig['config'],
         fee_percent: data.fee_percent,
         fee_flat: data.fee_flat,
         supports_qr: data.supports_qr
@@ -105,8 +116,8 @@ export class PaymentService {
     orderId: string,
     gatewayName: PaymentGatewayType,
     request: CreatePaymentRequest
-  ): Promise<Payment & { paymentUrl?: string; qrString?: string }> {
-    const supabase = getSupabase()
+  ): Promise<CreatePaymentResponse & { dbPayment?: Payment }> {
+    const supabase = getSupabase(true)
 
     if (!supabase) {
       throw new Error('Supabase client not initialized')
@@ -138,18 +149,17 @@ export class PaymentService {
     const paymentResponse: CreatePaymentResponse = await adapter.createPayment(request)
 
     if (!paymentResponse.success || !paymentResponse.paymentId) {
-      throw new Error(paymentResponse.error || 'Failed to create payment')
+      return paymentResponse
     }
 
-    // Save payment to database
     const paymentData = {
-      id: paymentResponse.paymentId,
+      id: generateUUID(),
       order_id: orderId,
       gateway: gatewayName,
       gateway_transaction_id: paymentResponse.transactionId || null,
       amount: totalAmount,
-      payment_type: request.paymentType as PaymentTypeNew,
-      status: 'pending' as PaymentStatusNew,
+      payment_type: request.paymentType as PaymentType,
+      status: 'pending' as PaymentStatus,
       payment_url: paymentResponse.paymentUrl || null,
       qr_string: paymentResponse.qrString || null,
       expires_at: paymentResponse.expiresAt || null,
@@ -175,17 +185,23 @@ export class PaymentService {
         .single()
 
       if (error) {
-        throw new Error(`Failed to save payment: ${error.message}`)
+        console.error('Failed to save payment:', error.message)
+        return {
+          success: false,
+          error: `Failed to save payment record: ${error.message}`
+        }
       }
 
       return {
-        ...data,
-        paymentUrl: paymentResponse.paymentUrl,
-        qrString: paymentResponse.qrString
+        ...paymentResponse,
+        dbPayment: data
       }
     } catch (err) {
       console.error('Error saving payment:', err)
-      throw err
+      return {
+        success: false,
+        error: err instanceof Error ? err.message : 'Failed to save payment'
+      }
     }
   }
 
@@ -193,7 +209,7 @@ export class PaymentService {
    * Get payment by ID
    */
   async getPayment(paymentId: string): Promise<Payment | null> {
-    const supabase = getSupabase()
+    const supabase = getSupabase(true)
 
     if (!supabase) {
       throw new Error('Supabase client not initialized')
@@ -221,7 +237,7 @@ export class PaymentService {
    * Get payment by order ID
    */
   async getPaymentByOrderId(orderId: string): Promise<Payment[]> {
-    const supabase = getSupabase()
+    const supabase = getSupabase(true)
 
     if (!supabase) {
       throw new Error('Supabase client not initialized')
@@ -250,14 +266,14 @@ export class PaymentService {
    */
   async updatePaymentStatus(
     paymentId: string,
-    status: PaymentStatusNew,
+    status: PaymentStatus,
     additionalData?: {
       paidAt?: string
       webhookReceivedAt?: string
       metadata?: Record<string, any>
     }
   ): Promise<Payment | null> {
-    const supabase = getSupabase()
+    const supabase = getSupabase(true)
 
     if (!supabase) {
       throw new Error('Supabase client not initialized')
@@ -319,7 +335,7 @@ export class PaymentService {
     gatewayStatus?: string
     error?: string
   }> {
-    const supabase = getSupabase()
+    const supabase = getSupabase(true)
 
     if (!supabase) {
       throw new Error('Supabase client not initialized')
@@ -388,8 +404,8 @@ export class PaymentService {
   /**
    * Map gateway status to payment status
    */
-  private mapGatewayStatus(gatewayStatus: string): PaymentStatusNew {
-    const statusMap: Record<string, PaymentStatusNew> = {
+  private mapGatewayStatus(gatewayStatus: string): PaymentStatus {
+    const statusMap: Record<string, PaymentStatus> = {
       'pending': 'pending',
       'processing': 'pending',
       'paid': 'paid',

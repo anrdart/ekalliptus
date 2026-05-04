@@ -1,0 +1,24 @@
+---
+import AdminLayout from '../layout.astro'
+import { CreditCard, MessageSquare, ShieldCheck } from 'lucide-astro'
+---
+
+<AdminLayout title="Settings">
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <a href="/admin/payments/gateways" class="glass-card rounded-2xl p-5 hover:bg-accent/40 transition cursor-interactive">
+      <CreditCard class="h-6 w-6 text-primary mb-4" />
+      <h2 class="font-semibold mb-1">Payment Gateways</h2>
+      <p class="text-sm text-muted-foreground">Configure Midtrans, Pakasir, fees, and QR support.</p>
+    </a>
+    <a href="/admin/consultations" class="glass-card rounded-2xl p-5 hover:bg-accent/40 transition cursor-interactive">
+      <MessageSquare class="h-6 w-6 text-primary mb-4" />
+      <h2 class="font-semibold mb-1">Consultations</h2>
+      <p class="text-sm text-muted-foreground">Review visitor handoffs and admin replies.</p>
+    </a>
+    <div class="glass-card rounded-2xl p-5">
+      <ShieldCheck class="h-6 w-6 text-primary mb-4" />
+      <h2 class="font-semibold mb-1">Session</h2>
+      <p class="text-sm text-muted-foreground">Admin auth hooks are ready for your production identity layer.</p>
+    </div>
+  </div>
+</AdminLayout>

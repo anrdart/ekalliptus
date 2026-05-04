@@ -1,5 +1,6 @@
 ---
-import { Menu, X, LayoutDashboard, ShoppingCart, Payment, MessageSquare, Settings, LogOut, User } from 'lucide-astro'
+import '../../styles/global.css'
+import { Menu, X, LayoutDashboard, ShoppingCart, CreditCard as Payment, MessageSquare, Settings, LogOut, User } from 'lucide-astro'
 
 interface Props {
   title?: string
@@ -16,6 +17,10 @@ const sidebarLinks = [
 ]
 
 const currentPath = Astro.url.pathname
+
+function isActivePath(href: string): boolean {
+  return href === '/admin' ? currentPath === href : currentPath.startsWith(href)
+}
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -41,8 +46,10 @@ const currentPath = Astro.url.pathname
       {sidebarLinks.map((link) => (
         <a
           href={link.href}
-          class="flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium transition hover:bg-accent cursor-interactive"
-          class:active={currentPath === link.href}
+          class:list={[
+            'flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium transition hover:bg-accent cursor-interactive sidebar-link',
+            { active: isActivePath(link.href) }
+          ]}
         >
           <link.icon class="h-5 w-5" />
           {link.label}
@@ -85,8 +92,10 @@ const currentPath = Astro.url.pathname
         {sidebarLinks.map((link) => (
           <a
             href={link.href}
-            class="sidebar-link flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium transition cursor-interactive"
-            class:active={currentPath === link.href}
+            class:list={[
+              'sidebar-link flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium transition cursor-interactive',
+              { active: isActivePath(link.href) }
+            ]}
           >
             <link.icon class="h-5 w-5 flex-shrink-0" />
             {link.label}

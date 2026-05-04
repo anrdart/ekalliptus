@@ -1,5 +1,6 @@
 import type { APIRoute } from 'astro'
 import { getSupabase } from '../../../lib/supabase'
+import type { ConsultationMessageInsert } from '../../../types/database'
 
 export const POST: APIRoute = async ({ request }) => {
   try {
@@ -15,7 +16,7 @@ export const POST: APIRoute = async ({ request }) => {
       })
     }
 
-    const supabase = getSupabase()
+    const supabase = getSupabase(true)
 
     const sessionId = session_id || crypto.randomUUID()
 
@@ -38,7 +39,7 @@ export const POST: APIRoute = async ({ request }) => {
           .single()
 
         if (!consultError && consultation) {
-          const messagesToInsert = []
+          const messagesToInsert: ConsultationMessageInsert[] = []
 
           if (history && Array.isArray(history)) {
             for (const entry of history) {
@@ -47,6 +48,7 @@ export const POST: APIRoute = async ({ request }) => {
               if (content) {
                 messagesToInsert.push({
                   consultation_id: consultation.id,
+                  session_id: sessionId,
                   sender_type: senderType,
                   sender_name: senderType === 'bot' ? 'eBot' : visitorName,
                   content: content.slice(0, 2000),
@@ -58,6 +60,7 @@ export const POST: APIRoute = async ({ request }) => {
           if (message) {
             messagesToInsert.push({
               consultation_id: consultation.id,
+              session_id: sessionId,
               sender_type: 'visitor',
               sender_name: visitorName,
               content: message.slice(0, 2000),

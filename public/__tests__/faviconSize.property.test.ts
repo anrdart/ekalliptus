@@ -50,6 +50,10 @@ function getFileSizeKB(filePath: string): number {
   return stat.size / 1024
 }
 
+function getFileSizeBytes(filePath: string): number {
+  return statSync(filePath).size
+}
+
 describe('Property 5: Favicon Size Limit', () => {
   const publicDir = 'public'
   const faviconFiles = findFaviconFiles(publicDir)
@@ -64,9 +68,9 @@ describe('Property 5: Favicon Size Limit', () => {
     fc.assert(
       fc.property(
         fc.constantFrom(...faviconFiles),
-        (filePath) => {
+        (filePath: string) => {
           const sizeKB = getFileSizeKB(filePath)
-          const isUnderLimit = sizeKB < MAX_FAVICON_SIZE_KB
+          const isUnderLimit = getFileSizeBytes(filePath) < MAX_FAVICON_SIZE_BYTES
           
           if (!isUnderLimit) {
             console.error(`Favicon ${filePath} is ${sizeKB.toFixed(2)}KB, exceeds ${MAX_FAVICON_SIZE_KB}KB limit`)

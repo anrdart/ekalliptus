@@ -1,11 +1,13 @@
 import { MidtransAdapter } from './midtrans.adapter'
 import { PakasirAdapter } from './pakasir.adapter'
 import type { PaymentAdapter, GatewayConfig, DbGatewayConfig } from '../types'
-import type { PaymentGateway } from '../../types/database'
+import type { PaymentGateway } from '../../../types/database'
+
+type AdapterConstructor = new (config: GatewayConfig) => PaymentAdapter
 
 // Adapter factory
 export class AdapterFactory {
-  private static adapters: Map<PaymentGateway, new (config: GatewayConfig) => PaymentAdapter> = new Map([
+  private static adapters = new Map<PaymentGateway, AdapterConstructor>([
     ['midtrans', MidtransAdapter],
     ['pakasir', PakasirAdapter]
   ])
@@ -22,15 +24,32 @@ export class AdapterFactory {
 }
 
 // Convert DB config to GatewayConfig
+function getEnvVar(key: string): string {
+  // Use import.meta.env which Astro exposes
+  return (import.meta.env as any)[key] || ''
+}
+
 export function dbConfigToGatewayConfig(dbConfig: DbGatewayConfig): GatewayConfig {
+  const envPrefix = dbConfig.name.toUpperCase()
+  
+  const apiKey = dbConfig.config.apiKey || getEnvVar(`${envPrefix}_API_KEY`) || getEnvVar(`VITE_${envPrefix}_API_KEY`)
+  const merchantCode = dbConfig.config.merchantCode || getEnvVar(`${envPrefix}_MERCHANT_CODE`) || getEnvVar(`VITE_${envPrefix}_MERCHANT_CODE`)
+  const clientId = dbConfig.config.clientId || getEnvVar(`${envPrefix}_CLIENT_ID`) || getEnvVar(`VITE_${envPrefix}_CLIENT_ID`)
+  const clientKey = dbConfig.config.clientKey || getEnvVar(`${envPrefix}_CLIENT_KEY`) || getEnvVar(`VITE_${envPrefix}_CLIENT_KEY`)
+  const serverKey = dbConfig.config.serverKey || getEnvVar(`${envPrefix}_SERVER_KEY`) || getEnvVar(`VITE_${envPrefix}_SERVER_KEY`)
+  const webhookSecret = dbConfig.config.webhookSecret || getEnvVar(`${envPrefix}_WEBHOOK_SECRET`) || getEnvVar(`VITE_${envPrefix}_WEBHOOK_SECRET`)
+  
+  const envIsProd = getEnvVar(`${envPrefix}_IS_PRODUCTION`) === 'true'
+  const isProduction = dbConfig.config.isProduction !== undefined ? dbConfig.config.isProduction : envIsProd
+
   return {
-    apiKey: dbConfig.config.apiKey || '',
-    merchantCode: dbConfig.config.merchantCode,
-    clientId: dbConfig.config.clientId,
-    clientKey: dbConfig.config.clientKey,
-    serverKey: dbConfig.config.serverKey,
-    webhookSecret: dbConfig.config.webhookSecret,
-    isProduction: dbConfig.config.isProduction || false
+    apiKey,
+    merchantCode,
+    clientId,
+    clientKey,
+    serverKey,
+    webhookSecret,
+    isProduction
   }
 }
 

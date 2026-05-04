@@ -1,5 +1,6 @@
 import type { APIRoute } from 'astro'
 import { getSupabase } from '../../../lib/supabase'
+import type { ConsultationMessageInsert } from '../../../types/database'
 
 const CONSULT_TOKEN = 'ekalliptus-consult-2026'
 
@@ -10,9 +11,6 @@ function isAuthorized(request: Request): boolean {
 
 export const POST: APIRoute = async ({ request }) => {
   try {
-    const origin = request.headers.get('origin') || ''
-    const host = request.headers.get('host') || ''
-
     if (!isAuthorized(request)) {
       return new Response(JSON.stringify({ error: 'Unauthorized' }), {
         status: 401,
@@ -32,7 +30,7 @@ export const POST: APIRoute = async ({ request }) => {
       })
     }
 
-    const supabase = getSupabase()
+    const supabase = getSupabase(true)
 
     if (!supabase) {
       return new Response(JSON.stringify({ error: 'Service unavailable' }), {
@@ -70,27 +68,33 @@ export const POST: APIRoute = async ({ request }) => {
         })
       }
 
+      const messageRecord: ConsultationMessageInsert = {
+        consultation_id: newConsultation.id,
+        session_id,
+        sender_type: 'visitor',
+        sender_name: visitorName,
+        content: message.slice(0, 2000),
+      }
+
       const { error: msgError } = await supabase
         .from('consultation_messages')
-        .insert({
-          consultation_id: newConsultation.id,
-          sender_type: 'visitor',
-          sender_name: visitorName,
-          content: message.slice(0, 2000),
-        })
+        .insert(messageRecord)
 
       if (msgError) {
         console.error('Failed to insert message:', msgError.message)
       }
     } else {
+      const messageRecord: ConsultationMessageInsert = {
+        consultation_id: consultation.id,
+        session_id,
+        sender_type: 'visitor',
+        sender_name: visitorName,
+        content: message.slice(0, 2000),
+      }
+
       const { error: msgError } = await supabase
         .from('consultation_messages')
-        .insert({
-          consultation_id: consultation.id,
-          sender_type: 'visitor',
-          sender_name: visitorName,
-          content: message.slice(0, 2000),
-        })
+        .insert(messageRecord)
 
       if (msgError) {
         console.error('Failed to insert message:', msgError.message)

@@ -14,12 +14,26 @@ const orders = [
   { id: 'ORD-008', customer: 'Frank Miller', email: 'frank@example.com', service: 'UI/UX Design', amount: '$950', status: 'pending', date: '2026-04-16' }
 ]
 
-const services = ['All Services', 'Web Development', 'UI/UX Design', 'SEO Optimization', 'Content Writing', 'Mobile App']
+const services = [
+  { label: 'All Services', value: '' },
+  { label: 'Website', value: 'website' },
+  { label: 'WordPress', value: 'wordpress' },
+  { label: 'Mobile App', value: 'mobile' },
+  { label: 'Editing', value: 'editing' },
+  { label: 'Service Device', value: 'service_device' }
+]
 
-const statuses = ['All Status', 'completed', 'pending', 'processing', 'cancelled']
+const statuses = [
+  { label: 'All Status', value: '' },
+  { label: 'Waiting DP', value: 'waiting_dp' },
+  { label: 'DP Paid', value: 'dp_paid' },
+  { label: 'Waiting Onsite Payment', value: 'waiting_onsite_payment' },
+  { label: 'Onsite Paid', value: 'onsite_paid' },
+  { label: 'Cancelled', value: 'cancelled' }
+]
 
-const currentPage = 1
-const totalPages = 5
+const currentPage: number = 1
+const totalPages: number = 5
 ---
 
 <AdminLayout title="Orders">
@@ -48,7 +62,7 @@ const totalPages = 5
             class="glass-input appearance-none rounded-xl pl-4 pr-10 py-2.5 text-sm outline-none cursor-interactive"
           >
             {statuses.map((status) => (
-              <option value={status === 'All Status' ? '' : status}>{status}</option>
+              <option value={status.value}>{status.label}</option>
             ))}
           </select>
           <Filter class="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
@@ -61,7 +75,7 @@ const totalPages = 5
             class="glass-input appearance-none rounded-xl pl-4 pr-10 py-2.5 text-sm outline-none cursor-interactive"
           >
             {services.map((service) => (
-              <option value={service === 'All Services' ? '' : service}>{service}</option>
+              <option value={service.value}>{service.label}</option>
             ))}
           </select>
           <ArrowUpDown class="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
@@ -148,8 +162,10 @@ const totalPages = 5
         <div class="hidden sm:flex items-center gap-1" id="page-numbers">
           {Array.from({ length: Math.min(totalPages, 5) }, (_, i) => i + 1).map((page) => (
             <button
-              class="page-btn w-10 h-10 rounded-xl text-sm font-medium transition cursor-interactive"
-              class:active={currentPage === page}
+              class:list={[
+                'page-btn w-10 h-10 rounded-xl text-sm font-medium transition cursor-interactive',
+                { active: currentPage === page }
+              ]}
               data-page={page}
             >
               {page}
@@ -177,18 +193,22 @@ const totalPages = 5
     border: 1px solid hsl(var(--border));
   }
 
+  .status-badge[data-status="onsite_paid"],
   .status-badge[data-status="completed"] {
     background: hsl(142 76% 36% / 0.15);
     color: hsl(142 76% 36%);
     border-color: hsl(142 76% 36% / 0.3);
   }
 
+  .status-badge[data-status="waiting_dp"],
+  .status-badge[data-status="waiting_onsite_payment"],
   .status-badge[data-status="pending"] {
     background: hsl(38 92% 50% / 0.15);
     color: hsl(38 92% 50%);
     border-color: hsl(38 92% 50% / 0.3);
   }
 
+  .status-badge[data-status="dp_paid"],
   .status-badge[data-status="processing"] {
     background: hsl(199 89% 48% / 0.15);
     color: hsl(199 89% 48%);
@@ -232,13 +252,33 @@ const totalPages = 5
 </style>
 
 <script>
-  const searchInput = document.getElementById('search-input')
-  const statusFilter = document.getElementById('status-filter')
-  const serviceFilter = document.getElementById('service-filter')
+  type AdminOrder = {
+    id?: string
+    order_id?: string
+    customer_name?: string
+    customer?: string
+    email?: string | null
+    service?: string
+    service_type?: string
+    amount?: number | string
+    pricing?: { grand_total?: number } | null
+    created_at?: string
+    status?: string
+  }
+
+  type Pagination = {
+    currentPage: number
+    totalPages: number
+    total: number
+  }
+
+  const searchInput = document.getElementById('search-input') as HTMLInputElement | null
+  const statusFilter = document.getElementById('status-filter') as HTMLSelectElement | null
+  const serviceFilter = document.getElementById('service-filter') as HTMLSelectElement | null
   const ordersTableBody = document.getElementById('orders-table-body')
   const emptyState = document.getElementById('empty-state')
-  const prevPageBtn = document.getElementById('prev-page')
-  const nextPageBtn = document.getElementById('next-page')
+  const prevPageBtn = document.getElementById('prev-page') as HTMLButtonElement | null
+  const nextPageBtn = document.getElementById('next-page') as HTMLButtonElement | null
   const paginationInfo = document.getElementById('pagination-info')
   const pageNumbers = document.getElementById('page-numbers')
 
@@ -269,7 +309,16 @@ const totalPages = 5
     }
   }
 
-  function createRow(order) {
+  function formatCurrency(amount: number | string | undefined): string {
+    const value = Number(amount || 0)
+    return new Intl.NumberFormat('id-ID', {
+      style: 'currency',
+      currency: 'IDR',
+      maximumFractionDigits: 0
+    }).format(value)
+  }
+
+  function createRow(order: AdminOrder) {
     const tr = document.createElement('tr')
     tr.className = 'border-b border-border/50 hover:bg-accent/50 transition'
 
@@ -287,7 +336,7 @@ const totalPages = 5
       <td class="p-4 text-sm text-muted-foreground hidden sm:table-cell"></td>
       <td class="p-4"></td>
       <td class="p-4">
-        <a href="/admin/orders/${order.id}" class="inline-flex items-center gap-1 text-sm text-primary hover:underline">
+        <a href="/admin/orders/${order.id || order.order_id || ''}" class="inline-flex items-center gap-1 text-sm text-primary hover:underline">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
           <span class="hidden sm:inline">View</span>
         </a>
@@ -296,25 +345,26 @@ const totalPages = 5
 
     // Use textContent for safe text insertion
     const cells = tr.querySelectorAll('td')
-    cells[0].textContent = order.id || order.order_id
-    cells[1].querySelector('.font-medium').textContent = order.customer_name || order.customer || 'N/A'
-    cells[1].querySelector('.text-muted-foreground').textContent = order.email || 'N/A'
+    cells[0].textContent = order.id || order.order_id || 'N/A'
+    cells[1].querySelector('.font-medium')!.textContent = order.customer_name || order.customer || 'N/A'
+    cells[1].querySelector('.text-muted-foreground')!.textContent = order.email || 'N/A'
     cells[2].textContent = order.email || 'N/A'
-    cells[3].textContent = order.service || 'N/A'
-    cells[4].textContent = '$' + (order.amount || '0')
-    cells[5].textContent = new Date(order.created_at).toLocaleDateString()
+    cells[3].textContent = order.service || order.service_type || 'N/A'
+    cells[4].textContent = formatCurrency(order.amount || order.pricing?.grand_total)
+    cells[5].textContent = order.created_at ? new Date(order.created_at).toLocaleDateString('id-ID') : 'N/A'
 
     // Status badge
     const statusBadge = document.createElement('span')
     statusBadge.className = 'status-badge inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium'
-    statusBadge.dataset.status = order.status
-    statusBadge.textContent = order.status
+    statusBadge.dataset.status = order.status || 'waiting_dp'
+    statusBadge.textContent = order.status || 'waiting_dp'
     cells[6].appendChild(statusBadge)
 
     return tr
   }
 
-  function renderOrders(orders) {
+  function renderOrders(orders: AdminOrder[]) {
+    if (!ordersTableBody || !emptyState) return
     ordersTableBody.innerHTML = ''
 
     if (orders.length === 0) {
@@ -328,7 +378,7 @@ const totalPages = 5
     })
   }
 
-  function updatePagination(pagination) {
+  function updatePagination(pagination: Pagination) {
     if (prevPageBtn) prevPageBtn.disabled = pagination.currentPage === 1
     if (nextPageBtn) nextPageBtn.disabled = pagination.currentPage === pagination.totalPages
 
@@ -349,7 +399,7 @@ const totalPages = 5
         if (i === pagination.currentPage) {
           btn.classList.add('active')
         }
-        btn.textContent = i
+        btn.textContent = String(i)
         btn.addEventListener('click', () => {
           currentFilters.page = i
           fetchOrders()
@@ -361,11 +411,11 @@ const totalPages = 5
 
   // Event listeners for filters
   if (searchInput) {
-    let debounceTimer
+    let debounceTimer: ReturnType<typeof setTimeout> | undefined
     searchInput.addEventListener('input', (e) => {
       clearTimeout(debounceTimer)
       debounceTimer = setTimeout(() => {
-        currentFilters.search = e.target.value
+        currentFilters.search = (e.target as HTMLInputElement).value
         currentFilters.page = 1
         fetchOrders()
       }, 300)
@@ -374,7 +424,7 @@ const totalPages = 5
 
   if (statusFilter) {
     statusFilter.addEventListener('change', (e) => {
-      currentFilters.status = e.target.value
+      currentFilters.status = (e.target as HTMLSelectElement).value
       currentFilters.page = 1
       fetchOrders()
     })
@@ -382,7 +432,7 @@ const totalPages = 5
 
   if (serviceFilter) {
     serviceFilter.addEventListener('change', (e) => {
-      currentFilters.service = e.target.value
+      currentFilters.service = (e.target as HTMLSelectElement).value
       currentFilters.page = 1
       fetchOrders()
     })
