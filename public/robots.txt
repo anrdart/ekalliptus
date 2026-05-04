@@ -3,9 +3,12 @@
 User-agent: *
 Allow: /
 Disallow: /api/
+Disallow: /admin/
 Disallow: /order-success
-Disallow: /payment
-Disallow: /*.json$
-Disallow: /*.md$
+Disallow: /payment/
+Allow: /blog/feed.json
+Allow: /blog/rss.xml
+Allow: /llms.txt
 
 Sitemap: https://ekalliptus.com/sitemap-index.xml
+Sitemap: https://ekalliptus.com/blog/sitemap.xml
