@@ -12,16 +12,30 @@ const siteUrl = 'https://ekalliptus.com'
 const organization = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
+  '@id': `${siteUrl}#organization`,
   name: 'Ekalliptus Digital',
   url: siteUrl,
   logo: `${siteUrl}/ekalliptus_rounded.webp`,
   description: 'Digital agency Indonesia spesialis website development, WordPress, mobile app, dan multimedia editing.',
   email: 'ekalliptus@gmail.com',
   telephone: '+6281999900306',
+  foundingDate: '2023',
+  numberOfEmployees: { '@type': 'QuantitativeValue', minValue: 1, maxValue: 10 },
+  knowsAbout: [
+    'Web Development',
+    'Mobile App Development',
+    'WordPress Development',
+    'UI/UX Design',
+    'Photo & Video Editing',
+    'Astro Framework',
+    'React Native',
+    'Flutter'
+  ],
   address: {
     '@type': 'PostalAddress',
     addressLocality: 'Tegal',
     addressRegion: 'Jawa Tengah',
+    postalCode: '52100',
     addressCountry: 'ID'
   },
   sameAs: [
@@ -34,11 +48,16 @@ const organization = {
 const localBusiness = {
   '@context': 'https://schema.org',
   '@type': 'ProfessionalService',
+  '@id': `${siteUrl}#localbusiness`,
   name: 'Ekalliptus Digital',
   url: siteUrl,
   image: `${siteUrl}/ekalliptus_rounded.webp`,
   telephone: '+6281999900306',
   email: 'ekalliptus@gmail.com',
+  openingHours: 'Mo-Fr 09:00-17:00',
+  currenciesAccepted: 'IDR',
+  paymentAccepted: 'Cash, Bank Transfer, E-Wallet, Credit Card',
+  hasMap: 'https://www.google.com/maps/place/Tegal',
   address: {
     '@type': 'PostalAddress',
     addressLocality: 'Tegal',
@@ -52,10 +71,11 @@ const localBusiness = {
     latitude: -6.8707,
     longitude: 109.1250
   },
-  areaServed: {
-    '@type': 'Country',
-    name: 'Indonesia'
-  },
+  areaServed: [
+    { '@type': 'Country', name: 'Indonesia' },
+    { '@type': 'City', name: 'Tegal' },
+    { '@type': 'AdministrativeArea', name: 'Jawa Tengah' }
+  ],
   serviceType: [
     'Web Development',
     'Mobile App Development',
@@ -68,10 +88,30 @@ const localBusiness = {
 const webSite = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
+  '@id': `${siteUrl}#website`,
   name: 'Ekalliptus Digital',
   url: siteUrl,
   description: 'Digital agency Indonesia spesialis website development, WordPress, mobile app, dan multimedia editing.',
-  inLanguage: locale
+  inLanguage: locale,
+  publisher: { '@id': `${siteUrl}#organization` },
+  potentialAction: {
+    '@type': 'SearchAction',
+    target: {
+      '@type': 'EntryPoint',
+      urlTemplate: `${siteUrl}/blog?q={search_term_string}`
+    },
+    'query-input': 'required name=search_term_string'
+  }
+}
+
+const teamPerson = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  '@id': `${siteUrl}#tim-ekalliptus`,
+  name: 'Tim Ekalliptus',
+  jobTitle: 'Digital Agency Team',
+  worksFor: { '@id': `${siteUrl}#organization` },
+  url: `${siteUrl}/about`
 }
 
 const services = [
@@ -79,45 +119,71 @@ const services = [
     '@type': 'Service',
     name: 'Website Development',
     description: 'Layanan pembuatan website company profile, e-commerce, dan aplikasi web custom dengan teknologi modern.',
-    url: `${siteUrl}/#services`,
-    provider: { '@type': 'Organization', name: 'Ekalliptus Digital' }
+    url: `${siteUrl}/services/website`,
+    provider: { '@id': `${siteUrl}#organization` },
+    areaServed: { '@type': 'Country', name: 'Indonesia' },
+    offers: { '@type': 'Offer', priceCurrency: 'IDR', price: '1500000', availability: 'https://schema.org/InStock' }
   },
   {
     '@type': 'Service',
     name: 'Mobile App Development',
     description: 'Pengembangan aplikasi mobile cross-platform dengan React Native dan Flutter untuk iOS dan Android.',
-    url: `${siteUrl}/#services`,
-    provider: { '@type': 'Organization', name: 'Ekalliptus Digital' }
+    url: `${siteUrl}/services/mobile-app`,
+    provider: { '@id': `${siteUrl}#organization` },
+    areaServed: { '@type': 'Country', name: 'Indonesia' },
+    offers: { '@type': 'Offer', priceCurrency: 'IDR', price: '5000000', availability: 'https://schema.org/InStock' }
   },
   {
     '@type': 'Service',
     name: 'WordPress Development',
     description: 'Pembuatan dan customisasi website WordPress dengan plugin custom, optimasi performa, dan integrasi sistem.',
-    url: `${siteUrl}/#services`,
-    provider: { '@type': 'Organization', name: 'Ekalliptus Digital' }
-  },
-  {
-    '@type': 'Service',
-    name: 'Photo & Video Editing',
-    description: 'Layanan editing foto dan video profesional untuk kebutuhan bisnis, social media, dan marketing.',
-    url: `${siteUrl}/#services`,
-    provider: { '@type': 'Organization', name: 'Ekalliptus Digital' }
+    url: `${siteUrl}/services/wordpress`,
+    provider: { '@id': `${siteUrl}#organization` },
+    areaServed: { '@type': 'Country', name: 'Indonesia' },
+    offers: { '@type': 'Offer', priceCurrency: 'IDR', price: '2000000', availability: 'https://schema.org/InStock' }
   },
   {
     '@type': 'Service',
     name: 'UI/UX Design',
     description: 'Desain antarmuka pengguna dan pengalaman pengguna yang intuitif, modern, dan user-centric.',
-    url: `${siteUrl}/#services`,
-    provider: { '@type': 'Organization', name: 'Ekalliptus Digital' }
+    url: `${siteUrl}/services/ui-ux`,
+    provider: { '@id': `${siteUrl}#organization` },
+    areaServed: { '@type': 'Country', name: 'Indonesia' },
+    offers: { '@type': 'Offer', priceCurrency: 'IDR', price: '1000000', availability: 'https://schema.org/InStock' }
+  },
+  {
+    '@type': 'Service',
+    name: 'Photo & Video Editing',
+    description: 'Layanan editing foto dan video profesional untuk kebutuhan bisnis, social media, dan marketing.',
+    url: `${siteUrl}/services/multimedia`,
+    provider: { '@id': `${siteUrl}#organization` },
+    areaServed: { '@type': 'Country', name: 'Indonesia' },
+    offers: { '@type': 'Offer', priceCurrency: 'IDR', price: '50000', availability: 'https://schema.org/InStock' }
   },
   {
     '@type': 'Service',
     name: 'Maintenance Website',
     description: 'Paket maintenance website rutin meliputi update, backup, monitoring keamanan, dan technical support.',
-    url: `${siteUrl}/#services`,
-    provider: { '@type': 'Organization', name: 'Ekalliptus Digital' }
+    url: `${siteUrl}/services/maintenance`,
+    provider: { '@id': `${siteUrl}#organization` },
+    areaServed: { '@type': 'Country', name: 'Indonesia' },
+    offers: { '@type': 'Offer', priceCurrency: 'IDR', price: '500000', availability: 'https://schema.org/InStock' }
   }
 ]
+
+const howToOrder = {
+  '@context': 'https://schema.org',
+  '@type': 'HowTo',
+  name: 'Cara Order Layanan Ekalliptus Digital',
+  description: 'Panduan langkah demi langkah untuk memesan layanan digital di Ekalliptus.',
+  totalTime: 'PT15M',
+  step: [
+    { '@type': 'HowToStep', position: 1, name: 'Isi Form Order', text: 'Pilih layanan dan isi form order dengan detail kebutuhan project Anda.' },
+    { '@type': 'HowToStep', position: 2, name: 'Konsultasi & Briefing', text: 'Tim kami akan menghubungi Anda untuk konsultasi dan menyusun brief project.' },
+    { '@type': 'HowToStep', position: 3, name: 'Pengerjaan Project', text: 'Project dikerjakan sesuai timeline yang disepakati dengan update berkala.' },
+    { '@type': 'HowToStep', position: 4, name: 'Review & Handover', text: 'Review hasil, revisi jika perlu, lalu handover beserta dokumentasi lengkap.' }
+  ]
+}
 
 const faqSchema = faqItems.length > 0 ? {
   '@context': 'https://schema.org',
@@ -125,10 +191,7 @@ const faqSchema = faqItems.length > 0 ? {
   mainEntity: faqItems.map(item => ({
     '@type': 'Question',
     name: item.question,
-    acceptedAnswer: {
-      '@type': 'Answer',
-      text: item.answer
-    }
+    acceptedAnswer: { '@type': 'Answer', text: item.answer }
   }))
 } : null
 
@@ -136,7 +199,9 @@ const schemas = [
   JSON.stringify(organization),
   JSON.stringify(localBusiness),
   JSON.stringify(webSite),
+  JSON.stringify(teamPerson),
   JSON.stringify({ '@context': 'https://schema.org', '@type': 'ItemList', name: 'Layanan Ekalliptus Digital', itemListElement: services.map((s, i) => ({ ...s, position: i + 1 })) }),
+  ...(page === 'home' ? [JSON.stringify(howToOrder)] : []),
   ...(faqSchema ? [JSON.stringify(faqSchema)] : [])
 ]
 ---
