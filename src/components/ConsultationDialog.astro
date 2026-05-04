@@ -451,9 +451,9 @@ ATURAN:
 })()
 
 // GA4 Custom Events
-function trackEvent(eventName, params) {
-  if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
-    window.gtag('event', eventName, params || {})
+function trackEvent(eventName: string, params?: Record<string, unknown>) {
+  if (typeof window !== 'undefined' && typeof (window as any).gtag === 'function') {
+    (window as any).gtag('event', eventName, params || {})
   }
 }
 
@@ -462,12 +462,12 @@ document.querySelectorAll('[data-track="consultation"]').forEach(function(btn) {
   btn.addEventListener('click', function() { trackEvent('consultation_click', { source: 'button' }) })
 })
 
-// Track WhatsApp link clicks (global, covers all pages)
+// Track WhatsApp link clicks
 document.querySelectorAll('a[data-track="whatsapp"]').forEach(function(link) {
   link.addEventListener('click', function() { trackEvent('whatsapp_click', { source: window.location.pathname }) })
 })
 
-// Track order button clicks (global)
+// Track order button clicks
 document.querySelectorAll('a[data-track="order"], button[data-track="order"]').forEach(function(el) {
   el.addEventListener('click', function() { trackEvent('order_click', { source: window.location.pathname }) })
 })
