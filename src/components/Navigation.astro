@@ -246,7 +246,7 @@ const isHomePage = currentPath === '/'
 
 <div id="language-backdrop" class="fixed inset-0 z-50 modal-backdrop hidden"></div>
 
-<div id="language-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 hidden">
+<div id="language-modal" class="fixed inset-0 z-50 items-center justify-center p-4 hidden">
   <div class="w-full max-w-sm rounded-2xl language-modal p-6 shadow-2xl">
     <div class="flex items-center justify-between mb-4">
       <h3 class="text-lg font-semibold text-foreground">
@@ -339,11 +339,13 @@ const isHomePage = currentPath === '/'
     langToggle.addEventListener('click', () => {
       langModalOpen = true
       langModal.classList.remove('hidden')
+      langModal.classList.add('flex')
       langBackdrop.classList.remove('hidden')
     })
     
     const closeModal = () => {
       langModalOpen = false
+      langModal.classList.remove('flex')
       langModal.classList.add('hidden')
       langBackdrop.classList.add('hidden')
     }
