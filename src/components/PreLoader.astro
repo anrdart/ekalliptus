@@ -1,59 +1,41 @@
 ---
 ---
-
-<div id="preloader" class="preloader-skeleton fixed inset-0 z-[100] bg-background pointer-events-none">
-  <div class="absolute top-0 left-1/2 -translate-x-1/2 mt-2 sm:mt-3 w-full max-w-md sm:max-w-4xl px-2 sm:px-6 lg:px-8">
-    <div class="skel-bar h-12 sm:h-14 rounded-full"></div>
-  </div>
-
-  <div class="absolute left-1/2 top-[35%] -translate-x-1/2 w-full max-w-3xl px-4 space-y-4">
-    <div class="skel-bar h-4 w-32 mx-auto rounded-full"></div>
-    <div class="skel-bar h-10 sm:h-14 w-3/4 mx-auto rounded-lg"></div>
-    <div class="skel-bar h-10 sm:h-14 w-2/3 mx-auto rounded-lg"></div>
-    <div class="skel-bar h-4 w-5/6 mx-auto rounded-full mt-6"></div>
-    <div class="skel-bar h-4 w-4/6 mx-auto rounded-full"></div>
-  </div>
-</div>
+<!-- Top progress bar only — content always visible, no LCP blocking overlay -->
+<div id="top-progress" aria-hidden="true"></div>
 
 <script>
-  const preloader = document.getElementById('preloader')
-  if (preloader) {
-    const hide = () => {
-      preloader.classList.add('preloader-hidden')
-      preloader.addEventListener('transitionend', () => preloader.remove(), { once: true })
-      setTimeout(() => preloader.remove(), 600)
+  const bar = document.getElementById('top-progress')
+  if (bar) {
+    const done = () => {
+      bar.style.width = '100%'
+      bar.style.opacity = '0'
+      setTimeout(() => bar.remove(), 400)
     }
     if (document.readyState === 'complete') {
-      requestAnimationFrame(hide)
+      done()
     } else {
-      window.addEventListener('load', () => requestAnimationFrame(hide), { once: true })
+      window.addEventListener('load', done, { once: true })
     }
   }
 </script>
 
 <style>
-  .preloader-skeleton {
-    transition: opacity 0.35s ease;
+  #top-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    height: 2px;
+    width: 70%;
+    background: linear-gradient(90deg, hsl(var(--primary)), hsl(var(--primary) / 0.6));
+    transition: width 0.4s ease, opacity 0.4s ease;
+    pointer-events: none;
+    animation: progress-indeterminate 1.2s ease-in-out infinite;
   }
-  .preloader-hidden {
-    opacity: 0;
-  }
-  .skel-bar {
-    background: linear-gradient(
-      90deg,
-      hsl(var(--card) / 0.4) 0%,
-      hsl(var(--card) / 0.7) 50%,
-      hsl(var(--card) / 0.4) 100%
-    );
-    background-size: 200% 100%;
-    animation: skel-shimmer 1.4s ease-in-out infinite;
-  }
-  @keyframes skel-shimmer {
-    0% { background-position: 200% 0; }
-    100% { background-position: -200% 0; }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .skel-bar { animation: none; }
-    .preloader-skeleton { transition: none; }
+
+  @keyframes progress-indeterminate {
+    0%   { width: 10%; margin-left: 0; }
+    50%  { width: 40%; margin-left: 30%; }
+    100% { width: 10%; margin-left: 90%; }
   }
 </style>

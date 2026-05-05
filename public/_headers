@@ -1,95 +1,103 @@
-# Cloudflare Pages Security Headers & Configuration
-# ekalliptus.com - Enhanced Trust & Safety
-# Performance Optimization: Requirements 6.1, 8.4
+# Cloudflare Pages — Security + Performance headers
+# ekalliptus.com
 
-# Security Headers - Applied to all routes (/*)
+# ── Global Security ──────────────────────────────────────────────────────────
 /*
-  # Prevent MIME type sniffing
   X-Content-Type-Options: nosniff
-
-  # Prevent clickjacking (XFO)
   X-Frame-Options: DENY
-
-  # XSS Protection
   X-XSS-Protection: 1; mode=block
-
-  # Referrer Policy
   Referrer-Policy: strict-origin-when-cross-origin
-
-  # HSTS (HTTP Strict Transport Security) - Force HTTPS for 1 year
   Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
-
-  # Cross-Origin Opener Policy (COOP) - Prevent cross-origin attacks
   Cross-Origin-Opener-Policy: same-origin
-
-  # Content Security Policy (CSP) - Prevent XSS attacks
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: https://fonts.googleapis.com https://api.emailjs.com https://sheetdb.io https://static.cloudflareinsights.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https: blob:; connect-src 'self' https://api.emailjs.com https://sheetdb.io https://lovable.dev https://*.supabase.co wss://*.supabase.co https://www.google-analytics.com https://analytics.google.com https://stats.g.doubleclick.net https://www.googletagmanager.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self' https://sheetdb.io; upgrade-insecure-requests
-
-  # Permissions Policy - Restrict potentially dangerous APIs
   Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
 
-# HTML Cache Control - No caching for SPA (Requirements 6.1, 8.4)
-/*.html
-  Cache-Control: no-cache, no-store, must-revalidate
-  Pragma: no-cache
-  Expires: 0
+  # CSP — Google Fonts removed (self-hosted), worker-src added for SW
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' blob: https://www.googletagmanager.com https://www.google-analytics.com https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: https: blob:; connect-src 'self' https://*.supabase.co wss://*.supabase.co https://www.google-analytics.com https://analytics.google.com https://stats.g.doubleclick.net https://www.googletagmanager.com; worker-src 'self' blob:; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests
 
+# ── HTML pages — allow Cloudflare edge cache (60s) + always revalidate ──────
 /
-  Cache-Control: no-cache, no-store, must-revalidate
-  Pragma: no-cache
-  Expires: 0
+  Cache-Control: public, s-maxage=60, stale-while-revalidate=30, no-cache
+  Link: </fonts/inter-latin-400-normal.woff2>; rel=preload; as=font; type=font/woff2; crossorigin
 
-# Hashed Assets - Long-term caching with immutable (Requirements 6.1, 8.4)
-# These files have content hashes in their names, so they can be cached forever
+/*.html
+  Cache-Control: public, s-maxage=60, stale-while-revalidate=30, no-cache
+
+/blog
+  Cache-Control: public, s-maxage=120, stale-while-revalidate=60, no-cache
+
+/blog/*
+  Cache-Control: public, s-maxage=120, stale-while-revalidate=60, no-cache
+
+/about
+  Cache-Control: public, s-maxage=3600, stale-while-revalidate=300, no-cache
+
+/services/*
+  Cache-Control: public, s-maxage=3600, stale-while-revalidate=300, no-cache
+
+# Admin + API — never cache
+/admin/*
+  Cache-Control: no-store, private
+
+/api/*
+  Cache-Control: no-store
+
+# ── Hashed build output — immutable forever ──────────────────────────────────
 /_astro/*
   Cache-Control: public, max-age=31536000, immutable
 
 /chunks/*
   Cache-Control: public, max-age=31536000, immutable
 
-# Static Assets - 1 day caching (Requirements 6.1)
-/*.png
-  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
-
-/*.jpg
-  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
-
-/*.jpeg
-  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
-
-/*.gif
-  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
-
-/*.svg
-  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
-
-/*.ico
-  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
-
-/*.webp
-  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
-
-# Font files - Long-term caching (Requirements 6.1)
-/*.woff
+# ── Self-hosted fonts — immutable ────────────────────────────────────────────
+/fonts/*
   Cache-Control: public, max-age=31536000, immutable
+  Access-Control-Allow-Origin: *
 
-/*.woff2
-  Cache-Control: public, max-age=31536000, immutable
-
-# Vendor scripts - Long-term caching (Requirements 6.1)
+# ── Vendor scripts (three.js, vanta) — immutable ────────────────────────────
 /vendor/*
   Cache-Control: public, max-age=31536000, immutable
 
-# XML files (sitemap, etc.) - 1 day caching
+# ── Service worker — must revalidate every time ──────────────────────────────
+/sw.js
+  Cache-Control: no-cache, no-store, must-revalidate
+  Service-Worker-Allowed: /
+
+# ── Static media — long cache, public ───────────────────────────────────────
+/*.webp
+  Cache-Control: public, max-age=2592000, stale-while-revalidate=86400
+
+/*.png
+  Cache-Control: public, max-age=2592000, stale-while-revalidate=86400
+
+/*.jpg
+  Cache-Control: public, max-age=2592000, stale-while-revalidate=86400
+
+/*.jpeg
+  Cache-Control: public, max-age=2592000, stale-while-revalidate=86400
+
+/*.gif
+  Cache-Control: public, max-age=2592000, stale-while-revalidate=86400
+
+/*.ico
+  Cache-Control: public, max-age=2592000, stale-while-revalidate=86400
+
+# ── Blog SVGs — immutable (content never changes once deployed) ──────────────
+/blog/*.svg
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.svg
+  Cache-Control: public, max-age=2592000, stale-while-revalidate=86400
+
+# ── Sitemap & feeds ──────────────────────────────────────────────────────────
 /*.xml
   Content-Type: application/xml; charset=utf-8
-  Cache-Control: public, max-age=86400
+  Cache-Control: public, max-age=3600, stale-while-revalidate=3600
 
-# JSON files - Short caching
-/*.json
-  Cache-Control: public, max-age=3600
+/blog/feed.json
+  Content-Type: application/json; charset=utf-8
+  Cache-Control: public, max-age=3600, stale-while-revalidate=3600
 
-# Manifest file
+# ── Web manifest ─────────────────────────────────────────────────────────────
 /site.webmanifest
   Content-Type: application/manifest+json
   Cache-Control: public, max-age=86400
