@@ -1,268 +1,132 @@
 ---
 import AdminLayout from './layout.astro'
-import { TrendingUp, TrendingDown, Package, DollarSign, Activity, ArrowUpRight } from 'lucide-astro'
+import StatCard from '../../components/admin/StatCard.astro'
+import RevenueChart from '../../components/admin/RevenueChart.astro'
+import EmptyState from '../../components/admin/EmptyState.astro'
+import { DollarSign, Package, Activity, TrendingUp, ArrowUpRight, ShoppingCart } from 'lucide-astro'
+import { getSupabase } from '../../lib/supabase'
 
-// Mock data - will be replaced with real API calls
-const stats = {
-  todayRevenue: {
-    value: '$2,450',
-    change: '+12.5%',
-    trend: 'up'
-  },
-  monthlyOrders: {
-    value: '148',
-    change: '+8.2%',
-    trend: 'up'
-  },
-  pendingPayments: {
-    value: '12',
-    change: '-3.1%',
-    trend: 'down'
-  },
-  conversionRate: {
-    value: '4.2%',
-    change: '+0.8%',
-    trend: 'up'
+const supabase = getSupabase(true)
+
+const now = new Date()
+const todayStart = new Date(now); todayStart.setHours(0, 0, 0, 0)
+const monthStart = new Date(now.getFullYear(), now.getMonth(), 1)
+const sevenDaysAgo = new Date(now); sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 6); sevenDaysAgo.setHours(0, 0, 0, 0)
+
+let stats = { todayRevenue: 'Rp 0', monthlyOrders: '0', pendingPayments: '0', conversionRate: '0%' }
+let series: Array<{ day: string; value: number }> = []
+let recentOrders: any[] = []
+let topServices: Array<{ name: string; orders: number; revenue: number }> = []
+
+if (supabase) {
+  const [paidToday, monthlyOrdersRes, pendingRes, paidRes, recentRes, weekly, monthOrdersRes] = await Promise.all([
+    supabase.from('payments').select('amount').eq('status', 'paid').gte('paid_at', todayStart.toISOString()),
+    supabase.from('orders').select('id', { count: 'exact', head: true }).gte('created_at', monthStart.toISOString()),
+    supabase.from('payments').select('id', { count: 'exact', head: true }).in('status', ['pending', 'processing']),
+    supabase.from('payments').select('id', { count: 'exact', head: true }).eq('status', 'paid').gte('created_at', monthStart.toISOString()),
+    supabase.from('orders').select('id, customer_name, service_type, pricing, status, created_at').order('created_at', { ascending: false }).limit(5),
+    supabase.from('payments').select('amount, paid_at').eq('status', 'paid').gte('paid_at', sevenDaysAgo.toISOString()),
+    supabase.from('orders').select('service_type, pricing').gte('created_at', monthStart.toISOString())
+  ])
+
+  const todayRev = (paidToday.data ?? []).reduce((s, p) => s + Number(p.amount ?? 0), 0)
+  const orderCount = monthlyOrdersRes.count ?? 0
+  const pending = pendingRes.count ?? 0
+  const paid = paidRes.count ?? 0
+  const fmt = (n: number) => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(n)
+  stats = {
+    todayRevenue: fmt(todayRev),
+    monthlyOrders: String(orderCount),
+    pendingPayments: String(pending),
+    conversionRate: orderCount > 0 ? `${((paid / orderCount) * 100).toFixed(1)}%` : '0%'
   }
+
+  const buckets = new Map<string, number>()
+  for (let i = 0; i < 7; i++) {
+    const d = new Date(sevenDaysAgo); d.setDate(d.getDate() + i)
+    buckets.set(d.toISOString().slice(0, 10), 0)
+  }
+  for (const p of weekly.data ?? []) {
+    const day = String(p.paid_at).slice(0, 10)
+    buckets.set(day, (buckets.get(day) ?? 0) + Number(p.amount ?? 0))
+  }
+  series = Array.from(buckets.entries()).map(([day, value]) => ({ day, value }))
+  recentOrders = recentRes.data ?? []
+
+  const svc = new Map<string, { orders: number; revenue: number }>()
+  for (const o of monthOrdersRes.data ?? []) {
+    const cur = svc.get(o.service_type) ?? { orders: 0, revenue: 0 }
+    cur.orders += 1
+    cur.revenue += Number((o.pricing as any)?.grand_total ?? 0)
+    svc.set(o.service_type, cur)
+  }
+  topServices = Array.from(svc.entries()).map(([name, v]) => ({ name, ...v })).sort((a, b) => b.revenue - a.revenue).slice(0, 5)
 }
 
-const recentOrders = [
-  { id: 'ORD-001', customer: 'John Doe', service: 'Web Development', amount: '$1,200', status: 'completed' },
-  { id: 'ORD-002', customer: 'Jane Smith', service: 'UI/UX Design', amount: '$800', status: 'pending' },
-  { id: 'ORD-003', customer: 'Bob Johnson', service: 'SEO Optimization', amount: '$450', status: 'processing' },
-  { id: 'ORD-004', customer: 'Alice Williams', service: 'Content Writing', amount: '$300', status: 'completed' },
-  { id: 'ORD-005', customer: 'Charlie Brown', service: 'Web Development', amount: '$1,500', status: 'pending' }
-]
-
-const topServices = [
-  { name: 'Web Development', orders: 45, revenue: '$18,500' },
-  { name: 'UI/UX Design', orders: 32, revenue: '$9,600' },
-  { name: 'SEO Optimization', orders: 28, revenue: '$6,300' },
-  { name: 'Content Writing', orders: 22, revenue: '$4,400' },
-  { name: 'Mobile App', orders: 15, revenue: '$12,000' }
-]
+const fmt = (n: number) => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(n)
 ---
-
 <AdminLayout title="Dashboard">
-  <!-- Stats Grid -->
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-    <!-- Today's Revenue -->
-    <div class="glass-card rounded-2xl p-6">
-      <div class="flex items-center justify-between mb-4">
-        <div class="h-12 w-12 rounded-xl bg-primary/10 flex items-center justify-center">
-          <DollarSign class="h-6 w-6 text-primary" />
-        </div>
-        <div class="flex items-center gap-1 text-sm">
-          {stats.todayRevenue.trend === 'up' ? (
-            <>
-              <TrendingUp class="h-4 w-4 text-green-500" />
-              <span class="text-green-500 font-medium">{stats.todayRevenue.change}</span>
-            </>
-          ) : (
-            <>
-              <TrendingDown class="h-4 w-4 text-red-500" />
-              <span class="text-red-500 font-medium">{stats.todayRevenue.change}</span>
-            </>
-          )}
-        </div>
-      </div>
-      <h3 class="text-2xl font-bold mb-1" id="stat-revenue">{stats.todayRevenue.value}</h3>
-      <p class="text-sm text-muted-foreground">Today's Revenue</p>
-    </div>
+    <StatCard icon={DollarSign} value={stats.todayRevenue} label="Revenue Hari Ini" />
+    <StatCard icon={Package} iconColorClass="text-blue-500" value={stats.monthlyOrders} label="Order Bulan Ini" />
+    <StatCard icon={Activity} iconColorClass="text-orange-500" value={stats.pendingPayments} label="Payment Pending" />
+    <StatCard icon={TrendingUp} iconColorClass="text-purple-500" value={stats.conversionRate} label="Conversion Rate" />
+  </div>
 
-    <!-- Monthly Orders -->
-    <div class="glass-card rounded-2xl p-6">
-      <div class="flex items-center justify-between mb-4">
-        <div class="h-12 w-12 rounded-xl bg-accent/10 flex items-center justify-center">
-          <Package class="h-6 w-6 text-accent" />
-        </div>
-        <div class="flex items-center gap-1 text-sm">
-          {stats.monthlyOrders.trend === 'up' ? (
-            <>
-              <TrendingUp class="h-4 w-4 text-green-500" />
-              <span class="text-green-500 font-medium">{stats.monthlyOrders.change}</span>
-            </>
-          ) : (
-            <>
-              <TrendingDown class="h-4 w-4 text-red-500" />
-              <span class="text-red-500 font-medium">{stats.monthlyOrders.change}</span>
-            </>
-          )}
-        </div>
-      </div>
-      <h3 class="text-2xl font-bold mb-1" id="stat-orders">{stats.monthlyOrders.value}</h3>
-      <p class="text-sm text-muted-foreground">Monthly Orders</p>
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+    <div class="lg:col-span-2 glass-card rounded-2xl p-6">
+      <h2 class="text-lg font-semibold mb-4">Revenue 7 Hari Terakhir</h2>
+      <RevenueChart series={series} />
     </div>
-
-    <!-- Pending Payments -->
     <div class="glass-card rounded-2xl p-6">
-      <div class="flex items-center justify-between mb-4">
-        <div class="h-12 w-12 rounded-xl bg-orange-500/10 flex items-center justify-center">
-          <Activity class="h-6 w-6 text-orange-500" />
+      <h2 class="text-lg font-semibold mb-4">Top Services Bulan Ini</h2>
+      {topServices.length === 0 ? (
+        <p class="text-sm text-muted-foreground">Belum ada order bulan ini.</p>
+      ) : (
+        <div class="space-y-3">
+          {topServices.map((s, i) => (
+            <div class="flex items-center justify-between p-2 rounded-lg hover:bg-accent/40">
+              <div class="flex items-center gap-3">
+                <div class="h-7 w-7 rounded-md bg-primary/10 text-primary text-sm font-bold flex items-center justify-center">{i + 1}</div>
+                <div>
+                  <p class="text-sm font-medium">{s.name}</p>
+                  <p class="text-xs text-muted-foreground">{s.orders} order</p>
+                </div>
+              </div>
+              <span class="text-sm font-semibold">{fmt(s.revenue)}</span>
+            </div>
+          ))}
         </div>
-        <div class="flex items-center gap-1 text-sm">
-          {stats.pendingPayments.trend === 'up' ? (
-            <>
-              <TrendingUp class="h-4 w-4 text-green-500" />
-              <span class="text-green-500 font-medium">{stats.pendingPayments.change}</span>
-            </>
-          ) : (
-            <>
-              <TrendingDown class="h-4 w-4 text-red-500" />
-              <span class="text-red-500 font-medium">{stats.pendingPayments.change}</span>
-            </>
-          )}
-        </div>
-      </div>
-      <h3 class="text-2xl font-bold mb-1" id="stat-pending">{stats.pendingPayments.value}</h3>
-      <p class="text-sm text-muted-foreground">Pending Payments</p>
-    </div>
-
-    <!-- Conversion Rate -->
-    <div class="glass-card rounded-2xl p-6">
-      <div class="flex items-center justify-between mb-4">
-        <div class="h-12 w-12 rounded-xl bg-purple-500/10 flex items-center justify-center">
-          <TrendingUp class="h-6 w-6 text-purple-500" />
-        </div>
-        <div class="flex items-center gap-1 text-sm">
-          {stats.conversionRate.trend === 'up' ? (
-            <>
-              <TrendingUp class="h-4 w-4 text-green-500" />
-              <span class="text-green-500 font-medium">{stats.conversionRate.change}</span>
-            </>
-          ) : (
-            <>
-              <TrendingDown class="h-4 w-4 text-red-500" />
-              <span class="text-red-500 font-medium">{stats.conversionRate.change}</span>
-            </>
-          )}
-        </div>
-      </div>
-      <h3 class="text-2xl font-bold mb-1" id="stat-conversion">{stats.conversionRate.value}</h3>
-      <p class="text-sm text-muted-foreground">Conversion Rate</p>
+      )}
     </div>
   </div>
 
-  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-    <!-- Recent Orders -->
-    <div class="lg:col-span-2 glass-card rounded-2xl p-6">
-      <div class="flex items-center justify-between mb-6">
-        <h2 class="text-lg font-semibold">Recent Orders</h2>
-        <a
-          href="/admin/orders"
-          class="flex items-center gap-1 text-sm text-primary hover:underline cursor-pointer"
-        >
-          View All
-          <ArrowUpRight class="h-4 w-4" />
-        </a>
-      </div>
-
-      <div class="overflow-x-auto">
-        <table class="w-full">
-          <thead>
-            <tr class="border-b border-border">
-              <th class="text-left pb-3 text-sm font-medium text-muted-foreground">Order ID</th>
-              <th class="text-left pb-3 text-sm font-medium text-muted-foreground">Customer</th>
-              <th class="text-left pb-3 text-sm font-medium text-muted-foreground hidden sm:table-cell">Service</th>
-              <th class="text-left pb-3 text-sm font-medium text-muted-foreground">Amount</th>
-              <th class="text-left pb-3 text-sm font-medium text-muted-foreground">Status</th>
+  <div class="glass-card rounded-2xl p-6">
+    <div class="flex items-center justify-between mb-4">
+      <h2 class="text-lg font-semibold">Recent Orders</h2>
+      <a href="/admin/orders" class="flex items-center gap-1 text-sm text-primary hover:underline">Lihat semua <ArrowUpRight class="h-4 w-4" /></a>
+    </div>
+    {recentOrders.length === 0 ? (
+      <EmptyState icon={ShoppingCart} title="Belum ada order" description="Order baru akan muncul di sini secara real-time." />
+    ) : (
+      <table class="w-full text-sm">
+        <thead>
+          <tr class="border-b border-border text-left text-xs font-medium text-muted-foreground">
+            <th class="pb-2">Order ID</th><th class="pb-2">Customer</th><th class="pb-2">Layanan</th><th class="pb-2 text-right">Total</th><th class="pb-2">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {recentOrders.map((o) => (
+            <tr class="border-b border-border/40">
+              <td class="py-2 font-mono text-xs">ORD-{o.id.slice(0, 8)}</td>
+              <td class="py-2">{o.customer_name}</td>
+              <td class="py-2">{o.service_type}</td>
+              <td class="py-2 text-right font-medium">{fmt(Number((o.pricing as any)?.grand_total ?? 0))}</td>
+              <td class="py-2 text-xs">{o.status}</td>
             </tr>
-          </thead>
-          <tbody>
-            {recentOrders.map((order) => (
-              <tr class="border-b border-border/50 hover:bg-accent/50 transition">
-                <td class="py-3 text-sm font-medium">{order.id}</td>
-                <td class="py-3 text-sm">{order.customer}</td>
-                <td class="py-3 text-sm hidden sm:table-cell">{order.service}</td>
-                <td class="py-3 text-sm font-medium">{order.amount}</td>
-                <td class="py-3">
-                  <span class="status-badge inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium" data-status={order.status}>
-                    {order.status}
-                  </span>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    <!-- Top Services -->
-    <div class="glass-card rounded-2xl p-6">
-      <h2 class="text-lg font-semibold mb-6">Top Services</h2>
-
-      <div class="space-y-4">
-        {topServices.map((service, index) => (
-          <div class="flex items-center justify-between p-3 rounded-xl hover:bg-accent/50 transition">
-            <div class="flex items-center gap-3">
-              <div class="h-8 w-8 rounded-lg bg-primary/10 flex items-center justify-center text-sm font-bold text-primary">
-                {index + 1}
-              </div>
-              <div>
-                <p class="text-sm font-medium">{service.name}</p>
-                <p class="text-xs text-muted-foreground">{service.orders} orders</p>
-              </div>
-            </div>
-            <p class="text-sm font-semibold">{service.revenue}</p>
-          </div>
-        ))}
-      </div>
-    </div>
+          ))}
+        </tbody>
+      </table>
+    )}
   </div>
 </AdminLayout>
-
-<style>
-  .status-badge {
-    background: hsl(var(--muted) / 0.3);
-    color: hsl(var(--muted-foreground));
-    border: 1px solid hsl(var(--border));
-  }
-
-  .status-badge[data-status="completed"] {
-    background: hsl(142 76% 36% / 0.15);
-    color: hsl(142 76% 36%);
-    border-color: hsl(142 76% 36% / 0.3);
-  }
-
-  .status-badge[data-status="pending"] {
-    background: hsl(38 92% 50% / 0.15);
-    color: hsl(38 92% 50%);
-    border-color: hsl(38 92% 50% / 0.3);
-  }
-
-  .status-badge[data-status="processing"] {
-    background: hsl(199 89% 48% / 0.15);
-    color: hsl(199 89% 48%);
-    border-color: hsl(199 89% 48% / 0.3);
-  }
-
-  @media (max-width: 639px) {
-    th, td {
-      padding: 0.75rem 0.5rem;
-    }
-  }
-</style>
-
-<script define:vars={{ recentOrders }}>
-  // This would fetch real data from the API
-  async function loadDashboardData() {
-    try {
-      const response = await fetch('/api/admin/dashboard')
-      if (response.ok) {
-        const data = await response.json()
-        // Update stats
-        if (data.stats) {
-          document.getElementById('stat-revenue').textContent = data.stats.todayRevenue
-          document.getElementById('stat-orders').textContent = data.stats.monthlyOrders
-          document.getElementById('stat-pending').textContent = data.stats.pendingPayments
-          document.getElementById('stat-conversion').textContent = data.stats.conversionRate
-        }
-      }
-    } catch (error) {
-      console.error('Failed to load dashboard data:', error)
-    }
-  }
-
-  // Load data when page is ready
-  loadDashboardData()
-</script>

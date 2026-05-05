@@ -1,0 +1,26 @@
+---
+interface Props {
+  series: Array<{ day: string; value: number }>
+  height?: number
+}
+const { series, height = 240 } = Astro.props
+const id = `revenue-chart-${Math.random().toString(36).slice(2)}`
+---
+<div id={id} style={`min-height:${height}px`}></div>
+<script type="module" define:vars={{ id, series, height }}>
+  const ApexCharts = (await import('https://cdn.jsdelivr.net/npm/apexcharts@3.49.1/+esm')).default
+  const labels = series.map((s) => new Date(s.day).toLocaleDateString('id-ID', { weekday: 'short' }))
+  const values = series.map((s) => s.value)
+  const chart = new ApexCharts(document.getElementById(id), {
+    chart: { type: 'bar', height, toolbar: { show: false }, fontFamily: 'inherit' },
+    colors: ['#6366f1'],
+    plotOptions: { bar: { borderRadius: 6, columnWidth: '50%' } },
+    dataLabels: { enabled: false },
+    series: [{ name: 'Revenue', data: values }],
+    xaxis: { categories: labels, labels: { style: { colors: '#94a3b8' } }, axisBorder: { show: false }, axisTicks: { show: false } },
+    yaxis: { labels: { formatter: (v) => `Rp ${Math.round(v / 1000)}k`, style: { colors: '#94a3b8' } } },
+    grid: { borderColor: '#e2e8f0', strokeDashArray: 4 },
+    tooltip: { y: { formatter: (v) => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(v) } }
+  })
+  chart.render()
+</script>
