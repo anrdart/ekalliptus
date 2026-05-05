@@ -1,3 +1,93 @@
 ---
-return Astro.redirect('/admin/payments/gateways')
+import AdminLayout from '../layout.astro'
+import SearchFilter from '../../../components/admin/SearchFilter.astro'
+import Pagination from '../../../components/admin/Pagination.astro'
+import EmptyState from '../../../components/admin/EmptyState.astro'
+import { CreditCard } from 'lucide-astro'
+import { getSupabase } from '../../../lib/supabase'
+
+const url = new URL(Astro.request.url)
+const status = url.searchParams.get('status') ?? ''
+const gateway = url.searchParams.get('gateway') ?? ''
+const page = Math.max(1, Number(url.searchParams.get('page') ?? '1'))
+const pageSize = 20
+const from = (page - 1) * pageSize
+const to = from + pageSize - 1
+
+const supabase = getSupabase(true)
+let payments: any[] = []
+let total = 0
+if (supabase) {
+  let q = supabase.from('payments').select('*, orders(customer_name, whatsapp)', { count: 'exact' }).order('created_at', { ascending: false }).range(from, to)
+  if (status) q = q.eq('status', status as any)
+  if (gateway) q = q.eq('gateway', gateway as any)
+  const { data, count } = await q
+  payments = data ?? []
+  total = count ?? 0
+}
+const totalPages = Math.max(1, Math.ceil(total / pageSize))
+const fmt = (n: number) => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(n)
+const baseUrl = `/admin/payments?status=${status}&gateway=${gateway}`
 ---
+<AdminLayout title="Payments">
+  <SearchFilter
+    placeholder="Cari..."
+    value=""
+    name="search"
+    action="/admin/payments"
+    filters={[
+      { name: 'status', label: 'Status', selected: status, options: [
+        { value: '', label: 'Semua Status' },
+        { value: 'pending', label: 'Pending' },
+        { value: 'processing', label: 'Processing' },
+        { value: 'paid', label: 'Paid' },
+        { value: 'failed', label: 'Failed' },
+        { value: 'expired', label: 'Expired' },
+        { value: 'refunded', label: 'Refunded' }
+      ]},
+      { name: 'gateway', label: 'Gateway', selected: gateway, options: [
+        { value: '', label: 'Semua Gateway' },
+        { value: 'midtrans', label: 'Midtrans' },
+        { value: 'pakasir', label: 'Pakasir' },
+        { value: 'qiospay', label: 'Qiospay' },
+        { value: 'sanpay', label: 'Sanpay' },
+        { value: 'tripay', label: 'Tripay' }
+      ]}
+    ]}
+  />
+
+  <div class="glass-card rounded-2xl p-6">
+    <div class="flex items-center justify-between mb-4">
+      <h2 class="text-lg font-semibold">{total} payment</h2>
+    </div>
+    {payments.length === 0 ? (
+      <EmptyState icon={CreditCard} title="Belum ada payment" />
+    ) : (
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead>
+            <tr class="border-b border-border text-left text-xs font-medium text-muted-foreground">
+              <th class="pb-3">ID</th><th class="pb-3">Customer</th><th class="pb-3">Gateway</th><th class="pb-3 text-right">Amount</th><th class="pb-3">Status</th><th class="pb-3">Created</th>
+            </tr>
+          </thead>
+          <tbody>
+            {payments.map((p) => (
+              <tr class="border-b border-border/40">
+                <td class="py-3 font-mono text-xs">PAY-{p.id.slice(0, 8)}</td>
+                <td class="py-3">
+                  <div class="font-medium">{p.orders?.customer_name ?? '-'}</div>
+                  <div class="text-xs text-muted-foreground">{p.orders?.whatsapp ?? ''}</div>
+                </td>
+                <td class="py-3"><span class="rounded-full bg-primary/10 text-primary px-2 py-0.5 text-xs">{p.gateway}</span></td>
+                <td class="py-3 text-right font-medium">{fmt(Number(p.amount))}</td>
+                <td class="py-3 text-xs">{p.status}</td>
+                <td class="py-3 text-xs text-muted-foreground">{new Date(p.created_at).toLocaleDateString('id-ID')}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <Pagination page={page} totalPages={totalPages} baseUrl={baseUrl} />
+      </div>
+    )}
+  </div>
+</AdminLayout>
