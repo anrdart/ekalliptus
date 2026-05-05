@@ -16,7 +16,8 @@ export default defineConfig({
   resolve: {
     alias: {
       '~': resolve(__dirname, '.'),
-      '@': resolve(__dirname, '.')
+      '@': resolve(__dirname, '.'),
+      'astro:middleware': resolve(__dirname, 'src/__mocks__/astro-middleware.ts')
     }
   }
 })
