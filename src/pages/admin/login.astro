@@ -1,28 +1,44 @@
 ---
 import '../../styles/global.css'
 import { LayoutDashboard } from 'lucide-astro'
----
 
+const next = Astro.url.searchParams.get('next') ?? '/admin'
+const error = Astro.url.searchParams.get('error')
+---
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Admin Login | Ekalliptus Digital</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 </head>
 <body class="min-h-screen bg-background text-foreground flex items-center justify-center p-4">
-  <main class="glass-card w-full max-w-sm rounded-2xl p-6 text-center">
+  <main class="glass-card w-full max-w-sm rounded-2xl p-6">
     <div class="mx-auto mb-4 h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center">
       <LayoutDashboard class="h-6 w-6 text-primary" />
     </div>
-    <h1 class="text-xl font-bold mb-2">Admin</h1>
-    <p class="text-sm text-muted-foreground mb-6">Authentication is not enforced in this build.</p>
-    <a
-      href="/admin"
-      class="inline-flex w-full items-center justify-center rounded-xl bg-primary px-4 py-3 text-sm font-semibold text-primary-foreground hover:bg-primary/90"
-    >
-      Open Dashboard
-    </a>
+    <h1 class="text-xl font-bold text-center mb-1">Admin Login</h1>
+    <p class="text-sm text-muted-foreground text-center mb-6">Ekalliptus Digital</p>
+    {error && (
+      <div class="mb-4 rounded-lg border border-destructive/40 bg-destructive/10 px-3 py-2 text-sm text-destructive">
+        {error === 'invalid' ? 'Email atau password salah.' : 'Login gagal. Coba lagi.'}
+      </div>
+    )}
+    <form method="POST" action="/api/admin/login" class="space-y-3">
+      <input type="hidden" name="next" value={next} />
+      <label class="block">
+        <span class="text-xs font-medium text-muted-foreground">Email</span>
+        <input type="email" name="email" required autocomplete="username" class="mt-1 block w-full rounded-lg border border-border bg-background px-3 py-2 text-sm" />
+      </label>
+      <label class="block">
+        <span class="text-xs font-medium text-muted-foreground">Password</span>
+        <input type="password" name="password" required autocomplete="current-password" class="mt-1 block w-full rounded-lg border border-border bg-background px-3 py-2 text-sm" />
+      </label>
+      <button type="submit" class="inline-flex w-full items-center justify-center rounded-xl bg-primary px-4 py-3 text-sm font-semibold text-primary-foreground hover:bg-primary/90">
+        Masuk
+      </button>
+    </form>
   </main>
 </body>
 </html>
