@@ -39,4 +39,7 @@ Thumbs.db
 .env
 
 # Scripts
-scripts/
+scripts/.superpowers/
+
+# Brainstorm session content (visual companion)
+.superpowers/
