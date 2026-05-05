@@ -1,6 +1,6 @@
 ---
 import '../../styles/global.css'
-import { Menu, X, LayoutDashboard, ShoppingCart, CreditCard as Payment, MessageSquare, Settings, LogOut, User } from 'lucide-astro'
+import { Menu, X, LayoutDashboard, Users, ShoppingCart, CreditCard as Payment, MessageSquare, Settings, LogOut, User } from 'lucide-astro'
 
 interface Props {
   title?: string
@@ -10,6 +10,7 @@ const { title = 'Dashboard' } = Astro.props
 
 const sidebarLinks = [
   { key: 'dashboard', href: '/admin', icon: LayoutDashboard, label: 'Dashboard' },
+  { key: 'customers', href: '/admin/customers', icon: Users, label: 'Customers' },
   { key: 'orders', href: '/admin/orders', icon: ShoppingCart, label: 'Orders' },
   { key: 'payments', href: '/admin/payments', icon: Payment, label: 'Payments' },
   { key: 'consultations', href: '/admin/consultations', icon: MessageSquare, label: 'Consultations' },
