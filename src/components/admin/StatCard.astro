@@ -1,0 +1,38 @@
+---
+import { TrendingUp, TrendingDown } from 'lucide-astro'
+
+interface Props {
+  icon: any
+  iconColorClass?: string
+  value: string
+  label: string
+  change?: string
+  trend?: 'up' | 'down' | null
+}
+
+const { icon: Icon, iconColorClass = 'text-primary', value, label, change, trend } = Astro.props
+---
+<div class="glass-card rounded-2xl p-6">
+  <div class="flex items-center justify-between mb-4">
+    <div class={`h-12 w-12 rounded-xl bg-primary/10 flex items-center justify-center`}>
+      <Icon class={`h-6 w-6 ${iconColorClass}`} />
+    </div>
+    {change && trend && (
+      <div class="flex items-center gap-1 text-sm">
+        {trend === 'up' ? (
+          <>
+            <TrendingUp class="h-4 w-4 text-green-500" />
+            <span class="text-green-500 font-medium">{change}</span>
+          </>
+        ) : (
+          <>
+            <TrendingDown class="h-4 w-4 text-red-500" />
+            <span class="text-red-500 font-medium">{change}</span>
+          </>
+        )}
+      </div>
+    )}
+  </div>
+  <h3 class="text-2xl font-bold mb-1">{value}</h3>
+  <p class="text-sm text-muted-foreground">{label}</p>
+</div>
