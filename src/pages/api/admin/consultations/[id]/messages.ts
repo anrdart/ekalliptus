@@ -1,8 +1,14 @@
 import type { APIRoute } from 'astro'
 import { getSupabase } from '../../../../../lib/supabase'
+import { requireAdmin } from '../../../../../lib/admin/auth'
+import { writeAudit } from '../../../../../lib/admin/audit'
 import type { ConsultationMessageInsert } from '../../../../../types/database'
 
-export const POST: APIRoute = async ({ params, request }) => {
+export const POST: APIRoute = async (ctx) => {
+  const guard = await requireAdmin(ctx)
+  if (guard instanceof Response) return guard
+
+  const { params, request } = ctx
   try {
     const { id } = params
 
@@ -77,6 +83,16 @@ export const POST: APIRoute = async ({ params, request }) => {
         updated_at: new Date().toISOString()
       })
       .eq('id', id)
+
+    await writeAudit({
+      user_id: guard.user.id,
+      action: 'create',
+      table_name: 'consultation_messages',
+      record_id: insertedMessage.id,
+      new_values: insertedMessage,
+      ip_address: ctx.clientAddress,
+      user_agent: ctx.request.headers.get('user-agent')
+    })
 
     return new Response(JSON.stringify({ message: insertedMessage }), {
       status: 201,

@@ -1,12 +1,16 @@
 import type { APIRoute } from 'astro'
 import { getSupabase } from '../../../lib/supabase'
+import { requireAdmin } from '../../../lib/admin/auth'
+import { writeAudit } from '../../../lib/admin/audit'
 import type { PaymentGateway } from '../../../types/database'
 
 /**
  * GET /api/admin/gateways
  * Fetches all payment gateway configurations
  */
-export const GET: APIRoute = async () => {
+export const GET: APIRoute = async (ctx) => {
+  const guard = await requireAdmin(ctx)
+  if (guard instanceof Response) return guard
   try {
     const supabase = getSupabase(true)
     if (!supabase) {
@@ -55,7 +59,11 @@ export const GET: APIRoute = async () => {
  * POST /api/admin/gateways
  * Creates a new payment gateway configuration
  */
-export const POST: APIRoute = async ({ request }) => {
+export const POST: APIRoute = async (ctx) => {
+  const guard = await requireAdmin(ctx)
+  if (guard instanceof Response) return guard
+
+  const { request } = ctx
   try {
     const body = await request.json()
 
@@ -142,6 +150,16 @@ export const POST: APIRoute = async ({ request }) => {
         headers: { 'Content-Type': 'application/json' }
       })
     }
+
+    await writeAudit({
+      user_id: guard.user.id,
+      action: 'create',
+      table_name: 'payment_gateways',
+      record_id: gateway.id,
+      new_values: gateway,
+      ip_address: ctx.clientAddress,
+      user_agent: ctx.request.headers.get('user-agent')
+    })
 
     return new Response(JSON.stringify({
       gateway

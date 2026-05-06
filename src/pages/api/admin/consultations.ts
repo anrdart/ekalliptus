@@ -1,8 +1,11 @@
 import type { APIRoute } from 'astro'
 import { getSupabase } from '../../../lib/supabase'
+import { requireAdmin } from '../../../lib/admin/auth'
 import type { ConsultationMessage } from '../../../types/database'
 
-export const GET: APIRoute = async () => {
+export const GET: APIRoute = async (ctx) => {
+  const guard = await requireAdmin(ctx)
+  if (guard instanceof Response) return guard
   try {
     const supabase = getSupabase(true)
 
