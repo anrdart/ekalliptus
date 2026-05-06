@@ -225,6 +225,82 @@ export type Database = {
           },
         ]
       }
+      leads: {
+        Row: {
+          id: string
+          name: string
+          whatsapp: string | null
+          email: string | null
+          company: string | null
+          service_interest: string | null
+          stage: Database['public']['Enums']['lead_stage']
+          source: string
+          consultation_id: string | null
+          order_id: string | null
+          notes: string | null
+          estimated_value: number | null
+          closed_at: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          name: string
+          whatsapp?: string | null
+          email?: string | null
+          company?: string | null
+          service_interest?: string | null
+          stage?: Database['public']['Enums']['lead_stage']
+          source?: string
+          consultation_id?: string | null
+          order_id?: string | null
+          notes?: string | null
+          estimated_value?: number | null
+          closed_at?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: Partial<Database['public']['Tables']['leads']['Insert']>
+        Relationships: [
+          { foreignKeyName: 'leads_consultation_id_fkey'; columns: ['consultation_id']; isOneToOne: false; referencedRelation: 'consultations'; referencedColumns: ['id'] },
+          { foreignKeyName: 'leads_order_id_fkey'; columns: ['order_id']; isOneToOne: false; referencedRelation: 'orders'; referencedColumns: ['id'] }
+        ]
+      }
+      activities: {
+        Row: {
+          id: string
+          type: Database['public']['Enums']['activity_type']
+          title: string
+          description: string | null
+          lead_id: string | null
+          order_id: string | null
+          due_date: string | null
+          completed_at: string | null
+          is_completed: boolean
+          priority: string
+          created_by: string | null
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          type?: Database['public']['Enums']['activity_type']
+          title: string
+          description?: string | null
+          lead_id?: string | null
+          order_id?: string | null
+          due_date?: string | null
+          completed_at?: string | null
+          is_completed?: boolean
+          priority?: string
+          created_by?: string | null
+          created_at?: string
+        }
+        Update: Partial<Database['public']['Tables']['activities']['Insert']>
+        Relationships: [
+          { foreignKeyName: 'activities_lead_id_fkey'; columns: ['lead_id']; isOneToOne: false; referencedRelation: 'leads'; referencedColumns: ['id'] },
+          { foreignKeyName: 'activities_order_id_fkey'; columns: ['order_id']; isOneToOne: false; referencedRelation: 'orders'; referencedColumns: ['id'] }
+        ]
+      }
       order_attachments: {
         Row: {
           bucket: string
@@ -513,6 +589,8 @@ export type Database = {
       blog_post_status: 'draft' | 'published' | 'archived'
       consultation_status: 'scheduled' | 'completed' | 'cancelled'
       delivery_method: 'pickup' | 'delivery'
+      lead_stage: 'new' | 'contacted' | 'qualified' | 'proposal' | 'negotiation' | 'won' | 'lost'
+      activity_type: 'note' | 'call' | 'meeting' | 'follow_up' | 'task' | 'email'
       order_status: 'waiting_dp' | 'dp_paid' | 'waiting_onsite_payment' | 'onsite_paid' | 'cancelled'
       payment_gateway: 'midtrans' | 'pakasir' | 'qiospay' | 'sanpay' | 'tripay'
       payment_status: 'pending' | 'processing' | 'paid' | 'failed' | 'expired' | 'refunded'
@@ -577,3 +655,12 @@ export type DeliveryMethod = Database['public']['Enums']['delivery_method']
 export type BlogPostStatus = Database['public']['Enums']['blog_post_status']
 export type UserRole = 'owner' | 'admin' | 'finance' | 'cs' | 'tech' | 'editor'
 export type VoucherType = 'percent' | 'nominal'
+
+export type Lead = Tables<'leads'>
+export type LeadInsert = TablesInsert<'leads'>
+export type LeadUpdate = TablesUpdate<'leads'>
+export type Activity = Tables<'activities'>
+export type ActivityInsert = TablesInsert<'activities'>
+export type ActivityUpdate = TablesUpdate<'activities'>
+export type LeadStage = Database['public']['Enums']['lead_stage']
+export type ActivityType = Database['public']['Enums']['activity_type']
