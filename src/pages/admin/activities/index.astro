@@ -1,0 +1,82 @@
+---
+import AdminLayout from '../layout.astro'
+import EmptyState from '../../../components/admin/EmptyState.astro'
+import { CheckSquare } from 'lucide-astro'
+import { listActivities, type ActivityFilter } from '../../../lib/admin/activities'
+
+const url = new URL(Astro.request.url)
+const filter = (url.searchParams.get('filter') ?? 'today') as ActivityFilter
+const activities = await listActivities(filter)
+
+const filters: Array<{ key: ActivityFilter; label: string }> = [
+  { key: 'today', label: 'Hari ini' },
+  { key: 'overdue', label: 'Terlambat' },
+  { key: 'upcoming', label: 'Mendatang' },
+  { key: 'completed', label: 'Selesai' },
+  { key: 'all', label: 'Semua' }
+]
+const fmt = (s: string | null) => s ? new Date(s).toLocaleString('id-ID', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' }) : '-'
+---
+<AdminLayout title="Activities">
+  <div class="flex gap-2 mb-4 overflow-x-auto">
+    {filters.map((f) => (
+      <a
+        href={`/admin/activities?filter=${f.key}`}
+        class:list={[
+          'rounded-full border px-3 py-1 text-sm whitespace-nowrap',
+          filter === f.key ? 'border-primary bg-primary text-primary-foreground' : 'border-border text-muted-foreground hover:bg-accent/40'
+        ]}
+      >
+        {f.label}
+      </a>
+    ))}
+  </div>
+
+  <div class="glass-card rounded-2xl p-6">
+    {activities.length === 0 ? (
+      <EmptyState icon={CheckSquare} title="Tidak ada aktivitas" description="Aktivitas akan muncul setelah ada follow-up atau task yang dibuat." />
+    ) : (
+      <ul class="space-y-2">
+        {activities.map((a) => (
+          <li class="flex items-start gap-3 p-3 rounded-lg border border-border/40 hover:bg-accent/30">
+            <input
+              type="checkbox"
+              class="mt-1 toggle-activity"
+              data-id={a.id}
+              checked={a.is_completed}
+            />
+            <div class="flex-1">
+              <div class="flex items-center gap-2">
+                <span class="text-xs uppercase tracking-wider px-1.5 py-0.5 rounded bg-muted text-muted-foreground">{a.type}</span>
+                <span class="font-medium" class:list={[a.is_completed && 'line-through text-muted-foreground']}>{a.title}</span>
+              </div>
+              {a.description && <p class="text-sm text-muted-foreground mt-1">{a.description}</p>}
+              <p class="text-xs text-muted-foreground mt-1">Due {fmt(a.due_date)} · prio {a.priority}</p>
+            </div>
+            <button class="text-xs text-destructive hover:underline delete-activity" data-id={a.id}>Hapus</button>
+          </li>
+        ))}
+      </ul>
+    )}
+  </div>
+
+  <script>
+    document.querySelectorAll<HTMLInputElement>('.toggle-activity').forEach((cb) => {
+      cb.addEventListener('change', async () => {
+        await fetch(`/api/admin/activities/${cb.dataset.id}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ is_completed: cb.checked })
+        })
+        window.location.reload()
+      })
+    })
+    document.querySelectorAll<HTMLButtonElement>('.delete-activity').forEach((btn) => {
+      btn.addEventListener('click', async () => {
+        if (!confirm('Hapus aktivitas ini?')) return
+        await fetch(`/api/admin/activities/${btn.dataset.id}`, { method: 'DELETE' })
+        window.location.reload()
+      })
+    })
+  </script>
+</AdminLayout>
