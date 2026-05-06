@@ -1,6 +1,7 @@
 import type { APIRoute } from 'astro'
 import { createPost, listPosts } from '../../../lib/admin/blog'
 import { requireRole } from '../../../lib/admin/auth'
+import { writeAudit } from '../../../lib/admin/audit'
 
 export const GET: APIRoute = async (ctx) => {
   const guard = await requireRole(ctx, ['admin', 'editor'])
@@ -42,5 +43,14 @@ export const POST: APIRoute = async (ctx) => {
     publish_date: body.publish_date ?? null
   })
   if (!post) return new Response(JSON.stringify({ error: 'failed' }), { status: 500 })
+  await writeAudit({
+    user_id: guard.user.id,
+    action: 'create',
+    table_name: 'blog_posts',
+    record_id: post.id,
+    new_values: post,
+    ip_address: ctx.clientAddress,
+    user_agent: ctx.request.headers.get('user-agent')
+  })
   return new Response(JSON.stringify({ post }), { status: 201, headers: { 'Content-Type': 'application/json' } })
 }

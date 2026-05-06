@@ -1,0 +1,60 @@
+---
+import AdminLayout from '../layout.astro'
+import Pagination from '../../../components/admin/Pagination.astro'
+import EmptyState from '../../../components/admin/EmptyState.astro'
+import { History } from 'lucide-astro'
+import { listAudit } from '../../../lib/admin/audit'
+
+const url = new URL(Astro.request.url)
+const table = url.searchParams.get('table') ?? ''
+const action = url.searchParams.get('action') ?? ''
+const page = Math.max(1, Number(url.searchParams.get('page') ?? '1'))
+
+const { rows, total, totalPages } = await listAudit({ table: table || undefined, action: action || undefined, page })
+const baseUrl = `/admin/audit-logs?table=${table}&action=${action}`
+---
+<AdminLayout title="Audit Logs">
+  <form method="GET" action="/admin/audit-logs" class="glass-card rounded-2xl p-4 mb-6 flex gap-3 flex-wrap">
+    <select name="table" class="rounded-lg border border-border bg-background px-2 py-1 text-sm">
+      <option value="">Semua tabel</option>
+      <option value="orders" selected={table === 'orders'}>orders</option>
+      <option value="payments" selected={table === 'payments'}>payments</option>
+      <option value="leads" selected={table === 'leads'}>leads</option>
+      <option value="activities" selected={table === 'activities'}>activities</option>
+      <option value="blog_posts" selected={table === 'blog_posts'}>blog_posts</option>
+      <option value="vouchers" selected={table === 'vouchers'}>vouchers</option>
+    </select>
+    <select name="action" class="rounded-lg border border-border bg-background px-2 py-1 text-sm">
+      <option value="">Semua aksi</option>
+      <option value="create" selected={action === 'create'}>create</option>
+      <option value="update" selected={action === 'update'}>update</option>
+      <option value="delete" selected={action === 'delete'}>delete</option>
+    </select>
+    <button type="submit" class="rounded-lg bg-primary px-4 py-1 text-sm text-primary-foreground">Filter</button>
+  </form>
+
+  <div class="glass-card rounded-2xl p-6">
+    {rows.length === 0 ? (
+      <EmptyState icon={History} title="Belum ada audit log" />
+    ) : (
+      <ul class="divide-y divide-border/40">
+        {rows.map((r) => (
+          <li class="py-3 text-sm">
+            <div class="flex items-center justify-between mb-1">
+              <span class="font-medium">{r.action} · <span class="text-muted-foreground">{r.table_name}</span></span>
+              <span class="text-xs text-muted-foreground">{new Date(r.created_at).toLocaleString('id-ID')}</span>
+            </div>
+            {r.record_id && <div class="text-xs text-muted-foreground font-mono">id: {r.record_id}</div>}
+            {r.new_values && (
+              <details class="mt-1">
+                <summary class="text-xs cursor-pointer text-primary">Lihat perubahan</summary>
+                <pre class="text-xs bg-muted/30 rounded-md p-2 mt-1 overflow-x-auto">{JSON.stringify({ old: r.old_values, new: r.new_values }, null, 2)}</pre>
+              </details>
+            )}
+          </li>
+        ))}
+      </ul>
+    )}
+    <Pagination page={page} totalPages={totalPages} baseUrl={baseUrl} />
+  </div>
+</AdminLayout>

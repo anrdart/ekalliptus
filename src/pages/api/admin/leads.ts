@@ -1,6 +1,7 @@
 import type { APIRoute } from 'astro'
 import { createLead, listLeadsByStage } from '../../../lib/admin/leads'
 import { requireAdmin } from '../../../lib/admin/auth'
+import { writeAudit } from '../../../lib/admin/audit'
 
 export const GET: APIRoute = async (ctx) => {
   const guard = await requireAdmin(ctx)
@@ -28,5 +29,14 @@ export const POST: APIRoute = async (ctx) => {
     estimated_value: body.estimated_value ?? null
   })
   if (!lead) return new Response(JSON.stringify({ error: 'Failed to create' }), { status: 500 })
+  await writeAudit({
+    user_id: guard.user.id,
+    action: 'create',
+    table_name: 'leads',
+    record_id: lead.id,
+    new_values: lead,
+    ip_address: ctx.clientAddress,
+    user_agent: ctx.request.headers.get('user-agent')
+  })
   return new Response(JSON.stringify({ lead }), { status: 201, headers: { 'Content-Type': 'application/json' } })
 }

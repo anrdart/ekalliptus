@@ -1,6 +1,7 @@
 import type { APIRoute } from 'astro'
 import { createActivity, listActivities } from '../../../lib/admin/activities'
 import { requireAdmin } from '../../../lib/admin/auth'
+import { writeAudit } from '../../../lib/admin/audit'
 
 export const GET: APIRoute = async (ctx) => {
   const guard = await requireAdmin(ctx)
@@ -28,5 +29,14 @@ export const POST: APIRoute = async (ctx) => {
     created_by: guard.displayName
   })
   if (!created) return new Response(JSON.stringify({ error: 'failed' }), { status: 500 })
+  await writeAudit({
+    user_id: guard.user.id,
+    action: 'create',
+    table_name: 'activities',
+    record_id: created.id,
+    new_values: created,
+    ip_address: ctx.clientAddress,
+    user_agent: ctx.request.headers.get('user-agent')
+  })
   return new Response(JSON.stringify({ activity: created }), { status: 201 })
 }
