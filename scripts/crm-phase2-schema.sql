@@ -65,6 +65,27 @@ CREATE INDEX IF NOT EXISTS idx_activities_lead_id ON public.activities(lead_id);
 CREATE INDEX IF NOT EXISTS idx_activities_order_id ON public.activities(order_id);
 CREATE INDEX IF NOT EXISTS idx_activities_due ON public.activities(due_date) WHERE is_completed = false;
 
--- 4. RLS (admin uses service role, but enable RLS for safety)
+-- 4. Row Level Security
+-- Admin backend uses the service role key (which bypasses RLS).
+-- For all anon/authenticated client requests, access is intentionally denied.
+-- This makes the deny explicit; otherwise enabled RLS without policies silently
+-- returns empty results, which is an easy-to-miss trap during development.
+
 ALTER TABLE public.leads ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.activities ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "Deny all anon access on leads" ON public.leads;
+CREATE POLICY "Deny all anon access on leads"
+  ON public.leads
+  FOR ALL
+  TO anon, authenticated
+  USING (false)
+  WITH CHECK (false);
+
+DROP POLICY IF EXISTS "Deny all anon access on activities" ON public.activities;
+CREATE POLICY "Deny all anon access on activities"
+  ON public.activities
+  FOR ALL
+  TO anon, authenticated
+  USING (false)
+  WITH CHECK (false);
