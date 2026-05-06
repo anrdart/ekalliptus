@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro'
-import { breakdownByService, breakdownByLeadSource } from '../../../../lib/admin/analytics'
+import { breakdownByService, breakdownByLeadSource, breakdownByCustomer } from '../../../../lib/admin/analytics'
 import { requireAdmin } from '../../../../lib/admin/auth'
 
 export const GET: APIRoute = async (ctx) => {
@@ -11,6 +11,10 @@ export const GET: APIRoute = async (ctx) => {
   const to = url.searchParams.get('to') ?? new Date().toISOString()
   if (type === 'source') {
     const data = await breakdownByLeadSource(from, to)
+    return new Response(JSON.stringify({ data }), { status: 200, headers: { 'Content-Type': 'application/json' } })
+  }
+  if (type === 'customer') {
+    const data = await breakdownByCustomer(from, to)
     return new Response(JSON.stringify({ data }), { status: 200, headers: { 'Content-Type': 'application/json' } })
   }
   const data = await breakdownByService(from, to)

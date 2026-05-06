@@ -118,3 +118,42 @@ export async function breakdownByLeadSource(fromISO: string, toISO: string): Pro
   for (const r of data ?? []) m.set(r.source, (m.get(r.source) ?? 0) + 1)
   return Array.from(m.entries()).map(([source, count]) => ({ source, count })).sort((a, b) => b.count - a.count)
 }
+
+export interface CustomerBreakdownRow {
+  name: string
+  whatsapp: string
+  customer_id: string  // url-safe encoded for linking
+  orders: number
+  revenue: number
+}
+
+export async function breakdownByCustomer(fromISO: string, toISO: string, limit = 10): Promise<CustomerBreakdownRow[]> {
+  const supabase = getSupabase(true)
+  if (!supabase) return []
+
+  const { data } = await supabase
+    .from('orders')
+    .select('customer_name, whatsapp, pricing')
+    .gte('created_at', fromISO)
+    .lte('created_at', toISO)
+
+  const m = new Map<string, { name: string; orders: number; revenue: number }>()
+  for (const o of data ?? []) {
+    const key = o.whatsapp
+    const cur = m.get(key) ?? { name: o.customer_name, orders: 0, revenue: 0 }
+    cur.orders += 1
+    cur.revenue += Number((o.pricing as any)?.grand_total ?? 0)
+    m.set(key, cur)
+  }
+  // Encode the customer_id using base64url like in customers.ts
+  return Array.from(m.entries())
+    .map(([whatsapp, v]) => ({
+      name: v.name,
+      whatsapp,
+      customer_id: Buffer.from(whatsapp, 'utf8').toString('base64url'),
+      orders: v.orders,
+      revenue: v.revenue
+    }))
+    .sort((a, b) => b.revenue - a.revenue)
+    .slice(0, limit)
+}

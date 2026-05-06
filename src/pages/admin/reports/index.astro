@@ -2,7 +2,7 @@
 import AdminLayout from '../layout.astro'
 import RevenueChart from '../../../components/admin/RevenueChart.astro'
 import FunnelChart from '../../../components/admin/FunnelChart.astro'
-import { revenueSeries, funnelStats, breakdownByService, breakdownByLeadSource, type Granularity } from '../../../lib/admin/analytics'
+import { revenueSeries, funnelStats, breakdownByService, breakdownByLeadSource, breakdownByCustomer, type Granularity } from '../../../lib/admin/analytics'
 import { Download } from 'lucide-astro'
 
 const url = new URL(Astro.request.url)
@@ -12,11 +12,12 @@ const from = url.searchParams.get('from') ?? monthAgo
 const to = url.searchParams.get('to') ?? today
 const granularity = (url.searchParams.get('granularity') ?? 'day') as Granularity
 
-const [series, stages, services, sources] = await Promise.all([
+const [series, stages, services, sources, customers] = await Promise.all([
   revenueSeries({ from, to, granularity }),
   funnelStats(from, to),
   breakdownByService(from, to),
-  breakdownByLeadSource(from, to)
+  breakdownByLeadSource(from, to),
+  breakdownByCustomer(from, to)
 ])
 
 const seriesForChart = series.map((p) => ({ day: p.bucket, value: p.value }))
@@ -60,7 +61,7 @@ const fmt = (n: number) => new Intl.NumberFormat('id-ID', { style: 'currency', c
     </div>
   </div>
 
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
     <div class="glass-card rounded-2xl p-6">
       <h2 class="text-lg font-semibold mb-4">Breakdown per Layanan</h2>
       <table class="w-full text-sm">
@@ -71,6 +72,21 @@ const fmt = (n: number) => new Intl.NumberFormat('id-ID', { style: 'currency', c
               <td class="py-2">{s.name}</td>
               <td class="py-2 text-right">{s.orders}</td>
               <td class="py-2 text-right font-medium">{fmt(s.revenue)}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <div class="glass-card rounded-2xl p-6">
+      <h2 class="text-lg font-semibold mb-4">Top Customers</h2>
+      <table class="w-full text-sm">
+        <thead><tr class="text-left text-xs text-muted-foreground border-b border-border"><th class="pb-2">Customer</th><th class="pb-2 text-right">Order</th><th class="pb-2 text-right">Spend</th></tr></thead>
+        <tbody>
+          {customers.map((c) => (
+            <tr class="border-b border-border/40">
+              <td class="py-2"><a href={`/admin/customers/${c.customer_id}`} class="hover:underline">{c.name}</a></td>
+              <td class="py-2 text-right">{c.orders}</td>
+              <td class="py-2 text-right font-medium">{fmt(c.revenue)}</td>
             </tr>
           ))}
         </tbody>
