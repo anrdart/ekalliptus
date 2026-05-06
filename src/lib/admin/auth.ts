@@ -52,6 +52,10 @@ export function hasRole(session: AdminSession, allowed: UserRole[]): boolean {
 }
 
 export async function requireAdmin(ctx: APIContext): Promise<AdminSession | Response> {
+  // Fast path: middleware already validated and stored the session
+  if (ctx.locals.adminSession) return ctx.locals.adminSession
+
+  // Fallback: full validation (e.g., direct API calls without middleware)
   const session = await getAdminSession(ctx)
   if (!session) {
     return new Response(JSON.stringify({ error: 'Unauthorized' }), {
