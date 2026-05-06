@@ -24,6 +24,20 @@ const sidebarLinks = [
   { key: 'settings', href: '/admin/settings', icon: Settings, label: 'Settings' }
 ]
 
+const session = Astro.locals.adminSession
+const role = session?.role ?? 'admin'
+
+function canSee(key: string): boolean {
+  if (role === 'owner' || role === 'admin') return true
+  if (key === 'blog') return role === 'editor'
+  if (key === 'vouchers' || key === 'payments' || key === 'reports') return role === 'finance'
+  if (key === 'consultations') return role === 'cs'
+  if (key === 'orders' || key === 'customers' || key === 'pipeline' || key === 'activities' || key === 'dashboard') return true
+  return false
+}
+
+const visibleLinks = sidebarLinks.filter((l) => canSee(l.key))
+
 const currentPath = Astro.url.pathname
 
 function isActivePath(href: string): boolean {
@@ -51,7 +65,7 @@ function isActivePath(href: string): boolean {
       </button>
     </div>
     <nav class="flex flex-col gap-1">
-      {sidebarLinks.map((link) => (
+      {visibleLinks.map((link) => (
         <a
           href={link.href}
           class:list={[
@@ -97,7 +111,7 @@ function isActivePath(href: string): boolean {
 
       <!-- Navigation -->
       <nav class="flex-1 p-4 space-y-1 overflow-y-auto custom-scrollbar">
-        {sidebarLinks.map((link) => (
+        {visibleLinks.map((link) => (
           <a
             href={link.href}
             class:list={[
@@ -118,8 +132,8 @@ function isActivePath(href: string): boolean {
             <User class="h-5 w-5 text-primary" />
           </div>
           <div class="flex-1 min-w-0">
-            <p class="text-sm font-medium truncate">Admin User</p>
-            <p class="text-xs text-muted-foreground truncate">admin@ekalliptus.com</p>
+            <p class="text-sm font-medium truncate">{session?.displayName ?? 'Admin User'}</p>
+            <p class="text-xs text-muted-foreground truncate">{session?.user.email ?? ''} · {role}</p>
           </div>
         </div>
         <button
