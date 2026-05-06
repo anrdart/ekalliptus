@@ -1,6 +1,6 @@
 ---
 import '../../styles/global.css'
-import { Menu, X, LayoutDashboard, Users, Columns3, CheckSquare, ShoppingCart, CreditCard as Payment, MessageSquare, Settings, LogOut, User } from 'lucide-astro'
+import { Menu, X, LayoutDashboard, Users, Columns3, CheckSquare, ShoppingCart, CreditCard as Payment, MessageSquare, BarChart3, Settings, LogOut, User } from 'lucide-astro'
 import NotificationBell from '../../components/admin/NotificationBell.astro'
 
 interface Props {
@@ -17,6 +17,7 @@ const sidebarLinks = [
   { key: 'orders', href: '/admin/orders', icon: ShoppingCart, label: 'Orders' },
   { key: 'payments', href: '/admin/payments', icon: Payment, label: 'Payments' },
   { key: 'consultations', href: '/admin/consultations', icon: MessageSquare, label: 'Consultations' },
+  { key: 'reports', href: '/admin/reports', icon: BarChart3, label: 'Reports' },
   { key: 'settings', href: '/admin/settings', icon: Settings, label: 'Settings' }
 ]
 
