@@ -1,0 +1,51 @@
+---
+import { Bell } from 'lucide-astro'
+---
+<div class="relative" id="notif-root">
+  <button id="notif-btn" class="h-10 w-10 rounded-full glass-panel flex items-center justify-center hover:bg-accent transition relative" aria-label="Notifications">
+    <Bell class="h-4 w-4" />
+    <span id="notif-dot" class="absolute top-1 right-1 h-2.5 w-2.5 rounded-full bg-red-500 hidden"></span>
+  </button>
+  <div id="notif-panel" class="hidden absolute right-0 mt-2 w-72 rounded-xl glass-panel border border-border shadow-lg p-3 z-50">
+    <h3 class="text-sm font-semibold mb-2">Notifikasi</h3>
+    <div id="notif-list" class="space-y-1 text-sm"></div>
+  </div>
+</div>
+
+<script>
+  const dot = document.getElementById('notif-dot')!
+  const list = document.getElementById('notif-list')!
+  const btn = document.getElementById('notif-btn')!
+  const panel = document.getElementById('notif-panel')!
+
+  btn.addEventListener('click', () => panel.classList.toggle('hidden'))
+  document.addEventListener('click', (e) => {
+    if (!(e.target as Element).closest?.('#notif-root')) panel.classList.add('hidden')
+  })
+
+  async function poll() {
+    const since = localStorage.getItem('admin_last_seen') ?? new Date(Date.now() - 24 * 3600_000).toISOString()
+    try {
+      const res = await fetch(`/api/admin/notifications?since=${encodeURIComponent(since)}`)
+      if (!res.ok) return
+      const c = await res.json()
+      dot.classList.toggle('hidden', c.total === 0)
+      const items: Array<[string, number, string]> = [
+        ['Order baru', c.newOrders, '/admin/orders'],
+        ['Payment pending', c.pendingPayments, '/admin/payments'],
+        ['Konsultasi baru', c.newConsultations, '/admin/consultations'],
+        ['Activities terlambat', c.overdueActivities, '/admin/activities?filter=overdue']
+      ]
+      list.innerHTML = items
+        .filter(([, count]) => count > 0)
+        .map(([label, count, href]) => `<a href="${href}" class="flex justify-between rounded-md px-2 py-1.5 hover:bg-accent/40"><span>${label}</span><span class="font-bold">${count}</span></a>`)
+        .join('') || '<p class="text-xs text-muted-foreground">Tidak ada notifikasi baru.</p>'
+    } catch {}
+  }
+
+  poll()
+  setInterval(poll, 30000)
+
+  // mark seen on tab visit reset on full reload of any admin page
+  localStorage.setItem('admin_last_seen', new Date().toISOString())
+</script>
