@@ -4,14 +4,16 @@ export const SERVICE_TYPE_MAP: Record<string, ServiceType> = {
   'web': 'website',
   'wordpress': 'wordpress',
   'mobile': 'mobile',
-  'uiux': 'editing'
+  'uiux': 'editing',
+  'service_device': 'service_device'
 }
 
 export const SERVICE_PRICES: Record<string, number> = {
   'web': 2500000,
   'wordpress': 1500000,
   'mobile': 5000000,
-  'uiux': 1000000
+  'uiux': 1000000,
+  'service_device': 500000
 }
 
 export interface ServiceDetails {
