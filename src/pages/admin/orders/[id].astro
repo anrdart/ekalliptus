@@ -14,7 +14,22 @@ const { id } = Astro.params
 
     <div id="order-loading" class="py-12 text-center text-muted-foreground">Loading order...</div>
     <div id="order-error" class="hidden py-12 text-center text-destructive">Order not found.</div>
-    <dl id="order-detail" class="hidden grid grid-cols-1 md:grid-cols-2 gap-4"></dl>
+    <dl id="order-detail" class="hidden"></dl>
+  </div>
+  <div class="glass-card rounded-2xl p-5 mt-4">
+    <h2 class="text-base font-semibold mb-3">Update Status</h2>
+    <form id="status-form" class="flex gap-2 items-center">
+      <select id="status-select" class="rounded-lg border border-border bg-background px-3 py-2 text-sm">
+        <option value="">Pilih status baru...</option>
+        <option value="waiting_dp">Waiting DP</option>
+        <option value="dp_paid">DP Paid</option>
+        <option value="waiting_onsite_payment">Waiting Onsite Payment</option>
+        <option value="onsite_paid">Onsite Paid</option>
+        <option value="cancelled">Cancelled</option>
+      </select>
+      <button type="submit" class="rounded-lg bg-primary px-4 py-2 text-sm text-primary-foreground">Update</button>
+    </form>
+    <p id="status-result" class="mt-2 text-xs text-muted-foreground"></p>
   </div>
 </AdminLayout>
 
@@ -58,6 +73,7 @@ const { id } = Astro.params
       const order = result.data
       loadingEl?.classList.add('hidden')
       detailEl?.classList.remove('hidden')
+      detailEl?.classList.add('grid', 'grid-cols-1', 'md:grid-cols-2', 'gap-4')
       addField('Order ID', order.id)
       addField('Customer', order.customerName)
       addField('Email', order.email)
@@ -76,4 +92,25 @@ const { id } = Astro.params
   }
 
   loadOrder()
+
+  const form = document.getElementById('status-form')
+  const select = document.getElementById('status-select')
+  const result = document.getElementById('status-result')
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault()
+    const status = select?.value
+    if (!status) return
+    const res = await fetch(`/api/admin/orders/${id}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ status })
+    })
+    if (res.ok) {
+      result.textContent = '✓ Status diupdate. Reloading...'
+      setTimeout(() => window.location.reload(), 600)
+    } else {
+      const { error } = await res.json().catch(() => ({ error: 'Failed' }))
+      result.textContent = '✗ Gagal: ' + error
+    }
+  })
 </script>
