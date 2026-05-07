@@ -43,3 +43,4 @@ scripts/.superpowers/
 
 # Brainstorm session content (visual companion)
 .superpowers/
+*.sql
