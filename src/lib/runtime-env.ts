@@ -10,13 +10,21 @@ let cachedRuntimeEnv: Record<string, string | undefined> | null = null
 
 export function captureRuntimeEnv(env: Record<string, unknown> | undefined): void {
   if (!env) return
-  // Shallow-copy and coerce values to strings for safety
-  const next: Record<string, string | undefined> = {}
-  for (const key of Object.keys(env)) {
-    const value = env[key]
-    if (typeof value === 'string') next[key] = value
+  // Cloudflare bindings can be Proxies that throw on enumeration. Wrap safely.
+  try {
+    const next: Record<string, string | undefined> = {}
+    for (const key of Object.keys(env)) {
+      try {
+        const value = env[key]
+        if (typeof value === 'string') next[key] = value
+      } catch {
+        // Skip keys that throw on access (e.g. KV bindings)
+      }
+    }
+    cachedRuntimeEnv = next
+  } catch (err) {
+    console.warn('[runtime-env] Failed to capture env:', err)
   }
-  cachedRuntimeEnv = next
 }
 
 export function readEnv(key: string): string | undefined {

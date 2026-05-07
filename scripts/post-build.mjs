@@ -36,16 +36,22 @@ if (fs.existsSync(astroDir)) {
 }
 
 if (renames.length > 0) {
-  // 2b. Walk all JS/MJS files under dist/client and replace references
+  // 2b. Walk all JS/MJS files under dist/client and replace references.
+  // Replace BOTH "/_astro/.NAME" (HTML href form) and "_astro/.NAME"
+  // (manifest string form, no leading slash).
   const replaceInFile = (filePath) => {
     let content = fs.readFileSync(filePath, 'utf8')
     let changed = false
     for (const [oldName, newName] of renames) {
-      const oldRef = '/_astro/' + oldName
-      const newRef = '/_astro/' + newName
-      if (content.includes(oldRef)) {
-        content = content.split(oldRef).join(newRef)
-        changed = true
+      const variants = [
+        ['/_astro/' + oldName, '/_astro/' + newName],
+        ['_astro/' + oldName, '_astro/' + newName]
+      ]
+      for (const [oldRef, newRef] of variants) {
+        if (content.includes(oldRef)) {
+          content = content.split(oldRef).join(newRef)
+          changed = true
+        }
       }
     }
     if (changed) fs.writeFileSync(filePath, content, 'utf8')

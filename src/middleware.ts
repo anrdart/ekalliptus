@@ -25,8 +25,13 @@ export function isProtectedPath(pathname: string): boolean {
 export const onRequest = defineMiddleware(async (ctx, next) => {
   // Capture Cloudflare runtime env on EVERY request (not just admin routes).
   // Public routes (webhook, order, etc.) also need access to Supabase secrets.
-  const runtimeEnv = (ctx.locals as { runtime?: { env?: Record<string, unknown> } })?.runtime?.env
-  if (runtimeEnv) captureRuntimeEnv(runtimeEnv)
+  // Wrap in try/catch — Cloudflare bindings can be Proxies that throw on access.
+  try {
+    const runtimeEnv = (ctx.locals as { runtime?: { env?: Record<string, unknown> } })?.runtime?.env
+    if (runtimeEnv) captureRuntimeEnv(runtimeEnv)
+  } catch (err) {
+    console.warn('[middleware] Failed to read runtime env:', err)
+  }
 
   const url = new URL(ctx.request.url)
   if (!isProtectedPath(url.pathname)) return next()
