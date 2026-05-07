@@ -1,6 +1,7 @@
 import type { APIRoute } from 'astro'
-import { getSupabase } from '../../../lib/supabase'
+import { createClient } from '@supabase/supabase-js'
 import { ADMIN_COOKIE_NAME } from '../../../lib/admin/auth'
+import type { Database } from '../../../types/database'
 
 export const POST: APIRoute = async ({ request, redirect }) => {
   const form = await request.formData()
@@ -9,26 +10,46 @@ export const POST: APIRoute = async ({ request, redirect }) => {
   const next = String(form.get('next') ?? '/admin') || '/admin'
 
   if (!email || !password) {
-    return redirect('/admin/login?error=invalid')
+    return redirect('/admin/login?error=empty')
   }
 
-  const supabase = getSupabase(true)
-  if (!supabase) {
+  const supabaseUrl = import.meta.env.SUPABASE_URL || import.meta.env.VITE_SUPABASE_URL
+  const supabaseAnonKey = import.meta.env.SUPABASE_ANON_KEY || import.meta.env.VITE_SUPABASE_ANON_KEY
+  const supabaseServiceKey = import.meta.env.SUPABASE_SERVICE_ROLE_KEY
+
+  if (!supabaseUrl || !supabaseAnonKey || !supabaseServiceKey) {
+    console.error('[admin/login] Supabase env vars missing:', {
+      hasUrl: !!supabaseUrl,
+      hasAnon: !!supabaseAnonKey,
+      hasServiceRole: !!supabaseServiceKey
+    })
     return redirect('/admin/login?error=server')
   }
 
-  const { data, error } = await supabase.auth.signInWithPassword({ email, password })
+  // Fresh request-scoped clients prevent auth-state pollution across requests.
+  // signInWithPassword sets the user's JWT on its client; subsequent queries
+  // on that same client run as the user (not as service_role), which makes RLS apply.
+  const authClient = createClient<Database>(supabaseUrl, supabaseAnonKey, {
+    auth: { persistSession: false, autoRefreshToken: false }
+  })
+  const adminClient = createClient<Database>(supabaseUrl, supabaseServiceKey, {
+    auth: { persistSession: false, autoRefreshToken: false }
+  })
+
+  const { data, error } = await authClient.auth.signInWithPassword({ email, password })
   if (error || !data.session) {
+    console.error('[admin/login] signInWithPassword failed:', error?.message ?? 'no session returned')
     return redirect('/admin/login?error=invalid')
   }
 
-  const { data: profile } = await supabase
+  const { data: profile, error: profileError } = await adminClient
     .from('profiles')
     .select('role')
     .eq('user_id', data.user.id)
     .single()
 
   if (!profile) {
+    console.error('[admin/login] No profile row for user_id:', data.user.id, 'profileError:', profileError?.message)
     return redirect('/admin/login?error=no_profile')
   }
 

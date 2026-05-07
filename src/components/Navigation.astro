@@ -355,18 +355,42 @@ const isHomePage = currentPath === '/'
     langBackdrop.addEventListener('click', closeModal)
   }
   
-  function toggleTheme() {
+  function toggleTheme(event) {
     const root = document.documentElement
     const isDark = root.classList.contains('dark')
+    const newDark = !isDark
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+    // Capture click origin for circular reveal
+    const target = event && event.currentTarget
+    let cx = '50%', cy = '50%'
+    if (target && target.getBoundingClientRect) {
+      const r = target.getBoundingClientRect()
+      cx = (r.left + r.width / 2) + 'px'
+      cy = (r.top + r.height / 2) + 'px'
+    }
+    root.style.setProperty('--theme-x', cx)
+    root.style.setProperty('--theme-y', cy)
+
+    const apply = () => {
+      root.classList.toggle('dark', newDark)
+      localStorage.setItem('ekal-theme', newDark ? 'dark' : 'light')
+      updateThemeIcons(newDark)
+    }
+
+    // Modern path: View Transitions API (Chrome/Edge/Safari 18+)
+    if (!reduced && document.startViewTransition) {
+      const transition = document.startViewTransition(apply)
+      transition.finished.catch(() => {})
+      return
+    }
+
+    // Fallback: scoped CSS transitions
     root.classList.add('theme-transitioning')
-    root.classList.toggle('dark', !isDark)
-    localStorage.setItem('ekal-theme', isDark ? 'light' : 'dark')
-    updateThemeIcons(!isDark)
-    // Remove the transition class after animation finishes so we don't pay
-    // transition cost on every hover/state change
+    apply()
     window.setTimeout(function () {
       root.classList.remove('theme-transitioning')
-    }, 320)
+    }, 360)
   }
   
   function updateThemeIcons(isDark) {

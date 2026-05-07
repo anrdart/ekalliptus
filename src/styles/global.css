@@ -151,18 +151,50 @@
     margin-bottom: env(safe-area-inset-bottom, 0px);
   }
 
-  /* Smooth theme transition — applied briefly when toggling */
-  html.theme-transitioning,
+  /* Smooth theme transition — only on key surfaces, not every element */
   html.theme-transitioning body,
-  html.theme-transitioning *,
-  html.theme-transitioning *::before,
-  html.theme-transitioning *::after {
-    transition: background-color 280ms ease,
-                color 280ms ease,
-                border-color 280ms ease,
-                fill 280ms ease,
-                stroke 280ms ease !important;
-    transition-delay: 0s !important;
+  html.theme-transitioning .glass-panel,
+  html.theme-transitioning .glass-nav,
+  html.theme-transitioning .glass-pill,
+  html.theme-transitioning [class*="bg-"],
+  html.theme-transitioning [class*="text-"],
+  html.theme-transitioning [class*="border-"] {
+    transition: background-color 320ms cubic-bezier(0.4, 0, 0.2, 1),
+                color 320ms cubic-bezier(0.4, 0, 0.2, 1),
+                border-color 320ms cubic-bezier(0.4, 0, 0.2, 1),
+                fill 320ms cubic-bezier(0.4, 0, 0.2, 1),
+                stroke 320ms cubic-bezier(0.4, 0, 0.2, 1) !important;
+  }
+
+  /* View Transitions API — GPU-accelerated circular reveal from toggle position */
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
+    mix-blend-mode: normal;
+  }
+
+  ::view-transition-old(root) {
+    z-index: 1;
+  }
+
+  ::view-transition-new(root) {
+    z-index: 2;
+    animation: theme-clip-reveal 480ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+
+  @keyframes theme-clip-reveal {
+    from {
+      clip-path: circle(0% at var(--theme-x, 50%) var(--theme-y, 50%));
+    }
+    to {
+      clip-path: circle(150% at var(--theme-x, 50%) var(--theme-y, 50%));
+    }
+  }
+
+  /* Vanta canvas — fade in/out during theme swap to mask WebGL re-render jank */
+  html.theme-transitioning #vanta-canvas {
+    transition: opacity 200ms ease;
+    opacity: 0.6;
   }
 
   @media (prefers-reduced-motion: reduce) {
