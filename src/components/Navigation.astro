@@ -356,10 +356,17 @@ const isHomePage = currentPath === '/'
   }
   
   function toggleTheme() {
-    const isDark = document.documentElement.classList.contains('dark')
-    document.documentElement.classList.toggle('dark', !isDark)
+    const root = document.documentElement
+    const isDark = root.classList.contains('dark')
+    root.classList.add('theme-transitioning')
+    root.classList.toggle('dark', !isDark)
     localStorage.setItem('ekal-theme', isDark ? 'light' : 'dark')
     updateThemeIcons(!isDark)
+    // Remove the transition class after animation finishes so we don't pay
+    // transition cost on every hover/state change
+    window.setTimeout(function () {
+      root.classList.remove('theme-transitioning')
+    }, 320)
   }
   
   function updateThemeIcons(isDark) {

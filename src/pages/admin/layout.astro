@@ -1,6 +1,6 @@
 ---
 import '../../styles/global.css'
-import { Menu, X, LayoutDashboard, Users, Columns3, CheckSquare, ShoppingCart, CreditCard as Payment, MessageSquare, BarChart3, Settings, LogOut, User, FileText, Ticket, History } from 'lucide-astro'
+import { Menu, X, LayoutDashboard, Users, Columns3, CheckSquare, ShoppingCart, CreditCard as Payment, MessageSquare, BarChart3, Settings, LogOut, User, FileText, Ticket, History, Moon, Sun } from 'lucide-astro'
 import NotificationBell from '../../components/admin/NotificationBell.astro'
 
 interface Props {
@@ -52,7 +52,7 @@ function isActivePath(href: string): boolean {
   <title>{title} - Admin | Ekalliptus Digital</title>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 </head>
-<body class="bg-background text-foreground min-h-screen">
+<body class="bg-background text-foreground min-h-screen" data-admin="true">
   <!-- Mobile backdrop -->
   <div id="admin-backdrop" class="fixed inset-0 bg-background/80 backdrop-blur-sm z-40 md:hidden hidden"></div>
 
@@ -165,6 +165,14 @@ function isActivePath(href: string): boolean {
             </div>
           </div>
           <div class="flex items-center gap-3">
+            <button
+              id="admin-theme-toggle"
+              class="h-10 w-10 rounded-full glass-panel flex items-center justify-center hover:bg-accent transition cursor-pointer"
+              aria-label="Toggle theme"
+            >
+              <Sun class="h-4 w-4 dark-icon" />
+              <Moon class="h-4 w-4 light-icon hidden" />
+            </button>
             <NotificationBell />
             <div class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full glass-pill">
               <div class="h-2 w-2 rounded-full bg-primary animate-pulse"></div>
@@ -255,6 +263,27 @@ function isActivePath(href: string): boolean {
       if (e.key === 'Escape' && menuOpen) {
         closeMenu()
       }
+    })
+
+    // Theme toggle (mirrors public site behavior)
+    const themeToggleBtn = document.getElementById('admin-theme-toggle')
+    const sunIcon = themeToggleBtn?.querySelector('.dark-icon')
+    const moonIcon = themeToggleBtn?.querySelector('.light-icon')
+    function syncThemeIcons(isDark: boolean) {
+      if (sunIcon) sunIcon.classList.toggle('hidden', !isDark)
+      if (moonIcon) moonIcon.classList.toggle('hidden', isDark)
+    }
+    const initialTheme = localStorage.getItem('ekal-theme') || 'dark'
+    document.documentElement.classList.toggle('dark', initialTheme === 'dark')
+    syncThemeIcons(initialTheme === 'dark')
+    themeToggleBtn?.addEventListener('click', () => {
+      const root = document.documentElement
+      const isDark = root.classList.contains('dark')
+      root.classList.add('theme-transitioning')
+      root.classList.toggle('dark', !isDark)
+      localStorage.setItem('ekal-theme', isDark ? 'light' : 'dark')
+      syncThemeIcons(!isDark)
+      setTimeout(() => root.classList.remove('theme-transitioning'), 320)
     })
   </script>
 </body>

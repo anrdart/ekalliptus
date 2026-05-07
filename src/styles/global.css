@@ -151,11 +151,25 @@
     margin-bottom: env(safe-area-inset-bottom, 0px);
   }
 
+  /* Smooth theme transition — applied briefly when toggling */
+  html.theme-transitioning,
+  html.theme-transitioning body,
+  html.theme-transitioning *,
+  html.theme-transitioning *::before,
+  html.theme-transitioning *::after {
+    transition: background-color 280ms ease,
+                color 280ms ease,
+                border-color 280ms ease,
+                fill 280ms ease,
+                stroke 280ms ease !important;
+    transition-delay: 0s !important;
+  }
+
   @media (prefers-reduced-motion: reduce) {
     html {
       scroll-behavior: auto;
     }
-    
+
     *,
     *::before,
     *::after {
@@ -397,6 +411,22 @@
   .content-vis {
     content-visibility: auto;
     contain-intrinsic-size: auto 800px;
+  }
+
+  /* Admin-only perf override — admin pages have many glass elements.
+     Reducing blur radius and using solid-er backgrounds cuts GPU cost. */
+  body[data-admin="true"] .glass-card,
+  body[data-admin="true"] .glass-panel,
+  body[data-admin="true"] .glass-pill {
+    backdrop-filter: blur(8px) saturate(1.2);
+    -webkit-backdrop-filter: blur(8px) saturate(1.2);
+    background: hsl(var(--card) / 0.75);
+  }
+
+  /* Admin off-screen section lazy rendering */
+  body[data-admin="true"] .cv-auto {
+    content-visibility: auto;
+    contain-intrinsic-size: 1px 400px;
   }
 
   /* Floating animation */
