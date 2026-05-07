@@ -81,6 +81,8 @@ export const POST: APIRoute = async ({ request }) => {
       service_type: serviceType,
       scope: scope || {},
       urgency,
+      status: 'waiting_dp' as const,
+      payment_option,
       voucher_code: resolvedVoucherCode,
       pricing: {
         subtotal: calculation.subtotal,

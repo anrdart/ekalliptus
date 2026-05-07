@@ -1,5 +1,6 @@
 import { MidtransAdapter } from './midtrans.adapter'
 import { PakasirAdapter } from './pakasir.adapter'
+import { readEnv } from '../../runtime-env'
 import type { PaymentAdapter, GatewayConfig, DbGatewayConfig } from '../types'
 import type { PaymentGateway } from '../../../types/database'
 
@@ -23,10 +24,9 @@ export class AdapterFactory {
   }
 }
 
-// Convert DB config to GatewayConfig
+// Read env var via runtime helper (Cloudflare Workers secrets) with build-time fallback
 function getEnvVar(key: string): string {
-  // Use import.meta.env which Astro exposes
-  return (import.meta.env as any)[key] || ''
+  return readEnv(key) || ''
 }
 
 export function dbConfigToGatewayConfig(dbConfig: DbGatewayConfig): GatewayConfig {
