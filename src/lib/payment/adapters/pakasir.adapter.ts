@@ -73,6 +73,16 @@ export class PakasirAdapter extends BaseAdapter {
 
   async createPayment(request: CreatePaymentRequest): Promise<CreatePaymentResponse> {
     try {
+      // Fail fast with clear diagnostic if credentials are missing
+      const missing: string[] = []
+      if (!this.merchantCode) missing.push('merchantCode (env: PAKASIR_MERCHANT_CODE)')
+      if (!this.apiKey) missing.push('apiKey (env: PAKASIR_API_KEY)')
+      if (missing.length > 0) {
+        const msg = `Pakasir credentials missing: ${missing.join(', ')}. Set them in Cloudflare Pages env vars or in payment_gateways.config JSONB.`
+        console.error('[Pakasir]', msg)
+        return { success: false, error: msg }
+      }
+
       const transactionId = this.generateTransactionId(request.orderId)
       const expiryDate = this.calculateExpiryDate(request.expiryHours || 24)
 
