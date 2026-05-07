@@ -140,6 +140,7 @@ export const POST: APIRoute = async ({ request }) => {
     }
 
     let gatewayName = gateway
+    let gatewayResolutionError: string | undefined
     console.log('[Order API] Looking for payment gateway. Explicit gateway:', gateway || '(none)')
     if (!gatewayName) {
       try {
@@ -148,9 +149,13 @@ export const POST: APIRoute = async ({ request }) => {
         console.log('[Order API] Active gateways found:', activeGateways?.length || 0, activeGateways?.map(g => g.name))
         if (activeGateways && activeGateways.length > 0) {
           gatewayName = activeGateways[0].name
+        } else {
+          gatewayResolutionError = 'No active payment gateway found in database. Please configure one in admin panel.'
         }
       } catch (err) {
-        console.error('[Order API] Failed to fetch active gateways:', err instanceof Error ? err.message : err)
+        const msg = err instanceof Error ? err.message : String(err)
+        console.error('[Order API] Failed to fetch active gateways:', msg)
+        gatewayResolutionError = `Gateway lookup failed: ${msg}`
       }
     }
     console.log('[Order API] Resolved gateway:', gatewayName || '(none)')
@@ -201,6 +206,9 @@ export const POST: APIRoute = async ({ request }) => {
       }
     } else {
       console.warn('[Order API] Skipping payment creation. gatewayName:', gatewayName, 'order:', !!order)
+      if (!paymentError && gatewayResolutionError) {
+        paymentError = gatewayResolutionError
+      }
     }
 
     return new Response(JSON.stringify({
