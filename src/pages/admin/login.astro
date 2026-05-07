@@ -4,6 +4,14 @@ import { LayoutDashboard } from 'lucide-astro'
 
 const next = Astro.url.searchParams.get('next') ?? '/admin'
 const error = Astro.url.searchParams.get('error')
+
+const errorMessages: Record<string, string> = {
+  invalid: 'Email atau password salah.',
+  server: 'Server Supabase belum dikonfigurasi. Cek SUPABASE_SERVICE_ROLE_KEY di .env.',
+  no_profile: 'User berhasil login tapi belum punya row di tabel profiles. Insert profile dengan role owner.',
+  empty: 'Email dan password wajib diisi.'
+}
+const errorMessage = error ? (errorMessages[error] ?? 'Login gagal. Coba lagi.') : null
 ---
 <!DOCTYPE html>
 <html lang="id">
@@ -13,16 +21,16 @@ const error = Astro.url.searchParams.get('error')
   <title>Admin Login | Ekalliptus Digital</title>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 </head>
-<body class="min-h-screen bg-background text-foreground flex items-center justify-center p-4">
+<body class="min-h-screen bg-background text-foreground flex items-center justify-center p-4" data-admin="true">
   <main class="glass-card w-full max-w-sm rounded-2xl p-6">
     <div class="mx-auto mb-4 h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center">
       <LayoutDashboard class="h-6 w-6 text-primary" />
     </div>
     <h1 class="text-xl font-bold text-center mb-1">Admin Login</h1>
     <p class="text-sm text-muted-foreground text-center mb-6">Ekalliptus Digital</p>
-    {error && (
+    {errorMessage && (
       <div class="mb-4 rounded-lg border border-destructive/40 bg-destructive/10 px-3 py-2 text-sm text-destructive">
-        {error === 'invalid' ? 'Email atau password salah.' : 'Login gagal. Coba lagi.'}
+        {errorMessage}
       </div>
     )}
     <form method="POST" action="/api/admin/login" class="space-y-3">

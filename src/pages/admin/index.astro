@@ -97,7 +97,7 @@ const fmt = (n: number) => new Intl.NumberFormat('id-ID', { style: 'currency', c
     </div>
   </div>
 
-  <div class="glass-card rounded-2xl p-6 mb-6">
+  <div class="glass-card rounded-2xl p-6 mb-6 cv-auto">
     <h2 class="text-lg font-semibold mb-4">Top Services Bulan Ini</h2>
     {topServices.length === 0 ? (
       <p class="text-sm text-muted-foreground">Belum ada order bulan ini.</p>
@@ -119,7 +119,7 @@ const fmt = (n: number) => new Intl.NumberFormat('id-ID', { style: 'currency', c
     )}
   </div>
 
-  <div class="glass-card rounded-2xl p-6">
+  <div class="glass-card rounded-2xl p-6 cv-auto">
     <div class="flex items-center justify-between mb-4">
       <h2 class="text-lg font-semibold">Recent Orders</h2>
       <a href="/admin/orders" class="flex items-center gap-1 text-sm text-primary hover:underline">Lihat semua <ArrowUpRight class="h-4 w-4" /></a>
