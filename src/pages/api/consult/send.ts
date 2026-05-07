@@ -53,7 +53,7 @@ export const POST: APIRoute = async ({ request }) => {
         .insert({
           session_id,
           visitor_name: visitorName,
-          status: 'active',
+          status: 'scheduled',
           last_message: message.length > 200 ? message.slice(0, 200) + '...' : message,
           last_message_at: new Date().toISOString(),
           unread_count: 1,
@@ -106,7 +106,7 @@ export const POST: APIRoute = async ({ request }) => {
           last_message: message.length > 200 ? message.slice(0, 200) + '...' : message,
           last_message_at: new Date().toISOString(),
           unread_count: 1,
-          status: 'active',
+          status: 'scheduled',
         })
         .eq('id', consultation.id)
 

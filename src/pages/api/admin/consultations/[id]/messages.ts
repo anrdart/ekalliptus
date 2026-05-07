@@ -79,7 +79,7 @@ export const POST: APIRoute = async (ctx) => {
         last_message: message.content,
         last_message_at: new Date().toISOString(),
         unread_count: 0,
-        status: 'active',
+        status: 'scheduled',
         updated_at: new Date().toISOString()
       })
       .eq('id', id)

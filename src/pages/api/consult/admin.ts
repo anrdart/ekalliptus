@@ -30,7 +30,7 @@ export const POST: APIRoute = async ({ request }) => {
           .upsert({
             session_id: sessionId,
             visitor_name: visitorName,
-            status: 'active',
+            status: 'scheduled',
             last_message: lastMessage,
             last_message_at: new Date().toISOString(),
             unread_count: 1,
@@ -81,7 +81,7 @@ export const POST: APIRoute = async ({ request }) => {
         const { error } = await supabase
           .from('audit_logs')
           .insert({
-            table_name: 'consultation',
+            table_name: 'consultations',
             action: 'admin_handoff',
             new_values: {
               message,
