@@ -1,6 +1,7 @@
 import type { APIRoute } from 'astro'
 import { getSupabase } from '../../../lib/supabase'
 import type { ConsultationMessageInsert } from '../../../types/database'
+import { createLead } from '../../../lib/admin/leads'
 
 const CONSULT_TOKEN = 'ekalliptus-consult-2026'
 
@@ -66,6 +67,23 @@ export const POST: APIRoute = async ({ request }) => {
           status: 500,
           headers: { 'Content-Type': 'application/json' }
         })
+      }
+
+      // Auto-create lead from first visitor message (non-blocking)
+      // Dedup is naturally ensured since this branch only runs on new consultation insert (session_id unique)
+      try {
+        await createLead({
+          name: visitorName !== 'Pengunjung' ? visitorName : 'Visitor',
+          whatsapp: null,
+          email: null,
+          service_interest: null,
+          stage: 'new',
+          source: 'consultation',
+          consultation_id: newConsultation.id,
+          notes: 'Auto-created from consultation (first message)'
+        })
+      } catch (err) {
+        console.error('[consult/send] Auto-create lead failed:', err)
       }
 
       const messageRecord: ConsultationMessageInsert = {

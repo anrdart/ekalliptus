@@ -1,6 +1,7 @@
 import type { APIRoute } from 'astro'
-import { createOrder } from '../../lib/supabase'
+import { createOrder, validateVoucher, incrementVoucherUsage } from '../../lib/supabase'
 import { SERVICE_TYPE_MAP, calculateOrder, SERVICE_PRICES } from '../../utils/pricing'
+import { createLead } from '../../lib/admin/leads'
 
 export const POST: APIRoute = async ({ request }) => {
   try {
@@ -15,7 +16,8 @@ export const POST: APIRoute = async ({ request }) => {
       scope,
       urgency = 'normal',
       payment_option = 'full',
-      gateway
+      gateway,
+      voucher_code = null
     } = body
 
     if (!service_type || !customer_name || !whatsapp) {
@@ -42,6 +44,21 @@ export const POST: APIRoute = async ({ request }) => {
     const serviceType = SERVICE_TYPE_MAP[service_type] || 'website'
     const basePrice = SERVICE_PRICES[service_type] || 0
 
+    // Validate voucher before calculating if provided
+    let voucherDiscount = 0
+    let resolvedVoucherCode: string | null = null
+    if (voucher_code) {
+      const subtotalForVoucher = basePrice // pre-discount subtotal estimate
+      const voucherResult = await validateVoucher(voucher_code, subtotalForVoucher)
+      if (voucherResult.valid) {
+        voucherDiscount = voucherResult.discount
+        resolvedVoucherCode = (voucher_code as string).toUpperCase()
+      } else {
+        console.warn('[order] Voucher invalid:', voucherResult.error)
+        // Proceed without voucher discount rather than blocking order
+      }
+    }
+
     const calculation = calculateOrder({
       serviceId: service_type,
       basePrice,
@@ -52,6 +69,10 @@ export const POST: APIRoute = async ({ request }) => {
     const tomorrow = new Date()
     tomorrow.setDate(tomorrow.getDate() + 1)
 
+    const effectiveGrandTotal = Math.max(0, calculation.grandTotal - voucherDiscount)
+    const effectiveDeposit = Math.max(0, calculation.deposit - (payment_option === 'dp' ? voucherDiscount : 0))
+    const effectiveRemaining = Math.max(0, calculation.remaining - (payment_option !== 'dp' ? 0 : voucherDiscount))
+
     const orderData = {
       customer_name,
       email: email || null,
@@ -60,16 +81,18 @@ export const POST: APIRoute = async ({ request }) => {
       service_type: serviceType,
       scope: scope || {},
       urgency,
+      voucher_code: resolvedVoucherCode,
       pricing: {
         subtotal: calculation.subtotal,
-        discount: calculation.discount,
+        discount: calculation.discount + voucherDiscount,
         dpp: calculation.dpp,
         ppn: calculation.ppn,
         fee: calculation.fee,
         shipping_cost: 0,
-        grand_total: calculation.grandTotal,
-        deposit: calculation.deposit,
-        remaining: calculation.remaining
+        grand_total: effectiveGrandTotal,
+        deposit: effectiveDeposit,
+        remaining: effectiveRemaining,
+        ...(voucherDiscount > 0 ? { voucher_discount: voucherDiscount } : {})
       },
       schedule_date: tomorrow.toISOString().split('T')[0],
       schedule_time: '10:00',
@@ -87,6 +110,31 @@ export const POST: APIRoute = async ({ request }) => {
         status: 500,
         headers: { 'Content-Type': 'application/json' }
       })
+    }
+
+    // Auto-create lead from order (non-blocking)
+    try {
+      await createLead({
+        name: order!.customer_name,
+        whatsapp: order!.whatsapp,
+        email: order!.email,
+        company: order!.company,
+        service_interest: order!.service_type,
+        stage: 'new',
+        source: 'direct_order',
+        order_id: order!.id,
+        estimated_value: Number((order!.pricing as any)?.grand_total ?? 0),
+        notes: `Auto-created from order ${order!.id.slice(0, 8)}`
+      })
+    } catch (err) {
+      console.error('[order] Auto-create lead failed:', err)
+    }
+
+    // Increment voucher usage after successful order (non-blocking)
+    if (resolvedVoucherCode) {
+      await incrementVoucherUsage(resolvedVoucherCode).catch((err) =>
+        console.error('[order] increment voucher failed:', err)
+      )
     }
 
     let gatewayName = gateway

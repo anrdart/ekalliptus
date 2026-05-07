@@ -230,6 +230,22 @@ export async function validateVoucher(code: string, subtotal: number): Promise<{
   }
 }
 
+export async function incrementVoucherUsage(code: string): Promise<boolean> {
+  const supabase = getSupabase(true)
+  if (!supabase) return false
+  const { data: voucher } = await supabase
+    .from('vouchers')
+    .select('used_count')
+    .eq('code', code.toUpperCase())
+    .single()
+  if (!voucher) return false
+  const { error } = await supabase
+    .from('vouchers')
+    .update({ used_count: (voucher.used_count ?? 0) + 1 })
+    .eq('code', code.toUpperCase())
+  return !error
+}
+
 // Blog-related types and helpers
 export function normalizeBlogImage(img: string | null | undefined): string {
   if (!img || typeof img !== 'string') return '/blog/placeholder.svg'

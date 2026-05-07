@@ -1,6 +1,7 @@
 import type { APIRoute } from 'astro'
 import { getSupabase } from '../../../lib/supabase'
 import type { ConsultationMessageInsert } from '../../../types/database'
+import { createLead } from '../../../lib/admin/leads'
 
 export const POST: APIRoute = async ({ request }) => {
   try {
@@ -39,6 +40,35 @@ export const POST: APIRoute = async ({ request }) => {
           .single()
 
         if (!consultError && consultation) {
+          // Auto-create lead from consultation handoff (non-blocking, with dedup by whatsapp)
+          try {
+            const whatsapp = body.whatsapp || null
+            let shouldCreate = true
+            if (whatsapp) {
+              const { data: existing } = await supabase!
+                .from('leads')
+                .select('id, stage')
+                .eq('whatsapp', whatsapp)
+                .not('stage', 'in', '("won","lost")')
+                .limit(1)
+              if (existing && existing.length > 0) shouldCreate = false
+            }
+            if (shouldCreate) {
+              await createLead({
+                name: visitorName !== 'Pengunjung' ? visitorName : 'Visitor',
+                whatsapp: whatsapp,
+                email: body.email || null,
+                service_interest: null,
+                stage: 'contacted',
+                source: 'consultation',
+                consultation_id: consultation.id,
+                notes: 'Auto-created from consultation handoff'
+              })
+            }
+          } catch (err) {
+            console.error('[consult/admin] Auto-create lead failed:', err)
+          }
+
           const messagesToInsert: ConsultationMessageInsert[] = []
 
           if (history && Array.isArray(history)) {
