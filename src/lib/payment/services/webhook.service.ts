@@ -155,17 +155,21 @@ export class WebhookService {
       const newStatus = adapter.extractStatus(payload) as PaymentStatus
 
       // Update payment status
+      const updatePayload: any = {
+        status: newStatus,
+        webhook_received_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+        metadata: {
+          ...(payment.metadata as Record<string, any> || {}),
+          webhook_payload: payload
+        }
+      }
+      if (newStatus === 'paid') {
+        updatePayload.paid_at = new Date().toISOString()
+      }
       const { data: updatedPayment, error: updateError } = await supabase
         .from('payments')
-        .update({
-          status: newStatus,
-          webhook_received_at: new Date().toISOString(),
-          updated_at: new Date().toISOString(),
-          metadata: {
-            ...(payment.metadata as Record<string, any> || {}),
-            webhook_payload: payload
-          }
-        })
+        .update(updatePayload)
         .eq('id', payment.id)
         .select()
         .single()
