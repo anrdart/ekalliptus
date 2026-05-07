@@ -1,9 +1,17 @@
 import type { APIRoute } from 'astro'
 import { createClient } from '@supabase/supabase-js'
 import { ADMIN_COOKIE_NAME } from '../../../lib/admin/auth'
+import { captureRuntimeEnv, readSupabaseEnv } from '../../../lib/runtime-env'
 import type { Database } from '../../../types/database'
 
-export const POST: APIRoute = async ({ request, redirect }) => {
+export const POST: APIRoute = async (ctx) => {
+  // Defensive: middleware should already have captured runtime env, but recapture
+  // here in case this handler was hit via a path the middleware skipped or the
+  // module cache was reset.
+  const runtimeEnv = (ctx.locals as { runtime?: { env?: Record<string, unknown> } })?.runtime?.env
+  if (runtimeEnv) captureRuntimeEnv(runtimeEnv)
+
+  const { request, redirect } = ctx
   const form = await request.formData()
   const email = String(form.get('email') ?? '')
   const password = String(form.get('password') ?? '')
@@ -13,15 +21,14 @@ export const POST: APIRoute = async ({ request, redirect }) => {
     return redirect('/admin/login?error=empty')
   }
 
-  const supabaseUrl = import.meta.env.SUPABASE_URL || import.meta.env.VITE_SUPABASE_URL
-  const supabaseAnonKey = import.meta.env.SUPABASE_ANON_KEY || import.meta.env.VITE_SUPABASE_ANON_KEY
-  const supabaseServiceKey = import.meta.env.SUPABASE_SERVICE_ROLE_KEY
+  const { url: supabaseUrl, anonKey: supabaseAnonKey, serviceRoleKey: supabaseServiceKey } = readSupabaseEnv()
 
   if (!supabaseUrl || !supabaseAnonKey || !supabaseServiceKey) {
     console.error('[admin/login] Supabase env vars missing:', {
       hasUrl: !!supabaseUrl,
       hasAnon: !!supabaseAnonKey,
-      hasServiceRole: !!supabaseServiceKey
+      hasServiceRole: !!supabaseServiceKey,
+      source: runtimeEnv ? 'cloudflare-runtime' : 'import.meta.env'
     })
     return redirect('/admin/login?error=server')
   }

@@ -1,5 +1,6 @@
 import { defineMiddleware } from 'astro:middleware'
 import { getAdminSession } from './lib/admin/auth'
+import { captureRuntimeEnv } from './lib/runtime-env'
 
 const ROLE_RULES: Array<{ pattern: RegExp; allowed: string[] }> = [
   { pattern: /^\/admin\/blog/, allowed: ['owner', 'admin', 'editor'] },
@@ -22,6 +23,11 @@ export function isProtectedPath(pathname: string): boolean {
 }
 
 export const onRequest = defineMiddleware(async (ctx, next) => {
+  // Capture Cloudflare runtime env on EVERY request (not just admin routes).
+  // Public routes (webhook, order, etc.) also need access to Supabase secrets.
+  const runtimeEnv = (ctx.locals as { runtime?: { env?: Record<string, unknown> } })?.runtime?.env
+  if (runtimeEnv) captureRuntimeEnv(runtimeEnv)
+
   const url = new URL(ctx.request.url)
   if (!isProtectedPath(url.pathname)) return next()
   if (import.meta.env.ADMIN_AUTH_DISABLED === 'true') return next()

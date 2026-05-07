@@ -1,13 +1,12 @@
 import { createClient, type SupabaseClient } from '@supabase/supabase-js'
 import type { Database, Order, OrderInsert, OrderAttachment, OrderAttachmentInsert, ServiceType, OrderStatus } from '../types/database'
+import { readSupabaseEnv } from './runtime-env'
 
 let supabaseClient: SupabaseClient<Database> | null = null
 let supabaseAdminClient: SupabaseClient<Database> | null = null
 
 export function getSupabase(useServiceRole = false): SupabaseClient<Database> | null {
-  const supabaseUrl = import.meta.env.SUPABASE_URL || import.meta.env.VITE_SUPABASE_URL
-  const supabaseAnonKey = import.meta.env.SUPABASE_ANON_KEY || import.meta.env.VITE_SUPABASE_ANON_KEY
-  const supabaseServiceRoleKey = import.meta.env.SUPABASE_SERVICE_ROLE_KEY
+  const { url: supabaseUrl, anonKey: supabaseAnonKey, serviceRoleKey: supabaseServiceRoleKey } = readSupabaseEnv()
 
   if (!supabaseUrl || !supabaseAnonKey) {
     console.warn('Supabase credentials not configured')
