@@ -22,27 +22,35 @@ export interface AdminSession {
 }
 
 export async function getAdminSession(ctx: APIContext): Promise<AdminSession | null> {
-  const token = parseSessionCookie(ctx.request.headers.get('cookie'))
-  if (!token) return null
+  // Wrap entirely so a thrown Supabase/network error doesn't bubble up and
+  // 500 the request. A null session redirects to login, which is the safe
+  // fallback for any failure mode here.
+  try {
+    const token = parseSessionCookie(ctx.request.headers.get('cookie'))
+    if (!token) return null
 
-  const supabase = getSupabase(true)
-  if (!supabase) return null
+    const supabase = getSupabase(true)
+    if (!supabase) return null
 
-  const { data: userData, error } = await supabase.auth.getUser(token)
-  if (error || !userData.user) return null
+    const { data: userData, error } = await supabase.auth.getUser(token)
+    if (error || !userData.user) return null
 
-  const { data: profile } = await supabase
-    .from('profiles')
-    .select('role, display_name')
-    .eq('user_id', userData.user.id)
-    .single()
+    const { data: profile } = await supabase
+      .from('profiles')
+      .select('role, display_name')
+      .eq('user_id', userData.user.id)
+      .single()
 
-  if (!profile) return null
+    if (!profile) return null
 
-  return {
-    user: userData.user,
-    role: (profile.role as UserRole) ?? 'admin',
-    displayName: profile.display_name
+    return {
+      user: userData.user,
+      role: (profile.role as UserRole) ?? 'admin',
+      displayName: profile.display_name
+    }
+  } catch (err) {
+    console.error('[getAdminSession] Unhandled error:', err instanceof Error ? err.stack : err)
+    return null
   }
 }
 
