@@ -1,0 +1,39 @@
+---
+interface Props {
+  slot?: string
+  format?: 'auto' | 'fluid' | 'rectangle' | 'horizontal' | 'vertical'
+  layout?: string
+  className?: string
+}
+
+const {
+  slot = '',
+  format = 'auto',
+  layout,
+  className = ''
+} = Astro.props
+
+const client = 'ca-pub-9374589831001594'
+---
+
+<div class={`ad-unit ${className}`}>
+  <ins
+    class="adsbygoogle"
+    style="display:block"
+    data-ad-client={client}
+    data-ad-slot={slot || undefined}
+    data-ad-format={format}
+    data-full-width-responsive="true"
+    {...(layout ? { 'data-ad-layout': layout } : {})}
+  ></ins>
+</div>
+
+<style>
+  .ad-unit {
+    min-height: 50px;
+    overflow: hidden;
+  }
+  .ad-unit ins {
+    background: transparent;
+  }
+</style>

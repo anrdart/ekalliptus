@@ -6,6 +6,7 @@ import Navigation from '../../components/Navigation.astro'
 import VantaBackground from '../../components/VantaBackground.astro'
 import PreLoader from '../../components/PreLoader.astro'
 import SocialShare from '../../components/SocialShare.astro'
+import AdUnit from '../../components/AdUnit.astro'
 import { Calendar, User, Tag, ArrowLeft, Clock, List } from 'lucide-astro'
 import { t } from '../../i18n'
 
@@ -210,27 +211,44 @@ while ((tocMatch = tocRe.exec(processedHtml)) !== null) {
       </div>
     </section>
 
+    <!-- Ad: after intro -->
+    <section class="px-4 pb-6">
+      <div class="mx-auto max-w-5xl">
+        <AdUnit format="horizontal" className="rounded-xl overflow-hidden" />
+      </div>
+    </section>
+
     <!-- Main content with TOC sidebar and article body -->
     <section class="px-4 pb-12">
       <div class="mx-auto max-w-6xl grid grid-cols-12 gap-8">
-        <!-- Desktop TOC -->
+        <!-- Desktop TOC + Sidebar Ad -->
         {processedTocHeadings.length > 0 && (
           <aside class="hidden lg:block col-span-3 w-64">
-            <div class="glass-panel p-4 sticky top-32 h-full">
-              <nav aria-label="Table of contents">
-                <ul class="space-y-2">
-                  {processedTocHeadings.map((h) => (
-                    <li>
-                      <a href={`#${h.slug}`} class="toc-link">{h.text}</a>
-                    </li>
-                  ))}
-                </ul>
-              </nav>
+            <div class="sticky top-32 space-y-6">
+              <div class="glass-panel p-4">
+                <nav aria-label="Table of contents">
+                  <ul class="space-y-2">
+                    {processedTocHeadings.map((h) => (
+                      <li>
+                        <a href={`#${h.slug}`} class="toc-link">{h.text}</a>
+                      </li>
+                    ))}
+                  </ul>
+                </nav>
+              </div>
+              <AdUnit format="vertical" className="rounded-xl overflow-hidden" />
             </div>
           </aside>
         )}
 
         <article class="col-span-12 lg:col-span-9 prose prose-lg prose-invert max-w-none" set:html={processedHtml}></article>
+      </div>
+    </section>
+
+    <!-- Ad: after article -->
+    <section class="px-4 pb-6">
+      <div class="mx-auto max-w-5xl">
+        <AdUnit format="auto" className="rounded-xl overflow-hidden" />
       </div>
     </section>
 
@@ -365,6 +383,11 @@ while ((tocMatch = tocRe.exec(processedHtml)) !== null) {
           }
         }
       }, { passive: true });
+
+      // Initialize AdSense units
+      document.querySelectorAll('.adsbygoogle').forEach(() => {
+        try { (adsbygoogle = window.adsbygoogle || []).push({}) } catch(e) {}
+      })
     </script>
   </main>
   
