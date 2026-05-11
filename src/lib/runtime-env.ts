@@ -1,10 +1,6 @@
 // Runtime environment helper.
-// Cloudflare Pages exposes secrets at request runtime via ctx.locals.runtime.env,
-// not via import.meta.env (which only contains BUILD-time values inlined by Vite).
-// Middleware captures runtime.env on every request; helpers read via readEnv().
-//
-// In dev (platformProxy enabled), runtime.env mirrors .env / .dev.vars.
-// In production Cloudflare, secrets configured in the dashboard are exposed here.
+// Cloudflare Workers exposes secrets via `import { env } from "cloudflare:workers"`.
+// Middleware captures env on every request; helpers read via readEnv().
 
 let cachedRuntimeEnv: Record<string, string | undefined> | null = null
 

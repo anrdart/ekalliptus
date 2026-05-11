@@ -1,4 +1,5 @@
 import { defineMiddleware } from 'astro:middleware'
+import { env as cfEnv } from 'cloudflare:workers'
 import { getAdminSession } from './lib/admin/auth'
 import { captureRuntimeEnv } from './lib/runtime-env'
 
@@ -27,8 +28,7 @@ export const onRequest = defineMiddleware(async (ctx, next) => {
   // Public routes (webhook, order, etc.) also need access to Supabase secrets.
   // Wrap in try/catch — Cloudflare bindings can be Proxies that throw on access.
   try {
-    const runtimeEnv = (ctx.locals as { runtime?: { env?: Record<string, unknown> } })?.runtime?.env
-    if (runtimeEnv) captureRuntimeEnv(runtimeEnv)
+    captureRuntimeEnv(cfEnv as unknown as Record<string, unknown>)
   } catch (err) {
     console.warn('[middleware] Failed to read runtime env:', err)
   }
