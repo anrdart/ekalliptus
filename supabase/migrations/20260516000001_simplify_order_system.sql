@@ -4,7 +4,7 @@
 CREATE TABLE IF NOT EXISTS order_sync_failures (
   id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
   order_id uuid NOT NULL REFERENCES orders(id) ON DELETE CASCADE,
-  target text NOT NULL CHECK (target IN ('sheets', 'telegram')),
+  target text NOT NULL CHECK (target IN ('telegram')),
   error_message text,
   attempts integer DEFAULT 0,
   resolved boolean DEFAULT false,
