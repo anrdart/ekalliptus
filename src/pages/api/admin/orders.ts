@@ -19,7 +19,7 @@ export const GET: APIRoute = async (ctx) => {
   const to = from + pageSize - 1
 
   let query = supabase.from('orders').select('*', { count: 'exact' }).order('created_at', { ascending: false }).range(from, to)
-  if (search) query = query.or(`customer_name.ilike.%${search}%,email.ilike.%${search}%,whatsapp.ilike.%${search}%`)
+  if (search) query = query.or(`customer_name.ilike.%${search}%,whatsapp.ilike.%${search}%`)
   if (service) query = query.eq('service_type', service as any)
   if (status) query = query.eq('status', status as any)
 

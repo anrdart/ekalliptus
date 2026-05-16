@@ -4,7 +4,7 @@ import { writeAudit } from '../../../../lib/admin/audit'
 import { getSupabase } from '../../../../lib/supabase'
 import type { OrderStatus } from '../../../../types/database'
 
-const VALID_STATUSES: OrderStatus[] = ['waiting_dp', 'dp_paid', 'waiting_onsite_payment', 'onsite_paid', 'cancelled']
+const VALID_STATUSES: OrderStatus[] = ['new', 'contacted', 'in_progress', 'done', 'cancelled']
 
 export const GET: APIRoute = async (ctx) => {
   const guard = await requireAdmin(ctx)
