@@ -349,9 +349,11 @@ export type Database = {
           created_at: string
           customer_name: string
           delivery_method: Database['public']['Enums']['delivery_method']
+          description: string | null
           email: string | null
           id: string
           payment_option: string | null
+          price: number | null
           pricing: Json
           schedule_date: string
           schedule_time: string
@@ -369,9 +371,11 @@ export type Database = {
           created_at?: string
           customer_name: string
           delivery_method?: Database['public']['Enums']['delivery_method']
+          description?: string | null
           email?: string | null
           id?: string
           payment_option?: string | null
+          price?: number | null
           pricing: Json
           schedule_date: string
           schedule_time: string
@@ -389,9 +393,11 @@ export type Database = {
           created_at?: string
           customer_name?: string
           delivery_method?: Database['public']['Enums']['delivery_method']
+          description?: string | null
           email?: string | null
           id?: string
           payment_option?: string | null
+          price?: number | null
           pricing?: Json
           schedule_date?: string
           schedule_time?: string
@@ -404,6 +410,44 @@ export type Database = {
           whatsapp?: string
         }
         Relationships: []
+      }
+      order_sync_failures: {
+        Row: {
+          id: string
+          order_id: string
+          target: string
+          error_message: string | null
+          attempts: number
+          resolved: boolean
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          order_id: string
+          target: string
+          error_message?: string | null
+          attempts?: number
+          resolved?: boolean
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          order_id?: string
+          target?: string
+          error_message?: string | null
+          attempts?: number
+          resolved?: boolean
+          created_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "order_sync_failures_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       payment_gateways: {
         Row: {
@@ -591,7 +635,7 @@ export type Database = {
       delivery_method: 'pickup' | 'delivery'
       lead_stage: 'new' | 'contacted' | 'qualified' | 'proposal' | 'negotiation' | 'won' | 'lost'
       activity_type: 'note' | 'call' | 'meeting' | 'follow_up' | 'task' | 'email'
-      order_status: 'waiting_dp' | 'dp_paid' | 'waiting_onsite_payment' | 'onsite_paid' | 'cancelled'
+      order_status: 'waiting_dp' | 'dp_paid' | 'waiting_onsite_payment' | 'onsite_paid' | 'cancelled' | 'new' | 'contacted' | 'in_progress' | 'done'
       payment_gateway: 'midtrans' | 'pakasir' | 'qiospay' | 'sanpay' | 'tripay'
       payment_status: 'pending' | 'processing' | 'paid' | 'failed' | 'expired' | 'refunded'
       payment_type: 'full' | 'dp' | 'remaining'
