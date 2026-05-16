@@ -10,7 +10,7 @@ const locale = getLocaleFromRequest(Astro.request)
 const dir = getDir(locale)
 ---
 
-<Layout 
+<Layout
   title={`${t('order.title', locale)} | Ekalliptus Digital`}
   description={t('order.subtitle', locale)}
   lang={locale}
@@ -19,27 +19,9 @@ const dir = getDir(locale)
   <VantaBackground />
   <PreLoader />
   <Navigation t={(key: string) => t(key, locale)} currentLang={locale} />
-  
+
   <style>
     .service-btn.selected {
-      border-color: hsl(var(--primary) / 0.6) !important;
-      box-shadow:
-        0 8px 32px hsl(var(--glass-shadow)),
-        0 0 0 1px hsl(var(--primary) / 0.6),
-        0 0 16px hsl(var(--primary) / 0.12),
-        inset 0 1px 0 hsl(0 0% 100% / 0.1) !important;
-    }
-
-    input[name="urgency"]:checked + div {
-      border-color: hsl(var(--primary) / 0.6) !important;
-      box-shadow:
-        0 8px 32px hsl(var(--glass-shadow)),
-        0 0 0 1px hsl(var(--primary) / 0.6),
-        0 0 16px hsl(var(--primary) / 0.12),
-        inset 0 1px 0 hsl(0 0% 100% / 0.1) !important;
-    }
-
-    input[name="payment_option"]:checked + div {
       border-color: hsl(var(--primary) / 0.6) !important;
       box-shadow:
         0 8px 32px hsl(var(--glass-shadow)),
@@ -56,196 +38,80 @@ const dir = getDir(locale)
           <h1 class="text-2xl sm:text-3xl font-bold text-foreground mb-3 sm:mb-4">{t('order.title', locale)}</h1>
           <p class="text-muted-foreground text-sm sm:text-base">{t('order.subtitle', locale)}</p>
         </div>
-        
+
         <form id="order-form" class="space-y-6">
           <div>
             <label class="block text-sm font-medium text-foreground mb-2">
               {t('order.selectService', locale)}
             </label>
-            <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
-              <button type="button" data-service="web" class="service-btn glass-panel rounded-xl p-3 sm:p-4 text-center transition hover:scale-105 active:scale-[0.98] min-h-[44px]">
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
+              <button type="button" data-service="web" data-price="2500000" class="service-btn glass-panel rounded-xl p-3 sm:p-4 text-center transition hover:scale-105 active:scale-[0.98] min-h-[44px]">
                 <span class="block font-medium text-sm sm:text-base">{t('order.serviceCards.web.title', locale)}</span>
-                <span class="text-[0.65rem] sm:text-xs text-muted-foreground">{t('order.startingFrom', locale)} Rp 2.500.000</span>
+                <span class="text-[0.65rem] sm:text-xs text-muted-foreground">Rp 2.500.000</span>
               </button>
-              <button type="button" data-service="mobile" class="service-btn glass-panel rounded-xl p-3 sm:p-4 text-center transition hover:scale-105 active:scale-[0.98] min-h-[44px]">
+              <button type="button" data-service="mobile" data-price="5000000" class="service-btn glass-panel rounded-xl p-3 sm:p-4 text-center transition hover:scale-105 active:scale-[0.98] min-h-[44px]">
                 <span class="block font-medium text-sm sm:text-base">{t('order.serviceCards.mobile.title', locale)}</span>
-                <span class="text-[0.65rem] sm:text-xs text-muted-foreground">{t('order.startingFrom', locale)} Rp 5.000.000</span>
+                <span class="text-[0.65rem] sm:text-xs text-muted-foreground">Rp 5.000.000</span>
               </button>
-              <button type="button" data-service="wordpress" class="service-btn glass-panel rounded-xl p-3 sm:p-4 text-center transition hover:scale-105 active:scale-[0.98] min-h-[44px]">
+              <button type="button" data-service="wordpress" data-price="1500000" class="service-btn glass-panel rounded-xl p-3 sm:p-4 text-center transition hover:scale-105 active:scale-[0.98] min-h-[44px]">
                 <span class="block font-medium text-sm sm:text-base">{t('order.serviceCards.wordpress.title', locale)}</span>
-                <span class="text-[0.65rem] sm:text-xs text-muted-foreground">{t('order.startingFrom', locale)} Rp 1.500.000</span>
+                <span class="text-[0.65rem] sm:text-xs text-muted-foreground">Rp 1.500.000</span>
               </button>
-              <button type="button" data-service="uiux" class="service-btn glass-panel rounded-xl p-3 sm:p-4 text-center transition hover:scale-105 active:scale-[0.98] min-h-[44px]">
+              <button type="button" data-service="uiux" data-price="1000000" class="service-btn glass-panel rounded-xl p-3 sm:p-4 text-center transition hover:scale-105 active:scale-[0.98] min-h-[44px]">
                 <span class="block font-medium text-sm sm:text-base">{t('order.serviceCards.uiux.title', locale)}</span>
-                <span class="text-[0.65rem] sm:text-xs text-muted-foreground">{t('order.startingFrom', locale)} Rp 1.000.000</span>
+                <span class="text-[0.65rem] sm:text-xs text-muted-foreground">Rp 1.000.000</span>
               </button>
             </div>
             <input type="hidden" name="service" id="selected-service" />
           </div>
-          
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <label for="order-name" class="block text-sm font-medium text-foreground mb-2">
-                {t('order.name', locale)} *
-              </label>
-              <input 
-                id="order-name"
-                type="text" 
-                name="name" 
-                required
-                autocomplete="name"
-                placeholder={t('order.namePlaceholder', locale)}
-                class="w-full glass-input rounded-lg px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
-              />
-            </div>
-            
-            <div>
-              <label for="order-email" class="block text-sm font-medium text-foreground mb-2">
-                {t('order.email', locale)} *
-              </label>
-              <input 
-                id="order-email"
-                type="email" 
-                name="email" 
-                required
-                autocomplete="email"
-                placeholder={t('order.emailPlaceholder', locale)}
-                class="w-full glass-input rounded-lg px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
-              />
-            </div>
+
+          <div>
+            <label for="order-name" class="block text-sm font-medium text-foreground mb-2">
+              {t('order.name', locale)} *
+            </label>
+            <input
+              id="order-name"
+              type="text"
+              name="name"
+              required
+              autocomplete="name"
+              placeholder={t('order.namePlaceholder', locale)}
+              class="w-full glass-input rounded-lg px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
+            />
           </div>
-          
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <label for="order-whatsapp" class="block text-sm font-medium text-foreground mb-2">
-                {t('order.phone', locale)} *
-              </label>
-              <input 
-                id="order-whatsapp"
-                type="tel" 
-                name="whatsapp" 
-                required
-                autocomplete="tel"
-                placeholder={t('order.phonePlaceholder', locale)}
-                class="w-full glass-input rounded-lg px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
-              />
-            </div>
-            
-            <div>
-              <label for="order-company" class="block text-sm font-medium text-foreground mb-2">
-                {t('order.company', locale)}
-              </label>
-              <input 
-                id="order-company"
-                type="text" 
-                name="company"
-                autocomplete="organization"
-                placeholder={t('order.companyPlaceholder', locale)}
-                class="w-full glass-input rounded-lg px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
-              />
-            </div>
+
+          <div>
+            <label for="order-whatsapp" class="block text-sm font-medium text-foreground mb-2">
+              {t('order.phone', locale)} *
+            </label>
+            <input
+              id="order-whatsapp"
+              type="tel"
+              name="whatsapp"
+              required
+              autocomplete="tel"
+              placeholder={t('order.phonePlaceholder', locale)}
+              class="w-full glass-input rounded-lg px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
+            />
           </div>
-          
+
           <div>
             <label for="order-description" class="block text-sm font-medium text-foreground mb-2">
               {t('order.projectDescription', locale)} *
             </label>
-            <textarea 
+            <textarea
               id="order-description"
-              name="description" 
+              name="description"
               required
               rows="4"
               placeholder={t('order.descriptionPlaceholder', locale)}
               class="w-full glass-input rounded-lg px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 resize-none"
             ></textarea>
           </div>
-          
-          <div id="service-details-container" class="hidden">
-            <h2 class="sr-only">{t('order.fields.serviceDetails.title', locale)}</h2>
-            <h3 class="text-lg font-semibold text-foreground mb-4">{t('order.fields.serviceDetails.title', locale)}</h3>
-            <div id="service-details" class="space-y-4"></div>
-          </div>
-          
-          <div class="glass-panel rounded-xl p-6">
-            <h2 class="sr-only">{t('order.urgency.title', locale)}</h2>
-            <h3 class="text-lg font-semibold text-foreground mb-4">{t('order.urgency.title', locale)}</h3>
-            <div class="grid grid-cols-3 gap-2 sm:gap-4">
-              <label class="urgency-option contents">
-                <input type="radio" name="urgency" value="normal" checked class="sr-only" />
-                <div class="glass-panel rounded-lg p-3 sm:p-4 text-center cursor-pointer transition hover:scale-105 active:scale-[0.98] min-h-[44px] flex flex-col items-center justify-center">
-                  <span class="block font-medium text-xs sm:text-sm">{t('order.urgency.normal', locale)}</span>
-                  <span class="text-[0.6rem] sm:text-xs text-muted-foreground mt-0.5">{t('order.urgency.normalDesc', locale)}</span>
-                </div>
-              </label>
-              <label class="urgency-option contents">
-                <input type="radio" name="urgency" value="express" class="sr-only" />
-                <div class="glass-panel rounded-lg p-3 sm:p-4 text-center cursor-pointer transition hover:scale-105 active:scale-[0.98] min-h-[44px] flex flex-col items-center justify-center">
-                  <span class="block font-medium text-xs sm:text-sm">{t('order.urgency.express', locale)}</span>
-                  <span class="text-[0.6rem] sm:text-xs text-primary mt-0.5">{t('order.urgency.expressPrice', locale)}</span>
-                </div>
-              </label>
-              <label class="urgency-option contents">
-                <input type="radio" name="urgency" value="priority" class="sr-only" />
-                <div class="glass-panel rounded-lg p-3 sm:p-4 text-center cursor-pointer transition hover:scale-105 active:scale-[0.98] min-h-[44px] flex flex-col items-center justify-center">
-                  <span class="block font-medium text-xs sm:text-sm">{t('order.urgency.priority', locale)}</span>
-                  <span class="text-[0.6rem] sm:text-xs text-primary mt-0.5">{t('order.urgency.priorityPrice', locale)}</span>
-                </div>
-              </label>
-            </div>
-          </div>
 
-          <div class="glass-panel rounded-xl p-6">
-            <h2 class="sr-only">{t('order.paymentOption.title', locale)}</h2>
-            <h3 class="text-lg font-semibold text-foreground mb-4">{t('order.paymentOption.title', locale)}</h3>
-            <div class="grid grid-cols-2 gap-4">
-              <label class="cursor-pointer">
-                <input type="radio" name="payment_option" value="full" checked class="sr-only" />
-                <div class="glass-panel rounded-lg p-4 text-center">
-                  <span class="font-medium">{t('order.paymentOption.full', locale)}</span>
-                  <span class="text-xs text-muted-foreground">{t('order.paymentOption.fullDesc', locale)}</span>
-                </div>
-              </label>
-              <label class="cursor-pointer">
-                <input type="radio" name="payment_option" value="dp" class="sr-only" />
-                <div class="glass-panel rounded-lg p-4 text-center">
-                  <span class="font-medium">{t('order.paymentOption.dp', locale)}</span>
-                  <span class="text-xs text-primary">{t('order.paymentOption.dpDesc', locale)}</span>
-                </div>
-              </label>
-            </div>
-          </div>
-
-          <div class="glass-panel rounded-xl p-6">
-            <h2 class="sr-only">{t('order.summary.title', locale)}</h2>
-            <h3 class="text-lg font-semibold text-foreground mb-4">{t('order.summary.title', locale)}</h3>
-            <div class="space-y-2">
-              <div class="flex justify-between text-muted-foreground">
-                <span>{t('order.summary.subtotal', locale)}</span>
-                <span id="subtotal">Rp 0</span>
-              </div>
-              <div class="flex justify-between text-muted-foreground">
-                <span>{t('order.summary.discount', locale)}</span>
-                <span id="discount">- Rp 0</span>
-              </div>
-              <div class="flex justify-between text-muted-foreground">
-                <span>{t('order.summary.ppn', locale)}</span>
-                <span id="ppn">Rp 0</span>
-              </div>
-              <div class="border-t border-border pt-2 mt-2">
-                <div class="flex justify-between font-semibold text-foreground">
-                  <span>{t('order.summary.total', locale)}</span>
-                  <span id="grand-total">Rp 0</span>
-                </div>
-                <div class="flex justify-between text-sm text-primary mt-1">
-                  <span>{t('order.summary.deposit', locale)} (<span id="deposit-percent">50</span>%)</span>
-                  <span id="deposit">Rp 0</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          <button 
-            type="submit" 
+          <button
+            type="submit"
+            id="submit-btn"
             class="w-full flex items-center justify-center gap-2 rounded-lg bg-primary px-6 py-3.5 sm:py-4 font-semibold text-primary-foreground transition hover:bg-primary/90 active:bg-primary/80 min-h-[44px]"
           >
             {t('order.submit', locale)}
@@ -258,26 +124,61 @@ const dir = getDir(locale)
 </Layout>
 
 <script>
-  const serviceBtns = document.querySelectorAll('.service-btn')
-  const selectedServiceInput = document.getElementById('selected-service') as HTMLInputElement
-  const serviceDetailsContainer = document.getElementById('service-details-container')
-  
-  const prices: Record<string, number> = {
+  const WA_NUMBER = '6281999900306'
+
+  const SERVICE_LABELS: Record<string, string> = {
+    web: 'Website Development',
+    mobile: 'Mobile App Development',
+    wordpress: 'WordPress Development',
+    uiux: 'UI/UX Design'
+  }
+
+  const SERVICE_PRICES: Record<string, number> = {
     web: 2500000,
     mobile: 5000000,
     wordpress: 1500000,
     uiux: 1000000
   }
 
-  const depositPercentages: Record<string, number> = {
-    web: 50,
-    mobile: 50,
-    wordpress: 50,
-    uiux: 50
+  function formatPrice(n: number): string {
+    return `Rp ${n.toLocaleString('id-ID')}`
   }
 
+  function normalizeWhatsapp(wa: string): string {
+    let cleaned = wa.replace(/\D/g, '')
+    if (cleaned.startsWith('0')) cleaned = '62' + cleaned.slice(1)
+    if (!cleaned.startsWith('62')) cleaned = '62' + cleaned
+    return cleaned
+  }
+
+  function buildWhatsAppMessage(data: {
+    orderId: string
+    serviceType: string
+    price: number
+    customerName: string
+    whatsapp: string
+    description: string
+  }): string {
+    return `Halo, saya ingin order jasa di Ekalliptus 🙏
+
+📋 *Detail Order:*
+• Order ID: ${data.orderId.slice(0, 8).toUpperCase()}
+• Layanan: ${SERVICE_LABELS[data.serviceType] || data.serviceType}
+• Harga: ${formatPrice(data.price)}
+
+👤 *Data Saya:*
+• Nama: ${data.customerName}
+• WhatsApp: ${data.whatsapp}
+
+📝 *Deskripsi Project:*
+${data.description}
+
+Mohon informasi selanjutnya untuk proses pembayaran. Terima kasih!`
+  }
+
+  const serviceBtns = document.querySelectorAll('.service-btn')
+  const selectedServiceInput = document.getElementById('selected-service') as HTMLInputElement
   let selectedService = ''
-  let selectedPaymentOption = 'full'
 
   serviceBtns.forEach(btn => {
     btn.addEventListener('click', () => {
@@ -285,116 +186,65 @@ const dir = getDir(locale)
       btn.classList.add('selected')
       selectedService = btn.getAttribute('data-service') || ''
       selectedServiceInput.value = selectedService
-      updatePricing()
-      
-      if (serviceDetailsContainer) {
-        serviceDetailsContainer.classList.remove('hidden')
-      }
-    })
-  })
-  
-  function updatePricing() {
-    const urgencyInput = document.querySelector('input[name="urgency"]:checked') as HTMLInputElement
-    const urgency = urgencyInput?.value || 'normal'
-
-    let price = prices[selectedService] || 0
-    const serviceDepositPct = depositPercentages[selectedService] ?? 50
-
-    if (urgency === 'express') price *= 1.25
-    if (urgency === 'priority') price *= 1.5
-
-    const subtotal = Math.round(price)
-    const ppn = Math.round(subtotal * 0.11)
-    const grandTotal = subtotal + ppn
-
-    // Calculate deposit based on payment option
-    // Full = 100%, DP = service deposit percentage (50% for most services)
-    const actualDepositPct = selectedPaymentOption === 'dp' ? serviceDepositPct : 100
-    const deposit = Math.round(grandTotal * (actualDepositPct / 100))
-
-    const formatCurrency = (n: number) => `Rp ${n.toLocaleString('id-ID')}`
-    const setText = (id: string, value: string) => {
-      const el = document.getElementById(id)
-      if (el) el.textContent = value
-    }
-
-    setText('subtotal', formatCurrency(subtotal))
-    setText('ppn', formatCurrency(ppn))
-    setText('grand-total', formatCurrency(grandTotal))
-    setText('deposit', formatCurrency(deposit))
-    setText('deposit-percent', String(actualDepositPct))
-  }
-  
-  document.querySelectorAll('input[name="urgency"]').forEach(input => {
-    input.addEventListener('change', updatePricing)
-  })
-
-  document.querySelectorAll('input[name="payment_option"]').forEach(input => {
-    input.addEventListener('change', (e) => {
-      selectedPaymentOption = (e.target as HTMLInputElement).value
-      updatePricing() // Update pricing when payment option changes
     })
   })
 
   document.getElementById('order-form')?.addEventListener('submit', async (e) => {
     e.preventDefault()
-    
+
     if (!selectedService) {
       alert('Pilih layanan terlebih dahulu')
       return
     }
-    
+
     const form = e.target as HTMLFormElement
     const formData = new FormData(form)
-    
-    const orderData = {
-      service_type: selectedService,
-      customer_name: formData.get('name'),
-      email: formData.get('email'),
-      whatsapp: formData.get('whatsapp'),
-      company: formData.get('company'),
-      scope: { description: formData.get('description') },
-      urgency: formData.get('urgency'),
-      payment_option: selectedPaymentOption
-    }
-    
+    const submitBtn = document.getElementById('submit-btn') as HTMLButtonElement
+
+    submitBtn.disabled = true
+    submitBtn.textContent = 'Memproses...'
+
+    const customerName = (formData.get('name') as string).trim()
+    const whatsapp = (formData.get('whatsapp') as string).trim()
+    const description = (formData.get('description') as string).trim()
+
     try {
       const response = await fetch('/api/order', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(orderData)
+        body: JSON.stringify({
+          service_type: selectedService,
+          customer_name: customerName,
+          whatsapp: normalizeWhatsapp(whatsapp),
+          description
+        })
       })
-      
-      if (response.ok) {
-        const result = await response.json()
-        console.log('[Order] API response:', JSON.stringify(result, null, 2))
-        const orderId = result.data?.order?.id
-        if (result.data && result.data.payment && result.data.payment.paymentUrl) {
-          console.log('[Order] Redirecting to payment gateway:', result.data.payment.paymentUrl)
-          window.location.href = result.data.payment.paymentUrl
-        } else if (result.data?.paymentError) {
-          // Order saved but payment gateway failed — alert user with details
-          console.error('[Order] Payment gateway error:', result.data.paymentError)
-          const proceed = confirm(
-            'Pesanan berhasil disimpan, tetapi pembayaran online tidak bisa diproses saat ini.\n\n' +
-            'Detail: ' + result.data.paymentError + '\n\n' +
-            'Klik OK untuk lanjut ke halaman success (admin akan menghubungi Anda untuk pembayaran manual). ' +
-            'Klik Cancel untuk tetap di halaman ini.'
-          )
-          if (proceed) {
-            window.location.href = orderId ? `/order-success?orderId=${orderId}` : '/order-success'
-          }
-        } else {
-          // No gateway configured — order saved, redirect to success
-          console.warn('[Order] No payment gateway configured. Redirecting to success page.')
-          window.location.href = orderId ? `/order-success?orderId=${orderId}` : '/order-success'
-        }
-      } else {
-        alert('Terjadi kesalahan. Silakan coba lagi.')
+
+      if (!response.ok) {
+        const err = await response.json().catch(() => ({ error: 'Unknown error' }))
+        alert('Gagal membuat order: ' + (err.error || 'Silakan coba lagi'))
+        return
       }
+
+      const result = await response.json()
+      const { orderId, price, serviceType } = result.data
+
+      const message = buildWhatsAppMessage({
+        orderId,
+        serviceType,
+        price,
+        customerName,
+        whatsapp,
+        description
+      })
+
+      window.location.href = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(message)}`
     } catch (error) {
       console.error('Order error:', error)
       alert('Terjadi kesalahan. Silakan coba lagi.')
+    } finally {
+      submitBtn.disabled = false
+      submitBtn.textContent = 'Kirim Order'
     }
   })
 </script>
