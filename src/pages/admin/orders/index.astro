@@ -20,7 +20,7 @@ let orders: any[] = []
 let total = 0
 if (supabase) {
   let q = supabase.from('orders').select('*', { count: 'exact' }).order('created_at', { ascending: false }).range(from, to)
-  if (search) q = q.or(`customer_name.ilike.%${search}%,email.ilike.%${search}%,whatsapp.ilike.%${search}%`)
+  if (search) q = q.or(`customer_name.ilike.%${search}%,whatsapp.ilike.%${search}%`)
   if (service) q = q.eq('service_type', service as any)
   if (status) q = q.eq('status', status as any)
   const { data, count } = await q
@@ -33,7 +33,7 @@ const baseUrl = `/admin/orders?search=${encodeURIComponent(search)}&service=${se
 ---
 <AdminLayout title="Orders">
   <SearchFilter
-    placeholder="Cari nama, email, WA..."
+    placeholder="Cari nama, WA..."
     value={search}
     name="search"
     action="/admin/orders"
@@ -43,15 +43,14 @@ const baseUrl = `/admin/orders?search=${encodeURIComponent(search)}&service=${se
         { value: 'website', label: 'Website' },
         { value: 'wordpress', label: 'WordPress' },
         { value: 'mobile', label: 'Mobile App' },
-        { value: 'editing', label: 'Editing' },
-        { value: 'service_device', label: 'Service Device' }
+        { value: 'editing', label: 'UI/UX Design' }
       ]},
       { name: 'status', label: 'Status', selected: status, options: [
         { value: '', label: 'Semua Status' },
-        { value: 'waiting_dp', label: 'Waiting DP' },
-        { value: 'dp_paid', label: 'DP Paid' },
-        { value: 'waiting_onsite_payment', label: 'Waiting Onsite' },
-        { value: 'onsite_paid', label: 'Onsite Paid' },
+        { value: 'new', label: 'New' },
+        { value: 'contacted', label: 'Contacted' },
+        { value: 'in_progress', label: 'In Progress' },
+        { value: 'done', label: 'Done' },
         { value: 'cancelled', label: 'Cancelled' }
       ]}
     ]}
@@ -68,7 +67,7 @@ const baseUrl = `/admin/orders?search=${encodeURIComponent(search)}&service=${se
         <table class="w-full text-sm">
           <thead>
             <tr class="border-b border-border text-left text-xs font-medium text-muted-foreground">
-              <th class="pb-3">Order ID</th><th class="pb-3">Customer</th><th class="pb-3">Layanan</th><th class="pb-3 text-right">Total</th><th class="pb-3">Status</th><th class="pb-3"></th>
+              <th class="pb-3">Order ID</th><th class="pb-3">Customer</th><th class="pb-3">Layanan</th><th class="pb-3 text-right">Harga</th><th class="pb-3">Status</th><th class="pb-3"></th>
             </tr>
           </thead>
           <tbody>
@@ -80,7 +79,7 @@ const baseUrl = `/admin/orders?search=${encodeURIComponent(search)}&service=${se
                   <div class="text-xs text-muted-foreground">{o.whatsapp}</div>
                 </td>
                 <td class="py-3"><span class="rounded-full bg-primary/10 text-primary px-2 py-0.5 text-xs">{o.service_type}</span></td>
-                <td class="py-3 text-right font-medium">{fmt(Number((o.pricing as any)?.grand_total ?? 0))}</td>
+                <td class="py-3 text-right font-medium">{fmt(Number((o as any).price ?? (o.pricing as any)?.grand_total ?? 0))}</td>
                 <td class="py-3 text-xs">{o.status}</td>
                 <td class="py-3 text-right">
                   <a href={`/admin/orders/${o.id}`} class="inline-flex items-center gap-1 text-primary hover:underline text-xs">
