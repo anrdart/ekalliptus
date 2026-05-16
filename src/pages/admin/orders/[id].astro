@@ -21,10 +21,10 @@ const { id } = Astro.params
     <form id="status-form" class="flex gap-2 items-center">
       <select id="status-select" class="rounded-lg border border-border bg-background px-3 py-2 text-sm">
         <option value="">Pilih status baru...</option>
-        <option value="waiting_dp">Waiting DP</option>
-        <option value="dp_paid">DP Paid</option>
-        <option value="waiting_onsite_payment">Waiting Onsite Payment</option>
-        <option value="onsite_paid">Onsite Paid</option>
+        <option value="new">New</option>
+        <option value="contacted">Contacted</option>
+        <option value="in_progress">In Progress</option>
+        <option value="done">Done</option>
         <option value="cancelled">Cancelled</option>
       </select>
       <button type="submit" class="rounded-lg bg-primary px-4 py-2 text-sm text-primary-foreground">Update</button>
@@ -76,14 +76,11 @@ const { id } = Astro.params
       detailEl?.classList.add('grid', 'grid-cols-1', 'md:grid-cols-2', 'gap-4')
       addField('Order ID', order.id)
       addField('Customer', order.customerName)
-      addField('Email', order.email)
       addField('WhatsApp', order.whatsapp)
       addField('Service', order.serviceType)
+      addField('Harga', formatCurrency(order.price))
+      addField('Deskripsi', order.description)
       addField('Status', order.status)
-      addField('Urgency', order.urgency)
-      addField('Grand Total', formatCurrency(order.pricing?.grand_total))
-      addField('Deposit', formatCurrency(order.pricing?.deposit))
-      addField('Schedule', `${order.scheduleDate || ''} ${order.scheduleTime || ''}`.trim())
       addField('Created', order.createdAt ? new Date(order.createdAt).toLocaleString('id-ID') : '')
     } catch {
       loadingEl?.classList.add('hidden')
