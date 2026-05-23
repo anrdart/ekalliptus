@@ -79,14 +79,9 @@ function slugify(input: string): string {
     // ignore
   }
 
-  // 3) Prepare file list and read each markdown
-  const files = [
-    'biaya-pembuatan-aplikasi-android-ios.md',
-    'jasa-pembuatan-website-tegal.md',
-    'jasa-editing-video-konten-sosial.md',
-    'wordpress-custom-vs-template.md',
-    'website-maintenance-rutin.md',
-  ]
+  // 3) Prepare file list — auto-detect all .md files
+  const { readdirSync } = await import('fs')
+  const files = readdirSync(postsDir).filter((f: string) => f.endsWith('.md'))
 
   // 4) Markdown -> HTML conversion and mapping frontmatter -> insert payload
   const results: { slug: string; ok: boolean; error?: string }[] = []
@@ -163,7 +158,7 @@ function slugify(input: string): string {
         if (insertObj[k] === undefined) delete insertObj[k]
       })
 
-      const { error } = await supabase.from('blog_posts').insert([insertObj])
+      const { error } = await supabase.from('blog_posts').upsert([insertObj], { onConflict: 'slug,locale' })
       if (error) {
         errors++
         results.push({ slug, ok: false, error: error.message })
