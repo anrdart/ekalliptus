@@ -13,6 +13,7 @@ export default defineConfig({
   site: 'https://ekalliptus.com',
   integrations: [
     sitemap({
+      filter: (page) => !page.includes('/admin'),
       i18n: {
         defaultLocale: 'id',
         locales: {

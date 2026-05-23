@@ -4,8 +4,6 @@ User-agent: *
 Allow: /
 Disallow: /api/
 Disallow: /admin/
-Disallow: /order-success
-Disallow: /payment/
 Allow: /blog/feed.json
 Allow: /blog/rss.xml
 Allow: /llms.txt
