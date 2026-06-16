@@ -1,0 +1,310 @@
+---
+import '../../styles/global.css'
+import { Menu, X, LayoutDashboard, Users, Columns3, CheckSquare, ShoppingCart, CreditCard as Payment, MessageSquare, BarChart3, Settings, LogOut, User, FileText, Ticket, History, Moon, Sun } from 'lucide-astro'
+import NotificationBell from '../../components/admin/NotificationBell.astro'
+
+interface Props {
+  title?: string
+}
+
+const { title = 'Dashboard' } = Astro.props
+
+const sidebarLinks = [
+  { key: 'dashboard', href: '/admin', icon: LayoutDashboard, label: 'Dashboard' },
+  { key: 'customers', href: '/admin/customers', icon: Users, label: 'Customers' },
+  { key: 'pipeline', href: '/admin/pipeline', icon: Columns3, label: 'Pipeline' },
+  { key: 'activities', href: '/admin/activities', icon: CheckSquare, label: 'Activities' },
+  { key: 'orders', href: '/admin/orders', icon: ShoppingCart, label: 'Orders' },
+  { key: 'payments', href: '/admin/payments', icon: Payment, label: 'Payments' },
+  { key: 'consultations', href: '/admin/consultations', icon: MessageSquare, label: 'Consultations' },
+  { key: 'reports', href: '/admin/reports', icon: BarChart3, label: 'Reports' },
+  { key: 'blog', href: '/admin/blog', icon: FileText, label: 'Blog' },
+  { key: 'vouchers', href: '/admin/vouchers', icon: Ticket, label: 'Vouchers' },
+  { key: 'audit', href: '/admin/audit-logs', icon: History, label: 'Audit Logs' },
+  { key: 'settings', href: '/admin/settings', icon: Settings, label: 'Settings' }
+]
+
+const session = Astro.locals.adminSession
+const role = session?.role ?? 'admin'
+
+function canSee(key: string): boolean {
+  if (role === 'owner' || role === 'admin') return true
+  if (key === 'blog') return role === 'editor'
+  if (key === 'vouchers' || key === 'payments' || key === 'reports') return role === 'finance'
+  if (key === 'consultations') return role === 'cs'
+  if (key === 'orders' || key === 'customers' || key === 'pipeline' || key === 'activities' || key === 'dashboard') return true
+  return false
+}
+
+const visibleLinks = sidebarLinks.filter((l) => canSee(l.key))
+
+const currentPath = Astro.url.pathname
+
+function isActivePath(href: string): boolean {
+  return href === '/admin' ? currentPath === href : currentPath.startsWith(href)
+}
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title} - Admin | Ekalliptus Digital</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+</head>
+<body class="bg-background text-foreground min-h-screen" data-admin="true">
+  <!-- Mobile backdrop -->
+  <div id="admin-backdrop" class="fixed inset-0 bg-background/80 backdrop-blur-sm z-40 md:hidden hidden"></div>
+
+  <!-- Mobile menu -->
+  <div id="admin-mobile-menu" class="fixed inset-x-4 top-4 z-50 max-h-[calc(100vh-2rem)] overflow-y-auto rounded-2xl glass-panel p-4 md:hidden hidden custom-scrollbar">
+    <div class="flex items-center justify-between mb-4">
+      <h2 class="text-lg font-semibold">Admin Menu</h2>
+      <button id="close-mobile-menu" class="h-8 w-8 rounded-full flex items-center justify-center hover:bg-accent transition cursor-pointer" aria-label="Close menu">
+        <X class="h-4 w-4" />
+      </button>
+    </div>
+    <nav class="flex flex-col gap-1">
+      {visibleLinks.map((link) => (
+        <a
+          href={link.href}
+          class:list={[
+            'flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium transition hover:bg-accent cursor-interactive sidebar-link',
+            { active: isActivePath(link.href) }
+          ]}
+        >
+          <link.icon class="h-5 w-5" />
+          {link.label}
+        </a>
+      ))}
+    </nav>
+    <div class="mt-4 pt-4 border-t border-border">
+      <button
+        id="mobile-logout-btn"
+        class="flex w-full items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium text-destructive transition hover:bg-destructive/10 cursor-interactive"
+      >
+        <LogOut class="h-5 w-5" />
+        Logout
+      </button>
+    </div>
+  </div>
+
+  <div class="flex min-h-screen">
+    <!-- Desktop Sidebar -->
+    <aside class="hidden md:flex md:w-64 lg:w-72 flex-col fixed h-full glass-panel border-r border-border m-4 rounded-2xl overflow-hidden">
+      <!-- accent rail -->
+      <div class="bg-gradient-brand absolute inset-y-0 left-0 w-1 opacity-80"></div>
+      <!-- Logo -->
+      <div class="p-6 border-b border-border">
+        <a href="/admin" class="flex items-center gap-3">
+          <img
+            src="/logo_mobile.webp"
+            alt="Ekalliptus Digital"
+            width="40"
+            height="26"
+            class="h-10 w-auto invert dark:invert-0"
+          />
+          <div>
+            <h1 class="font-bold text-lg">Admin</h1>
+            <p class="text-xs text-muted-foreground">Ekalliptus Digital</p>
+          </div>
+        </a>
+      </div>
+
+      <!-- Navigation -->
+      <nav class="flex-1 p-4 space-y-1 overflow-y-auto custom-scrollbar">
+        {visibleLinks.map((link) => (
+          <a
+            href={link.href}
+            class:list={[
+              'sidebar-link flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium transition cursor-interactive',
+              { active: isActivePath(link.href) }
+            ]}
+          >
+            <link.icon class="h-5 w-5 flex-shrink-0" />
+            {link.label}
+          </a>
+        ))}
+      </nav>
+
+      <!-- User profile -->
+      <div class="p-4 border-t border-border">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center">
+            <User class="h-5 w-5 text-primary" />
+          </div>
+          <div class="flex-1 min-w-0">
+            <p class="text-sm font-medium truncate">{session?.displayName ?? 'Admin User'}</p>
+            <p class="text-xs text-muted-foreground truncate">{session?.user.email ?? ''} · {role}</p>
+          </div>
+        </div>
+        <button
+          id="desktop-logout-btn"
+          class="flex w-full items-center justify-center gap-2 rounded-xl border border-border px-4 py-2.5 text-sm font-medium text-destructive transition hover:bg-destructive/10 cursor-interactive"
+        >
+          <LogOut class="h-4 w-4" />
+          Logout
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main content -->
+    <div class="flex-1 md:ml-72 lg:ml-80">
+      <!-- Top bar -->
+      <header class="sticky top-0 z-30 glass-panel border-b border-border m-4 mb-0 rounded-t-2xl">
+        <div class="flex items-center justify-between px-6 py-4">
+          <div class="flex items-center gap-4">
+            <button
+              id="mobile-menu-toggle"
+              class="md:hidden h-10 w-10 rounded-full glass-panel flex items-center justify-center cursor-pointer hover:bg-accent transition"
+              aria-label="Toggle menu"
+            >
+              <Menu class="h-5 w-5" />
+            </button>
+            <div>
+              <h1 class="text-xl font-bold tracking-tight" id="page-title">{title}</h1>
+              <p class="text-sm text-muted-foreground hidden sm:block">Kelola bisnis Anda</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-3">
+            <button
+              id="admin-theme-toggle"
+              class="h-10 w-10 rounded-full glass-panel flex items-center justify-center hover:bg-accent transition cursor-pointer"
+              aria-label="Toggle theme"
+            >
+              <Sun class="h-4 w-4 dark-icon" />
+              <Moon class="h-4 w-4 light-icon hidden" />
+            </button>
+            <NotificationBell />
+            <div class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full glass-pill">
+              <div class="h-2 w-2 rounded-full bg-primary animate-pulse"></div>
+              <span class="text-xs font-medium">Online</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Page content -->
+      <main class="p-4 md:p-6">
+        <slot />
+      </main>
+    </div>
+  </div>
+
+  <style>
+    .sidebar-link {
+      color: hsl(var(--muted-foreground));
+      position: relative;
+    }
+
+    .sidebar-link:hover {
+      background: hsl(var(--accent) / 0.1);
+      color: hsl(var(--foreground));
+    }
+
+    .sidebar-link.active {
+      background: linear-gradient(
+        100deg,
+        hsl(var(--primary) / 0.16),
+        hsl(var(--accent-2) / 0.12)
+      );
+      color: hsl(var(--primary));
+      border: 1px solid hsl(var(--primary) / 0.22);
+      box-shadow: 0 4px 18px -6px hsl(var(--primary) / 0.25);
+    }
+
+    /* active indicator bar */
+    .sidebar-link.active::before {
+      content: '';
+      position: absolute;
+      left: -1px;
+      top: 50%;
+      transform: translateY(-50%);
+      height: 60%;
+      width: 3px;
+      border-radius: 0 4px 4px 0;
+      background: hsl(var(--primary));
+    }
+
+    @media (max-width: 767px) {
+      .sidebar-link.active {
+        background: hsl(var(--primary) / 0.15);
+        border: 1px solid hsl(var(--primary) / 0.2);
+      }
+    }
+  </style>
+
+  <script>
+    const mobileToggle = document.getElementById('mobile-menu-toggle')
+    const mobileMenu = document.getElementById('admin-mobile-menu')
+    const backdrop = document.getElementById('admin-backdrop')
+    const closeMobileMenu = document.getElementById('close-mobile-menu')
+
+    let menuOpen = false
+
+    function toggleMenu() {
+      menuOpen = !menuOpen
+      if (mobileMenu) mobileMenu.classList.toggle('hidden', !menuOpen)
+      if (backdrop) backdrop.classList.toggle('hidden', !menuOpen)
+    }
+
+    function closeMenu() {
+      menuOpen = false
+      if (mobileMenu) mobileMenu.classList.add('hidden')
+      if (backdrop) backdrop.classList.add('hidden')
+    }
+
+    if (mobileToggle) mobileToggle.addEventListener('click', toggleMenu)
+    if (closeMobileMenu) closeMobileMenu.addEventListener('click', closeMenu)
+    if (backdrop) backdrop.addEventListener('click', closeMenu)
+
+    // Logout handlers
+    const desktopLogout = document.getElementById('desktop-logout-btn')
+    const mobileLogout = document.getElementById('mobile-logout-btn')
+
+    async function handleLogout() {
+      if (confirm('Are you sure you want to logout?')) {
+        try {
+          const response = await fetch('/api/admin/logout', { method: 'POST' })
+          if (response.ok) {
+            window.location.href = '/admin/login'
+          }
+        } catch (error) {
+          console.error('Logout error:', error)
+        }
+      }
+    }
+
+    if (desktopLogout) desktopLogout.addEventListener('click', handleLogout)
+    if (mobileLogout) mobileLogout.addEventListener('click', handleLogout)
+
+    // Close menu on Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && menuOpen) {
+        closeMenu()
+      }
+    })
+
+    // Theme toggle (mirrors public site behavior)
+    const themeToggleBtn = document.getElementById('admin-theme-toggle')
+    const sunIcon = themeToggleBtn?.querySelector('.dark-icon')
+    const moonIcon = themeToggleBtn?.querySelector('.light-icon')
+    function syncThemeIcons(isDark: boolean) {
+      if (sunIcon) sunIcon.classList.toggle('hidden', !isDark)
+      if (moonIcon) moonIcon.classList.toggle('hidden', isDark)
+    }
+    const initialTheme = localStorage.getItem('ekal-theme') || 'dark'
+    document.documentElement.classList.toggle('dark', initialTheme === 'dark')
+    syncThemeIcons(initialTheme === 'dark')
+    themeToggleBtn?.addEventListener('click', () => {
+      const root = document.documentElement
+      const isDark = root.classList.contains('dark')
+      root.classList.add('theme-transitioning')
+      root.classList.toggle('dark', !isDark)
+      localStorage.setItem('ekal-theme', isDark ? 'light' : 'dark')
+      syncThemeIcons(!isDark)
+      setTimeout(() => root.classList.remove('theme-transitioning'), 320)
+    })
+  </script>
+</body>
+</html>

@@ -1,0 +1,592 @@
+---
+import { Menu, X, Moon, Sun, ArrowUpRight, Languages } from 'lucide-astro'
+
+interface Props {
+  t: (key: string) => string
+  currentLang?: string
+}
+
+const { t, currentLang = 'id' } = Astro.props
+
+const sectionLinks = [
+  { key: 'home', hash: '#home' },
+  { key: 'services', hash: '#services', dropdown: true },
+  { key: 'blog', href: '/blog', external: true },
+  { key: 'about', href: '/about', external: true },
+  { key: 'contact', hash: '#contact' }
+]
+
+const serviceItems = [
+  { key: 'websiteDevelopment', href: '/services/website' },
+  { key: 'mobileAppDevelopment', href: '/services/mobile-app' },
+  { key: 'wordpressDevelopment', href: '/services/wordpress' },
+  { key: 'uiUxDesign', href: '/services/ui-ux' }
+]
+
+const languages = [
+  { code: 'id', name: 'Bahasa Indonesia', flag: '🇮🇩', nativeName: 'Indonesia' },
+  { code: 'en', name: 'English', flag: '🇺🇸', nativeName: 'English' },
+  { code: 'ja', name: '日本語', flag: '🇯🇵', nativeName: '日本語' },
+  { code: 'ko', name: '한국어', flag: '🇰🇷', nativeName: '한국어' },
+  { code: 'ru', name: 'Русский', flag: '🇷🇺', nativeName: 'Русский' },
+  { code: 'ar', name: 'العربية', flag: '🇸🇦', nativeName: 'العربية' },
+  { code: 'tr', name: 'Türkçe', flag: '🇹🇷', nativeName: 'Türkçe' }
+]
+
+const currentLanguage = languages.find(lang => lang.code === currentLang) || languages[0]
+
+const currentPath = Astro.url.pathname
+const isHomePage = currentPath === '/'
+---
+
+<header class="pointer-events-none fixed left-1/2 top-0 z-40 w-full max-w-md sm:max-w-4xl -translate-x-1/2 px-2 sm:px-6 lg:px-8 pt-2 sm:pt-3 safe-top">
+  <nav
+    id="main-nav"
+    class="pointer-events-auto flex items-center justify-between rounded-full px-3 sm:px-4 py-1.5 sm:py-2 transition-all duration-300 glass-nav"
+  >
+    <a
+      href="/"
+      class="cursor-interactive flex items-center space-x-3 rounded-full px-2 py-1 transition text-foreground"
+    >
+      <img
+        src="/logo_mobile.webp"
+        alt="Ekalliptus Digital Logo"
+        width="60"
+        height="40"
+        class="h-[60px] w-auto transition-opacity hover:opacity-90 invert dark:invert-0"
+        loading="eager"
+        fetchpriority="high"
+        decoding="async"
+      />
+    </a>
+
+    <div class="hidden items-center gap-1 md:flex" id="desktop-nav">
+      {sectionLinks.map((item) => (
+        item.dropdown ? (
+          <div class="relative group">
+            <button
+              type="button"
+              class="nav-link cursor-interactive rounded-full px-4 py-2 text-sm font-medium text-foreground/80 transition hover:bg-foreground/10 hover:text-foreground"
+              data-hash={item.hash}
+            >
+              {t(`nav.${item.key}`)}
+            </button>
+            <div class="absolute left-1/2 top-full -translate-x-1/2 mt-2 w-60 rounded-2xl glass-panel border border-border/20 p-2 opacity-0 invisible -translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-300 z-50">
+              {serviceItems.map((s) => (
+                <a
+                  href={s.href}
+                  class="service-link relative block overflow-hidden rounded-lg px-3 py-2.5 text-sm font-medium text-foreground/80 transition-colors duration-500"
+                >
+                  <span class="relative z-10 truncate">{t(`services.cards.${s.key}.title`)}</span>
+                </a>
+              ))}
+            </div>
+          </div>
+        ) : item.external ? (
+          <a
+            href={item.href}
+            class="nav-link cursor-interactive rounded-full px-4 py-2 text-sm font-medium text-foreground/80 transition hover:bg-foreground/10 hover:text-foreground"
+          >
+            {t(`nav.${item.key}`)}
+          </a>
+        ) : isHomePage ? (
+          <button
+            type="button"
+            data-hash={item.hash}
+            class="nav-link cursor-interactive rounded-full px-4 py-2 text-sm font-medium text-foreground/80 transition hover:bg-foreground/10 hover:text-foreground"
+          >
+            {t(`nav.${item.key}`)}
+          </button>
+        ) : (
+          <a
+            href={`/${item.hash}`}
+            class="nav-link cursor-interactive rounded-full px-4 py-2 text-sm font-medium text-foreground/80 transition hover:bg-foreground/10 hover:text-foreground"
+          >
+            {t(`nav.${item.key}`)}
+          </a>
+        )
+      ))}
+    </div>
+
+    <div class="flex items-center gap-2">
+      <button
+        id="theme-toggle"
+        class="cursor-interactive hidden h-10 w-10 items-center justify-center rounded-full transition hover:bg-card/20 md:flex"
+        aria-label="Toggle theme"
+      >
+        <Moon class="h-[18px] w-[18px] dark-icon" />
+        <Sun class="h-[18px] w-[18px] light-icon hidden" />
+      </button>
+
+      <button
+        id="lang-toggle"
+        class="cursor-interactive hidden items-center gap-2 rounded-full px-3 py-2.5 text-sm font-medium transition hover:bg-card/20 md:flex"
+        aria-label="Change language"
+      >
+        <span class="text-base">{currentLanguage.flag}</span>
+        <span class="hidden lg:inline text-xs">{currentLanguage.nativeName}</span>
+        <Languages class="h-4 w-4" />
+      </button>
+
+      <button
+        id="mobile-menu-toggle"
+        class="cursor-interactive flex h-10 w-10 items-center justify-center rounded-full glass-panel transition md:hidden"
+        aria-label="Toggle menu"
+      >
+        <Menu class="h-5 w-5 menu-icon" />
+        <X class="h-5 w-5 close-icon hidden" />
+      </button>
+    </div>
+  </nav>
+</header>
+
+<div id="mobile-backdrop" class="fixed inset-0 z-30 bg-background/80 backdrop-blur-sm md:hidden hidden"></div>
+
+<div id="mobile-menu" class="fixed inset-x-2 top-2 z-40 max-h-[calc(100vh-1rem)] overflow-y-auto rounded-2xl border border-border bg-card p-3 shadow-lg md:hidden hidden custom-scrollbar safe-top">
+    <div class="flex items-center justify-end mb-1">
+      <button id="mobile-menu-close" class="cursor-interactive flex h-8 w-8 items-center justify-center rounded-full transition hover:bg-accent" aria-label="Close menu">
+        <X class="h-4 w-4" />
+      </button>
+    </div>
+    <nav class="flex flex-col gap-1">
+    {sectionLinks.map((item) => (
+      item.dropdown ? (
+        <>
+          {isHomePage ? (
+            <button
+              type="button"
+              data-hash={item.hash}
+              class="nav-link cursor-interactive rounded-lg px-4 py-3 text-left text-sm font-medium text-foreground/80 transition hover:bg-accent hover:text-foreground active:bg-accent/80"
+            >
+              {t(`nav.${item.key}`)}
+            </button>
+          ) : (
+            <a
+              href={`/${item.hash}`}
+              class="nav-link cursor-interactive rounded-lg px-4 py-3 text-left text-sm font-medium text-foreground/80 transition hover:bg-accent hover:text-foreground active:bg-accent/80"
+            >
+              {t(`nav.${item.key}`)}
+            </a>
+          )}
+          <div class="ml-4 flex flex-col gap-1 mb-1">
+            {serviceItems.map(s => (
+              <a href={s.href} class="rounded-lg px-3 py-2 text-xs text-foreground/70 hover:bg-accent hover:text-foreground transition">
+                {t(`services.cards.${s.key}.title`)}
+              </a>
+            ))}
+          </div>
+        </>
+      ) : item.external ? (
+        <a
+          href={item.href}
+          class="nav-link cursor-interactive rounded-lg px-4 py-3 text-left text-sm font-medium text-foreground/80 transition hover:bg-accent hover:text-foreground active:bg-accent/80"
+        >
+          {t(`nav.${item.key}`)}
+        </a>
+      ) : isHomePage ? (
+        <button
+          type="button"
+          data-hash={item.hash}
+          class="nav-link cursor-interactive rounded-lg px-4 py-3 text-left text-sm font-medium text-foreground/80 transition hover:bg-accent hover:text-foreground active:bg-accent/80"
+        >
+          {t(`nav.${item.key}`)}
+        </button>
+      ) : (
+        <a
+          href={`/${item.hash}`}
+          class="nav-link cursor-interactive rounded-lg px-4 py-3 text-left text-sm font-medium text-foreground/80 transition hover:bg-accent hover:text-foreground active:bg-accent/80"
+        >
+          {t(`nav.${item.key}`)}
+        </a>
+      )
+    ))}
+  </nav>
+
+  <div class="my-2 border-t border-border"></div>
+
+    <div class="space-y-2">
+    <span class="px-4 text-xs font-medium uppercase tracking-wider text-muted-foreground">
+      {t('nav.language')}
+    </span>
+    <div class="grid grid-cols-2 gap-2 px-1">
+      {languages.map((lang) => (
+        <button
+          data-lang={lang.code}
+          class:list={[
+            'lang-btn flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm transition active:scale-[0.98]',
+            { 'language-active': lang.code === currentLang }
+          ]}
+          data-active={lang.code === currentLang}
+        >
+          <span class="text-base">{lang.flag}</span>
+          <span class="text-xs truncate">{lang.name}</span>
+        </button>
+      ))}
+    </div>
+  </div>
+
+  <div class="my-2 border-t border-border"></div>
+
+  <a
+    href="/order"
+    class="flex w-full items-center justify-center gap-2 rounded-lg bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90 active:bg-primary/80 min-h-[44px]"
+  >
+    {t('nav.consultation')}
+    <ArrowUpRight class="h-4 w-4" />
+  </a>
+
+  <button
+    id="mobile-theme-toggle"
+    class="mt-2 flex w-full items-center justify-center gap-2 rounded-lg border border-border py-3 text-sm font-medium transition cursor-interactive hover:bg-accent active:bg-accent/80 min-h-[44px]"
+  >
+    <Moon class="h-4 w-4 dark-icon" />
+    <Sun class="h-4 w-4 light-icon hidden" />
+    <span class="theme-text">{t('nav.darkMode')}</span>
+  </button>
+</div>
+
+<div id="language-backdrop" class="fixed inset-0 z-50 modal-backdrop hidden"></div>
+
+<div id="language-modal" class="fixed inset-0 z-50 items-center justify-center p-4 hidden">
+  <div class="w-full max-w-sm rounded-2xl language-modal p-6 shadow-2xl">
+    <div class="flex items-center justify-between mb-4">
+      <h3 class="text-lg font-semibold text-foreground">
+        {t('nav.selectLanguage') || 'Select Language'}
+      </h3>
+      <button
+        id="close-lang-modal"
+        class="h-8 w-8 rounded-full flex items-center justify-center cursor-interactive hover:bg-card/20"
+      >
+        <X class="h-4 w-4" />
+      </button>
+    </div>
+
+    <div class="grid grid-cols-2 gap-3">
+      {languages.map((lang) => (
+        <button
+          data-lang={lang.code}
+          class:list={[
+            'lang-modal-btn language-button group flex flex-col items-center gap-2 rounded-xl px-3 py-4 text-center transition-all duration-300',
+            { 'language-active': lang.code === currentLang }
+          ]}
+          data-active={lang.code === currentLang}
+        >
+          <span class="text-3xl group-hover:scale-110 transition-transform duration-300">
+            {lang.flag}
+          </span>
+          <div class="flex flex-col items-center">
+            <span class="text-sm font-medium leading-tight">{lang.nativeName}</span>
+            <span class="text-xs text-muted-foreground leading-tight">{lang.name}</span>
+          </div>
+        </button>
+      ))}
+    </div>
+
+    <div class="mt-4 text-center">
+      <p class="text-xs text-muted-foreground">
+        {t('nav.languageHint') || 'Language preference will be saved automatically'}
+      </p>
+    </div>
+  </div>
+</div>
+
+<script define:vars={{ isHomePage }}>
+  const nav = document.getElementById('main-nav')
+  const mobileToggle = document.getElementById('mobile-menu-toggle')
+  const mobileMenu = document.getElementById('mobile-menu')
+  const mobileBackdrop = document.getElementById('mobile-backdrop')
+  const langToggle = document.getElementById('lang-toggle')
+  const langModal = document.getElementById('language-modal')
+  const langBackdrop = document.getElementById('language-backdrop')
+  const closeLangModal = document.getElementById('close-lang-modal')
+  const themeToggle = document.getElementById('theme-toggle')
+  const mobileThemeToggle = document.getElementById('mobile-theme-toggle')
+  const menuIcon = document.querySelector('.menu-icon')
+  const closeIcon = document.querySelector('.close-icon')
+  
+  let menuOpen = false
+  let langModalOpen = false
+  
+  if (mobileToggle && mobileMenu && mobileBackdrop) {
+    mobileToggle.addEventListener('click', () => {
+      menuOpen = !menuOpen
+      mobileMenu.classList.toggle('hidden', !menuOpen)
+      mobileBackdrop.classList.toggle('hidden', !menuOpen)
+      if (menuIcon) menuIcon.classList.toggle('hidden', menuOpen)
+      if (closeIcon) closeIcon.classList.toggle('hidden', !menuOpen)
+    })
+    
+    mobileBackdrop.addEventListener('click', () => {
+      menuOpen = false
+      mobileMenu.classList.add('hidden')
+      mobileBackdrop.classList.add('hidden')
+      if (menuIcon) menuIcon.classList.remove('hidden')
+      if (closeIcon) closeIcon.classList.add('hidden')
+    })
+    
+    var mobileMenuClose = document.getElementById('mobile-menu-close')
+    if (mobileMenuClose) {
+      mobileMenuClose.addEventListener('click', function() {
+        menuOpen = false
+        mobileMenu.classList.add('hidden')
+        mobileBackdrop.classList.add('hidden')
+        if (menuIcon) menuIcon.classList.remove('hidden')
+        if (closeIcon) closeIcon.classList.add('hidden')
+      })
+    }
+  }
+  
+  if (langToggle && langModal && langBackdrop && closeLangModal) {
+    langToggle.addEventListener('click', () => {
+      langModalOpen = true
+      langModal.classList.remove('hidden')
+      langModal.classList.add('flex')
+      langBackdrop.classList.remove('hidden')
+    })
+    
+    const closeModal = () => {
+      langModalOpen = false
+      langModal.classList.remove('flex')
+      langModal.classList.add('hidden')
+      langBackdrop.classList.add('hidden')
+    }
+    
+    closeLangModal.addEventListener('click', closeModal)
+    langBackdrop.addEventListener('click', closeModal)
+  }
+  
+  function toggleTheme(event) {
+    const root = document.documentElement
+    const isDark = root.classList.contains('dark')
+    const newDark = !isDark
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+    // Capture click origin for circular reveal
+    const target = event && event.currentTarget
+    let cx = '50%', cy = '50%'
+    if (target && target.getBoundingClientRect) {
+      const r = target.getBoundingClientRect()
+      cx = (r.left + r.width / 2) + 'px'
+      cy = (r.top + r.height / 2) + 'px'
+    }
+    root.style.setProperty('--theme-x', cx)
+    root.style.setProperty('--theme-y', cy)
+
+    const apply = () => {
+      root.classList.toggle('dark', newDark)
+      localStorage.setItem('ekal-theme', newDark ? 'dark' : 'light')
+      updateThemeIcons(newDark)
+    }
+
+    // Modern path: View Transitions API (Chrome/Edge/Safari 18+)
+    if (!reduced && document.startViewTransition) {
+      const transition = document.startViewTransition(apply)
+      transition.finished.catch(() => {})
+      return
+    }
+
+    // Fallback: scoped CSS transitions
+    root.classList.add('theme-transitioning')
+    apply()
+    window.setTimeout(function () {
+      root.classList.remove('theme-transitioning')
+    }, 360)
+  }
+  
+  function updateThemeIcons(isDark) {
+    document.querySelectorAll('.dark-icon').forEach(function(el) {
+      el.classList.toggle('hidden', isDark)
+    })
+    document.querySelectorAll('.light-icon').forEach(function(el) {
+      el.classList.toggle('hidden', !isDark)
+    })
+  }
+  
+  if (themeToggle) themeToggle.addEventListener('click', toggleTheme)
+  if (mobileThemeToggle) mobileThemeToggle.addEventListener('click', toggleTheme)
+  
+  var savedTheme = localStorage.getItem('ekal-theme') || 'dark'
+  updateThemeIcons(savedTheme === 'dark')
+  
+  var scrolled = false
+  window.addEventListener('scroll', function() {
+    var newScrolled = window.scrollY > 32
+    if (newScrolled !== scrolled && nav) {
+      scrolled = newScrolled
+      nav.classList.toggle('nav-scrolled', scrolled)
+    }
+  }, { passive: true })
+  
+  // Only handle scroll on homepage
+  if (isHomePage) {
+    document.querySelectorAll('.nav-link[data-hash]').forEach(function(link) {
+      link.addEventListener('click', function(e) {
+        var hash = e.currentTarget.dataset.hash
+        if (hash) {
+          var id = hash.replace('#', '')
+          var target = document.getElementById(id)
+          if (target) {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' })
+          }
+          if (menuOpen && mobileMenu) {
+            menuOpen = false
+            mobileMenu.classList.add('hidden')
+            if (mobileBackdrop) mobileBackdrop.classList.add('hidden')
+            if (menuIcon) menuIcon.classList.remove('hidden')
+            if (closeIcon) closeIcon.classList.add('hidden')
+          }
+        }
+      })
+    })
+  }
+  
+  document.querySelectorAll('.lang-btn, .lang-modal-btn').forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+      var lang = e.currentTarget.dataset.lang
+      if (lang) {
+        document.cookie = 'i18n_redirected=' + lang + ';path=/;max-age=31536000'
+        window.location.reload()
+      }
+    })
+  })
+  
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      if (langModalOpen && langModal && langBackdrop) {
+        langModalOpen = false
+        langModal.classList.add('hidden')
+        langBackdrop.classList.add('hidden')
+      }
+      if (menuOpen && mobileMenu && mobileBackdrop) {
+        menuOpen = false
+        mobileMenu.classList.add('hidden')
+        mobileBackdrop.classList.add('hidden')
+        if (menuIcon) menuIcon.classList.remove('hidden')
+        if (closeIcon) closeIcon.classList.add('hidden')
+      }
+    }
+  })
+
+  // Liquid morph blob: track cursor position on each service link
+  document.querySelectorAll('.service-link').forEach((link) => {
+    const el = link
+    el.addEventListener('pointerenter', (e) => {
+      const rect = el.getBoundingClientRect()
+      el.style.setProperty('--mx', `${e.clientX - rect.left}px`)
+      el.style.setProperty('--my', `${e.clientY - rect.top}px`)
+    })
+    el.addEventListener('pointermove', (e) => {
+      const rect = el.getBoundingClientRect()
+      el.style.setProperty('--mx', `${e.clientX - rect.left}px`)
+      el.style.setProperty('--my', `${e.clientY - rect.top}px`)
+    })
+    el.addEventListener('pointerdown', (e) => {
+      const rect = el.getBoundingClientRect()
+      el.style.setProperty('--mx', `${e.clientX - rect.left}px`)
+      el.style.setProperty('--my', `${e.clientY - rect.top}px`)
+      el.classList.add('is-pressed')
+      setTimeout(() => el.classList.remove('is-pressed'), 500)
+    })
+  })
+</script>
+
+<style>
+  .service-link {
+    --mx: 50%;
+    --my: 50%;
+    isolation: isolate;
+  }
+
+  .service-link > span {
+    transition:
+      transform 0.45s cubic-bezier(0.34, 1.3, 0.64, 1),
+      letter-spacing 0.5s ease;
+    display: inline-block;
+  }
+
+  .service-link:hover > span {
+    transform: translateX(4px);
+    letter-spacing: 0.015em;
+  }
+
+  .service-link::before {
+    content: '';
+    position: absolute;
+    left: var(--mx);
+    top: var(--my);
+    width: 14px;
+    height: 14px;
+    margin-left: -7px;
+    margin-top: -7px;
+    background: radial-gradient(
+      circle,
+      hsl(var(--primary) / 0.7) 0%,
+      hsl(var(--primary) / 0.45) 40%,
+      hsl(var(--primary) / 0.2) 70%,
+      transparent 100%
+    );
+    border-radius: 60% 40% 55% 45% / 50% 60% 40% 50%;
+    transform: scale(0);
+    opacity: 0;
+    filter: blur(0.5px);
+    transition:
+      transform 0.5s cubic-bezier(0.34, 1.4, 0.64, 1),
+      opacity 0.25s ease,
+      filter 0.4s ease;
+    z-index: -1;
+    animation: liquid-morph 5s ease-in-out infinite;
+    animation-play-state: paused;
+    pointer-events: none;
+    will-change: transform, opacity;
+  }
+
+  .service-link:hover::before {
+    transform: scale(45);
+    opacity: 1;
+    filter: blur(0);
+    animation-play-state: running;
+  }
+
+  .service-link.is-pressed::before {
+    transform: scale(60);
+    transition:
+      transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1),
+      opacity 0.2s ease;
+  }
+
+  .service-link:hover {
+    color: hsl(var(--foreground));
+    text-shadow: 0 0 12px hsl(var(--primary) / 0.4);
+  }
+
+  @keyframes liquid-morph {
+    0%, 100% {
+      border-radius: 60% 40% 55% 45% / 50% 60% 40% 50%;
+    }
+    25% {
+      border-radius: 45% 55% 40% 60% / 60% 45% 55% 40%;
+    }
+    50% {
+      border-radius: 50% 50% 60% 40% / 40% 55% 45% 60%;
+    }
+    75% {
+      border-radius: 55% 45% 50% 50% / 55% 40% 60% 45%;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .service-link::before,
+    .service-link > span {
+      transition: opacity 0.2s ease;
+      animation: none;
+    }
+    .service-link:hover > span {
+      transform: none;
+      letter-spacing: normal;
+    }
+    .service-link:hover::before {
+      transform: scale(40);
+      opacity: 0.5;
+    }
+  }
+</style>

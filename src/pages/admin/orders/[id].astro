@@ -1,0 +1,113 @@
+---
+import AdminLayout from '../_layout.astro'
+import { ArrowLeft } from 'lucide-astro'
+
+const { id } = Astro.params
+---
+
+<AdminLayout title="Order Detail">
+  <div class="glass-card rounded-2xl p-5">
+    <a href="/admin/orders" class="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground mb-6">
+      <ArrowLeft class="h-4 w-4" />
+      Back to orders
+    </a>
+
+    <div id="order-loading" class="py-12 text-center text-muted-foreground">Loading order...</div>
+    <div id="order-error" class="hidden py-12 text-center text-destructive">Order not found.</div>
+    <dl id="order-detail" class="hidden"></dl>
+  </div>
+  <div class="glass-card rounded-2xl p-5 mt-4">
+    <h2 class="text-base font-semibold mb-3">Update Status</h2>
+    <form id="status-form" class="flex gap-2 items-center">
+      <select id="status-select" class="rounded-lg border border-border bg-background px-3 py-2 text-sm">
+        <option value="">Pilih status baru...</option>
+        <option value="new">New</option>
+        <option value="contacted">Contacted</option>
+        <option value="in_progress">In Progress</option>
+        <option value="done">Done</option>
+        <option value="cancelled">Cancelled</option>
+      </select>
+      <button type="submit" class="rounded-lg bg-primary px-4 py-2 text-sm text-primary-foreground">Update</button>
+    </form>
+    <p id="status-result" class="mt-2 text-xs text-muted-foreground"></p>
+  </div>
+</AdminLayout>
+
+<script define:vars={{ id }}>
+  const loadingEl = document.getElementById('order-loading')
+  const errorEl = document.getElementById('order-error')
+  const detailEl = document.getElementById('order-detail')
+
+  function formatCurrency(amount) {
+    return new Intl.NumberFormat('id-ID', {
+      style: 'currency',
+      currency: 'IDR',
+      maximumFractionDigits: 0
+    }).format(Number(amount || 0))
+  }
+
+  function addField(label, value) {
+    if (!detailEl) return
+    const item = document.createElement('div')
+    item.className = 'rounded-xl border border-border bg-card/40 p-4'
+
+    const dt = document.createElement('dt')
+    dt.className = 'text-xs uppercase tracking-wide text-muted-foreground'
+    dt.textContent = label
+
+    const dd = document.createElement('dd')
+    dd.className = 'mt-1 text-sm font-medium break-words'
+    dd.textContent = value || 'N/A'
+
+    item.appendChild(dt)
+    item.appendChild(dd)
+    detailEl.appendChild(item)
+  }
+
+  async function loadOrder() {
+    try {
+      const response = await fetch(`/api/order/${id}`)
+      const result = await response.json()
+      if (!response.ok || !result.success) throw new Error(result.error || 'Failed')
+
+      const order = result.data
+      loadingEl?.classList.add('hidden')
+      detailEl?.classList.remove('hidden')
+      detailEl?.classList.add('grid', 'grid-cols-1', 'md:grid-cols-2', 'gap-4')
+      addField('Order ID', order.id)
+      addField('Customer', order.customerName)
+      addField('WhatsApp', order.whatsapp)
+      addField('Service', order.serviceType)
+      addField('Harga', formatCurrency(order.price))
+      addField('Deskripsi', order.description)
+      addField('Status', order.status)
+      addField('Created', order.createdAt ? new Date(order.createdAt).toLocaleString('id-ID') : '')
+    } catch {
+      loadingEl?.classList.add('hidden')
+      errorEl?.classList.remove('hidden')
+    }
+  }
+
+  loadOrder()
+
+  const form = document.getElementById('status-form')
+  const select = document.getElementById('status-select')
+  const result = document.getElementById('status-result')
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault()
+    const status = select?.value
+    if (!status) return
+    const res = await fetch(`/api/admin/orders/${id}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ status })
+    })
+    if (res.ok) {
+      result.textContent = '✓ Status diupdate. Reloading...'
+      setTimeout(() => window.location.reload(), 600)
+    } else {
+      const { error } = await res.json().catch(() => ({ error: 'Failed' }))
+      result.textContent = '✗ Gagal: ' + error
+    }
+  })
+</script>

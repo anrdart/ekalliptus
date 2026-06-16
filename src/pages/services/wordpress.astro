@@ -1,0 +1,227 @@
+---
+import Layout from '../../layouts/Layout.astro'
+import Navigation from '../../components/Navigation.astro'
+import VantaBackground from '../../components/VantaBackground.astro'
+import PreLoader from '../../components/PreLoader.astro'
+import ConsultationDialog from '../../components/ConsultationDialog.astro'
+import { t, getLocaleFromRequest, getDir } from '../../i18n'
+import { Check, ArrowRight, Code, Globe, Zap, Shield } from 'lucide-astro'
+
+export const prerender = false
+
+const locale = getLocaleFromRequest(Astro.request)
+const dir = getDir(locale)
+
+const siteUrl = 'https://ekalliptus.com'
+const canonical = new URL(Astro.url.pathname, siteUrl).toString()
+
+const faqs = [
+  { question: 'Apakah lebih baik WordPress custom atau pakai theme premium?', answer: 'Theme premium cocok untuk budget terbatas dan kebutuhan standard. Custom development cocok untuk identitas brand unik, fitur spesifik, dan performa optimal.' },
+  { question: 'Berapa biaya WordPress custom development?', answer: 'Mulai Rp 2 juta untuk WordPress dengan theme premium customized, Rp 5-15 juta untuk custom theme dari nol, Rp 10-30 juta untuk WooCommerce e-commerce.' },
+  { question: 'Apakah include hosting dan domain?', answer: 'Ya, paket sudah include domain .com (1 tahun) dan hosting Indonesia (1 tahun pertama).' },
+  { question: 'Bisa migrasi WordPress dari hosting lain?', answer: 'Ya, kami handle migrasi WordPress termasuk database, files, theme, dan plugins tanpa downtime.' },
+  { question: 'Apakah include SEO plugin setup?', answer: 'Ya, Yoast SEO atau Rank Math di-setup dengan konfigurasi optimal untuk SEO Indonesia.' },
+  { question: 'Apakah ada maintenance bulanan?', answer: 'Ya, paket maintenance WordPress mulai Rp 500rb/bulan: update core, plugin, theme, backup, monitoring keamanan.' }
+]
+
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: 'Jasa WordPress Developer Indonesia',
+  serviceType: 'WordPress Development',
+  description: 'Jasa pembuatan dan customisasi website WordPress dengan custom theme, plugin development, WooCommerce, dan maintenance di Indonesia.',
+  provider: { '@id': `${siteUrl}#organization` },
+  areaServed: [{ '@type': 'Country', name: 'Indonesia' }, { '@type': 'City', name: 'Tegal' }],
+  offers: { '@type': 'AggregateOffer', priceCurrency: 'IDR', lowPrice: '2000000', highPrice: '30000000', availability: 'https://schema.org/InStock' },
+  url: canonical
+}
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.question, acceptedAnswer: { '@type': 'Answer', text: f.answer } }))
+}
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: siteUrl },
+    { '@type': 'ListItem', position: 2, name: 'Layanan', item: `${siteUrl}/services/wordpress` },
+    { '@type': 'ListItem', position: 3, name: 'WordPress Development', item: canonical }
+  ]
+}
+---
+
+<Layout
+  title="Jasa WordPress Developer Indonesia | Custom & Maintenance - Ekalliptus"
+  description="Jasa WordPress developer Indonesia: custom theme, plugin development, optimasi performa, dan maintenance bulanan. Mulai Rp 2 juta. Garansi 30 hari."
+  lang={locale}
+  dir={dir}
+  keywords="jasa wordpress developer, wordpress custom development, jasa wordpress indonesia, maintenance wordpress, optimasi wordpress, woocommerce developer"
+>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(serviceSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+  </Fragment>
+
+  <VantaBackground />
+  <PreLoader />
+  <Navigation t={(key: string) => t(key, locale)} currentLang={locale} />
+
+  <main class="relative z-0 flex min-h-screen flex-col pt-14 sm:pt-16 md:pt-20">
+    <div class="container mx-auto max-w-6xl px-4 py-8 sm:py-12">
+
+      <nav class="text-sm mb-6" aria-label="Breadcrumb">
+        <a href="/" class="text-muted-foreground hover:text-foreground">Home</a>
+        <span class="mx-2 text-muted-foreground">/</span>
+        <span class="text-foreground">Jasa WordPress Developer</span>
+      </nav>
+
+      <header class="mb-12 text-center">
+        <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4">Jasa WordPress Developer Indonesia</h1>
+        <p class="article-intro text-base sm:text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+          <strong>Jasa WordPress developer</strong> adalah layanan pengembangan website berbasis WordPress yang mencakup custom theme, plugin development, optimasi performa, dan maintenance rutin. Ekalliptus Digital menyediakan jasa WordPress developer profesional di Indonesia dengan harga mulai <strong>Rp 2 juta</strong>, plus paket WooCommerce e-commerce dan maintenance bulanan.
+        </p>
+      </header>
+
+      <section class="mb-12">
+        <h2 class="text-2xl sm:text-3xl font-semibold text-foreground mb-6 text-center">Apa yang Anda Dapatkan</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+          <div class="glass-panel rounded-2xl p-5 bg-card/10 border border-border/20">
+            <div class="rounded-full bg-primary/10 p-3 w-fit mb-4"><Code class="h-5 w-5 text-primary" /></div>
+            <h3 class="text-lg font-semibold text-foreground mb-2">Custom Theme</h3>
+            <p class="text-sm text-muted-foreground">Theme WordPress custom dari nol sesuai brand identity Anda.</p>
+          </div>
+          <div class="glass-panel rounded-2xl p-5 bg-card/10 border border-border/20">
+            <div class="rounded-full bg-primary/10 p-3 w-fit mb-4"><Globe class="h-5 w-5 text-primary" /></div>
+            <h3 class="text-lg font-semibold text-foreground mb-2">WooCommerce</h3>
+            <p class="text-sm text-muted-foreground">Toko online WordPress dengan payment gateway lokal Indonesia.</p>
+          </div>
+          <div class="glass-panel rounded-2xl p-5 bg-card/10 border border-border/20">
+            <div class="rounded-full bg-primary/10 p-3 w-fit mb-4"><Zap class="h-5 w-5 text-primary" /></div>
+            <h3 class="text-lg font-semibold text-foreground mb-2">SEO Plugin Setup</h3>
+            <p class="text-sm text-muted-foreground">Yoast SEO / Rank Math dikonfigurasi optimal untuk ranking Google.</p>
+          </div>
+          <div class="glass-panel rounded-2xl p-5 bg-card/10 border border-border/20">
+            <div class="rounded-full bg-primary/10 p-3 w-fit mb-4"><Shield class="h-5 w-5 text-primary" /></div>
+            <h3 class="text-lg font-semibold text-foreground mb-2">Maintenance</h3>
+            <p class="text-sm text-muted-foreground">Update rutin, backup harian, dan monitoring keamanan.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="mb-12">
+        <h2 class="text-2xl sm:text-3xl font-semibold text-foreground mb-6 text-center">Paket & Harga WordPress</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="glass-panel rounded-2xl p-6 bg-card/10 border border-border/20">
+            <h3 class="text-xl font-bold text-foreground mb-2">WordPress Theme</h3>
+            <p class="text-2xl font-bold text-primary mb-4">Rp 2jt - 5jt</p>
+            <ul class="space-y-2 text-sm text-muted-foreground">
+              <li class="flex gap-2"><Check class="h-4 w-4 text-primary flex-shrink-0" /> Theme premium customized</li>
+              <li class="flex gap-2"><Check class="h-4 w-4 text-primary flex-shrink-0" /> Elementor / Gutenberg</li>
+              <li class="flex gap-2"><Check class="h-4 w-4 text-primary flex-shrink-0" /> SEO plugin setup</li>
+              <li class="flex gap-2"><Check class="h-4 w-4 text-primary flex-shrink-0" /> 7-14 hari pengerjaan</li>
+            </ul>
+          </div>
+          <div class="glass-panel neon-border rounded-2xl p-6 bg-card/10">
+            <h3 class="text-xl font-bold text-foreground mb-2">WordPress Custom</h3>
+            <p class="text-2xl font-bold text-primary mb-4">Rp 5jt - 15jt</p>
+            <ul class="space-y-2 text-sm text-muted-foreground">
+              <li class="flex gap-2"><Check class="h-4 w-4 text-primary flex-shrink-0" /> Custom theme dari nol</li>
+              <li class="flex gap-2"><Check class="h-4 w-4 text-primary flex-shrink-0" /> ACF Pro & custom CPT</li>
+              <li class="flex gap-2"><Check class="h-4 w-4 text-primary flex-shrink-0" /> Plugin custom integration</li>
+              <li class="flex gap-2"><Check class="h-4 w-4 text-primary flex-shrink-0" /> 14-30 hari pengerjaan</li>
+            </ul>
+          </div>
+          <div class="glass-panel rounded-2xl p-6 bg-card/10 border border-border/20">
+            <h3 class="text-xl font-bold text-foreground mb-2">WooCommerce</h3>
+            <p class="text-2xl font-bold text-primary mb-4">Rp 10jt - 30jt</p>
+            <ul class="space-y-2 text-sm text-muted-foreground">
+              <li class="flex gap-2"><Check class="h-4 w-4 text-primary flex-shrink-0" /> Toko online lengkap</li>
+              <li class="flex gap-2"><Check class="h-4 w-4 text-primary flex-shrink-0" /> Payment gateway lokal</li>
+              <li class="flex gap-2"><Check class="h-4 w-4 text-primary flex-shrink-0" /> Integrasi kurir & inventory</li>
+              <li class="flex gap-2"><Check class="h-4 w-4 text-primary flex-shrink-0" /> 21-45 hari pengerjaan</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="mb-12">
+        <h2 class="text-2xl sm:text-3xl font-semibold text-foreground mb-6 text-center">Teknologi yang Kami Gunakan</h2>
+        <div class="glass-panel rounded-2xl p-6 bg-card/10 border border-border/20 text-center">
+          <div class="flex flex-wrap gap-2 justify-center">
+            {['WordPress', 'WooCommerce', 'PHP', 'MySQL', 'ACF Pro', 'Elementor', 'Gutenberg', 'Yoast SEO', 'Rank Math', 'WP-Optimize'].map(tech => (
+              <span class="rounded-full bg-primary/10 px-4 py-1.5 text-xs font-medium text-primary">{tech}</span>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section class="mb-12">
+        <h2 class="text-2xl sm:text-3xl font-semibold text-foreground mb-6 text-center">Proses Kerja</h2>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+          {[
+            { num: 1, title: 'Konsultasi', desc: 'Diskusi kebutuhan website dan pilihan paket yang tepat' },
+            { num: 2, title: 'Setup & Design', desc: 'Instalasi, konfigurasi, dan customisasi theme' },
+            { num: 3, title: 'Development', desc: 'Pengisian konten, plugin, dan optimasi performa' },
+            { num: 4, title: 'Launch', desc: 'Testing, handover training, dan garansi 30 hari' }
+          ].map(step => (
+            <div class="glass-panel rounded-2xl p-5 bg-card/10 border border-border/20 text-center">
+              <div class="rounded-full bg-primary text-primary-foreground w-10 h-10 flex items-center justify-center font-bold mx-auto mb-3">{step.num}</div>
+              <h3 class="font-semibold text-foreground mb-2">{step.title}</h3>
+              <p class="text-sm text-muted-foreground">{step.desc}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section class="mb-12">
+        <h2 class="text-2xl sm:text-3xl font-semibold text-foreground mb-6 text-center">FAQ</h2>
+        <div class="space-y-3">
+          {faqs.map(faq => (
+            <details class="glass-panel rounded-2xl p-5 bg-card/10 border border-border/20 group">
+              <summary class="font-semibold text-foreground cursor-pointer flex items-center justify-between">
+                {faq.question}
+                <span class="text-primary group-open:rotate-180 transition-transform">▼</span>
+              </summary>
+              <p class="text-sm text-muted-foreground mt-3">{faq.answer}</p>
+            </details>
+          ))}
+        </div>
+      </section>
+
+      <section class="mb-12">
+        <h2 class="text-2xl sm:text-3xl font-semibold text-foreground mb-6 text-center">Artikel Terkait</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <a href="/blog/wordpress-custom-vs-template" class="glass-panel rounded-2xl p-6 bg-card/10 border border-border/20 hover:border-primary/30 transition group">
+            <h3 class="font-semibold text-foreground mb-2 group-hover:text-primary transition">WordPress Custom vs Template: Mana yang Lebih Baik?</h3>
+            <p class="text-sm text-muted-foreground">Perbandingan custom development vs theme premium →</p>
+          </a>
+          <a href="/blog/website-maintenance-rutin" class="glass-panel rounded-2xl p-6 bg-card/10 border border-border/20 hover:border-primary/30 transition group">
+            <h3 class="font-semibold text-foreground mb-2 group-hover:text-primary transition">5 Tanda Website Anda Butuh Redesign & Maintenance Rutin</h3>
+            <p class="text-sm text-muted-foreground">Kenali tanda website perlu redesign dan maintenance →</p>
+          </a>
+        </div>
+      </section>
+
+      <section class="mb-12 text-center">
+        <div class="glass-panel neon-border rounded-2xl sm:rounded-3xl p-8 bg-card/5">
+          <h2 class="text-2xl sm:text-3xl font-bold text-foreground mb-3">Butuh Jasa WordPress Developer?</h2>
+          <p class="text-muted-foreground mb-6">Konsultasi GRATIS — dari company profile hingga WooCommerce enterprise.</p>
+          <div class="flex flex-col sm:flex-row gap-3 justify-center">
+            <a href="/order" data-track="order" class="inline-flex items-center justify-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90">
+              Order Sekarang <ArrowRight class="h-4 w-4" />
+            </a>
+            <a href="https://wa.me/6281999900306" target="_blank" rel="noopener" data-track="whatsapp" class="inline-flex items-center justify-center gap-2 rounded-full border border-border px-6 py-3 text-sm font-semibold text-foreground transition hover:bg-card/30">
+              WhatsApp Konsultasi
+            </a>
+          </div>
+        </div>
+      </section>
+
+    </div>
+    <ConsultationDialog t={(key: string) => t(key, locale)} />
+  </main>
+</Layout>

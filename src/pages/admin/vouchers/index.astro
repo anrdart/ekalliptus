@@ -1,0 +1,99 @@
+---
+import AdminLayout from '../_layout.astro'
+import EmptyState from '../../../components/admin/EmptyState.astro'
+import { Ticket, Plus } from 'lucide-astro'
+import { listVouchers } from '../../../lib/admin/vouchers'
+import { formatIDR } from '../../../lib/format'
+
+const vouchers = await listVouchers()
+const fmt = formatIDR
+---
+<AdminLayout title="Vouchers">
+  <div class="flex justify-between items-center mb-4">
+    <h2 class="text-lg font-semibold">{vouchers.length} voucher</h2>
+    <button id="open-new" class="inline-flex items-center gap-1 rounded-xl bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90">
+      <Plus class="h-4 w-4" /> Voucher Baru
+    </button>
+  </div>
+
+  <div class="glass-card rounded-2xl p-6">
+    {vouchers.length === 0 ? (
+      <EmptyState icon={Ticket} title="Belum ada voucher" />
+    ) : (
+      <table class="w-full text-sm">
+        <thead><tr class="text-left text-xs text-muted-foreground border-b border-border">
+          <th class="pb-2">Kode</th><th class="pb-2">Tipe</th><th class="pb-2">Nilai</th><th class="pb-2">Min Spend</th><th class="pb-2">Pakai</th><th class="pb-2">Berlaku Sampai</th><th class="pb-2">Status</th><th class="pb-2"></th>
+        </tr></thead>
+        <tbody>
+          {vouchers.map((v) => (
+            <tr class="border-b border-border/40">
+              <td class="py-2 font-mono font-bold">{v.code}</td>
+              <td class="py-2">{v.type}</td>
+              <td class="py-2">{v.type === 'percent' ? `${v.value}%` : fmt(Number(v.value))}</td>
+              <td class="py-2">{v.min_spend ? fmt(Number(v.min_spend)) : '-'}</td>
+              <td class="py-2">{v.used_count}{v.max_uses ? `/${v.max_uses}` : ''}</td>
+              <td class="py-2 text-xs">{v.valid_until ? new Date(v.valid_until).toLocaleDateString('id-ID') : '-'}</td>
+              <td class="py-2"><span class:list={['text-xs px-2 py-0.5 rounded-full', v.is_active ? 'bg-green-500/15 text-green-600' : 'bg-muted text-muted-foreground']}>{v.is_active ? 'Aktif' : 'Nonaktif'}</span></td>
+              <td class="py-2 text-right space-x-2">
+                <button class="text-xs text-primary hover:underline toggle-btn" data-code={v.code} data-active={String(v.is_active)}>{v.is_active ? 'Disable' : 'Enable'}</button>
+                <button class="text-xs text-destructive hover:underline delete-btn" data-code={v.code}>Hapus</button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    )}
+  </div>
+
+  <dialog id="new-voucher" class="rounded-2xl p-0 backdrop:bg-black/50">
+    <form id="new-form" class="bg-background p-6 w-[420px] max-w-[90vw]">
+      <h2 class="text-lg font-semibold mb-4">Voucher Baru</h2>
+      <div class="space-y-3">
+        <input name="code" required placeholder="Kode (HEMAT10)" class="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm uppercase" />
+        <select name="type" class="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm">
+          <option value="percent">Persen (%)</option>
+          <option value="nominal">Nominal (Rp)</option>
+        </select>
+        <input name="value" type="number" required placeholder="Nilai" class="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm" />
+        <input name="min_spend" type="number" placeholder="Min spend (Rp, opsional)" class="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm" />
+        <input name="max_uses" type="number" placeholder="Max pemakaian (opsional)" class="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm" />
+        <input name="valid_until" type="datetime-local" class="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm" />
+      </div>
+      <div class="mt-4 flex justify-end gap-2">
+        <button type="button" id="cancel-new" class="rounded-lg border border-border px-4 py-2 text-sm">Batal</button>
+        <button type="submit" class="rounded-lg bg-primary px-4 py-2 text-sm text-primary-foreground">Simpan</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script>
+    const dialog = document.getElementById('new-voucher') as HTMLDialogElement
+    document.getElementById('open-new')!.addEventListener('click', () => dialog.showModal())
+    document.getElementById('cancel-new')!.addEventListener('click', () => dialog.close())
+    document.getElementById('new-form')!.addEventListener('submit', async (e) => {
+      e.preventDefault()
+      const fd = new FormData(e.target as HTMLFormElement)
+      const data: any = Object.fromEntries(fd)
+      data.value = Number(data.value)
+      if (data.min_spend) data.min_spend = Number(data.min_spend)
+      if (data.max_uses) data.max_uses = Number(data.max_uses)
+      const res = await fetch('/api/admin/vouchers', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) })
+      if (res.ok) window.location.reload()
+      else alert('Gagal membuat voucher')
+    })
+    document.querySelectorAll<HTMLButtonElement>('.toggle-btn').forEach((b) => {
+      b.addEventListener('click', async () => {
+        const isActive = b.dataset.active === 'true'
+        await fetch(`/api/admin/vouchers/${b.dataset.code}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ is_active: !isActive }) })
+        window.location.reload()
+      })
+    })
+    document.querySelectorAll<HTMLButtonElement>('.delete-btn').forEach((b) => {
+      b.addEventListener('click', async () => {
+        if (!confirm(`Hapus voucher ${b.dataset.code}?`)) return
+        await fetch(`/api/admin/vouchers/${b.dataset.code}`, { method: 'DELETE' })
+        window.location.reload()
+      })
+    })
+  </script>
+</AdminLayout>

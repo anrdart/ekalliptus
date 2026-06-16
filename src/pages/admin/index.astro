@@ -1,0 +1,182 @@
+---
+import AdminLayout from './_layout.astro'
+import StatCard from '../../components/admin/StatCard.astro'
+import RevenueChart from '../../components/admin/RevenueChart.astro'
+import EmptyState from '../../components/admin/EmptyState.astro'
+import StatusBadge from '../../components/admin/ui/StatusBadge.astro'
+import { DollarSign, Package, Activity, TrendingUp, ArrowUpRight, ShoppingCart } from 'lucide-astro'
+import { getSupabase } from '../../lib/supabase'
+import { formatIDR } from '../../lib/format'
+import { countLeadsByStage, LEAD_STAGE_LABELS, LEAD_STAGE_ORDER } from '../../lib/admin/leads'
+
+const supabase = getSupabase(true)
+
+const now = new Date()
+const todayStart = new Date(now); todayStart.setHours(0, 0, 0, 0)
+const monthStart = new Date(now.getFullYear(), now.getMonth(), 1)
+const sevenDaysAgo = new Date(now); sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 6); sevenDaysAgo.setHours(0, 0, 0, 0)
+
+let stats = { todayRevenue: 'Rp 0', monthlyOrders: '0', pendingPayments: '0', conversionRate: '0%' }
+let series: Array<{ day: string; value: number }> = []
+let recentOrders: any[] = []
+let topServices: Array<{ name: string; orders: number; revenue: number }> = []
+let leadCounts: Record<string, number> = {}
+
+if (supabase) {
+  const [paidToday, monthlyOrdersRes, pendingRes, paidRes, recentRes, weekly, monthOrdersRes] = await Promise.all([
+    supabase.from('payments').select('amount').eq('status', 'paid').gte('paid_at', todayStart.toISOString()),
+    supabase.from('orders').select('id', { count: 'exact', head: true }).gte('created_at', monthStart.toISOString()),
+    supabase.from('payments').select('id', { count: 'exact', head: true }).in('status', ['pending', 'processing']),
+    supabase.from('payments').select('id', { count: 'exact', head: true }).eq('status', 'paid').gte('created_at', monthStart.toISOString()),
+    supabase.from('orders').select('id, customer_name, service_type, pricing, status, created_at').order('created_at', { ascending: false }).limit(5),
+    supabase.from('payments').select('amount, paid_at').eq('status', 'paid').gte('paid_at', sevenDaysAgo.toISOString()),
+    supabase.from('orders').select('service_type, pricing').gte('created_at', monthStart.toISOString())
+  ])
+
+  const todayRev = (paidToday.data ?? []).reduce((s, p) => s + Number(p.amount ?? 0), 0)
+  const orderCount = monthlyOrdersRes.count ?? 0
+  const pending = pendingRes.count ?? 0
+  const paid = paidRes.count ?? 0
+  stats = {
+    todayRevenue: formatIDR(todayRev),
+    monthlyOrders: String(orderCount),
+    pendingPayments: String(pending),
+    conversionRate: orderCount > 0 ? `${((paid / orderCount) * 100).toFixed(1)}%` : '0%'
+  }
+
+  const buckets = new Map<string, number>()
+  for (let i = 0; i < 7; i++) {
+    const d = new Date(sevenDaysAgo); d.setDate(d.getDate() + i)
+    buckets.set(d.toISOString().slice(0, 10), 0)
+  }
+  for (const p of weekly.data ?? []) {
+    const day = String(p.paid_at).slice(0, 10)
+    buckets.set(day, (buckets.get(day) ?? 0) + Number(p.amount ?? 0))
+  }
+  series = Array.from(buckets.entries()).map(([day, value]) => ({ day, value }))
+  recentOrders = recentRes.data ?? []
+
+  const svc = new Map<string, { orders: number; revenue: number }>()
+  for (const o of monthOrdersRes.data ?? []) {
+    const cur = svc.get(o.service_type) ?? { orders: 0, revenue: 0 }
+    cur.orders += 1
+    cur.revenue += Number((o.pricing as any)?.grand_total ?? 0)
+    svc.set(o.service_type, cur)
+  }
+  topServices = Array.from(svc.entries()).map(([name, v]) => ({ name, ...v })).sort((a, b) => b.revenue - a.revenue).slice(0, 5)
+  leadCounts = await countLeadsByStage()
+}
+
+const fmt = formatIDR
+const today = new Intl.DateTimeFormat('id-ID', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }).format(now)
+---
+<AdminLayout title="Dashboard">
+  <!-- Welcome banner -->
+  <div class="relative mb-6 overflow-hidden rounded-2xl p-6 sm:p-7">
+    <div class="bg-gradient-brand absolute inset-0 opacity-95"></div>
+    <div class="bg-grid absolute inset-0 opacity-20"></div>
+    <div class="relative z-10">
+      <p class="text-xs font-medium uppercase tracking-wider text-white/80">{today}</p>
+      <h2 class="mt-1 text-2xl font-bold text-white sm:text-3xl">Selamat datang kembali 👋</h2>
+      <p class="mt-1 max-w-lg text-sm text-white/85">Ringkasan performa bisnis Anda hari ini. Pantau revenue, order, dan pipeline dalam satu tempat.</p>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+    <StatCard icon={DollarSign} value={stats.todayRevenue} label="Revenue Hari Ini" valueId="stat-today-revenue" />
+    <StatCard icon={Package} iconColorClass="text-blue-500" value={stats.monthlyOrders} label="Order Bulan Ini" valueId="stat-monthly-orders" />
+    <StatCard icon={Activity} iconColorClass="text-orange-500" value={stats.pendingPayments} label="Payment Pending" valueId="stat-pending-payments" />
+    <StatCard icon={TrendingUp} iconColorClass="text-purple-500" value={stats.conversionRate} label="Conversion Rate" valueId="stat-conversion" />
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+    <div class="lg:col-span-2 glass-card rounded-2xl p-6">
+      <h2 class="text-lg font-semibold mb-4">Revenue 7 Hari Terakhir</h2>
+      <RevenueChart series={series} />
+    </div>
+    <div class="glass-card rounded-2xl p-6">
+      <div class="flex items-center justify-between mb-4">
+        <h2 class="text-lg font-semibold">Pipeline</h2>
+        <a href="/admin/pipeline" class="text-xs text-primary hover:underline">Lihat board →</a>
+      </div>
+      <div class="space-y-2 text-sm">
+        {LEAD_STAGE_ORDER.map((stage) => (
+          <div class="flex items-center justify-between py-1.5 border-b border-border/40 last:border-0">
+            <span class="text-muted-foreground">{LEAD_STAGE_LABELS[stage]}</span>
+            <span class="font-bold">{leadCounts[stage] ?? 0}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <div class="glass-card rounded-2xl p-6 mb-6 cv-auto">
+    <h2 class="text-lg font-semibold mb-4">Top Services Bulan Ini</h2>
+    {topServices.length === 0 ? (
+      <p class="text-sm text-muted-foreground">Belum ada order bulan ini.</p>
+    ) : (
+      <div class="space-y-3">
+        {topServices.map((s, i) => (
+          <div class="flex items-center justify-between p-2 rounded-lg hover:bg-accent/40">
+            <div class="flex items-center gap-3">
+              <div class="h-7 w-7 rounded-md bg-primary/10 text-primary text-sm font-bold flex items-center justify-center">{i + 1}</div>
+              <div>
+                <p class="text-sm font-medium">{s.name}</p>
+                <p class="text-xs text-muted-foreground">{s.orders} order</p>
+              </div>
+            </div>
+            <span class="text-sm font-semibold">{fmt(s.revenue)}</span>
+          </div>
+        ))}
+      </div>
+    )}
+  </div>
+
+  <div class="glass-card rounded-2xl p-6 cv-auto">
+    <div class="flex items-center justify-between mb-4">
+      <h2 class="text-lg font-semibold">Recent Orders</h2>
+      <a href="/admin/orders" class="flex items-center gap-1 text-sm text-primary hover:underline">Lihat semua <ArrowUpRight class="h-4 w-4" /></a>
+    </div>
+    {recentOrders.length === 0 ? (
+      <EmptyState icon={ShoppingCart} title="Belum ada order" description="Order baru akan muncul di sini secara real-time." />
+    ) : (
+      <table class="w-full border-collapse text-sm">
+        <thead>
+          <tr class="border-b border-border text-left text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+            <th class="pb-3">Order ID</th><th class="pb-3">Customer</th><th class="pb-3">Layanan</th><th class="pb-3 text-right">Total</th><th class="pb-3">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {recentOrders.map((o) => (
+            <tr class="dt-row">
+              <td class="dt-cell font-mono text-xs">ORD-{o.id.slice(0, 8)}</td>
+              <td class="dt-cell">{o.customer_name}</td>
+              <td class="dt-cell">{o.service_type}</td>
+              <td class="dt-cell text-right font-medium">{fmt(Number((o.pricing as any)?.grand_total ?? 0))}</td>
+              <td class="dt-cell"><StatusBadge status={o.status} /></td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    )}
+  </div>
+<script>
+  async function refreshStats() {
+    try {
+      const res = await fetch('/api/admin/dashboard')
+      if (!res.ok) return
+      const data = await res.json()
+      if (!data.stats) return
+      const setText = (id: string, value: string) => {
+        const el = document.getElementById(id)
+        if (el) el.textContent = value
+      }
+      setText('stat-today-revenue', data.stats.todayRevenue)
+      setText('stat-monthly-orders', data.stats.monthlyOrders)
+      setText('stat-pending-payments', data.stats.pendingPayments)
+      setText('stat-conversion', data.stats.conversionRate)
+    } catch {}
+  }
+  setInterval(refreshStats, 60000)
+</script>
+</AdminLayout>

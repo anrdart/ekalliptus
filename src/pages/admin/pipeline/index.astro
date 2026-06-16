@@ -1,0 +1,73 @@
+---
+import AdminLayout from '../_layout.astro'
+import PipelineKanban from '../../../components/admin/PipelineKanban.astro'
+import Button from '../../../components/admin/ui/Button.astro'
+import { listLeadsByStage, totalEstimatedValueOpen, countLeadsByStage } from '../../../lib/admin/leads'
+import { Plus } from 'lucide-astro'
+import { formatIDR } from '../../../lib/format'
+
+const board = await listLeadsByStage()
+const counts = await countLeadsByStage()
+const totalOpen = await totalEstimatedValueOpen()
+const totalLeads = Object.values(counts).reduce((s, n) => s + n, 0)
+---
+<AdminLayout title="Pipeline">
+  <div class="mb-5 flex items-center justify-between">
+    <div>
+      <p class="text-sm text-muted-foreground">
+        <span class="font-semibold text-foreground">{totalLeads}</span> lead aktif · Estimasi nilai terbuka
+        <span class="font-semibold text-primary">{formatIDR(totalOpen)}</span>
+      </p>
+    </div>
+    <Button id="new-lead-btn" size="sm">
+      <Plus class="h-4 w-4" /> Lead Baru
+    </Button>
+  </div>
+
+  <PipelineKanban board={board} />
+
+  <!-- Modal: New Lead -->
+  <dialog id="new-lead-dialog" class="rounded-2xl p-0 backdrop:bg-black/50">
+    <form id="new-lead-form" class="bg-background p-6 w-[420px] max-w-[90vw]">
+      <h2 class="text-lg font-semibold mb-4">Lead Baru</h2>
+      <div class="space-y-3">
+        <input name="name" required placeholder="Nama" class="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm" />
+        <input name="whatsapp" placeholder="WhatsApp" class="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm" />
+        <input name="email" type="email" placeholder="Email" class="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm" />
+        <input name="company" placeholder="Perusahaan" class="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm" />
+        <input name="service_interest" placeholder="Layanan yang diminati" class="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm" />
+        <input name="estimated_value" type="number" placeholder="Estimasi nilai (Rp)" class="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm" />
+        <textarea name="notes" placeholder="Catatan" rows="3" class="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm"></textarea>
+      </div>
+      <div class="mt-4 flex justify-end gap-2">
+        <button type="button" id="cancel-new-lead" class="rounded-lg border border-border px-4 py-2 text-sm">Batal</button>
+        <button type="submit" class="rounded-lg bg-primary px-4 py-2 text-sm text-primary-foreground">Simpan</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script>
+    const dialog = document.getElementById('new-lead-dialog') as HTMLDialogElement
+    const openBtn = document.getElementById('new-lead-btn')
+    const cancelBtn = document.getElementById('cancel-new-lead')
+    const form = document.getElementById('new-lead-form') as HTMLFormElement
+    openBtn?.addEventListener('click', () => dialog.showModal())
+    cancelBtn?.addEventListener('click', () => dialog.close())
+    form?.addEventListener('submit', async (e) => {
+      e.preventDefault()
+      const data = Object.fromEntries(new FormData(form))
+      if (data.estimated_value) data.estimated_value = String(Number(data.estimated_value)) as any
+      const res = await fetch('/api/admin/leads', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      })
+      if (res.ok) {
+        dialog.close()
+        window.location.reload()
+      } else {
+        alert('Gagal membuat lead')
+      }
+    })
+  </script>
+</AdminLayout>

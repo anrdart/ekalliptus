@@ -1,0 +1,92 @@
+---
+import AdminLayout from '../_layout.astro'
+import SearchFilter from '../../../components/admin/SearchFilter.astro'
+import Pagination from '../../../components/admin/Pagination.astro'
+import EmptyState from '../../../components/admin/EmptyState.astro'
+import DataTable from '../../../components/admin/ui/DataTable.astro'
+import StatusBadge from '../../../components/admin/ui/StatusBadge.astro'
+import Badge from '../../../components/admin/ui/Badge.astro'
+import { CreditCard } from 'lucide-astro'
+import { getSupabase } from '../../../lib/supabase'
+import { formatIDR, formatDate } from '../../../lib/format'
+
+const url = new URL(Astro.request.url)
+const status = url.searchParams.get('status') ?? ''
+const gateway = url.searchParams.get('gateway') ?? ''
+const page = Math.max(1, Number(url.searchParams.get('page') ?? '1'))
+const pageSize = 20
+const from = (page - 1) * pageSize
+const to = from + pageSize - 1
+
+const supabase = getSupabase(true)
+let payments: any[] = []
+let total = 0
+if (supabase) {
+  let q = supabase.from('payments').select('*, orders(customer_name, whatsapp)', { count: 'exact' }).order('created_at', { ascending: false }).range(from, to)
+  if (status) q = q.eq('status', status as any)
+  if (gateway) q = q.eq('gateway', gateway as any)
+  const { data, count } = await q
+  payments = data ?? []
+  total = count ?? 0
+}
+const totalPages = Math.max(1, Math.ceil(total / pageSize))
+const baseUrl = `/admin/payments?status=${status}&gateway=${gateway}`
+---
+<AdminLayout title="Payments">
+  <SearchFilter
+    placeholder="Cari..."
+    value=""
+    name="search"
+    action="/admin/payments"
+    filters={[
+      { name: 'status', label: 'Status', selected: status, options: [
+        { value: '', label: 'Semua Status' },
+        { value: 'pending', label: 'Pending' },
+        { value: 'processing', label: 'Processing' },
+        { value: 'paid', label: 'Paid' },
+        { value: 'failed', label: 'Failed' },
+        { value: 'expired', label: 'Expired' },
+        { value: 'refunded', label: 'Refunded' }
+      ]},
+      { name: 'gateway', label: 'Gateway', selected: gateway, options: [
+        { value: '', label: 'Semua Gateway' },
+        { value: 'midtrans', label: 'Midtrans' },
+        { value: 'pakasir', label: 'Pakasir' },
+        { value: 'qiospay', label: 'Qiospay' },
+        { value: 'sanpay', label: 'Sanpay' },
+        { value: 'tripay', label: 'Tripay' }
+      ]}
+    ]}
+  />
+
+  <div class="glass-card rounded-2xl p-6">
+    <div class="mb-4 flex items-center justify-between">
+      <h2 class="text-lg font-semibold"><span class="text-primary">{total}</span> payment</h2>
+    </div>
+    {payments.length === 0 ? (
+      <EmptyState icon={CreditCard} title="Belum ada payment" />
+    ) : (
+      <>
+        <DataTable>
+          <Fragment slot="head">
+            <th>ID</th><th>Customer</th><th>Gateway</th><th class="text-right">Amount</th><th>Status</th><th>Created</th>
+          </Fragment>
+          {payments.map((p) => (
+            <tr class="dt-row">
+              <td class="dt-cell font-mono text-xs">PAY-{p.id.slice(0, 8)}</td>
+              <td class="dt-cell">
+                <div class="font-medium">{p.orders?.customer_name ?? '-'}</div>
+                <div class="text-xs text-muted-foreground">{p.orders?.whatsapp ?? ''}</div>
+              </td>
+              <td class="dt-cell"><Badge variant="muted">{p.gateway}</Badge></td>
+              <td class="dt-cell text-right font-medium">{formatIDR(Number(p.amount))}</td>
+              <td class="dt-cell"><StatusBadge status={p.status} /></td>
+              <td class="dt-cell text-xs text-muted-foreground">{formatDate(p.created_at)}</td>
+            </tr>
+          ))}
+        </DataTable>
+        <Pagination page={page} totalPages={totalPages} baseUrl={baseUrl} />
+      </>
+    )}
+  </div>
+</AdminLayout>

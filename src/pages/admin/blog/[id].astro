@@ -1,0 +1,67 @@
+---
+import AdminLayout from '../_layout.astro'
+import { getPost } from '../../../lib/admin/blog'
+import { Trash2 } from 'lucide-astro'
+
+const id = Astro.params.id as string
+const post = await getPost(id)
+if (!post) return Astro.redirect('/admin/blog')
+---
+<AdminLayout title={post.title}>
+  <form id="edit-post-form" class="glass-card rounded-2xl p-6 max-w-3xl space-y-4" data-id={id}>
+    <div class="grid grid-cols-2 gap-3">
+      <label class="block">
+        <span class="text-xs text-muted-foreground">Judul</span>
+        <input name="title" value={post.title} required class="mt-1 block w-full rounded-lg border border-border bg-background px-3 py-2 text-sm" />
+      </label>
+      <label class="block">
+        <span class="text-xs text-muted-foreground">Slug</span>
+        <input name="slug" value={post.slug} required class="mt-1 block w-full rounded-lg border border-border bg-background px-3 py-2 text-sm" />
+      </label>
+    </div>
+    <label class="block">
+      <span class="text-xs text-muted-foreground">Body (tulis Markdown atau edit HTML langsung)</span>
+      <textarea name="body_md" rows="18" class="mt-1 block w-full rounded-lg border border-border bg-background px-3 py-2 text-sm font-mono">{post.body_html ?? ''}</textarea>
+    </label>
+    <p class="text-xs text-muted-foreground">Pre-loaded dengan HTML saat ini ({post.body_html?.length ?? 0} karakter). Save akan re-render via markdown parser.</p>
+    <div class="grid grid-cols-2 gap-3">
+      <label class="block">
+        <span class="text-xs text-muted-foreground">Status</span>
+        <select name="status" class="mt-1 block w-full rounded-lg border border-border bg-background px-3 py-2 text-sm">
+          <option value="draft" selected={post.status === 'draft'}>Draft</option>
+          <option value="published" selected={post.status === 'published'}>Published</option>
+          <option value="archived" selected={post.status === 'archived'}>Archived</option>
+        </select>
+      </label>
+      <label class="block">
+        <span class="text-xs text-muted-foreground">Kategori</span>
+        <input name="category" value={post.category ?? ''} class="mt-1 block w-full rounded-lg border border-border bg-background px-3 py-2 text-sm" />
+      </label>
+    </div>
+    <div class="flex justify-between gap-2">
+      <button type="button" id="delete-btn" class="inline-flex items-center gap-1 rounded-lg border border-destructive text-destructive px-4 py-2 text-sm hover:bg-destructive/10"><Trash2 class="h-4 w-4" /> Hapus</button>
+      <div class="flex gap-2">
+        <a href="/admin/blog" class="rounded-lg border border-border px-4 py-2 text-sm">Batal</a>
+        <button type="submit" class="rounded-lg bg-primary px-4 py-2 text-sm text-primary-foreground">Simpan</button>
+      </div>
+    </div>
+  </form>
+
+  <script>
+    const form = document.getElementById('edit-post-form') as HTMLFormElement
+    const id = form.dataset.id!
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault()
+      const fd = new FormData(form)
+      const data: any = Object.fromEntries(fd)
+      const res = await fetch(`/api/admin/blog/${id}`, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) })
+      if (res.ok) window.location.href = '/admin/blog'
+      else alert('Gagal menyimpan')
+    })
+    document.getElementById('delete-btn')!.addEventListener('click', async () => {
+      if (!confirm('Hapus post ini?')) return
+      const res = await fetch(`/api/admin/blog/${id}`, { method: 'DELETE' })
+      if (res.ok) window.location.href = '/admin/blog'
+    })
+  </script>
+</AdminLayout>

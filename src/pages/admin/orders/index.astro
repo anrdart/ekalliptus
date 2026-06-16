@@ -1,0 +1,96 @@
+---
+import AdminLayout from '../_layout.astro'
+import SearchFilter from '../../../components/admin/SearchFilter.astro'
+import Pagination from '../../../components/admin/Pagination.astro'
+import EmptyState from '../../../components/admin/EmptyState.astro'
+import DataTable from '../../../components/admin/ui/DataTable.astro'
+import StatusBadge from '../../../components/admin/ui/StatusBadge.astro'
+import Badge from '../../../components/admin/ui/Badge.astro'
+import { ShoppingCart, Eye } from 'lucide-astro'
+import { getSupabase } from '../../../lib/supabase'
+import { formatIDR } from '../../../lib/format'
+
+const url = new URL(Astro.request.url)
+const search = url.searchParams.get('search') ?? ''
+const service = url.searchParams.get('service') ?? ''
+const status = url.searchParams.get('status') ?? ''
+const page = Math.max(1, Number(url.searchParams.get('page') ?? '1'))
+const pageSize = 20
+const from = (page - 1) * pageSize
+const to = from + pageSize - 1
+
+const supabase = getSupabase(true)
+let orders: any[] = []
+let total = 0
+if (supabase) {
+  let q = supabase.from('orders').select('*', { count: 'exact' }).order('created_at', { ascending: false }).range(from, to)
+  if (search) q = q.or(`customer_name.ilike.%${search}%,whatsapp.ilike.%${search}%`)
+  if (service) q = q.eq('service_type', service as any)
+  if (status) q = q.eq('status', status as any)
+  const { data, count } = await q
+  orders = data ?? []
+  total = count ?? 0
+}
+const totalPages = Math.max(1, Math.ceil(total / pageSize))
+const baseUrl = `/admin/orders?search=${encodeURIComponent(search)}&service=${service}&status=${status}`
+---
+<AdminLayout title="Orders">
+  <SearchFilter
+    placeholder="Cari nama, WA..."
+    value={search}
+    name="search"
+    action="/admin/orders"
+    filters={[
+      { name: 'service', label: 'Layanan', selected: service, options: [
+        { value: '', label: 'Semua Layanan' },
+        { value: 'website', label: 'Website' },
+        { value: 'wordpress', label: 'WordPress' },
+        { value: 'mobile', label: 'Mobile App' },
+        { value: 'editing', label: 'UI/UX Design' }
+      ]},
+      { name: 'status', label: 'Status', selected: status, options: [
+        { value: '', label: 'Semua Status' },
+        { value: 'new', label: 'New' },
+        { value: 'contacted', label: 'Contacted' },
+        { value: 'in_progress', label: 'In Progress' },
+        { value: 'done', label: 'Done' },
+        { value: 'cancelled', label: 'Cancelled' }
+      ]}
+    ]}
+  />
+
+  <div class="glass-card rounded-2xl p-6">
+    <div class="mb-4 flex items-center justify-between">
+      <h2 class="text-lg font-semibold"><span class="text-primary">{total}</span> order</h2>
+    </div>
+    {orders.length === 0 ? (
+      <EmptyState icon={ShoppingCart} title="Belum ada order" description="Order yang masuk akan muncul di sini." />
+    ) : (
+      <>
+        <DataTable>
+          <Fragment slot="head">
+            <th>Order ID</th><th>Customer</th><th>Layanan</th><th class="text-right">Harga</th><th>Status</th><th></th>
+          </Fragment>
+          {orders.map((o) => (
+            <tr class="dt-row">
+              <td class="dt-cell font-mono text-xs">ORD-{o.id.slice(0, 8)}</td>
+              <td class="dt-cell">
+                <div class="font-medium">{o.customer_name}</div>
+                <div class="text-xs text-muted-foreground">{o.whatsapp}</div>
+              </td>
+              <td class="dt-cell"><Badge variant="primary">{o.service_type}</Badge></td>
+              <td class="dt-cell text-right font-medium">{formatIDR(Number((o as any).price ?? (o.pricing as any)?.grand_total ?? 0))}</td>
+              <td class="dt-cell"><StatusBadge status={o.status} /></td>
+              <td class="dt-cell text-right">
+                <a href={`/admin/orders/${o.id}`} class="inline-flex items-center gap-1 text-xs text-primary hover:underline">
+                  <Eye class="h-3.5 w-3.5" /> Detail
+                </a>
+              </td>
+            </tr>
+          ))}
+        </DataTable>
+        <Pagination page={page} totalPages={totalPages} baseUrl={baseUrl} />
+      </>
+    )}
+  </div>
+</AdminLayout>

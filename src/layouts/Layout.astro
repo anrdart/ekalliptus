@@ -1,0 +1,225 @@
+---
+import '../styles/global.css'
+
+interface Props {
+  title: string
+  description?: string
+  lang?: string
+  dir?: 'ltr' | 'rtl'
+  noindex?: boolean
+  image?: string
+  imageAlt?: string
+  /** OG image dimensions — default matches /og-image.png (1024×1024). */
+  imageWidth?: string | number
+  imageHeight?: string | number
+  type?: 'website' | 'article'
+  publishedTime?: string
+  modifiedTime?: string
+  author?: string
+  keywords?: string
+  /** Search Console / Bing site verification tokens (optional). */
+  googleVerification?: string
+  bingVerification?: string
+}
+
+const {
+  title,
+  description = 'Digital agency Indonesia spesialis website development, WordPress, mobile app, dan multimedia editing.',
+  lang = 'id',
+  dir = 'ltr',
+  noindex = false,
+  image = '/og-image.png',
+  imageAlt = 'Ekalliptus Digital — Indonesian Web & Mobile App Agency',
+  imageWidth = 1024,
+  imageHeight = 1024,
+  type = 'website',
+  publishedTime,
+  modifiedTime,
+  author,
+  keywords,
+  googleVerification = import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION ?? '',
+  bingVerification = import.meta.env.PUBLIC_BING_SITE_VERIFICATION ?? ''
+} = Astro.props
+
+const siteUrl = 'https://ekalliptus.com'
+const canonical = new URL(Astro.url.pathname, siteUrl).toString()
+const ogImage = new URL(image, siteUrl).toString()
+const ogImageWidth = String(imageWidth)
+const ogImageHeight = String(imageHeight)
+
+const ogLocaleMap: Record<string, string> = {
+  id: 'id_ID', en: 'en_US', ja: 'ja_JP',
+  ko: 'ko_KR', ru: 'ru_RU', ar: 'ar_SA', tr: 'tr_TR'
+}
+const ogLocale = ogLocaleMap[lang] ?? 'id_ID'
+const ogLocaleAlternates = Object.values(ogLocaleMap).filter(l => l !== ogLocale)
+
+const locales = ['id', 'en', 'ja', 'ko', 'ru', 'ar', 'tr']
+const path = Astro.url.pathname
+
+function localePath(l: string) {
+  const pathWithoutSlash = path.replace(/^\//, '')
+  if (l === 'id') return `${siteUrl}/${pathWithoutSlash}`
+  return `${siteUrl}/${l}/${pathWithoutSlash}`
+}
+
+const publishedYMD = publishedTime ? publishedTime.slice(0, 10).replace(/-/g, '/') : undefined
+---
+
+<!DOCTYPE html>
+<html lang={lang} dir={dir} class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="description" content={description} />
+    {keywords && <meta name="keywords" content={keywords} />}
+    {author && <meta name="author" content={author} />}
+    <meta name="format-detection" content="telephone=no" />
+    <meta http-equiv="content-language" content={lang} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    <meta name="theme-color" content="#0c1222" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#f1f5f9" media="(prefers-color-scheme: light)" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="canonical" href={canonical} />
+    <link rel="sitemap" type="application/xml" href="/sitemap-index.xml" />
+
+    {locales.map(l => (
+      <link rel="alternate" hreflang={l} href={localePath(l)} />
+    ))}
+    <link rel="alternate" hreflang="x-default" href={localePath('id')} />
+
+    <link rel="preload" as="font" type="font/woff2" href="/fonts/inter-latin-400-normal.woff2" crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href="/fonts/inter-latin-600-normal.woff2" crossorigin />
+
+    <title>{title}</title>
+
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content={type} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content="Ekalliptus Digital" />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content={ogImageWidth} />
+    <meta property="og:image:height" content={ogImageHeight} />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:alt" content={imageAlt} />
+    <meta property="og:locale" content={ogLocale} />
+    {ogLocaleAlternates.map(l => <meta property="og:locale:alternate" content={l} />)}
+
+    {type === 'article' && publishedTime && <meta property="article:published_time" content={publishedTime} />}
+    {type === 'article' && modifiedTime && <meta property="article:modified_time" content={modifiedTime} />}
+    {type === 'article' && author && <meta property="article:author" content={author} />}
+
+    {type === 'article' && publishedYMD && <meta name="citation_title" content={title} />}
+    {type === 'article' && author && <meta name="citation_author" content={author} />}
+    {type === 'article' && publishedYMD && <meta name="citation_publication_date" content={publishedYMD} />}
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@ekalliptus" />
+    <meta name="twitter:creator" content="@ekalliptus" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image:alt" content={imageAlt} />
+
+    {/* Search Console / Bing verification — render only when configured */}
+    {googleVerification && <meta name="google-site-verification" content={googleVerification} />}
+    {bingVerification && <meta name="msvalidate.01" content={bingVerification} />}
+
+    <slot name="head" />
+
+    <!-- Google AdSense -->
+    <script is:inline async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9374589831001594" crossorigin="anonymous"></script>
+
+    <!-- Google Analytics 4 — deferred to idle to avoid blocking critical render -->
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      window.gtag = function(){ dataLayer.push(arguments); };
+      const loadGA = () => {
+        if (window.__gaLoaded) return;
+        window.__gaLoaded = true;
+        const s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=G-HQL55M3RTK';
+        document.head.appendChild(s);
+        gtag('js', new Date());
+        gtag('config', 'G-HQL55M3RTK', { 'send_page_view': true });
+      };
+      if ('requestIdleCallback' in window) {
+        requestIdleCallback(loadGA, { timeout: 4000 });
+      } else {
+        window.addEventListener('load', () => setTimeout(loadGA, 1500), { once: true });
+      }
+    </script>
+
+    <!-- Vanta 3D background — desktop only, lazy-loaded on idle -->
+    <script is:inline>
+      (function () {
+        const isTouchOnly = window.matchMedia('(pointer: coarse)').matches && window.innerWidth < 1024;
+        const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const lowMemory = (navigator.deviceMemory && navigator.deviceMemory < 4);
+        const saveData = (navigator.connection && navigator.connection.saveData);
+        if (isTouchOnly || reducedMotion || lowMemory || saveData) return;
+
+        const inject = (src) => new Promise((resolve, reject) => {
+          const s = document.createElement('script');
+          s.src = src;
+          s.defer = true;
+          s.onload = resolve;
+          s.onerror = reject;
+          document.head.appendChild(s);
+        });
+
+        const loadVanta = async () => {
+          try {
+            await inject('/vendor/three.min.js');
+            await inject('/vendor/vanta.net.min.js');
+            window.dispatchEvent(new CustomEvent('vanta-ready'));
+          } catch (_) {}
+        };
+
+        if ('requestIdleCallback' in window) {
+          requestIdleCallback(loadVanta, { timeout: 3000 });
+        } else {
+          window.addEventListener('load', () => setTimeout(loadVanta, 800), { once: true });
+        }
+      })();
+    </script>
+
+    <script is:inline>
+      const theme = localStorage.getItem('ekal-theme') || 'dark'
+      document.documentElement.classList.toggle('dark', theme === 'dark')
+    </script>
+
+    <!-- Service worker — runtime cache for fonts, vendor scripts, images -->
+    <script is:inline>
+      if ('serviceWorker' in navigator && location.protocol === 'https:') {
+        const register = () => navigator.serviceWorker.register('/sw.js').catch(() => {});
+        if ('requestIdleCallback' in window) {
+          requestIdleCallback(register, { timeout: 5000 });
+        } else {
+          window.addEventListener('load', register, { once: true });
+        }
+      }
+    </script>
+  </head>
+  <body class="bg-background text-foreground antialiased min-h-screen">
+    <noscript>
+      <div style="padding:2rem;text-align:center;font-family:system-ui,sans-serif;">
+        <p style="font-size:1.5rem;font-weight:700;">Ekalliptus Digital</p>
+        <p>Javascript diperlukan untuk melihat website ini dengan baik.</p>
+        <p>Hubungi kami: <a href="mailto:support@ekalliptus.com">support@ekalliptus.com</a> | <a href="https://wa.me/6281999900306">WhatsApp</a></p>
+        <p><a href="/">Kembali ke Beranda</a> | <a href="/order">Order Layanan</a></p>
+      </div>
+    </noscript>
+    <slot />
+  </body>
+</html>

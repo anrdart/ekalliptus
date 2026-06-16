@@ -1,0 +1,151 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0c1222;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#1a2332;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0f172a;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="accent3" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#8b5cf6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ec4899;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="accent4" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#8b5cf6;stop-opacity:0.3" />
+      <stop offset="100%" style="stop-color:#ec4899;stop-opacity:0.3" />
+    </linearGradient>
+    <filter id="glow2">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg2)"/>
+
+  <!-- Grid Pattern -->
+  <g opacity="0.05">
+    <pattern id="grid2" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#ffffff" stroke-width="1"/>
+    </pattern>
+    <rect width="1200" height="630" fill="url(#grid2)"/>
+  </g>
+
+  <!-- Decorative Circles -->
+  <circle cx="1100" cy="100" r="200" fill="url(#accent4)" opacity="0.5"/>
+  <circle cx="100" cy="530" r="250" fill="url(#accent4)" opacity="0.4"/>
+
+  <!-- Main Content Area -->
+  <g transform="translate(100, 150)">
+    <!-- Badge -->
+    <rect x="0" y="-40" width="160" height="32" rx="16" fill="url(#accent3)" opacity="0.9"/>
+    <text x="80" y="-18" font-family="system-ui, sans-serif" font-size="14" font-weight="600" fill="#ffffff" text-anchor="middle" letter-spacing="2">MOBILE APP</text>
+
+    <!-- Title -->
+    <text x="0" y="30" font-family="system-ui, sans-serif" font-size="52" font-weight="700" fill="#ffffff">
+      Biaya Buat Aplikasi
+    </text>
+    <text x="0" y="95" font-family="system-ui, sans-serif" font-size="52" font-weight="700" fill="#ffffff">
+      <tspan fill="url(#accent3)">Android</tspan> &amp; iOS
+    </text>
+    <text x="0" y="155" font-family="system-ui, sans-serif" font-size="28" font-weight="400" fill="#94a3b8">
+      Update 2026 - Mulai Rp 5 Juta
+    </text>
+
+    <!-- Price Cards -->
+    <g transform="translate(0, 200)">
+      <!-- MVP -->
+      <rect x="0" y="0" width="170" height="70" rx="12" fill="rgba(255,255,255,0.05)" stroke="rgba(139,92,246,0.3)" stroke-width="2"/>
+      <text x="85" y="25" font-family="system-ui, sans-serif" font-size="14" font-weight="600" fill="#8b5cf6" text-anchor="middle">MVP</text>
+      <text x="85" y="55" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#ffffff" text-anchor="middle">Rp 5-15Jt</text>
+
+      <!-- E-Commerce -->
+      <rect x="190" y="0" width="170" height="70" rx="12" fill="rgba(255,255,255,0.05)" stroke="rgba(139,92,246,0.3)" stroke-width="2"/>
+      <text x="275" y="25" font-family="system-ui, sans-serif" font-size="14" font-weight="600" fill="#8b5cf6" text-anchor="middle">E-Commerce</text>
+      <text x="275" y="55" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#ffffff" text-anchor="middle">Rp 15-50Jt</text>
+
+      <!-- Enterprise -->
+      <rect x="380" y="0" width="170" height="70" rx="12" fill="rgba(255,255,255,0.05)" stroke="rgba(139,92,246,0.3)" stroke-width="2"/>
+      <text x="465" y="25" font-family="system-ui, sans-serif" font-size="14" font-weight="600" fill="#8b5cf6" text-anchor="middle">Enterprise</text>
+      <text x="465" y="55" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#ffffff" text-anchor="middle">Rp 50-200Jt</text>
+    </g>
+
+    <!-- Tech Stack -->
+    <g transform="translate(0, 290)">
+      <text x="0" y="0" font-family="system-ui, sans-serif" font-size="14" fill="#94a3b8">Technology:</text>
+      <rect x="80" y="-18" width="100" height="28" rx="6" fill="rgba(97,218,251,0.2)" stroke="#06b6d4" stroke-width="1"/>
+      <text x="130" y="2" font-family="system-ui, sans-serif" font-size="13" font-weight="600" fill="#06b6d4" text-anchor="middle">Flutter</text>
+
+      <rect x="195" y="-18" width="120" height="28" rx="6" fill="rgba(97,218,251,0.2)" stroke="#06b6d4" stroke-width="1"/>
+      <text x="255" y="2" font-family="system-ui, sans-serif" font-size="13" font-weight="600" fill="#06b6d4" text-anchor="middle">React Native</text>
+    </g>
+  </g>
+
+  <!-- Right Side Illustration - Phones -->
+  <g transform="translate(720, 130)">
+    <!-- Phone 1 - Android -->
+    <g transform="translate(0, 0)">
+      <rect x="0" y="0" width="140" height="280" rx="20" fill="#1e293b" stroke="url(#accent3)" stroke-width="2"/>
+      <rect x="10" y="10" width="120" height="250" rx="4" fill="#0f172a"/>
+      <!-- Screen Content -->
+      <rect x="20" y="30" width="60" height="60" rx="8" fill="url(#accent3)" opacity="0.5"/>
+      <rect x="90" y="35" width="30" height="8" rx="4" fill="#334155"/>
+      <rect x="90" y="50" width="25" height="8" rx="4" fill="#334155"/>
+      <rect x="20" y="100" width="100" height="8" rx="4" fill="#334155"/>
+      <rect x="20" y="115" width="80" height="8" rx="4" fill="#334155"/>
+      <rect x="20" y="145" width="45" height="45" rx="8" fill="url(#accent3)" opacity="0.4"/>
+      <rect x="75" y="145" width="45" height="45" rx="8" fill="url(#accent3)" opacity="0.3"/>
+      <!-- Button -->
+      <rect x="35" y="220" width="70" height="24" rx="12" fill="url(#accent3)"/>
+      <text x="70" y="236" font-family="system-ui, sans-serif" font-size="10" fill="#ffffff" text-anchor="middle">Install</text>
+      <!-- Android Logo hint -->
+      <circle cx="70" cy="265" r="8" fill="#334155"/>
+    </g>
+
+    <!-- Phone 2 - iOS (slightly offset) -->
+    <g transform="translate(180, 50)">
+      <rect x="0" y="0" width="140" height="280" rx="20" fill="#1e293b" stroke="url(#accent3)" stroke-width="2"/>
+      <rect x="10" y="10" width="120" height="250" rx="4" fill="#0f172a"/>
+      <!-- Notch -->
+      <rect x="50" y="12" width="40" height="6" rx="3" fill="#000"/>
+      <!-- Screen Content -->
+      <rect x="20" y="35" width="100" height="70" rx="8" fill="url(#accent3)" opacity="0.4"/>
+      <rect x="20" y="115" width="100" height="8" rx="4" fill="#334155"/>
+      <rect x="20" y="130" width="70" height="8" rx="4" fill="#334155"/>
+      <!-- Icons grid -->
+      <rect x="20" y="155" width="30" height="30" rx="8" fill="url(#accent3)" opacity="0.5"/>
+      <rect x="60" y="155" width="30" height="30" rx="8" fill="url(#accent3)" opacity="0.3"/>
+      <rect x="100" y="155" width="30" height="30" rx="8" fill="url(#accent3)" opacity="0.4"/>
+      <rect x="20" y="195" width="30" height="30" rx="8" fill="url(#accent3)" opacity="0.3"/>
+      <rect x="60" y="195" width="30" height="30" rx="8" fill="url(#accent3)" opacity="0.5"/>
+      <rect x="100" y="195" width="30" height="30" rx="8" fill="url(#accent3)" opacity="0.3"/>
+      <!-- Home indicator -->
+      <rect x="50" y="250" width="40" height="4" rx="2" fill="#334155"/>
+    </g>
+
+    <!-- Floating Elements -->
+    <g transform="translate(350, -20)">
+      <circle cx="0" cy="0" r="28" fill="url(#accent3)" opacity="0.8" filter="url(#glow2)"/>
+      <text x="0" y="7" font-size="20" text-anchor="middle">📱</text>
+    </g>
+
+    <g transform="translate(-40, 310)">
+      <circle cx="0" cy="0" r="24" fill="url(#accent3)" opacity="0.6"/>
+      <text x="0" y="6" font-size="18" text-anchor="middle">💰</text>
+    </g>
+
+    <g transform="translate(380, 280)">
+      <circle cx="0" cy="0" r="22" fill="url(#accent3)" opacity="0.7"/>
+      <text x="0" y="6" font-size="16" text-anchor="middle">⚡</text>
+    </g>
+  </g>
+
+  <!-- Logo/Badge -->
+  <g transform="translate(1050, 50)">
+    <circle cx="0" cy="0" r="40" fill="url(#accent3)" opacity="0.2"/>
+    <circle cx="0" cy="0" r="30" fill="url(#accent3)"/>
+    <text x="0" y="8" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#ffffff" text-anchor="middle">єκ</text>
+  </g>
+</svg>

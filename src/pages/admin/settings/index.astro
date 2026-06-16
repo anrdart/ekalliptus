@@ -1,0 +1,36 @@
+---
+import AdminLayout from '../_layout.astro'
+import { CreditCard, MessageSquare, ShieldCheck } from 'lucide-astro'
+
+const cards = [
+  { href: '/admin/payments/gateways', icon: CreditCard, title: 'Payment Gateways', desc: 'Konfigurasi Midtrans, Pakasir, biaya, dan dukungan QR.' },
+  { href: '/admin/consultations', icon: MessageSquare, title: 'Consultations', desc: 'Tinjau handoff pengunjung dan balasan admin.' },
+  { href: null, icon: ShieldCheck, title: 'Session', desc: 'Hook auth admin siap untuk lapisan identitas produksi Anda.' },
+]
+---
+
+<AdminLayout title="Settings">
+  <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
+    {
+      cards.map((c) => {
+        const inner = (
+          <>
+            <div class="bg-gradient-brand pointer-events-none absolute inset-x-0 top-0 h-0.5 opacity-70" />
+            <div class="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10">
+              <c.icon class="h-5 w-5 text-primary" />
+            </div>
+            <h2 class="mb-1 font-semibold">{c.title}</h2>
+            <p class="text-sm text-muted-foreground">{c.desc}</p>
+          </>
+        )
+        return c.href ? (
+          <a href={c.href} class="glass-card relative overflow-hidden rounded-2xl p-5 transition hover:-translate-y-0.5 hover:bg-accent/40 cursor-interactive">
+            {inner}
+          </a>
+        ) : (
+          <div class="glass-card relative overflow-hidden rounded-2xl p-5">{inner}</div>
+        )
+      })
+    }
+  </div>
+</AdminLayout>

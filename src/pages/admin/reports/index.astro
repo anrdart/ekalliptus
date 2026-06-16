@@ -1,0 +1,109 @@
+---
+import AdminLayout from '../_layout.astro'
+import RevenueChart from '../../../components/admin/RevenueChart.astro'
+import FunnelChart from '../../../components/admin/FunnelChart.astro'
+import Button from '../../../components/admin/ui/Button.astro'
+import { revenueSeries, funnelStats, breakdownByService, breakdownByLeadSource, breakdownByCustomer, type Granularity } from '../../../lib/admin/analytics'
+import { Download } from 'lucide-astro'
+import { formatIDR } from '../../../lib/format'
+
+const url = new URL(Astro.request.url)
+const today = new Date().toISOString().slice(0, 10)
+const monthAgo = new Date(Date.now() - 30 * 86400_000).toISOString().slice(0, 10)
+const from = url.searchParams.get('from') ?? monthAgo
+const to = url.searchParams.get('to') ?? today
+const granularity = (url.searchParams.get('granularity') ?? 'day') as Granularity
+
+const [series, stages, services, sources, customers] = await Promise.all([
+  revenueSeries({ from, to, granularity }),
+  funnelStats(from, to),
+  breakdownByService(from, to),
+  breakdownByLeadSource(from, to),
+  breakdownByCustomer(from, to)
+])
+
+const seriesForChart = series.map((p) => ({ day: p.bucket, value: p.value }))
+const fmt = formatIDR
+---
+<AdminLayout title="Reports">
+  <form method="GET" action="/admin/reports" class="glass-card rounded-2xl p-4 mb-6 flex flex-wrap gap-3 items-end">
+    <label class="block">
+      <span class="text-xs text-muted-foreground">Dari</span>
+      <input type="date" name="from" value={from} class="block mt-1 rounded-lg border border-border bg-background px-2 py-1 text-sm" />
+    </label>
+    <label class="block">
+      <span class="text-xs text-muted-foreground">Sampai</span>
+      <input type="date" name="to" value={to} class="block mt-1 rounded-lg border border-border bg-background px-2 py-1 text-sm" />
+    </label>
+    <label class="block">
+      <span class="text-xs text-muted-foreground">Granularitas</span>
+      <select name="granularity" class="block mt-1 rounded-lg border border-border bg-background px-2 py-1 text-sm">
+        <option value="day" selected={granularity === 'day'}>Harian</option>
+        <option value="week" selected={granularity === 'week'}>Mingguan</option>
+        <option value="month" selected={granularity === 'month'}>Bulanan</option>
+      </select>
+    </label>
+    <Button type="submit" size="sm">Terapkan</Button>
+    <Button href={`/api/admin/reports/export?type=orders&from=${from}&to=${to}`} variant="outline" size="sm" class="ml-auto">
+      <Download class="h-4 w-4" /> Export Orders CSV
+    </Button>
+    <Button href={`/api/admin/reports/export?type=payments&from=${from}&to=${to}`} variant="outline" size="sm">
+      <Download class="h-4 w-4" /> Export Payments CSV
+    </Button>
+  </form>
+
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+    <div class="lg:col-span-2 glass-card rounded-2xl p-6">
+      <h2 class="text-lg font-semibold mb-4">Revenue</h2>
+      <RevenueChart series={seriesForChart} height={260} />
+    </div>
+    <div class="glass-card rounded-2xl p-6">
+      <h2 class="text-lg font-semibold mb-4">Conversion Funnel</h2>
+      <FunnelChart stages={stages} />
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div class="glass-card rounded-2xl p-6">
+      <h2 class="text-lg font-semibold mb-4">Breakdown per Layanan</h2>
+      <table class="w-full border-collapse text-sm">
+        <thead><tr class="border-b border-border text-left text-xs font-semibold uppercase tracking-wider text-muted-foreground [&>th]:pb-2"><th>Layanan</th><th class="text-right">Order</th><th class="text-right">Revenue</th></tr></thead>
+        <tbody>
+          {services.map((s) => (
+            <tr class="dt-row">
+              <td class="dt-cell">{s.name}</td>
+              <td class="dt-cell text-right">{s.orders}</td>
+              <td class="dt-cell text-right font-medium">{fmt(s.revenue)}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <div class="glass-card rounded-2xl p-6">
+      <h2 class="text-lg font-semibold mb-4">Top Customers</h2>
+      <table class="w-full border-collapse text-sm">
+        <thead><tr class="border-b border-border text-left text-xs font-semibold uppercase tracking-wider text-muted-foreground [&>th]:pb-2"><th>Customer</th><th class="text-right">Order</th><th class="text-right">Spend</th></tr></thead>
+        <tbody>
+          {customers.map((c) => (
+            <tr class="dt-row">
+              <td class="dt-cell"><a href={`/admin/customers/${c.customer_id}`} class="hover:text-primary hover:underline">{c.name}</a></td>
+              <td class="dt-cell text-right">{c.orders}</td>
+              <td class="dt-cell text-right font-medium">{fmt(c.revenue)}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <div class="glass-card rounded-2xl p-6">
+      <h2 class="text-lg font-semibold mb-4">Sumber Lead</h2>
+      <table class="w-full border-collapse text-sm">
+        <thead><tr class="border-b border-border text-left text-xs font-semibold uppercase tracking-wider text-muted-foreground [&>th]:pb-2"><th>Source</th><th class="text-right">Jumlah</th></tr></thead>
+        <tbody>
+          {sources.map((s) => (
+            <tr class="dt-row"><td class="dt-cell">{s.source}</td><td class="dt-cell text-right font-medium">{s.count}</td></tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</AdminLayout>

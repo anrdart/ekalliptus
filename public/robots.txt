@@ -1,0 +1,12 @@
+# Robots.txt for ekalliptus.com
+
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+Allow: /blog/feed.json
+Allow: /blog/rss.xml
+Allow: /llms.txt
+
+Sitemap: https://ekalliptus.com/sitemap-index.xml
+Sitemap: https://ekalliptus.com/blog/sitemap.xml

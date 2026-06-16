@@ -1,0 +1,37 @@
+---
+import { Search } from 'lucide-astro'
+
+interface Props {
+  placeholder?: string
+  value?: string
+  name?: string
+  action: string
+  filters?: Array<{ name: string; label: string; options: Array<{ value: string; label: string }>; selected?: string }>
+}
+
+const { placeholder = 'Cari...', value = '', name = 'q', action, filters = [] } = Astro.props
+---
+<form method="GET" action={action} class="glass-card rounded-2xl p-4 mb-6">
+  <div class="flex flex-col lg:flex-row gap-3">
+    <div class="flex-1 relative">
+      <Search class="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+      <input
+        type="text"
+        name={name}
+        value={value}
+        placeholder={placeholder}
+        class="w-full rounded-lg border border-border bg-background pl-9 pr-3 py-2 text-sm"
+      />
+    </div>
+    {filters.map((f) => (
+      <select name={f.name} class="rounded-lg border border-border bg-background px-3 py-2 text-sm">
+        {f.options.map((opt) => (
+          <option value={opt.value} selected={opt.value === f.selected}>{opt.label}</option>
+        ))}
+      </select>
+    ))}
+    <button type="submit" class="rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90">
+      Terapkan
+    </button>
+  </div>
+</form>

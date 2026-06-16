@@ -1,0 +1,23 @@
+import { defineConfig } from 'vitest/config'
+import { fileURLToPath } from 'url'
+import { dirname, resolve } from 'path'
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
+
+export default defineConfig({
+  test: {
+    globals: true,
+    environment: 'happy-dom',
+    include: ['**/*.{test,spec}.{js,ts}'],
+    exclude: ['**/node_modules/**', '.opencode/**', '.nuxt/**', 'dist/**', '.astro/**'],
+    testTimeout: 10000
+  },
+  resolve: {
+    alias: {
+      '~': resolve(__dirname, '.'),
+      '@': resolve(__dirname, '.'),
+      'astro:middleware': resolve(__dirname, 'src/__mocks__/astro-middleware.ts')
+    }
+  }
+})

@@ -1,0 +1,102 @@
+---
+import AdminLayout from '../_layout.astro'
+import SearchFilter from '../../../components/admin/SearchFilter.astro'
+import Pagination from '../../../components/admin/Pagination.astro'
+import EmptyState from '../../../components/admin/EmptyState.astro'
+import DataTable from '../../../components/admin/ui/DataTable.astro'
+import Badge from '../../../components/admin/ui/Badge.astro'
+import { listCustomers } from '../../../lib/admin/customers'
+import { Users, Eye } from 'lucide-astro'
+import { formatIDR } from '../../../lib/format'
+
+const url = new URL(Astro.request.url)
+const search = url.searchParams.get('search') ?? ''
+const service = url.searchParams.get('service') ?? ''
+const sort = (url.searchParams.get('sort') ?? 'recent') as 'recent' | 'spend' | 'orders'
+const page = Math.max(1, Number(url.searchParams.get('page') ?? '1'))
+
+const { customers, total, totalPages } = await listCustomers({ search, service, sort, page })
+
+const baseUrl = `/admin/customers?search=${encodeURIComponent(search)}&service=${service}&sort=${sort}`
+---
+<AdminLayout title="Customers">
+  <SearchFilter
+    placeholder="Cari nama, email, WhatsApp..."
+    value={search}
+    name="search"
+    action="/admin/customers"
+    filters={[
+      {
+        name: 'service',
+        label: 'Layanan',
+        selected: service,
+        options: [
+          { value: '', label: 'Semua Layanan' },
+          { value: 'website', label: 'Website' },
+          { value: 'wordpress', label: 'WordPress' },
+          { value: 'mobile', label: 'Mobile App' },
+          { value: 'editing', label: 'Editing' },
+          { value: 'service_device', label: 'Service Device' }
+        ]
+      },
+      {
+        name: 'sort',
+        label: 'Urutkan',
+        selected: sort,
+        options: [
+          { value: 'recent', label: 'Terbaru' },
+          { value: 'spend', label: 'Total Spend' },
+          { value: 'orders', label: 'Total Order' }
+        ]
+      }
+    ]}
+  />
+
+  <div class="glass-card rounded-2xl p-6">
+    <div class="mb-4 flex items-center justify-between">
+      <h2 class="text-lg font-semibold"><span class="text-primary">{total}</span> pelanggan</h2>
+    </div>
+
+    {customers.length === 0 ? (
+      <EmptyState
+        icon={Users}
+        title="Belum ada pelanggan"
+        description="Pelanggan akan muncul di sini setelah ada order pertama masuk."
+      />
+    ) : (
+      <>
+        <DataTable>
+          <Fragment slot="head">
+            <th>Nama</th>
+            <th>Kontak</th>
+            <th>Layanan</th>
+            <th class="text-right">Total Order</th>
+            <th class="text-right">Total Spend</th>
+            <th></th>
+          </Fragment>
+          {customers.map((c) => (
+            <tr class="dt-row">
+              <td class="dt-cell">
+                <div class="font-medium">{c.customer_name}</div>
+                {c.company && <div class="text-xs text-muted-foreground">{c.company}</div>}
+              </td>
+              <td class="dt-cell text-xs text-muted-foreground">
+                {c.email && <div>{c.email}</div>}
+                <div>{c.whatsapp}</div>
+              </td>
+              <td class="dt-cell"><Badge variant="primary">{c.primary_service}</Badge></td>
+              <td class="dt-cell text-right font-medium">{c.total_orders}</td>
+              <td class="dt-cell text-right font-semibold text-emerald-600 dark:text-emerald-400">{formatIDR(c.total_spent)}</td>
+              <td class="dt-cell text-right">
+                <a href={`/admin/customers/${c.id}`} class="inline-flex items-center gap-1 text-xs text-primary hover:underline">
+                  <Eye class="h-3.5 w-3.5" /> Detail
+                </a>
+              </td>
+            </tr>
+          ))}
+        </DataTable>
+        <Pagination page={page} totalPages={totalPages} baseUrl={baseUrl} />
+      </>
+    )}
+  </div>
+</AdminLayout>

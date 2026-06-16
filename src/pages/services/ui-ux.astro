@@ -1,0 +1,226 @@
+---
+import Layout from '../../layouts/Layout.astro'
+import Navigation from '../../components/Navigation.astro'
+import VantaBackground from '../../components/VantaBackground.astro'
+import PreLoader from '../../components/PreLoader.astro'
+import ConsultationDialog from '../../components/ConsultationDialog.astro'
+import { t, getLocaleFromRequest, getDir } from '../../i18n'
+import { Check, ArrowRight, Layers, Globe, Zap, Shield } from 'lucide-astro'
+
+export const prerender = false
+
+const locale = getLocaleFromRequest(Astro.request)
+const dir = getDir(locale)
+const siteUrl = 'https://ekalliptus.com'
+const canonical = new URL(Astro.url.pathname, siteUrl).toString()
+
+const faqs = [
+  { question: 'Apa bedanya UI dan UX design?', answer: 'UI (User Interface) fokus pada visual design — warna, layout, tipografi. UX (User Experience) fokus pada flow dan kemudahan pengguna mencapai tujuan. Keduanya saling melengkapi.' },
+  { question: 'Tools apa yang digunakan?', answer: 'Kami menggunakan Figma sebagai primary tool, plus Adobe XD, FigJam untuk whiteboarding, dan Maze untuk usability testing.' },
+  { question: 'Berapa lama proses UI/UX design?', answer: 'Wireframe 2-3 hari, mockup detail 5-7 hari, design system lengkap 10-14 hari. Tergantung jumlah halaman dan kompleksitas.' },
+  { question: 'Apakah hasil design bisa di-handover ke developer?', answer: 'Ya, kami siapkan Figma file dengan auto-layout, components, design tokens, dan spec untuk dev handoff yang clean.' },
+  { question: 'Apakah include user research?', answer: 'Untuk paket lengkap, ya — termasuk competitor analysis, user persona, dan usability testing. Paket basic fokus pada visual design.' },
+  { question: 'Bisa revisi berapa kali?', answer: '3x revisi gratis di setiap fase (wireframe, mockup, prototype). Revisi tambahan dapat di-arrange dengan biaya reasonable.' }
+]
+
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: 'Jasa UI/UX Design Indonesia',
+  serviceType: 'UI/UX Design',
+  description: 'Jasa UI/UX design profesional dengan Figma untuk website dan aplikasi mobile. Wireframe, mockup, prototype, dan design system di Indonesia.',
+  provider: { '@id': `${siteUrl}#organization` },
+  areaServed: [{ '@type': 'Country', name: 'Indonesia' }, { '@type': 'City', name: 'Tegal' }],
+  offers: { '@type': 'AggregateOffer', priceCurrency: 'IDR', lowPrice: '1000000', highPrice: '20000000', availability: 'https://schema.org/InStock' },
+  url: canonical
+}
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(f => ({ '@type': 'Question', name: f.question, acceptedAnswer: { '@type': 'Answer', text: f.answer } }))
+}
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: siteUrl },
+    { '@type': 'ListItem', position: 2, name: 'Layanan', item: `${siteUrl}/services/ui-ux` },
+    { '@type': 'ListItem', position: 3, name: 'UI/UX Design', item: canonical }
+  ]
+}
+---
+
+<Layout
+  title="Jasa UI/UX Design Indonesia | Figma Designer Profesional - Ekalliptus"
+  description="Jasa UI/UX design profesional di Indonesia: wireframe, mockup, prototype, design system. Untuk website & aplikasi mobile. Mulai Rp 1 juta."
+  lang={locale}
+  dir={dir}
+  keywords="jasa ui ux design Indonesia, figma designer, jasa desain aplikasi, ui ux freelance, design system, mockup design"
+>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(serviceSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+  </Fragment>
+
+  <VantaBackground />
+  <PreLoader />
+  <Navigation t={(key: string) => t(key, locale)} currentLang={locale} />
+
+  <main class="relative z-0 flex min-h-screen flex-col pt-14 sm:pt-16 md:pt-20">
+    <div class="container mx-auto max-w-6xl px-4 py-8 sm:py-12">
+
+      <nav class="text-sm mb-6" aria-label="Breadcrumb">
+        <a href="/" class="text-muted-foreground hover:text-foreground">Home</a>
+        <span class="mx-2 text-muted-foreground">/</span>
+        <span class="text-foreground">Jasa UI/UX Design</span>
+      </nav>
+
+      <header class="mb-12 text-center">
+        <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4">Jasa UI/UX Design Indonesia</h1>
+        <p class="article-intro text-base sm:text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+          <strong>Jasa UI/UX design</strong> adalah layanan desain antarmuka pengguna (User Interface) dan pengalaman pengguna (User Experience) untuk aplikasi mobile dan website. Ekalliptus Digital menyediakan jasa UI/UX design profesional dengan <strong>Figma</strong>, dari wireframe hingga design system lengkap, untuk bisnis di Indonesia mulai <strong>Rp 1 juta</strong>.
+        </p>
+      </header>
+
+      <section class="mb-12">
+        <h2 class="text-2xl sm:text-3xl font-semibold text-foreground mb-6 text-center">Apa yang Anda Dapatkan</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+          <div class="glass-panel rounded-2xl p-5 bg-card/10 border border-border/20">
+            <div class="rounded-full bg-primary/10 p-3 w-fit mb-4"><Layers class="h-5 w-5 text-primary" /></div>
+            <h3 class="text-lg font-semibold text-foreground mb-2">Wireframe & Mockup</h3>
+            <p class="text-sm text-muted-foreground">Low-fidelity wireframe hingga high-fidelity mockup yang pixel-perfect.</p>
+          </div>
+          <div class="glass-panel rounded-2xl p-5 bg-card/10 border border-border/20">
+            <div class="rounded-full bg-primary/10 p-3 w-fit mb-4"><Globe class="h-5 w-5 text-primary" /></div>
+            <h3 class="text-lg font-semibold text-foreground mb-2">Design System</h3>
+            <p class="text-sm text-muted-foreground">Tokens, components, dan dokumentasi untuk tim developer.</p>
+          </div>
+          <div class="glass-panel rounded-2xl p-5 bg-card/10 border border-border/20">
+            <div class="rounded-full bg-primary/10 p-3 w-fit mb-4"><Zap class="h-5 w-5 text-primary" /></div>
+            <h3 class="text-lg font-semibold text-foreground mb-2">Prototype Interaktif</h3>
+            <p class="text-sm text-muted-foreground">Prototype di Figma yang bisa di-test sebelum development dimulai.</p>
+          </div>
+          <div class="glass-panel rounded-2xl p-5 bg-card/10 border border-border/20">
+            <div class="rounded-full bg-primary/10 p-3 w-fit mb-4"><Shield class="h-5 w-5 text-primary" /></div>
+            <h3 class="text-lg font-semibold text-foreground mb-2">Dev Handoff</h3>
+            <p class="text-sm text-muted-foreground">Figma file siap handover dengan specs, assets, dan annotations.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="mb-12">
+        <h2 class="text-2xl sm:text-3xl font-semibold text-foreground mb-6 text-center">Paket & Harga UI/UX Design</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="glass-panel rounded-2xl p-6 bg-card/10 border border-border/20">
+            <h3 class="text-xl font-bold text-foreground mb-2">Wireframe Only</h3>
+            <p class="text-2xl font-bold text-primary mb-4">Rp 1jt - 2,5jt</p>
+            <ul class="space-y-2 text-sm text-muted-foreground">
+              <li class="flex gap-2"><Check class="h-4 w-4 text-primary flex-shrink-0" /> 5-10 screens</li>
+              <li class="flex gap-2"><Check class="h-4 w-4 text-primary flex-shrink-0" /> Low-fidelity wireframe</li>
+              <li class="flex gap-2"><Check class="h-4 w-4 text-primary flex-shrink-0" /> User flow diagram</li>
+              <li class="flex gap-2"><Check class="h-4 w-4 text-primary flex-shrink-0" /> 3-5 hari pengerjaan</li>
+            </ul>
+          </div>
+          <div class="glass-panel neon-border rounded-2xl p-6 bg-card/10">
+            <h3 class="text-xl font-bold text-foreground mb-2">UI Mockup</h3>
+            <p class="text-2xl font-bold text-primary mb-4">Rp 2,5jt - 7jt</p>
+            <ul class="space-y-2 text-sm text-muted-foreground">
+              <li class="flex gap-2"><Check class="h-4 w-4 text-primary flex-shrink-0" /> High-fidelity design</li>
+              <li class="flex gap-2"><Check class="h-4 w-4 text-primary flex-shrink-0" /> Figma prototype interaktif</li>
+              <li class="flex gap-2"><Check class="h-4 w-4 text-primary flex-shrink-0" /> Mobile + desktop</li>
+              <li class="flex gap-2"><Check class="h-4 w-4 text-primary flex-shrink-0" /> 7-14 hari pengerjaan</li>
+            </ul>
+          </div>
+          <div class="glass-panel rounded-2xl p-6 bg-card/10 border border-border/20">
+            <h3 class="text-xl font-bold text-foreground mb-2">Full UI/UX + System</h3>
+            <p class="text-2xl font-bold text-primary mb-4">Rp 7jt+</p>
+            <ul class="space-y-2 text-sm text-muted-foreground">
+              <li class="flex gap-2"><Check class="h-4 w-4 text-primary flex-shrink-0" /> User research & persona</li>
+              <li class="flex gap-2"><Check class="h-4 w-4 text-primary flex-shrink-0" /> Complete design system</li>
+              <li class="flex gap-2"><Check class="h-4 w-4 text-primary flex-shrink-0" /> Design tokens + components</li>
+              <li class="flex gap-2"><Check class="h-4 w-4 text-primary flex-shrink-0" /> 14-30 hari pengerjaan</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="mb-12">
+        <h2 class="text-2xl sm:text-3xl font-semibold text-foreground mb-6 text-center">Teknologi yang Kami Gunakan</h2>
+        <div class="glass-panel rounded-2xl p-6 bg-card/10 border border-border/20 text-center">
+          <div class="flex flex-wrap gap-2 justify-center">
+            {['Figma', 'Adobe XD', 'Sketch', 'Maze', 'FigJam', 'Principle', 'Lottie', 'Material Design', 'iOS HIG', 'Tailwind UI'].map(tech => (
+              <span class="rounded-full bg-primary/10 px-4 py-1.5 text-xs font-medium text-primary">{tech}</span>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section class="mb-12">
+        <h2 class="text-2xl sm:text-3xl font-semibold text-foreground mb-6 text-center">Proses Kerja</h2>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+          {[
+            { num: 1, title: 'Discovery', desc: 'Riset user, kompetitor, dan kebutuhan bisnis' },
+            { num: 2, title: 'Wireframe', desc: 'Struktur halaman dan user flow' },
+            { num: 3, title: 'Visual Design', desc: 'High-fidelity mockup dan prototype' },
+            { num: 4, title: 'Handoff', desc: 'Figma specs siap untuk developer' }
+          ].map(step => (
+            <div class="glass-panel rounded-2xl p-5 bg-card/10 border border-border/20 text-center">
+              <div class="rounded-full bg-primary text-primary-foreground w-10 h-10 flex items-center justify-center font-bold mx-auto mb-3">{step.num}</div>
+              <h3 class="font-semibold text-foreground mb-2">{step.title}</h3>
+              <p class="text-sm text-muted-foreground">{step.desc}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section class="mb-12">
+        <h2 class="text-2xl sm:text-3xl font-semibold text-foreground mb-6 text-center">FAQ</h2>
+        <div class="space-y-3">
+          {faqs.map(faq => (
+            <details class="glass-panel rounded-2xl p-5 bg-card/10 border border-border/20 group">
+              <summary class="font-semibold text-foreground cursor-pointer flex items-center justify-between">
+                {faq.question}
+                <span class="text-primary group-open:rotate-180 transition-transform">▼</span>
+              </summary>
+              <p class="text-sm text-muted-foreground mt-3">{faq.answer}</p>
+            </details>
+          ))}
+        </div>
+      </section>
+
+      <section class="mb-12">
+        <h2 class="text-2xl sm:text-3xl font-semibold text-foreground mb-6 text-center">Artikel Terkait</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <a href="/blog/harga-jasa-ui-ux-design-indonesia" class="glass-panel rounded-2xl p-6 bg-card/10 border border-border/20 hover:border-primary/30 transition group">
+            <h3 class="font-semibold text-foreground mb-2 group-hover:text-primary transition">Harga Jasa UI/UX Design di Indonesia: Panduan Lengkap</h3>
+            <p class="text-sm text-muted-foreground">Breakdown pricing wireframe, mockup, prototype, design system →</p>
+          </a>
+          <a href="/blog/cara-membuat-website-company-profile" class="glass-panel rounded-2xl p-6 bg-card/10 border border-border/20 hover:border-primary/30 transition group">
+            <h3 class="font-semibold text-foreground mb-2 group-hover:text-primary transition">Cara Membuat Website Company Profile yang Profesional</h3>
+            <p class="text-sm text-muted-foreground">Panduan lengkap dari planning hingga launch →</p>
+          </a>
+        </div>
+      </section>
+
+      <section class="mb-12 text-center">
+        <div class="glass-panel neon-border rounded-2xl sm:rounded-3xl p-8 bg-card/5">
+          <h2 class="text-2xl sm:text-3xl font-bold text-foreground mb-3">Butuh Jasa UI/UX Design?</h2>
+          <p class="text-muted-foreground mb-6">Konsultasi GRATIS — dari wireframe hingga design system siap implementasi.</p>
+          <div class="flex flex-col sm:flex-row gap-3 justify-center">
+            <a href="/order" data-track="order" class="inline-flex items-center justify-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90">
+              Order Sekarang <ArrowRight class="h-4 w-4" />
+            </a>
+            <a href="https://wa.me/6281999900306" target="_blank" rel="noopener" data-track="whatsapp" class="inline-flex items-center justify-center gap-2 rounded-full border border-border px-6 py-3 text-sm font-semibold text-foreground transition hover:bg-card/30">
+              WhatsApp Konsultasi
+            </a>
+          </div>
+        </div>
+      </section>
+
+    </div>
+    <ConsultationDialog t={(key: string) => t(key, locale)} />
+  </main>
+</Layout>

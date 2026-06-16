@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<browserconfig>
+  <msapplication>
+    <tile>
+      <!-- Use existing favicon asset to avoid 404 -->
+      <square150x150logo src="/android-chrome-192x192.png"/>
+      <TileColor>#4F6F46</TileColor>
+    </tile>
+  </msapplication>
+</browserconfig>
