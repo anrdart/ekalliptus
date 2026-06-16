@@ -1,23 +1,27 @@
 ---
 import AdminLayout from '../_layout.astro'
 import PipelineKanban from '../../../components/admin/PipelineKanban.astro'
+import Button from '../../../components/admin/ui/Button.astro'
 import { listLeadsByStage, totalEstimatedValueOpen, countLeadsByStage } from '../../../lib/admin/leads'
 import { Plus } from 'lucide-astro'
+import { formatIDR } from '../../../lib/format'
 
 const board = await listLeadsByStage()
 const counts = await countLeadsByStage()
 const totalOpen = await totalEstimatedValueOpen()
-const fmt = (n: number) => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(n)
 const totalLeads = Object.values(counts).reduce((s, n) => s + n, 0)
 ---
 <AdminLayout title="Pipeline">
-  <div class="flex items-center justify-between mb-4">
+  <div class="mb-5 flex items-center justify-between">
     <div>
-      <p class="text-sm text-muted-foreground">{totalLeads} lead aktif · Estimasi nilai terbuka {fmt(totalOpen)}</p>
+      <p class="text-sm text-muted-foreground">
+        <span class="font-semibold text-foreground">{totalLeads}</span> lead aktif · Estimasi nilai terbuka
+        <span class="font-semibold text-primary">{formatIDR(totalOpen)}</span>
+      </p>
     </div>
-    <button id="new-lead-btn" class="inline-flex items-center gap-1 rounded-xl bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90">
+    <Button id="new-lead-btn" size="sm">
       <Plus class="h-4 w-4" /> Lead Baru
-    </button>
+    </Button>
   </div>
 
   <PipelineKanban board={board} />

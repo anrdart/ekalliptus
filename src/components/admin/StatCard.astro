@@ -13,27 +13,20 @@ interface Props {
 
 const { icon: Icon, iconColorClass = 'text-primary', value, label, change, trend, valueId } = Astro.props
 ---
-<div class="glass-card rounded-2xl p-6">
-  <div class="flex items-center justify-between mb-4">
-    <div class={`h-12 w-12 rounded-xl bg-primary/10 flex items-center justify-center`}>
+<div class="glass-card group relative overflow-hidden rounded-2xl p-6">
+  <!-- gradient top accent -->
+  <div class="bg-gradient-brand pointer-events-none absolute inset-x-0 top-0 h-0.5 opacity-70"></div>
+  <div class="mb-4 flex items-center justify-between">
+    <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 transition-transform group-hover:scale-105">
       <Icon class={`h-6 w-6 ${iconColorClass}`} />
     </div>
     {change && trend && (
-      <div class="flex items-center gap-1 text-sm">
-        {trend === 'up' ? (
-          <>
-            <TrendingUp class="h-4 w-4 text-green-500" />
-            <span class="text-green-500 font-medium">{change}</span>
-          </>
-        ) : (
-          <>
-            <TrendingDown class="h-4 w-4 text-red-500" />
-            <span class="text-red-500 font-medium">{change}</span>
-          </>
-        )}
+      <div class={`flex items-center gap-1 rounded-full px-2 py-1 text-xs font-medium ${trend === 'up' ? 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400' : 'bg-destructive/10 text-destructive'}`}>
+        {trend === 'up' ? <TrendingUp class="h-3.5 w-3.5" /> : <TrendingDown class="h-3.5 w-3.5" />}
+        <span>{change}</span>
       </div>
     )}
   </div>
-  <h3 class="text-2xl font-bold mb-1" id={valueId}>{value}</h3>
+  <h3 class="mb-1 text-2xl font-bold tracking-tight" id={valueId}>{value}</h3>
   <p class="text-sm text-muted-foreground">{label}</p>
 </div>

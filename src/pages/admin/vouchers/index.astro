@@ -3,9 +3,10 @@ import AdminLayout from '../_layout.astro'
 import EmptyState from '../../../components/admin/EmptyState.astro'
 import { Ticket, Plus } from 'lucide-astro'
 import { listVouchers } from '../../../lib/admin/vouchers'
+import { formatIDR } from '../../../lib/format'
 
 const vouchers = await listVouchers()
-const fmt = (n: number) => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(n)
+const fmt = formatIDR
 ---
 <AdminLayout title="Vouchers">
   <div class="flex justify-between items-center mb-4">

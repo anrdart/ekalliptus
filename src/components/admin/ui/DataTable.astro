@@ -1,0 +1,31 @@
+---
+/**
+ * Consistent table chrome for admin list pages.
+ *
+ * Unifies the 5 hand-rolled tables (orders, customers, payments, reports, …)
+ * that drifted on border opacity, hover, and row padding. Pages supply the
+ * header cells via the `head` slot and body rows via the default slot; this
+ * component owns the wrapper, scroll, thead styling, and row dividers/hover.
+ *
+ * Row styling helpers (apply on your <tr>/<td> in the default slot):
+ *   tr  → class="dt-row"     (bottom border + hover, defined in global.css)
+ *   td  → class="dt-cell"    (py-3 align-middle)  ·  add "text-right" for numbers
+ */
+interface Props {
+  class?: string
+}
+const { class: extra = '' } = Astro.props
+---
+
+<div class={`overflow-x-auto ${extra}`}>
+  <table class="w-full border-collapse text-sm">
+    <thead>
+      <tr class="border-b border-border text-left text-xs font-semibold uppercase tracking-wider text-muted-foreground [&>th]:pb-3">
+        <slot name="head" />
+      </tr>
+    </thead>
+    <tbody>
+      <slot />
+    </tbody>
+  </table>
+</div>

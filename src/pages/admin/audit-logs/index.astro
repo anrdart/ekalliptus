@@ -2,8 +2,17 @@
 import AdminLayout from '../_layout.astro'
 import Pagination from '../../../components/admin/Pagination.astro'
 import EmptyState from '../../../components/admin/EmptyState.astro'
+import Badge from '../../../components/admin/ui/Badge.astro'
+import Button from '../../../components/admin/ui/Button.astro'
 import { History } from 'lucide-astro'
 import { listAudit } from '../../../lib/admin/audit'
+import { formatDateTime } from '../../../lib/format'
+
+const actionVariant: Record<string, 'success' | 'info' | 'destructive' | 'muted'> = {
+  create: 'success',
+  update: 'info',
+  delete: 'destructive',
+}
 
 const url = new URL(Astro.request.url)
 const table = url.searchParams.get('table') ?? ''
@@ -30,7 +39,7 @@ const baseUrl = `/admin/audit-logs?table=${table}&action=${action}`
       <option value="update" selected={action === 'update'}>update</option>
       <option value="delete" selected={action === 'delete'}>delete</option>
     </select>
-    <button type="submit" class="rounded-lg bg-primary px-4 py-1 text-sm text-primary-foreground">Filter</button>
+    <Button type="submit" size="sm">Filter</Button>
   </form>
 
   <div class="glass-card rounded-2xl p-6">
@@ -40,9 +49,12 @@ const baseUrl = `/admin/audit-logs?table=${table}&action=${action}`
       <ul class="divide-y divide-border/40">
         {rows.map((r) => (
           <li class="py-3 text-sm">
-            <div class="flex items-center justify-between mb-1">
-              <span class="font-medium">{r.action} · <span class="text-muted-foreground">{r.table_name}</span></span>
-              <span class="text-xs text-muted-foreground">{new Date(r.created_at).toLocaleString('id-ID')}</span>
+            <div class="mb-1 flex items-center justify-between gap-2">
+              <span class="flex items-center gap-2 font-medium">
+                <Badge variant={actionVariant[r.action] ?? 'muted'} size="xs">{r.action}</Badge>
+                <span class="text-muted-foreground">{r.table_name}</span>
+              </span>
+              <span class="text-xs text-muted-foreground">{formatDateTime(r.created_at)}</span>
             </div>
             {r.record_id && <div class="text-xs text-muted-foreground font-mono">id: {r.record_id}</div>}
             {r.new_values && (

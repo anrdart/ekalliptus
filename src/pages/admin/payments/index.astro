@@ -3,8 +3,12 @@ import AdminLayout from '../_layout.astro'
 import SearchFilter from '../../../components/admin/SearchFilter.astro'
 import Pagination from '../../../components/admin/Pagination.astro'
 import EmptyState from '../../../components/admin/EmptyState.astro'
+import DataTable from '../../../components/admin/ui/DataTable.astro'
+import StatusBadge from '../../../components/admin/ui/StatusBadge.astro'
+import Badge from '../../../components/admin/ui/Badge.astro'
 import { CreditCard } from 'lucide-astro'
 import { getSupabase } from '../../../lib/supabase'
+import { formatIDR, formatDate } from '../../../lib/format'
 
 const url = new URL(Astro.request.url)
 const status = url.searchParams.get('status') ?? ''
@@ -26,7 +30,6 @@ if (supabase) {
   total = count ?? 0
 }
 const totalPages = Math.max(1, Math.ceil(total / pageSize))
-const fmt = (n: number) => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(n)
 const baseUrl = `/admin/payments?status=${status}&gateway=${gateway}`
 ---
 <AdminLayout title="Payments">
@@ -57,37 +60,33 @@ const baseUrl = `/admin/payments?status=${status}&gateway=${gateway}`
   />
 
   <div class="glass-card rounded-2xl p-6">
-    <div class="flex items-center justify-between mb-4">
-      <h2 class="text-lg font-semibold">{total} payment</h2>
+    <div class="mb-4 flex items-center justify-between">
+      <h2 class="text-lg font-semibold"><span class="text-primary">{total}</span> payment</h2>
     </div>
     {payments.length === 0 ? (
       <EmptyState icon={CreditCard} title="Belum ada payment" />
     ) : (
-      <div class="overflow-x-auto">
-        <table class="w-full text-sm">
-          <thead>
-            <tr class="border-b border-border text-left text-xs font-medium text-muted-foreground">
-              <th class="pb-3">ID</th><th class="pb-3">Customer</th><th class="pb-3">Gateway</th><th class="pb-3 text-right">Amount</th><th class="pb-3">Status</th><th class="pb-3">Created</th>
+      <>
+        <DataTable>
+          <Fragment slot="head">
+            <th>ID</th><th>Customer</th><th>Gateway</th><th class="text-right">Amount</th><th>Status</th><th>Created</th>
+          </Fragment>
+          {payments.map((p) => (
+            <tr class="dt-row">
+              <td class="dt-cell font-mono text-xs">PAY-{p.id.slice(0, 8)}</td>
+              <td class="dt-cell">
+                <div class="font-medium">{p.orders?.customer_name ?? '-'}</div>
+                <div class="text-xs text-muted-foreground">{p.orders?.whatsapp ?? ''}</div>
+              </td>
+              <td class="dt-cell"><Badge variant="muted">{p.gateway}</Badge></td>
+              <td class="dt-cell text-right font-medium">{formatIDR(Number(p.amount))}</td>
+              <td class="dt-cell"><StatusBadge status={p.status} /></td>
+              <td class="dt-cell text-xs text-muted-foreground">{formatDate(p.created_at)}</td>
             </tr>
-          </thead>
-          <tbody>
-            {payments.map((p) => (
-              <tr class="border-b border-border/40">
-                <td class="py-3 font-mono text-xs">PAY-{p.id.slice(0, 8)}</td>
-                <td class="py-3">
-                  <div class="font-medium">{p.orders?.customer_name ?? '-'}</div>
-                  <div class="text-xs text-muted-foreground">{p.orders?.whatsapp ?? ''}</div>
-                </td>
-                <td class="py-3"><span class="rounded-full bg-primary/10 text-primary px-2 py-0.5 text-xs">{p.gateway}</span></td>
-                <td class="py-3 text-right font-medium">{fmt(Number(p.amount))}</td>
-                <td class="py-3 text-xs">{p.status}</td>
-                <td class="py-3 text-xs text-muted-foreground">{new Date(p.created_at).toLocaleDateString('id-ID')}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+          ))}
+        </DataTable>
         <Pagination page={page} totalPages={totalPages} baseUrl={baseUrl} />
-      </div>
+      </>
     )}
   </div>
 </AdminLayout>

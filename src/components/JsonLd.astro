@@ -3,9 +3,12 @@ interface Props {
   locale?: string
   page?: 'home' | 'faq' | 'service'
   faqItems?: Array<{ question: string; answer: string }>
+  /** Only pass when derived from REAL verified testimonials. Gated downstream. */
+  aggregateRating?: { ratingValue: string; reviewCount: number } | null
+  reviews?: Array<{ author: string; rating: number; body: string }>
 }
 
-const { locale = 'id', page = 'home', faqItems = [] } = Astro.props
+const { locale = 'id', page = 'home', faqItems = [], aggregateRating = null, reviews = [] } = Astro.props
 
 const siteUrl = 'https://ekalliptus.com'
 
@@ -195,6 +198,29 @@ const faqSchema = faqItems.length > 0 ? {
   }))
 } : null
 
+// Review / AggregateRating — emitted ONLY when real verified data is provided.
+// No fabricated reviews: if aggregateRating is null, nothing is attached.
+const ratingSchema = aggregateRating ? {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  '@id': `${siteUrl}#organization`,
+  aggregateRating: {
+    '@type': 'AggregateRating',
+    ratingValue: aggregateRating.ratingValue,
+    reviewCount: aggregateRating.reviewCount,
+    bestRating: '5',
+    worstRating: '1'
+  },
+  ...(reviews.length > 0 ? {
+    review: reviews.map(r => ({
+      '@type': 'Review',
+      author: { '@type': 'Person', name: r.author },
+      reviewRating: { '@type': 'Rating', ratingValue: String(r.rating), bestRating: '5', worstRating: '1' },
+      reviewBody: r.body
+    }))
+  } : {})
+} : null
+
 const schemas = [
   JSON.stringify(organization),
   JSON.stringify(localBusiness),
@@ -202,7 +228,8 @@ const schemas = [
   JSON.stringify(teamPerson),
   JSON.stringify({ '@context': 'https://schema.org', '@type': 'ItemList', name: 'Layanan Ekalliptus Digital', itemListElement: services.map((s, i) => ({ ...s, position: i + 1 })) }),
   ...(page === 'home' ? [JSON.stringify(howToOrder)] : []),
-  ...(faqSchema ? [JSON.stringify(faqSchema)] : [])
+  ...(faqSchema ? [JSON.stringify(faqSchema)] : []),
+  ...(ratingSchema ? [JSON.stringify(ratingSchema)] : [])
 ]
 ---
 

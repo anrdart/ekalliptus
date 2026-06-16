@@ -1,0 +1,43 @@
+---
+interface Props {
+  t: (key: string) => string
+}
+
+const { t } = Astro.props
+
+// Real tech stack used by the team (mirrors /about). No fake client logos.
+const tech = [
+  'Astro',
+  'React',
+  'Next.js',
+  'React Native',
+  'Flutter',
+  'TypeScript',
+  'Node.js',
+  'WordPress',
+  'Tailwind CSS',
+  'Figma',
+  'Supabase',
+  'Cloudflare',
+]
+---
+
+<section id="tech" class="content-vis relative px-4 py-16 sm:py-20">
+  <div class="mx-auto max-w-5xl">
+    <div class="mx-auto mb-8 max-w-2xl text-center">
+      <span class="text-xs font-semibold uppercase tracking-[0.35em] text-primary">{t('home.trust.eyebrow')}</span>
+      <h2 class="mt-3 text-2xl font-bold text-foreground sm:text-3xl">{t('home.trust.title')}</h2>
+      <p class="mt-3 text-sm text-muted-foreground sm:text-base">{t('home.trust.subtitle')}</p>
+    </div>
+
+    <ul class="flex flex-wrap items-center justify-center gap-2.5 sm:gap-3">
+      {
+        tech.map((name) => (
+          <li class="glass-pill rounded-full px-4 py-2 text-sm font-medium text-foreground/75 transition hover:text-foreground">
+            {name}
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>

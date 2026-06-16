@@ -1351,5 +1351,83 @@
     "orderId": "ID Pesanan:",
     "confirmPayment": "Saya Sudah Membayar",
     "confirmationNote": "Tim kami akan memverifikasi pembayaran Anda dalam 1x24 jam"
+  },
+  "home": {
+    "hero": {
+      "badge": "Digital Agency • Berbasis di Tegal, Indonesia",
+      "titleLead": "Bangun Produk Digital",
+      "titleAccent": "yang Menjual",
+      "titleTail": "untuk Bisnis Anda",
+      "subtitle": "Jasa pembuatan website, aplikasi mobile, WordPress, dan UI/UX design profesional. Cepat, modern, dan dioptimasi untuk SEO sejak hari pertama.",
+      "ctaPrimary": "Konsultasi Gratis",
+      "ctaSecondary": "Lihat Layanan",
+      "trustRating": "Rating klien",
+      "trustClients": "Klien terlayani",
+      "trustYears": "Tahun pengalaman",
+      "trustResponse": "Respons cepat"
+    },
+    "stats": {
+      "eyebrow": "Kenapa Ekalliptus",
+      "title": "Angka yang berbicara",
+      "subtitle": "Hasil nyata dari komitmen kami terhadap kualitas dan kepuasan klien.",
+      "yearsLabel": "Tahun Pengalaman",
+      "clientsLabel": "Klien Terlayani",
+      "projectsLabel": "Proyek Selesai",
+      "ratingLabel": "Kepuasan Klien"
+    },
+    "services": {
+      "eyebrow": "Layanan Kami",
+      "title": "Solusi digital lengkap dalam satu tempat",
+      "subtitle": "Dari ide hingga peluncuran — kami tangani setiap tahap dengan standar profesional.",
+      "featureTitle": "Solusi Digital End-to-End",
+      "featureDesc": "Strategi, desain, dan pengembangan dalam satu tim. Hasil yang konsisten, terukur, dan siap berkembang bersama bisnis Anda.",
+      "featureCta": "Mulai proyek Anda",
+      "learnMore": "Selengkapnya",
+      "viewAll": "Lihat semua layanan"
+    },
+    "process": {
+      "eyebrow": "Cara Kerja",
+      "title": "Proses yang transparan & terukur",
+      "subtitle": "Empat langkah sederhana dari konsultasi hingga produk siap pakai.",
+      "step1Title": "Order & Brief",
+      "step1Desc": "Isi form order atau konsultasi gratis. Ceritakan kebutuhan dan tujuan bisnis Anda.",
+      "step2Title": "Konsultasi & Penawaran",
+      "step2Desc": "Kami susun solusi, timeline, dan estimasi biaya yang transparan.",
+      "step3Title": "Pengerjaan",
+      "step3Desc": "Tim kami mengerjakan project dengan update progres berkala.",
+      "step4Title": "Review & Handover",
+      "step4Desc": "Revisi sesuai kebutuhan, lalu serah terima beserta garansi."
+    },
+    "testimonials": {
+      "eyebrow": "Testimoni",
+      "title": "Dipercaya oleh klien kami",
+      "subtitle": "Cerita dari bisnis yang tumbuh bersama Ekalliptus.",
+      "placeholder": "Testimoni klien akan segera tampil di sini."
+    },
+    "trust": {
+      "eyebrow": "Teknologi",
+      "title": "Dibangun dengan teknologi modern & andal",
+      "subtitle": "Stack yang kami gunakan untuk hasil yang cepat, aman, dan scalable."
+    },
+    "cta": {
+      "badge": "Siap memulai?",
+      "title": "Wujudkan ide digital Anda hari ini",
+      "subtitle": "Konsultasi gratis tanpa komitmen. Ceritakan kebutuhan Anda, kami bantu carikan solusinya.",
+      "primary": "Mulai Sekarang",
+      "secondary": "Chat WhatsApp"
+    },
+    "footer": {
+      "tagline": "Agensi digital yang membantu bisnis Indonesia tumbuh lewat website, aplikasi, dan desain yang berkelas.",
+      "servicesHeading": "Layanan",
+      "companyHeading": "Perusahaan",
+      "resourcesHeading": "Sumber Daya",
+      "contactHeading": "Kontak",
+      "aboutLink": "Tentang Kami",
+      "blogLink": "Blog",
+      "orderLink": "Order Layanan",
+      "privacyLink": "Kebijakan Privasi",
+      "termsLink": "Syarat & Ketentuan",
+      "rights": "Hak cipta dilindungi."
+    }
   }
 }

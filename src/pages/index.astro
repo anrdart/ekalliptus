@@ -1,7 +1,11 @@
 ---
 import Layout from '../layouts/Layout.astro'
 import Hero from '../components/Hero.astro'
+import StatsBand from '../components/StatsBand.astro'
 import Services from '../components/Services.astro'
+import ProcessSteps from '../components/ProcessSteps.astro'
+import Testimonials from '../components/Testimonials.astro'
+import TrustBand from '../components/TrustBand.astro'
 import FAQ from '../components/FAQ.astro'
 import ContactCTA from '../components/ContactCTA.astro'
 import ConsultationDialog from '../components/ConsultationDialog.astro'
@@ -10,17 +14,11 @@ import VantaBackground from '../components/VantaBackground.astro'
 import PreLoader from '../components/PreLoader.astro'
 import JsonLd from '../components/JsonLd.astro'
 import { t, getLocaleFromRequest, getDir } from '../i18n'
-import { Sparkles, Info, Target, Layers, Check, Shield, Lock, FileText, ArrowRight, Zap, CheckCircle, Users } from 'lucide-astro'
+import { aggregateRating, verifiedTestimonials } from '../data/testimonials'
+import { ArrowRight, ArrowUpRight, Mail, Phone, MapPin } from 'lucide-astro'
 
 const locale = getLocaleFromRequest(Astro.request)
 const dir = getDir(locale)
-
-const words = [
-  t('hero.uiUxDesign', locale),
-  t('hero.digitalExperience', locale),
-  t('hero.web3d', locale),
-  t('hero.branding', locale)
-]
 
 const FAQ_COUNT = 8
 const faqItems = []
@@ -31,6 +29,20 @@ for (let i = 0; i < FAQ_COUNT; i++) {
     faqItems.push({ question, answer })
   }
 }
+
+// Review schema only from REAL verified testimonials (null otherwise → no schema).
+const rating = aggregateRating()
+const reviews = verifiedTestimonials.map((r) => ({ author: r.name, rating: r.rating, body: r.quote }))
+
+const serviceLinks = [
+  { label: t('services.cards.websiteDevelopment.title', locale), href: '/services/website' },
+  { label: t('services.cards.mobileAppDevelopment.title', locale), href: '/services/mobile-app' },
+  { label: t('services.cards.wordpressDevelopment.title', locale), href: '/services/wordpress' },
+  { label: t('services.cards.uiUxDesign.title', locale), href: '/services/ui-ux' },
+  { label: t('services.cards.photoVideoEditing.title', locale), href: '/services/multimedia' },
+  { label: t('services.cards.websiteMaintenance.title', locale), href: '/services/maintenance' },
+]
+const year = new Date().getFullYear()
 ---
 
 <Layout
@@ -40,328 +52,144 @@ for (let i = 0; i < FAQ_COUNT; i++) {
   dir={dir}
   keywords="jasa pembuatan website, jasa aplikasi mobile, web developer Indonesia, digital agency Tegal, jasa wordpress, ui ux design Indonesia"
 >
-  <JsonLd locale={locale} page="home" faqItems={faqItems} />
+  <JsonLd locale={locale} page="home" faqItems={faqItems} aggregateRating={rating} reviews={reviews} />
   <VantaBackground />
   <PreLoader />
   <Navigation t={(key: string) => t(key, locale)} currentLang={locale} />
-  
+
   <main class="relative z-0 flex min-h-screen flex-col pt-14 sm:pt-16 md:pt-20">
-    <div class="relative flex flex-col gap-16 sm:gap-24 pb-16 sm:pb-24">
-      <Hero t={(key: string) => t(key, locale)} />
-      
-      <div class="text-center py-6 sm:py-8 px-4">
-        <div class="inline-flex items-center gap-2 rounded-full bg-card/20 px-4 sm:px-5 py-2 text-[0.65rem] sm:text-xs uppercase tracking-[0.3em] sm:tracking-[0.35em] text-foreground/70 shadow-lg shadow-primary/10 mb-4 sm:mb-6">
-          <Sparkles class="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-          <span>{t('hero.solusiDigital', locale)}</span>
+    <Hero t={(key: string) => t(key, locale)} />
+    <StatsBand t={(key: string) => t(key, locale)} />
+    <Services t={(key: string) => t(key, locale)} />
+    <ProcessSteps t={(key: string) => t(key, locale)} />
+    <Testimonials t={(key: string) => t(key, locale)} />
+    <TrustBand t={(key: string) => t(key, locale)} />
+    <FAQ t={(key: string) => t(key, locale)} />
+    <ContactCTA t={(key: string) => t(key, locale)} />
+    <ConsultationDialog t={(key: string) => t(key, locale)} />
+
+    <!-- Blog teaser -->
+    <section id="blog" class="content-vis px-4 py-16 sm:py-20">
+      <div class="mx-auto max-w-6xl">
+        <div class="mb-8 flex flex-col items-start justify-between gap-4 sm:mb-12 sm:flex-row sm:items-end">
+          <div>
+            <span class="text-xs font-semibold uppercase tracking-[0.35em] text-primary">{t('blog.badge', locale)}</span>
+            <h2 class="mt-3 text-2xl font-bold text-foreground sm:text-3xl md:text-4xl">{t('blog.title', locale)}</h2>
+            <p class="mt-2 max-w-2xl text-base text-muted-foreground">{t('blog.description', locale)}</p>
+          </div>
+          <a
+            href="/blog"
+            class="hidden flex-shrink-0 items-center gap-2 rounded-full border border-border/40 bg-card/20 px-5 py-2.5 text-sm font-semibold text-foreground/80 transition hover:bg-card/30 sm:inline-flex cursor-interactive"
+          >
+            {t('blog.readMore', locale)}
+            <ArrowRight class="h-4 w-4" />
+          </a>
         </div>
-        
-        <p class="text-base sm:text-lg leading-relaxed text-foreground/70 md:text-xl max-w-3xl mx-auto px-2">
-          {t('hero.description', locale)}
-        </p>
-        
-        <p class="mt-2 sm:mt-3 text-sm sm:text-base leading-relaxed text-primary font-medium md:text-lg max-w-2xl mx-auto px-2">
-          {t('hero.subdescription', locale)}
-        </p>
-        
-        <p class="mt-3 sm:mt-4 text-xs sm:text-sm font-medium uppercase tracking-[0.35em] sm:tracking-[0.4em] text-foreground/50">
-          {t('hero.fokus', locale)}
-          <span id="typewriter" class="ml-2 sm:ml-3 inline-block rounded-full bg-card/20 px-2.5 sm:px-3 py-1 text-[0.65rem] sm:text-xs font-semibold uppercase tracking-[0.15em] sm:tracking-[0.2em] text-foreground align-middle">
-            {words[0]}
-          </span>
-        </p>
+
+        <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
+          <a href="/blog/jasa-pembuatan-website-tegal" class="group glass-card overflow-hidden rounded-3xl transition-all hover:-translate-y-1 hover:shadow-lg hover:shadow-primary/5 cursor-interactive">
+            <div class="skel-shimmer aspect-video overflow-hidden bg-card/30">
+              <img src="/blog/jasa-website-tegal.svg" alt="Jasa Pembuatan Website Tegal" width="640" height="360" class="img-skel h-full w-full object-cover transition-transform duration-300 group-hover:scale-105" loading="lazy" decoding="async" onload="this.classList.add('img-loaded')" onerror="this.onerror=null;this.src='/blog/placeholder.svg'" />
+            </div>
+            <div class="p-5 sm:p-6">
+              <span class="rounded-full bg-primary/10 px-3 py-1 text-[0.65rem] font-semibold uppercase tracking-wider text-primary">{t('blog.categories.web-development', locale)}</span>
+              <h3 class="mt-3 text-lg font-semibold text-foreground transition-colors group-hover:text-primary">Jasa Pembuatan Website Tegal: Harga & Portfolio 2026</h3>
+              <p class="mt-2 line-clamp-2 text-sm text-muted-foreground">Temukan layanan pembuatan website profesional di Tegal dengan harga terjangkau. Mulai dari Rp 1,5 juta untuk company profile.</p>
+            </div>
+          </a>
+
+          <a href="/blog/biaya-pembuatan-aplikasi-android-ios" class="group glass-card overflow-hidden rounded-3xl transition-all hover:-translate-y-1 hover:shadow-lg hover:shadow-primary/5 cursor-interactive">
+            <div class="skel-shimmer aspect-video overflow-hidden bg-card/30">
+              <img src="/blog/biaya-aplikasi-mobile.svg" alt="Biaya Pembuatan Aplikasi Mobile" width="640" height="360" class="img-skel h-full w-full object-cover transition-transform duration-300 group-hover:scale-105" loading="lazy" decoding="async" onload="this.classList.add('img-loaded')" onerror="this.onerror=null;this.src='/blog/placeholder.svg'" />
+            </div>
+            <div class="p-5 sm:p-6">
+              <span class="rounded-full bg-accent/10 px-3 py-1 text-[0.65rem] font-semibold uppercase tracking-wider text-accent">{t('blog.categories.mobile-app', locale)}</span>
+              <h3 class="mt-3 text-lg font-semibold text-foreground transition-colors group-hover:text-primary">Biaya Pembuatan Aplikasi Android & iOS di Indonesia</h3>
+              <p class="mt-2 line-clamp-2 text-sm text-muted-foreground">Panduan lengkap estimasi biaya pembuatan aplikasi mobile cross-platform dengan React Native dan Flutter.</p>
+            </div>
+          </a>
+
+          <a href="/blog/wordpress-custom-vs-template" class="group glass-card overflow-hidden rounded-3xl transition-all hover:-translate-y-1 hover:shadow-lg hover:shadow-primary/5 cursor-interactive">
+            <div class="skel-shimmer aspect-video overflow-hidden bg-card/30">
+              <img src="/blog/wordpress-custom-vs-template.svg" alt="WordPress Custom vs Template" width="640" height="360" class="img-skel h-full w-full object-cover transition-transform duration-300 group-hover:scale-105" loading="lazy" decoding="async" onload="this.classList.add('img-loaded')" onerror="this.onerror=null;this.src='/blog/placeholder.svg'" />
+            </div>
+            <div class="p-5 sm:p-6">
+              <span class="rounded-full bg-primary/10 px-3 py-1 text-[0.65rem] font-semibold uppercase tracking-wider text-primary">{t('blog.categories.wordpress', locale)}</span>
+              <h3 class="mt-3 text-lg font-semibold text-foreground transition-colors group-hover:text-primary">WordPress Custom vs Template: Mana yang Lebih Baik?</h3>
+              <p class="mt-2 line-clamp-2 text-sm text-muted-foreground">Perbandingan lengkap antara WordPress custom development dengan tema premium. Pilih sesuai kebutuhan bisnis Anda.</p>
+            </div>
+          </a>
+        </div>
+
+        <div class="mt-8 text-center sm:hidden">
+          <a href="/blog" class="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90">
+            {t('blog.readMore', locale)}
+            <ArrowRight class="h-4 w-4" />
+          </a>
+        </div>
       </div>
-      
-      <section id="application-purpose" class="content-vis relative px-4 py-12 sm:py-16 bg-card/5">
-        <div class="relative z-10 mx-auto max-w-5xl">
-          <div class="mx-auto mb-8 sm:mb-12 max-w-4xl text-center">
-            <div class="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 sm:px-5 py-2 text-[0.6rem] sm:text-[0.65rem] font-semibold uppercase tracking-[0.5em] sm:tracking-[0.6em] text-primary mb-4 sm:mb-6">
-              <Info class="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-              <span>{t('appPurpose.badge', locale)}</span>
+    </section>
+
+    <!-- Footer -->
+    <footer id="about" class="safe-bottom mt-8 border-t border-border/20 bg-card/5 py-12 sm:mt-12">
+      <div class="mx-auto max-w-6xl px-4">
+        <div class="grid grid-cols-2 gap-8 md:grid-cols-4">
+          <div class="col-span-2 md:col-span-1">
+            <div class="mb-4 flex items-center gap-3">
+              <img src="/ekalliptus_rounded.webp" alt="Ekalliptus Digital" width="40" height="40" class="h-9 w-auto sm:h-10" loading="lazy" decoding="async" />
+              <span class="text-lg font-bold text-foreground">Ekalliptus</span>
             </div>
-            
-            <h2 class="text-2xl sm:text-3xl font-semibold text-foreground md:text-4xl mb-4 sm:mb-6">
-              {t('appPurpose.title', locale)}
-            </h2>
-            
-            <p class="text-base sm:text-lg text-muted-foreground leading-relaxed max-w-3xl mx-auto mb-6 sm:mb-8">
-              {t('appPurpose.description', locale)}
-            </p>
+            <p class="max-w-xs text-sm leading-relaxed text-muted-foreground">{t('home.footer.tagline', locale)}</p>
           </div>
-            
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-8 sm:mb-12">
-            <div class="glass-panel rounded-2xl p-5 sm:p-6 bg-card/10 border border-border/20">
-              <div class="rounded-full bg-primary/10 p-3 w-fit mb-3 sm:mb-4">
-                <Target class="h-5 w-5 sm:h-6 sm:w-6 text-primary" />
-              </div>
-              <h3 class="text-lg sm:text-xl font-semibold text-foreground mb-2 sm:mb-3">{t('appPurpose.whatWeDo.title', locale)}</h3>
-              <p class="text-muted-foreground leading-relaxed text-sm">{t('appPurpose.whatWeDo.description', locale)}</p>
-            </div>
-            
-            <div class="glass-panel rounded-2xl p-5 sm:p-6 bg-card/10 border border-border/20">
-              <div class="rounded-full bg-primary/10 p-3 w-fit mb-3 sm:mb-4">
-                <Layers class="h-5 w-5 sm:h-6 sm:w-6 text-primary" />
-              </div>
-              <h3 class="text-lg sm:text-xl font-semibold text-foreground mb-2 sm:mb-3">{t('appPurpose.ourServices.title', locale)}</h3>
-              <ul class="text-muted-foreground text-sm space-y-1">
-                <li>{t('appPurpose.ourServices.service1', locale)}</li>
-                <li>{t('appPurpose.ourServices.service2', locale)}</li>
-                <li>{t('appPurpose.ourServices.service3', locale)}</li>
-                <li>{t('appPurpose.ourServices.service4', locale)}</li>
-              </ul>
-            </div>
-            
-            <div class="glass-panel rounded-2xl p-5 sm:p-6 bg-card/10 border border-border/20">
-              <div class="rounded-full bg-accent/10 p-3 w-fit mb-3 sm:mb-4">
-                <Shield class="h-5 w-5 sm:h-6 sm:w-6 text-accent" />
-              </div>
-              <h3 class="text-lg sm:text-xl font-semibold text-foreground mb-2 sm:mb-3">{t('appPurpose.dataUsage.title', locale)}</h3>
-              <p class="text-muted-foreground leading-relaxed text-sm">{t('appPurpose.dataUsage.description', locale)}</p>
-            </div>
+
+          <div>
+            <h3 class="mb-4 text-sm font-semibold text-foreground">{t('home.footer.servicesHeading', locale)}</h3>
+            <ul class="space-y-2.5 text-sm">
+              {serviceLinks.map((s) => (
+                <li>
+                  <a href={s.href} class="text-muted-foreground transition-colors hover:text-primary">{s.label}</a>
+                </li>
+              ))}
+            </ul>
           </div>
-            
-          <div class="glass-panel neon-border rounded-2xl sm:rounded-3xl p-5 sm:p-8 bg-card/5">
-            <h3 class="text-xl sm:text-2xl font-semibold text-foreground mb-4 sm:mb-6 text-center">{t('appPurpose.howItWorks.title', locale)}</h3>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <div>
-                <h4 class="text-lg font-semibold text-foreground mb-4">{t('appPurpose.howItWorks.orderProcess.title', locale)}</h4>
-                <ol class="space-y-3">
-                  <li class="flex gap-3 text-sm text-muted-foreground">
-                    <span class="flex-shrink-0 w-6 h-6 rounded-full bg-primary/10 text-primary text-xs flex items-center justify-center font-medium">1</span>
-                    {t('appPurpose.howItWorks.orderProcess.step1', locale)}
-                  </li>
-                  <li class="flex gap-3 text-sm text-muted-foreground">
-                    <span class="flex-shrink-0 w-6 h-6 rounded-full bg-primary/10 text-primary text-xs flex items-center justify-center font-medium">2</span>
-                    {t('appPurpose.howItWorks.orderProcess.step2', locale)}
-                  </li>
-                  <li class="flex gap-3 text-sm text-muted-foreground">
-                    <span class="flex-shrink-0 w-6 h-6 rounded-full bg-primary/10 text-primary text-xs flex items-center justify-center font-medium">3</span>
-                    {t('appPurpose.howItWorks.orderProcess.step3', locale)}
-                  </li>
-                  <li class="flex gap-3 text-sm text-muted-foreground">
-                    <span class="flex-shrink-0 w-6 h-6 rounded-full bg-primary/10 text-primary text-xs flex items-center justify-center font-medium">4</span>
-                    {t('appPurpose.howItWorks.orderProcess.step4', locale)}
-                  </li>
-                </ol>
-              </div>
-              
-              <div>
-                <h4 class="text-lg font-semibold text-foreground mb-4">{t('appPurpose.howItWorks.privacyCommitment.title', locale)}</h4>
-                <ul class="space-y-3">
-                  <li class="flex gap-3 text-sm text-muted-foreground">
-                    <Check class="flex-shrink-0 h-5 w-5 text-primary" />
-                    {t('appPurpose.howItWorks.privacyCommitment.point1', locale)}
-                  </li>
-                  <li class="flex gap-3 text-sm text-muted-foreground">
-                    <Check class="flex-shrink-0 h-5 w-5 text-primary" />
-                    {t('appPurpose.howItWorks.privacyCommitment.point2', locale)}
-                  </li>
-                  <li class="flex gap-3 text-sm text-muted-foreground">
-                    <Check class="flex-shrink-0 h-5 w-5 text-primary" />
-                    {t('appPurpose.howItWorks.privacyCommitment.point3', locale)}
-                  </li>
-                </ul>
-              </div>
-            </div>
+
+          <div>
+            <h3 class="mb-4 text-sm font-semibold text-foreground">{t('home.footer.companyHeading', locale)}</h3>
+            <ul class="space-y-2.5 text-sm">
+              <li><a href="/about" class="text-muted-foreground transition-colors hover:text-primary">{t('home.footer.aboutLink', locale)}</a></li>
+              <li><a href="/blog" class="text-muted-foreground transition-colors hover:text-primary">{t('home.footer.blogLink', locale)}</a></li>
+              <li><a href="/order" class="text-muted-foreground transition-colors hover:text-primary">{t('home.footer.orderLink', locale)}</a></li>
+              <li><a href="/privacy-policy" class="text-muted-foreground transition-colors hover:text-primary">{t('home.footer.privacyLink', locale)}</a></li>
+              <li><a href="/terms-of-service" class="text-muted-foreground transition-colors hover:text-primary">{t('home.footer.termsLink', locale)}</a></li>
+            </ul>
           </div>
-          
-          <div class="mt-6 sm:mt-8 text-center">
-            <p class="text-xs sm:text-sm text-muted-foreground">{t('appPurpose.learnMore', locale)}</p>
-            <div class="flex gap-4 justify-center mt-3">
-              <a href="/privacy-policy" class="text-sm text-primary hover:underline">{t('privacyPolicy.title', locale)}</a>
-              <a href="/terms-of-service" class="text-sm text-primary hover:underline">{t('termsOfService.title', locale)}</a>
-            </div>
+
+          <div>
+            <h3 class="mb-4 text-sm font-semibold text-foreground">{t('home.footer.contactHeading', locale)}</h3>
+            <ul class="space-y-2.5 text-sm text-muted-foreground">
+              <li>
+                <a href="mailto:support@ekalliptus.com" class="inline-flex items-center gap-2 transition-colors hover:text-primary">
+                  <Mail class="h-4 w-4 flex-shrink-0" /> support@ekalliptus.com
+                </a>
+              </li>
+              <li>
+                <a href="https://wa.me/6281999900306" class="inline-flex items-center gap-2 transition-colors hover:text-primary">
+                  <Phone class="h-4 w-4 flex-shrink-0" /> +62 819-9990-0306
+                </a>
+              </li>
+              <li class="inline-flex items-center gap-2"><MapPin class="h-4 w-4 flex-shrink-0" /> Tegal, Indonesia</li>
+            </ul>
           </div>
         </div>
-      </section>
-      
-      <Services t={(key: string) => t(key, locale)} />
-      <FAQ t={(key: string) => t(key, locale)} />
-      <ContactCTA t={(key: string) => t(key, locale)} />
-      <ConsultationDialog t={(key: string) => t(key, locale)} />
 
-      <!-- Blog Section -->
-      <section id="blog" class="px-4 py-12 sm:py-16 bg-card/5">
-        <div class="mx-auto max-w-6xl">
-          <div class="text-center mb-8 sm:mb-12">
-            <div class="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 sm:px-5 py-2 text-[0.6rem] sm:text-[0.65rem] font-semibold uppercase tracking-[0.5em] sm:tracking-[0.6em] text-primary mb-4">
-              <span>📝</span>
-              <span>{t('blog.badge', locale)}</span>
-            </div>
-
-            <h2 class="text-2xl sm:text-3xl font-semibold text-foreground mb-4">
-              {t('blog.title', locale)}
-            </h2>
-
-            <p class="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto">
-              {t('blog.description', locale)}
-            </p>
-          </div>
-
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 mb-8">
-            <!-- Blog Post 1 -->
-            <a href="/blog/jasa-pembuatan-website-tegal" class="group rounded-2xl glass-panel bg-card/10 border border-border/20 overflow-hidden transition-all hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5">
-              <div class="aspect-video overflow-hidden bg-card/30 skel-shimmer">
-                <img src="/blog/jasa-website-tegal.svg" alt="Jasa Pembuatan Website Tegal" width="640" height="360" class="img-skel w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" loading="lazy" decoding="async" onload="this.classList.add('img-loaded')" onerror="this.onerror=null;this.src='/blog/placeholder.svg'" />
-              </div>
-              <div class="p-5 sm:p-6">
-                <span class="rounded-full bg-primary/10 px-3 py-1 text-[0.65rem] font-semibold uppercase tracking-wider text-primary">
-                  {t('blog.categories.web-development', locale)}
-                </span>
-                <h3 class="text-lg sm:text-xl font-semibold text-foreground mt-3 mb-2 group-hover:text-primary transition-colors">
-                  Jasa Pembuatan Website Tegal: Harga & Portfolio 2026
-                </h3>
-                <p class="text-sm text-muted-foreground line-clamp-2 mb-4">
-                  Temukan layanan pembuatan website profesional di Tegal dengan harga terjangkau. Mulai dari Rp 1,5 juta untuk company profile.
-                </p>
-                <span class="inline-flex items-center gap-2 text-sm font-medium text-primary">
-                  {t('blog.readMore', locale)}
-                  <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-                </span>
-              </div>
-            </a>
-
-            <!-- Blog Post 2 -->
-            <a href="/blog/biaya-pembuatan-aplikasi-android-ios" class="group rounded-2xl glass-panel bg-card/10 border border-border/20 overflow-hidden transition-all hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5">
-              <div class="aspect-video overflow-hidden bg-card/30 skel-shimmer">
-                <img src="/blog/biaya-aplikasi-mobile.svg" alt="Biaya Pembuatan Aplikasi Mobile" width="640" height="360" class="img-skel w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" loading="lazy" decoding="async" onload="this.classList.add('img-loaded')" onerror="this.onerror=null;this.src='/blog/placeholder.svg'" />
-              </div>
-              <div class="p-5 sm:p-6">
-                <span class="rounded-full bg-accent/10 px-3 py-1 text-[0.65rem] font-semibold uppercase tracking-wider text-accent">
-                  {t('blog.categories.mobile-app', locale)}
-                </span>
-                <h3 class="text-lg sm:text-xl font-semibold text-foreground mt-3 mb-2 group-hover:text-primary transition-colors">
-                  Biaya Pembuatan Aplikasi Android & iOS di Indonesia
-                </h3>
-                <p class="text-sm text-muted-foreground line-clamp-2 mb-4">
-                  Panduan lengkap estimasi biaya pembuatan aplikasi mobile cross-platform dengan React Native dan Flutter.
-                </p>
-                <span class="inline-flex items-center gap-2 text-sm font-medium text-primary">
-                  {t('blog.readMore', locale)}
-                  <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-                </span>
-              </div>
-            </a>
-
-            <!-- Blog Post 3 -->
-            <a href="/blog/wordpress-custom-vs-template" class="group rounded-2xl glass-panel bg-card/10 border border-border/20 overflow-hidden transition-all hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5">
-              <div class="aspect-video overflow-hidden bg-card/30 skel-shimmer">
-                <img src="/blog/wordpress-custom-vs-template.svg" alt="WordPress Custom vs Template" width="640" height="360" class="img-skel w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" loading="lazy" decoding="async" onload="this.classList.add('img-loaded')" onerror="this.onerror=null;this.src='/blog/placeholder.svg'" />
-              </div>
-              <div class="p-5 sm:p-6">
-                <span class="rounded-full bg-primary/10 px-3 py-1 text-[0.65rem] font-semibold uppercase tracking-wider text-primary">
-                  {t('blog.categories.wordpress', locale)}
-                </span>
-                <h3 class="text-lg sm:text-xl font-semibold text-foreground mt-3 mb-2 group-hover:text-primary transition-colors">
-                  WordPress Custom vs Template: Mana yang Lebih Baik?
-                </h3>
-                <p class="text-sm text-muted-foreground line-clamp-2 mb-4">
-                  Perbandingan lengkap antara WordPress custom development dengan tema premium. Pilih sesuai kebutuhan bisnis Anda.
-                </p>
-                <span class="inline-flex items-center gap-2 text-sm font-medium text-primary">
-                  {t('blog.readMore', locale)}
-                  <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-                </span>
-              </div>
-            </a>
-          </div>
-
-          <div class="text-center">
-            <a
-              href="/blog"
-              class="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90"
-            >
-              {t('blog.readMore', locale)}
-              <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
-            </a>
-          </div>
+        <div class="mt-10 flex flex-col items-center justify-between gap-4 border-t border-border/20 pt-8 md:flex-row">
+          <p class="text-sm text-muted-foreground">© {year} Ekalliptus Digital. {t('home.footer.rights', locale)}</p>
+          <a href="/order" class="group inline-flex items-center gap-2 text-sm font-semibold text-primary">
+            {t('home.cta.primary', locale)}
+            <ArrowUpRight class="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+          </a>
         </div>
-      </section>
-      
-      <footer id="about" class="mt-8 sm:mt-12 border-t border-border/20 bg-card/5 py-8 sm:py-12 safe-bottom">
-        <div class="mx-auto max-w-6xl px-4">
-          <div class="grid grid-cols-1 gap-6 sm:gap-8 md:grid-cols-3">
-            <div>
-              <div class="flex items-center gap-3 mb-3 sm:mb-4">
-                <img src="/ekalliptus_rounded.webp" alt="Ekalliptus" width="40" height="40" class="h-9 w-auto sm:h-10" loading="lazy" decoding="async" />
-                <span class="font-semibold text-base sm:text-lg text-foreground">Ekalliptus</span>
-              </div>
-              <p class="text-sm text-muted-foreground">
-                {t('index.about.philosophyDesc', locale)}
-              </p>
-            </div>
-            
-            <div>
-              <h3 class="font-semibold text-foreground mb-4">{t('services.title', locale)}</h3>
-              <ul class="space-y-2 text-sm text-muted-foreground">
-                <li>{t('services.cards.websiteDevelopment.title', locale)}</li>
-                <li>{t('services.cards.mobileAppDevelopment.title', locale)}</li>
-                <li>{t('services.cards.wordpressDevelopment.title', locale)}</li>
-                <li>{t('services.cards.photoVideoEditing.title', locale)}</li>
-              </ul>
-            </div>
-            
-            <div>
-              <h3 class="font-semibold text-foreground mb-4">{t('footer.contact', locale)}</h3>
-              <ul class="space-y-2 text-sm text-muted-foreground">
-                <li>support@ekalliptus.com</li>
-                <li>+62 819-9990-0306</li>
-                <li>Tegal, Indonesia</li>
-              </ul>
-            </div>
-          </div>
-          
-          <div class="mt-8 pt-8 border-t border-border/20 flex flex-col md:flex-row justify-between items-center gap-4">
-            <p class="text-sm text-muted-foreground">
-              © {new Date().getFullYear()} Ekalliptus Digital. All rights reserved.
-            </p>
-            <div class="flex gap-4">
-              <a href="/privacy-policy" class="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                {t('privacyPolicy.title', locale)}
-              </a>
-              <a href="/terms-of-service" class="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                {t('termsOfService.title', locale)}
-              </a>
-            </div>
-          </div>
-        </div>
-      </footer>
-    </div>
+      </div>
+    </footer>
   </main>
 </Layout>
-
-<script define:vars={{ words }}>
-  const typewriterEl = document.getElementById('typewriter')
-  let currentWordIndex = 0
-  let charIndex = 0
-  let isDeleting = false
-  
-  function typeWriter() {
-    if (!typewriterEl) return
-    
-    const currentWord = words[currentWordIndex]
-    
-    if (isDeleting) {
-      typewriterEl.textContent = currentWord.substring(0, charIndex - 1)
-      charIndex--
-    } else {
-      typewriterEl.textContent = currentWord.substring(0, charIndex + 1)
-      charIndex++
-    }
-    
-    let timeout = isDeleting ? 40 : 80
-    
-    if (!isDeleting && charIndex === currentWord.length) {
-      timeout = 1400
-      isDeleting = true
-    } else if (isDeleting && charIndex === 0) {
-      isDeleting = false
-      currentWordIndex = (currentWordIndex + 1) % words.length
-      timeout = 500
-    }
-    
-    setTimeout(typeWriter, timeout)
-  }
-  
-  setTimeout(typeWriter, 1000)
-</script>

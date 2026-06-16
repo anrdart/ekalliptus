@@ -938,5 +938,83 @@
     "orderId": "Sipariş ID:",
     "confirmPayment": "Zaten Ödedim",
     "confirmationNote": "Takımımız ödemenizi 24 saat içinde doğrulayacaktır"
+  },
+  "home": {
+    "hero": {
+      "badge": "Digital Agency • Based in Tegal, Indonesia",
+      "titleLead": "Build Digital Products",
+      "titleAccent": "that Sell",
+      "titleTail": "for Your Business",
+      "subtitle": "Professional website, mobile app, WordPress, and UI/UX design services. Fast, modern, and SEO-optimized from day one.",
+      "ctaPrimary": "Free Consultation",
+      "ctaSecondary": "View Services",
+      "trustRating": "Client rating",
+      "trustClients": "Clients served",
+      "trustYears": "Years of experience",
+      "trustResponse": "Fast response"
+    },
+    "stats": {
+      "eyebrow": "Why Ekalliptus",
+      "title": "Numbers that speak",
+      "subtitle": "Real results from our commitment to quality and client satisfaction.",
+      "yearsLabel": "Years of Experience",
+      "clientsLabel": "Clients Served",
+      "projectsLabel": "Projects Completed",
+      "ratingLabel": "Client Satisfaction"
+    },
+    "services": {
+      "eyebrow": "Our Services",
+      "title": "Complete digital solutions in one place",
+      "subtitle": "From idea to launch — we handle every stage to a professional standard.",
+      "featureTitle": "End-to-End Digital Solutions",
+      "featureDesc": "Strategy, design, and development in one team. Consistent, measurable results, ready to grow with your business.",
+      "featureCta": "Start your project",
+      "learnMore": "Learn more",
+      "viewAll": "View all services"
+    },
+    "process": {
+      "eyebrow": "How It Works",
+      "title": "A transparent, measurable process",
+      "subtitle": "Four simple steps from consultation to a ready-to-use product.",
+      "step1Title": "Order & Brief",
+      "step1Desc": "Fill out the order form or book a free consultation. Tell us your needs and business goals.",
+      "step2Title": "Consultation & Quote",
+      "step2Desc": "We put together a solution, timeline, and transparent cost estimate.",
+      "step3Title": "Production",
+      "step3Desc": "Our team builds your project with regular progress updates.",
+      "step4Title": "Review & Handover",
+      "step4Desc": "Revisions as needed, then handover with a warranty."
+    },
+    "testimonials": {
+      "eyebrow": "Testimonials",
+      "title": "Trusted by our clients",
+      "subtitle": "Stories from businesses growing with Ekalliptus.",
+      "placeholder": "Client testimonials will appear here soon."
+    },
+    "trust": {
+      "eyebrow": "Technology",
+      "title": "Built with modern, reliable technology",
+      "subtitle": "The stack we use for fast, secure, and scalable results."
+    },
+    "cta": {
+      "badge": "Ready to start?",
+      "title": "Bring your digital idea to life today",
+      "subtitle": "Free consultation, no commitment. Tell us what you need and we'll help find the solution.",
+      "primary": "Get Started",
+      "secondary": "Chat on WhatsApp"
+    },
+    "footer": {
+      "tagline": "A digital agency helping Indonesian businesses grow through classy websites, apps, and design.",
+      "servicesHeading": "Services",
+      "companyHeading": "Company",
+      "resourcesHeading": "Resources",
+      "contactHeading": "Contact",
+      "aboutLink": "About Us",
+      "blogLink": "Blog",
+      "orderLink": "Order a Service",
+      "privacyLink": "Privacy Policy",
+      "termsLink": "Terms of Service",
+      "rights": "All rights reserved."
+    }
   }
 }

@@ -2,6 +2,7 @@
 import AdminLayout from '../_layout.astro'
 import { getCustomerDetail } from '../../../lib/admin/customers'
 import { Mail, Phone, Building2, Calendar } from 'lucide-astro'
+import { formatIDR, formatDate as fmtDate } from '../../../lib/format'
 
 const id = Astro.params.id as string
 const customer = await getCustomerDetail(id)
@@ -9,9 +10,7 @@ if (!customer) {
   return Astro.redirect('/admin/customers')
 }
 
-const formatIDR = (n: number) =>
-  new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(n)
-const formatDate = (s: string | null) => s ? new Date(s).toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' }) : '-'
+const formatDate = (s: string | null) => (s ? fmtDate(s) : '-')
 const initials = customer.customer_name.split(' ').map(w => w[0]).slice(0, 2).join('').toUpperCase()
 ---
 <AdminLayout title={customer.customer_name}>

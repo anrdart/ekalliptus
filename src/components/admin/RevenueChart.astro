@@ -39,6 +39,13 @@ const dayLabels = series.map((s) => new Date(s.day).toLocaleDateString(labelLoca
     preserveAspectRatio="none"
     class="w-full h-full"
   >
+    <defs>
+      <linearGradient id="revBar" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="hsl(var(--accent-2))" />
+        <stop offset="55%" stop-color="hsl(var(--primary))" />
+        <stop offset="100%" stop-color="hsl(var(--accent))" />
+      </linearGradient>
+    </defs>
     <!-- horizontal grid lines -->
     {[0, 0.25, 0.5, 0.75, 1].map((p) => {
       const y = padTop + (height - padTop - padBottom) * (1 - p)
@@ -101,14 +108,13 @@ const dayLabels = series.map((s) => new Date(s.day).toLocaleDateString(labelLoca
     overflow: visible;
   }
   .bar {
-    fill: hsl(var(--primary));
-    opacity: 0.85;
-    transition: opacity 200ms ease, transform 200ms ease;
+    fill: url(#revBar);
+    opacity: 0.82;
+    transition: opacity 200ms ease;
     transform-origin: bottom;
   }
   .bar-group:hover .bar {
     opacity: 1;
-    fill: hsl(var(--accent));
   }
   .day-label {
     fill: hsl(var(--muted-foreground));

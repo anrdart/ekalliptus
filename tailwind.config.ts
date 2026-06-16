@@ -29,6 +29,11 @@ export default {
                     DEFAULT: 'hsl(var(--accent))',
                     foreground: 'hsl(var(--accent-foreground))'
                 },
+                // Secondary brand accent — indigo/violet
+                accent2: {
+                    DEFAULT: 'hsl(var(--accent-2))',
+                    foreground: 'hsl(var(--accent-2-foreground))'
+                },
                 // Background & Foreground
                 background: 'hsl(var(--background))',
                 foreground: 'hsl(var(--foreground))',
@@ -97,6 +102,14 @@ export default {
                 pulse: {
                     '0%, 100%': { opacity: '1' },
                     '50%': { opacity: '0.5' }
+                },
+                shimmer: {
+                    '0%': { backgroundPosition: '200% 0' },
+                    '100%': { backgroundPosition: '-200% 0' }
+                },
+                'gradient-pan': {
+                    '0%, 100%': { backgroundPosition: '0% 50%' },
+                    '50%': { backgroundPosition: '100% 50%' }
                 }
             },
             animation: {
@@ -107,7 +120,9 @@ export default {
                 'slide-in-right': 'slide-in-right 0.3s ease-out',
                 'slide-out-right': 'slide-out-right 0.3s ease-out',
                 float: 'float 3s ease-in-out infinite',
-                pulse: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite'
+                pulse: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                shimmer: 'shimmer 2.4s linear infinite',
+                'gradient-pan': 'gradient-pan 8s ease-in-out infinite'
             },
             backdropBlur: {
                 xs: '2px'

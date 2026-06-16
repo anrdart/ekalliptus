@@ -6,11 +6,13 @@ interface Props {
   title: string
   description: string
   features?: string[]
+  category?: string
   delay?: number
   href?: string
+  cta?: string
 }
 
-const { icon, title, description, features = [], delay = 0, href = '/order' } = Astro.props
+const { icon, title, description, features = [], category, delay = 0, href = '/order', cta = 'Selengkapnya' } = Astro.props
 
 const iconMap: Record<string, any> = {
   Globe,
@@ -19,63 +21,59 @@ const iconMap: Record<string, any> = {
   Video,
   Monitor,
   Wrench,
-  PenTool
+  PenTool,
 }
 
 const IconComponent = iconMap[icon] || Globe
 ---
 
-<div
-  class="glass-panel neon-border rounded-2xl sm:rounded-3xl p-5 sm:p-6 transition-all duration-500 md:hover:scale-[1.02] md:hover:shadow-xl opacity-0 translate-y-8 active:scale-[0.99]"
+<a
+  href={href}
+  class="bento-reveal group glass-card relative flex flex-col overflow-hidden rounded-3xl p-6 opacity-0 translate-y-8 transition-all duration-500 hover:-translate-y-1 hover:shadow-xl hover:shadow-primary/5 active:scale-[0.99] sm:p-7 cursor-interactive"
   style={`transition-delay: ${delay}ms`}
 >
-  <div class="mb-4 inline-flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-xl sm:rounded-2xl bg-gradient-to-br from-primary/20 to-secondary/20">
-    <IconComponent class="h-6 w-6 sm:h-7 sm:w-7 text-primary" />
+  <!-- hover gradient sheen -->
+  <div
+    class="bg-gradient-brand pointer-events-none absolute -right-12 -top-12 h-32 w-32 rounded-full opacity-0 blur-2xl transition-opacity duration-500 group-hover:opacity-20"
+  >
   </div>
 
-  <h3 class="mb-3 text-lg sm:text-xl font-semibold text-foreground">
-    {title}
-  </h3>
+  <div class="relative z-10 flex items-center justify-between">
+    <div
+      class="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-primary/20 to-accent2/20 transition-transform group-hover:scale-110 sm:h-14 sm:w-14"
+    >
+      <IconComponent class="h-6 w-6 text-primary sm:h-7 sm:w-7" />
+    </div>
+    {
+      category && (
+        <span class="rounded-full bg-card/40 px-2.5 py-1 text-[0.65rem] font-semibold uppercase tracking-wider text-muted-foreground">
+          {category}
+        </span>
+      )
+    }
+  </div>
 
-  <p class="mb-4 text-sm text-muted-foreground leading-relaxed">
-    {description}
-  </p>
+  <h3 class="relative z-10 mb-2 mt-4 text-lg font-semibold text-foreground sm:text-xl">{title}</h3>
 
-  {features.length > 0 && (
-    <ul class="space-y-2">
-      {features.slice(0, 3).map((feature) => (
-        <li class="flex items-start gap-2 text-sm text-muted-foreground">
-          <Check class="h-4 w-4 text-primary flex-shrink-0 mt-0.5" />
-          <span>{feature}</span>
-        </li>
-      ))}
-    </ul>
-  )}
+  <p class="relative z-10 mb-4 text-sm leading-relaxed text-muted-foreground">{description}</p>
 
-  <a
-    href={href}
-    class="mt-5 sm:mt-6 inline-flex items-center gap-2 text-sm font-medium text-primary hover:text-primary/80 transition-colors cursor-interactive min-h-[44px]"
+  {
+    features.length > 0 && (
+      <ul class="relative z-10 mb-5 space-y-2">
+        {features.slice(0, 3).map((feature) => (
+          <li class="flex items-start gap-2 text-sm text-muted-foreground">
+            <Check class="mt-0.5 h-4 w-4 flex-shrink-0 text-primary" />
+            <span>{feature}</span>
+          </li>
+        ))}
+      </ul>
+    )
+  }
+
+  <span
+    class="relative z-10 mt-auto inline-flex items-center gap-2 text-sm font-medium text-primary transition-all group-hover:gap-3"
   >
-    Pesan Sekarang
+    {cta}
     <ArrowRight class="h-4 w-4" />
-  </a>
-</div>
-
-<script>
-  const cards = document.querySelectorAll('.glass-panel')
-  
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.remove('opacity-0', 'translate-y-8')
-          entry.target.classList.add('opacity-100', 'translate-y-0')
-          observer.unobserve(entry.target)
-        }
-      })
-    },
-    { threshold: 0.1 }
-  )
-  
-  cards.forEach((card) => observer.observe(card))
-</script>
+  </span>
+</a>

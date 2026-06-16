@@ -7,24 +7,20 @@ interface Props {
 }
 const { board } = Astro.props
 
-const fmt = (n: number | null) => n ? new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(n) : ''
+import { formatIDR } from '../../lib/format'
 
-const stageColors: Record<LeadStage, string> = {
-  new: '#6b7280',
-  contacted: '#3b82f6',
-  qualified: '#06b6d4',
-  proposal: '#f59e0b',
-  negotiation: '#8b5cf6',
-  won: '#22c55e',
-  lost: '#ef4444'
-}
+const fmt = (n: number | null) => (n ? formatIDR(n) : '')
+
+// Each stage maps to a --status-* token (defined in global.css) so the palette
+// stays consistent with StatusBadge and adapts to light/dark automatically.
+const stageColor = (stage: LeadStage) => `hsl(var(--status-${stage}))`
 ---
 <div class="flex gap-3 overflow-x-auto pb-2" id="kanban-board">
   {LEAD_STAGE_ORDER.map((stage) => (
     <div class="kanban-col flex-shrink-0 w-64 glass-card rounded-2xl p-3" data-stage={stage}>
       <div class="flex items-center justify-between mb-3 px-1">
         <div class="flex items-center gap-2">
-          <span class="h-2 w-2 rounded-full" style={`background:${stageColors[stage]}`}></span>
+          <span class="h-2 w-2 rounded-full" style={`background:${stageColor(stage)}`}></span>
           <span class="text-xs font-bold uppercase tracking-wider">{LEAD_STAGE_LABELS[stage]}</span>
           <span class="text-xs text-muted-foreground">({board[stage].length})</span>
         </div>
@@ -32,14 +28,14 @@ const stageColors: Record<LeadStage, string> = {
       <div class="kanban-list space-y-2 min-h-[100px]" data-stage={stage}>
         {board[stage].map((lead) => (
           <div
-            class="kanban-card rounded-lg bg-background border border-border p-3 cursor-grab active:cursor-grabbing"
+            class="kanban-card rounded-xl bg-background border border-border p-3 cursor-grab transition-shadow hover:shadow-md active:cursor-grabbing"
             draggable="true"
             data-id={lead.id}
-            style={`border-left: 3px solid ${stageColors[stage]}`}
+            style={`border-left: 3px solid ${stageColor(stage)}`}
           >
             <div class="font-medium text-sm">{lead.name}</div>
             {lead.service_interest && <div class="text-xs text-muted-foreground mt-0.5">{lead.service_interest}</div>}
-            {lead.estimated_value && <div class="text-xs font-medium mt-1" style={`color:${stageColors[stage]}`}>{fmt(Number(lead.estimated_value))}</div>}
+            {lead.estimated_value && <div class="text-xs font-semibold mt-1" style={`color:${stageColor(stage)}`}>{fmt(Number(lead.estimated_value))}</div>}
           </div>
         ))}
       </div>

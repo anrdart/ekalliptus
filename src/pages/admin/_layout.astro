@@ -91,7 +91,9 @@ function isActivePath(href: string): boolean {
 
   <div class="flex min-h-screen">
     <!-- Desktop Sidebar -->
-    <aside class="hidden md:flex md:w-64 lg:w-72 flex-col fixed h-full glass-panel border-r border-border m-4 rounded-2xl">
+    <aside class="hidden md:flex md:w-64 lg:w-72 flex-col fixed h-full glass-panel border-r border-border m-4 rounded-2xl overflow-hidden">
+      <!-- accent rail -->
+      <div class="bg-gradient-brand absolute inset-y-0 left-0 w-1 opacity-80"></div>
       <!-- Logo -->
       <div class="p-6 border-b border-border">
         <a href="/admin" class="flex items-center gap-3">
@@ -160,8 +162,8 @@ function isActivePath(href: string): boolean {
               <Menu class="h-5 w-5" />
             </button>
             <div>
-              <h1 class="text-xl font-bold" id="page-title">{title}</h1>
-              <p class="text-sm text-muted-foreground hidden sm:block">Manage your business</p>
+              <h1 class="text-xl font-bold tracking-tight" id="page-title">{title}</h1>
+              <p class="text-sm text-muted-foreground hidden sm:block">Kelola bisnis Anda</p>
             </div>
           </div>
           <div class="flex items-center gap-3">
@@ -192,6 +194,7 @@ function isActivePath(href: string): boolean {
   <style>
     .sidebar-link {
       color: hsl(var(--muted-foreground));
+      position: relative;
     }
 
     .sidebar-link:hover {
@@ -200,10 +203,27 @@ function isActivePath(href: string): boolean {
     }
 
     .sidebar-link.active {
-      background: hsl(var(--primary) / 0.15);
+      background: linear-gradient(
+        100deg,
+        hsl(var(--primary) / 0.16),
+        hsl(var(--accent-2) / 0.12)
+      );
       color: hsl(var(--primary));
-      border: 1px solid hsl(var(--primary) / 0.2);
-      box-shadow: 0 0 20px hsl(var(--primary) / 0.1);
+      border: 1px solid hsl(var(--primary) / 0.22);
+      box-shadow: 0 4px 18px -6px hsl(var(--primary) / 0.25);
+    }
+
+    /* active indicator bar */
+    .sidebar-link.active::before {
+      content: '';
+      position: absolute;
+      left: -1px;
+      top: 50%;
+      transform: translateY(-50%);
+      height: 60%;
+      width: 3px;
+      border-radius: 0 4px 4px 0;
+      background: hsl(var(--primary));
     }
 
     @media (max-width: 767px) {

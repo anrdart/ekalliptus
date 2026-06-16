@@ -3,8 +3,11 @@ import AdminLayout from '../_layout.astro'
 import SearchFilter from '../../../components/admin/SearchFilter.astro'
 import Pagination from '../../../components/admin/Pagination.astro'
 import EmptyState from '../../../components/admin/EmptyState.astro'
+import StatusBadge from '../../../components/admin/ui/StatusBadge.astro'
+import Button from '../../../components/admin/ui/Button.astro'
 import { FileText, Plus } from 'lucide-astro'
 import { listPosts } from '../../../lib/admin/blog'
+import { formatDate } from '../../../lib/format'
 
 const url = new URL(Astro.request.url)
 const search = url.searchParams.get('search') ?? ''
@@ -21,11 +24,11 @@ const { posts, total, totalPages } = await listPosts({
 const baseUrl = `/admin/blog?search=${encodeURIComponent(search)}&status=${status}&locale=${locale}`
 ---
 <AdminLayout title="Blog">
-  <div class="flex justify-between items-center mb-4">
-    <h2 class="text-lg font-semibold">{total} post</h2>
-    <a href="/admin/blog/new" class="inline-flex items-center gap-1 rounded-xl bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90">
+  <div class="mb-4 flex items-center justify-between">
+    <h2 class="text-lg font-semibold"><span class="text-primary">{total}</span> post</h2>
+    <Button href="/admin/blog/new" size="sm">
       <Plus class="h-4 w-4" /> Tulis Post Baru
-    </a>
+    </Button>
   </div>
 
   <SearchFilter
@@ -59,15 +62,12 @@ const baseUrl = `/admin/blog?search=${encodeURIComponent(search)}&status=${statu
     ) : (
       <ul class="divide-y divide-border/40">
         {posts.map((p) => (
-          <li class="flex items-center justify-between py-3">
-            <div>
+          <li class="flex items-center justify-between gap-3 py-3">
+            <div class="min-w-0">
               <a href={`/admin/blog/${p.id}`} class="font-medium hover:text-primary">{p.title}</a>
-              <div class="text-xs text-muted-foreground">{p.category} · {p.locale} · diperbarui {new Date(p.updated_at).toLocaleDateString('id-ID')}</div>
+              <div class="text-xs text-muted-foreground">{p.category} · {p.locale} · diperbarui {formatDate(p.updated_at)}</div>
             </div>
-            <span class:list={[
-              'rounded-full px-2 py-0.5 text-xs',
-              p.status === 'published' ? 'bg-green-500/15 text-green-600' : p.status === 'draft' ? 'bg-muted text-muted-foreground' : 'bg-orange-500/15 text-orange-500'
-            ]}>{p.status}</span>
+            <StatusBadge status={p.status} />
           </li>
         ))}
       </ul>

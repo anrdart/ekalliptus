@@ -3,8 +3,10 @@ import AdminLayout from './_layout.astro'
 import StatCard from '../../components/admin/StatCard.astro'
 import RevenueChart from '../../components/admin/RevenueChart.astro'
 import EmptyState from '../../components/admin/EmptyState.astro'
+import StatusBadge from '../../components/admin/ui/StatusBadge.astro'
 import { DollarSign, Package, Activity, TrendingUp, ArrowUpRight, ShoppingCart } from 'lucide-astro'
 import { getSupabase } from '../../lib/supabase'
+import { formatIDR } from '../../lib/format'
 import { countLeadsByStage, LEAD_STAGE_LABELS, LEAD_STAGE_ORDER } from '../../lib/admin/leads'
 
 const supabase = getSupabase(true)
@@ -35,9 +37,8 @@ if (supabase) {
   const orderCount = monthlyOrdersRes.count ?? 0
   const pending = pendingRes.count ?? 0
   const paid = paidRes.count ?? 0
-  const fmt = (n: number) => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(n)
   stats = {
-    todayRevenue: fmt(todayRev),
+    todayRevenue: formatIDR(todayRev),
     monthlyOrders: String(orderCount),
     pendingPayments: String(pending),
     conversionRate: orderCount > 0 ? `${((paid / orderCount) * 100).toFixed(1)}%` : '0%'
@@ -66,9 +67,21 @@ if (supabase) {
   leadCounts = await countLeadsByStage()
 }
 
-const fmt = (n: number) => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(n)
+const fmt = formatIDR
+const today = new Intl.DateTimeFormat('id-ID', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }).format(now)
 ---
 <AdminLayout title="Dashboard">
+  <!-- Welcome banner -->
+  <div class="relative mb-6 overflow-hidden rounded-2xl p-6 sm:p-7">
+    <div class="bg-gradient-brand absolute inset-0 opacity-95"></div>
+    <div class="bg-grid absolute inset-0 opacity-20"></div>
+    <div class="relative z-10">
+      <p class="text-xs font-medium uppercase tracking-wider text-white/80">{today}</p>
+      <h2 class="mt-1 text-2xl font-bold text-white sm:text-3xl">Selamat datang kembali 👋</h2>
+      <p class="mt-1 max-w-lg text-sm text-white/85">Ringkasan performa bisnis Anda hari ini. Pantau revenue, order, dan pipeline dalam satu tempat.</p>
+    </div>
+  </div>
+
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
     <StatCard icon={DollarSign} value={stats.todayRevenue} label="Revenue Hari Ini" valueId="stat-today-revenue" />
     <StatCard icon={Package} iconColorClass="text-blue-500" value={stats.monthlyOrders} label="Order Bulan Ini" valueId="stat-monthly-orders" />
@@ -127,20 +140,20 @@ const fmt = (n: number) => new Intl.NumberFormat('id-ID', { style: 'currency', c
     {recentOrders.length === 0 ? (
       <EmptyState icon={ShoppingCart} title="Belum ada order" description="Order baru akan muncul di sini secara real-time." />
     ) : (
-      <table class="w-full text-sm">
+      <table class="w-full border-collapse text-sm">
         <thead>
-          <tr class="border-b border-border text-left text-xs font-medium text-muted-foreground">
-            <th class="pb-2">Order ID</th><th class="pb-2">Customer</th><th class="pb-2">Layanan</th><th class="pb-2 text-right">Total</th><th class="pb-2">Status</th>
+          <tr class="border-b border-border text-left text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+            <th class="pb-3">Order ID</th><th class="pb-3">Customer</th><th class="pb-3">Layanan</th><th class="pb-3 text-right">Total</th><th class="pb-3">Status</th>
           </tr>
         </thead>
         <tbody>
           {recentOrders.map((o) => (
-            <tr class="border-b border-border/40">
-              <td class="py-2 font-mono text-xs">ORD-{o.id.slice(0, 8)}</td>
-              <td class="py-2">{o.customer_name}</td>
-              <td class="py-2">{o.service_type}</td>
-              <td class="py-2 text-right font-medium">{fmt(Number((o.pricing as any)?.grand_total ?? 0))}</td>
-              <td class="py-2 text-xs">{o.status}</td>
+            <tr class="dt-row">
+              <td class="dt-cell font-mono text-xs">ORD-{o.id.slice(0, 8)}</td>
+              <td class="dt-cell">{o.customer_name}</td>
+              <td class="dt-cell">{o.service_type}</td>
+              <td class="dt-cell text-right font-medium">{fmt(Number((o.pricing as any)?.grand_total ?? 0))}</td>
+              <td class="dt-cell"><StatusBadge status={o.status} /></td>
             </tr>
           ))}
         </tbody>
