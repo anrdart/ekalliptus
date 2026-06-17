@@ -2,6 +2,7 @@ import type { APIRoute } from 'astro'
 import { getSupabase } from '../../../lib/supabase'
 import type { ConsultationMessageInsert } from '../../../types/database'
 import { createLead } from '../../../lib/admin/leads'
+import { readEnv } from '../../../lib/runtime-env'
 
 export const POST: APIRoute = async ({ request }) => {
   try {
@@ -129,8 +130,8 @@ export const POST: APIRoute = async ({ request }) => {
       }
     }
 
-    const supabaseUrl = import.meta.env.SUPABASE_URL || ''
-    const supabaseAnonKey = import.meta.env.SUPABASE_ANON_KEY || ''
+    const supabaseUrl = readEnv('SUPABASE_URL') || ''
+    const supabaseAnonKey = readEnv('SUPABASE_ANON_KEY') || ''
 
     if (supabaseUrl && supabaseAnonKey) {
       try {

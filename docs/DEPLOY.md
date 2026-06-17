@@ -19,22 +19,40 @@ apex `ekalliptus.com`.
 `wrangler.toml` pins: `name = "ekalliptus"`, `account_id`, and the `SESSION` KV
 namespace id.
 
-## Environment variables (CRITICAL)
+## Environment variables
 
-Env is **inlined at build time** (Vite `import.meta.env`; `readEnv()` falls back
-to it). The local `.env` is **gitignored**, so **CI must provide the same vars at
-build time** or Supabase/AI will be missing in the bundle. See `.env.example` for
-the full list. Required:
+Server-side env is read via `readEnv()` (`src/lib/runtime-env.ts`), which prefers
+the **Cloudflare runtime env** (secrets set with `wrangler secret`) and falls back
+to the build-inlined `import.meta.env`. So server secrets do **not** need to be in
+the build — they live as Worker secrets and survive `wrangler deploy`.
+
+**Runtime secrets** (already set on the `ekalliptus` Worker via `wrangler secret put`):
+
+| Secret | Notes |
+|---|---|
+| `SUPABASE_URL` | from `VITE_SUPABASE_URL` |
+| `SUPABASE_ANON_KEY` | from `VITE_SUPABASE_ANON_KEY` |
+| `SUPABASE_SERVICE_ROLE_KEY` | server-only |
+| `ZAI_API_KEY` | consult eBot |
+| `ZAI_MODEL` | consult model |
+
+`ZAI_API_URL` and `CONSULT_SECRET` have safe in-code defaults; override via
+`wrangler secret put` if needed.
+
+**Build-time only** (must exist at build — Vite inlines them into the client):
 
 | Variable | Notes |
 |---|---|
 | `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY` | public, client-visible |
-| `SUPABASE_URL`, `SUPABASE_ANON_KEY` | server mirror (same values) |
-| `SUPABASE_SERVICE_ROLE_KEY` | **secret**, server-only |
-| `ZAI_API_URL`, `ZAI_API_KEY`, `ZAI_MODEL` | consult eBot |
-| `CONSULT_SECRET` | consult widget token |
 | `PUBLIC_GOOGLE_SITE_VERIFICATION`, `PUBLIC_BING_SITE_VERIFICATION` | optional SEO |
 | `PUBLIC_URL` | site URL |
+
+To set or rotate a runtime secret:
+
+```bash
+CLOUDFLARE_ACCOUNT_ID=f24eb3f70bf59379632e280f8756b9e4 \
+  wrangler secret put SUPABASE_SERVICE_ROLE_KEY --name ekalliptus
+```
 
 ## Manual deploy (local)
 
@@ -58,9 +76,10 @@ Deploy on every push to `main`. One-time dashboard setup:
    - Build command: `bun run build`
    - Deploy command: `wrangler deploy`
    - Root directory: `/`
-4. **Build variables & secrets**: add every var from the table above (these are
-   needed at **build** time, not just runtime). Mark `SUPABASE_SERVICE_ROLE_KEY`,
-   `ZAI_API_KEY`, `CONSULT_SECRET` as **encrypted/secret**.
+4. **Build variables**: add the **build-time-only** vars (`VITE_SUPABASE_URL`,
+   `VITE_SUPABASE_ANON_KEY`, `PUBLIC_*`, `PUBLIC_URL`). The server runtime secrets
+   (Supabase/ZAI) are already set as Worker secrets and persist across deploys —
+   they do **not** need to be build variables.
 5. Save. Push to `main` → Cloudflare builds and deploys automatically.
 
 > Note: `account_id` and the `SESSION` KV id are already in `wrangler.toml`, so

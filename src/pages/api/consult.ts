@@ -1,9 +1,12 @@
 import type { APIRoute } from 'astro'
+import { readEnv } from '../../lib/runtime-env'
 
-const ZAI_API_URL = import.meta.env.ZAI_API_URL || 'https://api.z.ai/api/paas/v4/chat/completions'
-const ZAI_API_KEY = import.meta.env.ZAI_API_KEY || ''
-const ZAI_MODEL = import.meta.env.ZAI_MODEL || 'glm-4.5-air'
-const CONSULT_SECRET = import.meta.env.CONSULT_SECRET || 'ekalliptus-consult-2026'
+// Read at request time via readEnv() (Cloudflare runtime env first, then the
+// build-inlined import.meta.env fallback). Lets these be set as `wrangler
+// secret`s without baking them into the bundle.
+const ZAI_API_URL_DEFAULT = 'https://api.z.ai/api/paas/v4/chat/completions'
+const ZAI_MODEL_DEFAULT = 'glm-4.5-air'
+const CONSULT_SECRET_DEFAULT = 'ekalliptus-consult-2026'
 
 const FALLBACK_RESPONSES = [
   'Terima kasih atas pertanyaan Anda! Untuk informasi lebih detail, silakan hubungi kami melalui WhatsApp di +62 819-9990-0306 atau kunjungi halaman order kami di ekalliptus.com/order.',
@@ -70,6 +73,11 @@ function isRateLimited(ip: string): boolean {
 
 export const POST: APIRoute = async ({ request }) => {
   try {
+    const ZAI_API_URL = readEnv('ZAI_API_URL') || ZAI_API_URL_DEFAULT
+    const ZAI_API_KEY = readEnv('ZAI_API_KEY') || ''
+    const ZAI_MODEL = readEnv('ZAI_MODEL') || ZAI_MODEL_DEFAULT
+    const CONSULT_SECRET = readEnv('CONSULT_SECRET') || CONSULT_SECRET_DEFAULT
+
     const origin = request.headers.get('origin') || ''
     const referer = request.headers.get('referer') || ''
     const clientIp = request.headers.get('cf-connecting-ip') || request.headers.get('x-forwarded-for') || 'unknown'
