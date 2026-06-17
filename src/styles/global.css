@@ -472,41 +472,22 @@
 
   /* Gradient text */
   .gradient-text {
-    @apply bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent;
+    @apply text-primary;
   }
 
   /* ============================================
-     BRAND GRADIENTS — emerald → teal → violet
-     Dual-accent system for the Bold Modern SaaS look
+     BRAND SOLID COLORS
      ============================================ */
   .text-gradient-brand {
-    background-image: linear-gradient(
-      100deg,
-      hsl(var(--primary)) 0%,
-      hsl(var(--accent)) 45%,
-      hsl(var(--accent-2)) 100%
-    );
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    /* Slightly oversize so descenders of the gradient text aren't clipped */
-    padding-bottom: 0.08em;
+    color: hsl(var(--primary));
   }
 
   .bg-gradient-brand {
-    background-image: linear-gradient(
-      100deg,
-      hsl(var(--primary)) 0%,
-      hsl(var(--accent)) 50%,
-      hsl(var(--accent-2)) 100%
-    );
+    background-color: hsl(var(--primary));
   }
 
   .border-gradient-brand {
-    border: 1px solid transparent;
-    background:
-      linear-gradient(hsl(var(--card)), hsl(var(--card))) padding-box,
-      linear-gradient(100deg, hsl(var(--primary)), hsl(var(--accent-2))) border-box;
+    border: 1px solid hsl(var(--primary));
   }
 
   /* Soft glow halo behind hero CTAs / feature tiles */
@@ -517,32 +498,19 @@
       0 8px 32px -12px hsl(var(--accent-2) / 0.35);
   }
 
-  /* Layered mesh-gradient backdrop — emerald + violet blobs.
+  /* Layered mesh-gradient backdrop
      Static (no animation) so it never costs paint after first frame. */
   .bg-mesh {
-    position: relative;
     background-color: hsl(var(--background));
-    background-image:
-      radial-gradient(40% 50% at 15% 10%, hsl(var(--primary) / 0.18) 0%, transparent 60%),
-      radial-gradient(45% 55% at 85% 5%, hsl(var(--accent-2) / 0.16) 0%, transparent 60%),
-      radial-gradient(50% 50% at 50% 100%, hsl(var(--accent) / 0.12) 0%, transparent 70%);
   }
 
   .dark .bg-mesh {
-    background-image:
-      radial-gradient(40% 50% at 15% 10%, hsl(var(--primary) / 0.22) 0%, transparent 60%),
-      radial-gradient(45% 55% at 85% 5%, hsl(var(--accent-2) / 0.20) 0%, transparent 60%),
-      radial-gradient(50% 50% at 50% 100%, hsl(var(--accent) / 0.14) 0%, transparent 70%);
+    background-color: hsl(var(--background));
   }
 
   /* Subtle grid texture overlay for section backdrops */
   .bg-grid {
-    background-image:
-      linear-gradient(to right, hsl(var(--border) / 0.4) 1px, transparent 1px),
-      linear-gradient(to bottom, hsl(var(--border) / 0.4) 1px, transparent 1px);
-    background-size: 56px 56px;
-    -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 40%, transparent 100%);
-    mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 40%, transparent 100%);
+    display: none;
   }
 
   /* Status dot/badge color helpers driven by --status-* tokens */
@@ -888,18 +856,11 @@
   line-height: 1.7;
 }
 
-/* Horizontal rule — subtle glass line */
+/* Horizontal rule — subtle line */
 .prose hr {
   border: none;
   height: 1px;
-  background: linear-gradient(
-    to right,
-    transparent,
-    hsl(var(--border) / 0.3),
-    hsl(var(--primary) / 0.2),
-    hsl(var(--border) / 0.3),
-    transparent
-  );
+  background: hsl(var(--border) / 0.3);
   margin: 2.5rem 0;
 }
 
@@ -924,27 +885,18 @@
 /* Links — subtle underline animation */
 .prose a {
   text-decoration: none;
-  background-image: linear-gradient(hsl(var(--primary) / 0.3), hsl(var(--primary) / 0.3));
-  background-size: 0% 1px;
-  background-position: 0 100%;
-  background-repeat: no-repeat;
-  transition: background-size 0.2s ease;
+  background-color: transparent;
+  border-bottom: 1px solid hsl(var(--primary) / 0.3);
+  transition: border-color 0.2s ease;
 }
 
 .prose a:hover {
-  background-size: 100% 1px;
+  border-color: hsl(var(--primary));
 }
 
-/* Lazy-load skeleton: shimmering placeholder for image containers */
+/* Lazy-load skeleton: solid placeholder for image containers */
 .skel-shimmer {
-  background-image: linear-gradient(
-    90deg,
-    hsl(var(--card) / 0.3) 0%,
-    hsl(var(--card) / 0.6) 50%,
-    hsl(var(--card) / 0.3) 100%
-  );
-  background-size: 200% 100%;
-  animation: skel-shimmer-anim 1.6s ease-in-out infinite;
+  background-color: hsl(var(--card) / 0.3);
 }
 
 .skel-shimmer:has(.img-loaded) {
