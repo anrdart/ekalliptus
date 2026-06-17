@@ -86,7 +86,7 @@
       "startProject": "Mulai Proyek Digital Anda",
       "viewServices": "Lihat Layanan Kami",
       "contactUs": "Hubungi Kami",
-      "note": "Hubungi kami melalui form order untuk konsultasi gratis dan dapatkan proposal custom sesuai kebutuhan bisnis Anda di Indonesia."
+      "note": "Hubungi kami melalui form order untuk konsultasi gratis dan dapatkan proposal custom sesuai kebutuhan bisnis Anda di Global."
     }
   },
   "services": {
@@ -191,18 +191,18 @@
     "innovation": "Inovasi Berkelanjutan",
     "quality": "Kualitas Terjamin",
     "team": "Tim Profesional",
-    "innovationDesc": "Ekalliptus adalah digital agency berbasis di Indonesia yang spesialis dalam transformasi digital untuk bisnis modern. Dengan pengalaman lebih dari 5 tahun di industri, kami telah membantu ratusan klien dari UMKM hingga enterprise mencapai visi digital mereka.",
+    "innovationDesc": "Ekalliptus adalah digital agency berbasis di Global yang spesialis dalam transformasi digital untuk bisnis modern. Dengan pengalaman lebih dari 5 tahun di industri, kami telah membantu ratusan klien dari UMKM hingga enterprise mencapai visi digital mereka.",
     "qualityDesc": "Layanan kami mencakup website development yang responsif dan SEO-friendly, custom WordPress dengan plugin integrasi lengkap, pengembangan aplikasi mobile cross-platform menggunakan React Native dan Flutter.",
     "teamDesc": "Service perbaikan HP dan laptop dengan teknisi bersertifikat, serta editing foto dan video profesional untuk konten marketing yang impactful menggunakan software seperti Adobe Premiere, After Effects, dan Photoshop.",
     "whyChoose": "Mengapa Memilih Ekalliptus?",
     "technology": "Teknologi Terdepan",
     "local": "Fokus Lokal",
     "results": "Hasil Terjamin",
-    "technologyDesc": "Kami menyediakan jasa pembuatan website Indonesia yang terjangkau namun berkualitas tinggi dengan teknologi modern.",
+    "technologyDesc": "Kami menyediakan jasa pembuatan website Global yang terjangkau namun berkualitas tinggi dengan teknologi modern.",
     "localDesc": "Spesialis WordPress custom Jakarta untuk kebutuhan bisnis lokal dan mobile app development untuk startup hingga enterprise.",
     "resultsDesc": "Dengan fokus pada digital agency yang profesional, Ekalliptus telah menjadi pilihan utama untuk service HP laptop di Jakarta dan sekitarnya.",
-    "commitment": "Kami mengutamakan kepuasan klien dengan memberikan hasil yang tidak hanya estetis namun juga fungsional. Setiap proyek website development Indonesia yang kami kerjakan selalu mengikuti best practices SEO terbaru untuk memastikan visibilitas maksimal di mesin pencari Google.",
-    "contactForm": "Hubungi kami melalui form order untuk konsultasi gratis dan dapatkan proposal custom sesuai kebutuhan bisnis Anda di Indonesia."
+    "commitment": "Kami mengutamakan kepuasan klien dengan memberikan hasil yang tidak hanya estetis namun juga fungsional. Setiap proyek website development Global yang kami kerjakan selalu mengikuti best practices SEO terbaru untuk memastikan visibilitas maksimal di mesin pencari Google.",
+    "contactForm": "Hubungi kami melalui form order untuk konsultasi gratis dan dapatkan proposal custom sesuai kebutuhan bisnis Anda di Global."
   },
   "contact": {
     "insights": "Wawasan",
@@ -218,7 +218,7 @@
   "appPurpose": {
     "badge": "Tujuan Aplikasi",
     "title": "Apa itu Ekalliptus?",
-    "description": "Ekalliptus adalah platform digital agency profesional berbasis di Indonesia yang membantu bisnis dan individu mengakses berbagai layanan digital. Aplikasi kami menyediakan antarmuka yang mudah digunakan untuk memesan layanan digital, mengelola proyek, dan berkomunikasi dengan tim kami.",
+    "description": "Ekalliptus adalah platform digital agency profesional berbasis di Global yang membantu bisnis dan individu mengakses berbagai layanan digital. Aplikasi kami menyediakan antarmuka yang mudah digunakan untuk memesan layanan digital, mengelola proyek, dan berkomunikasi dengan tim kami.",
     "whatWeDo": {
       "title": "Apa yang Kami Lakukan",
       "description": "Ekalliptus menyediakan solusi digital komprehensif termasuk pengembangan website, pengembangan aplikasi mobile, kustomisasi WordPress, editing foto & video, dan layanan perbaikan perangkat. Kami membantu bisnis membangun dan meningkatkan kehadiran digital mereka dengan desain modern yang berpusat pada pengguna."
@@ -281,7 +281,7 @@
   "faq": {
     "pill": "FAQ",
     "title": "Pertanyaan yang Sering Diajukan",
-    "description": "Temukan jawaban untuk pertanyaan umum seputar layanan website development Indonesia, WordPress custom, mobile app development, dan layanan digital lainnya dari ekalliptus.",
+    "description": "Temukan jawaban untuk pertanyaan umum seputar layanan website development Global, WordPress custom, mobile app development, dan layanan digital lainnya dari ekalliptus.",
     "items": [
       {
         "question": "Berapa lama waktu pengerjaan untuk website development?",
@@ -331,7 +331,7 @@
     "title": "Order Layanan Digital",
     "formTitle": "Permintaan Penawaran",
     "subtitle": "Dapatkan penawaran terbaik untuk proyek digital Anda. Tim ahli siap membantu dari konsultasi hingga implementasi.",
-    "description": "Ceritakan kebutuhan proyek website development Indonesia, WordPress custom, mobile app development, atau layanan digital lainnya secara detail. Data akan otomatis masuk ke dashboard internal kami dan notifikasi email akan dikirim ke tim ekalliptus untuk memberikan proposal dalam 24 jam.",
+    "description": "Ceritakan kebutuhan proyek website development Global, WordPress custom, mobile app development, atau layanan digital lainnya secara detail. Data akan otomatis masuk ke dashboard internal kami dan notifikasi email akan dikirim ke tim ekalliptus untuk memberikan proposal dalam 24 jam.",
     "heading": "Order Layanan Digital",
     "subheading": "Dapatkan penawaran terbaik untuk proyek digital Anda",
     "selectService": "Pilih Layanan",
@@ -451,7 +451,7 @@
       "expressNote": "Termasuk biaya Express +25%",
       "priorityNote": "Termasuk biaya Priority +50%"
     },
-    "descriptionSecondary": "Kami melayani berbagai kebutuhan digital: jasa pembuatan website Indonesia, WordPress custom, mobile app development untuk Android dan iOS, service HP laptop profesional, serta editing foto video berkualitas tinggi. Pilih layanan yang sesuai dan isi form di bawah ini.",
+    "descriptionSecondary": "Kami melayani berbagai kebutuhan digital: jasa pembuatan website Global, WordPress custom, mobile app development untuk Android dan iOS, service HP laptop profesional, serta editing foto video berkualitas tinggi. Pilih layanan yang sesuai dan isi form di bawah ini.",
     "basicInfo": {
       "title": "Informasi Dasar"
     },
@@ -496,8 +496,8 @@
       },
       "serviceDetails": {
         "title": "Detail Layanan",
-        "description": "Isi kebutuhan spesifik sesuai layanan website development Indonesia, WordPress custom, mobile app development, service HP laptop, atau editing foto video agar tim kami dapat meninjau dengan cepat dan akurat.",
-        "emptyState": "Pilih layanan website development Indonesia, WordPress custom, mobile app development, service HP laptop, atau editing foto video terlebih dahulu untuk menampilkan form rinci sesuai kebutuhan proyek Anda."
+        "description": "Isi kebutuhan spesifik sesuai layanan website development Global, WordPress custom, mobile app development, service HP laptop, atau editing foto video agar tim kami dapat meninjau dengan cepat dan akurat.",
+        "emptyState": "Pilih layanan website development Global, WordPress custom, mobile app development, service HP laptop, atau editing foto video terlebih dahulu untuk menampilkan form rinci sesuai kebutuhan proyek Anda."
       },
       "contactPreference": {
         "label": "Preferensi Komunikasi"
@@ -957,7 +957,7 @@
     },
     "notes": {
       "title": "Catatan",
-      "description": "Dokumen langsung tersinkron ke Sheet internal ekalliptus untuk website development Indonesia, WordPress custom, mobile app development, service HP laptop, dan editing foto video. Jika ingin mengirim lampiran tambahan (wireframe, requirement, dsb), balas email konfirmasi yang Anda terima setelah pengiriman formulir ini.",
+      "description": "Dokumen langsung tersinkron ke Sheet internal ekalliptus untuk website development Global, WordPress custom, mobile app development, service HP laptop, dan editing foto video. Jika ingin mengirim lampiran tambahan (wireframe, requirement, dsb), balas email konfirmasi yang Anda terima setelah pengiriman formulir ini.",
       "privacy": "Kami menjaga kerahasiaan data Anda dan hanya menggunakan informasi ini untuk keperluan komunikasi proyek website development, WordPress custom, mobile app, dan layanan digital lainnya."
     },
     "actions": {
@@ -1237,11 +1237,11 @@
         "title": "11. Penyelesaian Sengketa",
         "governingLaw": {
           "title": "11.1 Hukum yang Mengatur",
-          "content": "Syarat ini akan diatur dan ditafsirkan sesuai dengan hukum Indonesia, tanpa memperhatikan prinsip konflik hukumnya."
+          "content": "Syarat ini akan diatur dan ditafsirkan sesuai dengan hukum Global, tanpa memperhatikan prinsip konflik hukumnya."
         },
         "arbitration": {
           "title": "11.2 Arbitrase",
-          "content": "Setiap sengketa yang timbul dari atau terkait dengan Syarat atau Layanan akan diselesaikan melalui arbitrase yang mengikat sesuai dengan aturan Asosiasi Arbitrase Indonesia. Arbitrase akan dilakukan dalam bahasa Indonesia dan diadakan di Jakarta, Indonesia."
+          "content": "Setiap sengketa yang timbul dari atau terkait dengan Syarat atau Layanan akan diselesaikan melalui arbitrase yang mengikat sesuai dengan aturan Asosiasi Arbitrase Global. Arbitrase akan dilakukan dalam bahasa Global dan diadakan di Jakarta, Global."
         },
         "classActionWaiver": {
           "title": "11.3 Pelepasan Gugatan Kelas",
@@ -1273,7 +1273,7 @@
         "content": "Jika Anda memiliki pertanyaan tentang Syarat dan Ketentuan Layanan ini, harap hubungi kami:",
         "email": "Email: legal{'@'}ekalliptus.com",
         "website": "Website: www.ekalliptus.com",
-        "businessHours": "Jam Kerja: Senin - Jumat, 09:00 - 18:00 WIB (Waktu Indonesia Barat)"
+        "businessHours": "Jam Kerja: Senin - Jumat, 09:00 - 18:00 WIB (Waktu Global Barat)"
       }
     }
   },
@@ -1320,17 +1320,17 @@
   "seo": {
     "home": {
       "title": "Ekalliptus Digital | Web & Mobile App",
-      "description": "Digital agency Indonesia spesialis website development, WordPress, mobile app, dan multimedia editing. Transformasi bisnis Anda dengan teknologi terdepan.",
-      "keywords": "digital agency indonesia, web development, wordpress, mobile app, website development indonesia, jasa pembuatan website"
+      "description": "Digital agency Global spesialis website development, WordPress, mobile app, dan multimedia editing. Transformasi bisnis Anda dengan teknologi terdepan.",
+      "keywords": "digital agency Global, web development, wordpress, mobile app, website development Global, jasa pembuatan website"
     },
     "order": {
       "title": "Order Layanan Digital - ekalliptus | Pesan Sekarang",
       "description": "Pesan layanan digital ekalliptus - Web Development, Mobile App, WordPress, editing foto video. Dapatkan penawaran terbaik untuk proyek digital Anda.",
       "keywords": "order layanan digital, pesan website, jasa website murah, order web development"
     },
-    "title": "Ekalliptus Digital — Website, WordPress, Mobile App Indonesia",
-    "description": "Ekalliptus - Solusi digital terdepan untuk website development, WordPress, mobile app, dan editing foto/video profesional di Indonesia. Hubungi kami untuk transformasi digital bisnis Anda.",
-    "keywords": "website development Indonesia, WordPress custom, mobile app development, photo editing service, video editing profesional, digital agency Jakarta, jasa pembuatan website, aplikasi mobile Android iOS, editing foto video berkualitas"
+    "title": "Ekalliptus Digital — Website, WordPress, Mobile App Global",
+    "description": "Ekalliptus - Solusi digital terdepan untuk website development, WordPress, mobile app, dan editing foto/video profesional di Global. Hubungi kami untuk transformasi digital bisnis Anda.",
+    "keywords": "website development Global, WordPress custom, mobile app development, photo editing service, video editing profesional, digital agency Jakarta, jasa pembuatan website, aplikasi mobile Android iOS, editing foto video berkualitas"
   },
   "qrPayment": {
     "title": "Pembayaran dengan QR Code",
@@ -1354,7 +1354,7 @@
   },
   "home": {
     "hero": {
-      "badge": "Digital Agency • Berbasis di Tegal, Indonesia",
+      "badge": "Digital Agency • Berbasis di Global",
       "titleLead": "Bangun Produk Digital",
       "titleAccent": "yang Menjual",
       "titleTail": "untuk Bisnis Anda",
@@ -1417,7 +1417,7 @@
       "secondary": "Chat WhatsApp"
     },
     "footer": {
-      "tagline": "Agensi digital yang membantu bisnis Indonesia tumbuh lewat website, aplikasi, dan desain yang berkelas.",
+      "tagline": "Agensi digital yang membantu bisnis Global tumbuh lewat website, aplikasi, dan desain yang berkelas.",
       "servicesHeading": "Layanan",
       "companyHeading": "Perusahaan",
       "resourcesHeading": "Sumber Daya",

@@ -18,20 +18,20 @@ const canonical = new URL(Astro.url.pathname, siteUrl).toString()
 const faqs = [
   { question: 'Apakah lebih baik WordPress custom atau pakai theme premium?', answer: 'Theme premium cocok untuk budget terbatas dan kebutuhan standard. Custom development cocok untuk identitas brand unik, fitur spesifik, dan performa optimal.' },
   { question: 'Berapa biaya WordPress custom development?', answer: 'Mulai Rp 2 juta untuk WordPress dengan theme premium customized, Rp 5-15 juta untuk custom theme dari nol, Rp 10-30 juta untuk WooCommerce e-commerce.' },
-  { question: 'Apakah include hosting dan domain?', answer: 'Ya, paket sudah include domain .com (1 tahun) dan hosting Indonesia (1 tahun pertama).' },
+  { question: 'Apakah include hosting dan domain?', answer: 'Ya, paket sudah include domain .com (1 tahun) dan hosting Global (1 tahun pertama).' },
   { question: 'Bisa migrasi WordPress dari hosting lain?', answer: 'Ya, kami handle migrasi WordPress termasuk database, files, theme, dan plugins tanpa downtime.' },
-  { question: 'Apakah include SEO plugin setup?', answer: 'Ya, Yoast SEO atau Rank Math di-setup dengan konfigurasi optimal untuk SEO Indonesia.' },
+  { question: 'Apakah include SEO plugin setup?', answer: 'Ya, Yoast SEO atau Rank Math di-setup dengan konfigurasi optimal untuk SEO Global.' },
   { question: 'Apakah ada maintenance bulanan?', answer: 'Ya, paket maintenance WordPress mulai Rp 500rb/bulan: update core, plugin, theme, backup, monitoring keamanan.' }
 ]
 
 const serviceSchema = {
   '@context': 'https://schema.org',
   '@type': 'Service',
-  name: 'Jasa WordPress Developer Indonesia',
+  name: 'Jasa WordPress Developer Global',
   serviceType: 'WordPress Development',
-  description: 'Jasa pembuatan dan customisasi website WordPress dengan custom theme, plugin development, WooCommerce, dan maintenance di Indonesia.',
+  description: 'Jasa pembuatan dan customisasi website WordPress dengan custom theme, plugin development, WooCommerce, dan maintenance di Global.',
   provider: { '@id': `${siteUrl}#organization` },
-  areaServed: [{ '@type': 'Country', name: 'Indonesia' }, { '@type': 'City', name: 'Tegal' }],
+  areaServed: [{ '@type': 'Country', name: 'Global' }, { '@type': 'City', name: 'Global' }],
   offers: { '@type': 'AggregateOffer', priceCurrency: 'IDR', lowPrice: '2000000', highPrice: '30000000', availability: 'https://schema.org/InStock' },
   url: canonical
 }
@@ -54,11 +54,11 @@ const breadcrumbSchema = {
 ---
 
 <Layout
-  title="Jasa WordPress Developer Indonesia | Custom & Maintenance - Ekalliptus"
-  description="Jasa WordPress developer Indonesia: custom theme, plugin development, optimasi performa, dan maintenance bulanan. Mulai Rp 2 juta. Garansi 30 hari."
+  title="Jasa WordPress Developer Global | Custom & Maintenance - Ekalliptus"
+  description="Jasa WordPress developer Global: custom theme, plugin development, optimasi performa, dan maintenance bulanan. Mulai Rp 2 juta. Garansi 30 hari."
   lang={locale}
   dir={dir}
-  keywords="jasa wordpress developer, wordpress custom development, jasa wordpress indonesia, maintenance wordpress, optimasi wordpress, woocommerce developer"
+  keywords="jasa wordpress developer, wordpress custom development, jasa wordpress Global, maintenance wordpress, optimasi wordpress, woocommerce developer"
 >
   <Fragment slot="head">
     <script type="application/ld+json" set:html={JSON.stringify(serviceSchema)} />
@@ -80,9 +80,9 @@ const breadcrumbSchema = {
       </nav>
 
       <header class="mb-12 text-center">
-        <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4">Jasa WordPress Developer Indonesia</h1>
+        <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4">Jasa WordPress Developer Global</h1>
         <p class="article-intro text-base sm:text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-          <strong>Jasa WordPress developer</strong> adalah layanan pengembangan website berbasis WordPress yang mencakup custom theme, plugin development, optimasi performa, dan maintenance rutin. Ekalliptus Digital menyediakan jasa WordPress developer profesional di Indonesia dengan harga mulai <strong>Rp 2 juta</strong>, plus paket WooCommerce e-commerce dan maintenance bulanan.
+          <strong>Jasa WordPress developer</strong> adalah layanan pengembangan website berbasis WordPress yang mencakup custom theme, plugin development, optimasi performa, dan maintenance rutin. Ekalliptus Digital menyediakan jasa WordPress developer profesional di Global dengan harga mulai <strong>Rp 2 juta</strong>, plus paket WooCommerce e-commerce dan maintenance bulanan.
         </p>
       </header>
 
@@ -97,7 +97,7 @@ const breadcrumbSchema = {
           <div class="glass-panel rounded-2xl p-5 bg-card/10 border border-border/20">
             <div class="rounded-full bg-primary/10 p-3 w-fit mb-4"><Globe class="h-5 w-5 text-primary" /></div>
             <h3 class="text-lg font-semibold text-foreground mb-2">WooCommerce</h3>
-            <p class="text-sm text-muted-foreground">Toko online WordPress dengan payment gateway lokal Indonesia.</p>
+            <p class="text-sm text-muted-foreground">Toko online WordPress dengan payment gateway lokal Global.</p>
           </div>
           <div class="glass-panel rounded-2xl p-5 bg-card/10 border border-border/20">
             <div class="rounded-full bg-primary/10 p-3 w-fit mb-4"><Zap class="h-5 w-5 text-primary" /></div>

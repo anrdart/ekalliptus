@@ -15,7 +15,7 @@ const { status, class: extra = '' } = Astro.props
 
 const key = String(status ?? '').toLowerCase().trim()
 
-// status key -> { token (CSS var suffix), label (Indonesian) }
+// status key -> { token (CSS var suffix), label (Globaln) }
 const map: Record<string, { token: string; label: string }> = {
   // orders
   new: { token: 'new', label: 'Baru' },
