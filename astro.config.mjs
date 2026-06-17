@@ -1,6 +1,7 @@
 import { defineConfig } from 'astro/config'
 import cloudflare from '@astrojs/cloudflare'
 import sitemap from '@astrojs/sitemap'
+import react from '@astrojs/react'
 
 export default defineConfig({
   output: 'server',
@@ -12,6 +13,7 @@ export default defineConfig({
   }),
   site: 'https://ekalliptus.com',
   integrations: [
+    react(),
     sitemap({
       filter: (page) => !page.includes('/admin'),
       i18n: {

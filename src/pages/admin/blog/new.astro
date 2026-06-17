@@ -1,5 +1,6 @@
 ---
 import AdminLayout from '../_layout.astro'
+import BlogEditor from '../../../components/admin/editor/BlogEditor.tsx'
 ---
 <AdminLayout title="Post Baru">
   <form id="new-post-form" class="glass-card rounded-2xl p-6 max-w-3xl space-y-4">
@@ -34,10 +35,10 @@ import AdminLayout from '../_layout.astro'
       <span class="text-xs text-muted-foreground">Deskripsi (meta)</span>
       <textarea name="description" rows="2" class="mt-1 block w-full rounded-lg border border-border bg-background px-3 py-2 text-sm"></textarea>
     </label>
-    <label class="block">
-      <span class="text-xs text-muted-foreground">Body (Markdown)</span>
-      <textarea name="body_md" rows="14" class="mt-1 block w-full rounded-lg border border-border bg-background px-3 py-2 text-sm font-mono"></textarea>
-    </label>
+    <div class="block">
+      <span class="text-xs text-muted-foreground mb-1 block">Body Content</span>
+      <BlogEditor client:only="react" />
+    </div>
     <div class="grid grid-cols-3 gap-3">
       <label class="block">
         <span class="text-xs text-muted-foreground">Image URL</span>

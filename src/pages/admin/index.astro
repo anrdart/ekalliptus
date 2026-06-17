@@ -4,6 +4,7 @@ import StatCard from '../../components/admin/StatCard.astro'
 import RevenueChart from '../../components/admin/RevenueChart.astro'
 import EmptyState from '../../components/admin/EmptyState.astro'
 import StatusBadge from '../../components/admin/ui/StatusBadge.astro'
+import ActivityFeed from '../../components/admin/ActivityFeed.tsx'
 import { DollarSign, Package, Activity, TrendingUp, ArrowUpRight, ShoppingCart } from 'lucide-astro'
 import { getSupabase } from '../../lib/supabase'
 import { formatIDR } from '../../lib/format'
@@ -94,18 +95,23 @@ const today = new Intl.DateTimeFormat('id-ID', { weekday: 'long', day: 'numeric'
       <h2 class="text-lg font-semibold mb-4">Revenue 7 Hari Terakhir</h2>
       <RevenueChart series={series} />
     </div>
-    <div class="glass-card rounded-2xl p-6">
-      <div class="flex items-center justify-between mb-4">
-        <h2 class="text-lg font-semibold">Pipeline</h2>
-        <a href="/admin/pipeline" class="text-xs text-primary hover:underline">Lihat board →</a>
+    <div class="flex flex-col gap-6">
+      <div class="glass-card rounded-2xl p-6">
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="text-lg font-semibold">Pipeline</h2>
+          <a href="/admin/pipeline" class="text-xs text-primary hover:underline">Lihat board →</a>
+        </div>
+        <div class="space-y-2 text-sm">
+          {LEAD_STAGE_ORDER.map((stage) => (
+            <div class="flex items-center justify-between py-1.5 border-b border-border/40 last:border-0">
+              <span class="text-muted-foreground">{LEAD_STAGE_LABELS[stage]}</span>
+              <span class="font-bold">{leadCounts[stage] ?? 0}</span>
+            </div>
+          ))}
+        </div>
       </div>
-      <div class="space-y-2 text-sm">
-        {LEAD_STAGE_ORDER.map((stage) => (
-          <div class="flex items-center justify-between py-1.5 border-b border-border/40 last:border-0">
-            <span class="text-muted-foreground">{LEAD_STAGE_LABELS[stage]}</span>
-            <span class="font-bold">{leadCounts[stage] ?? 0}</span>
-          </div>
-        ))}
+      <div class="h-auto">
+        <ActivityFeed client:only="react" />
       </div>
     </div>
   </div>

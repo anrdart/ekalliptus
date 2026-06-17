@@ -51,7 +51,7 @@ export async function getPost(id: string): Promise<BlogPost | null> {
 export async function createPost(payload: BlogPostInsert & { body_md?: string }): Promise<BlogPost | null> {
   const supabase = getSupabase(true)
   if (!supabase) return null
-  const body_html = payload.body_md ? await marked.parse(payload.body_md) : (payload.body_html ?? null)
+  const body_html = payload.body_html ? payload.body_html : (payload.body_md ? await marked.parse(payload.body_md) : null)
   const { body_md, ...rest } = payload
   const { data } = await supabase.from('blog_posts').insert({ ...rest, body_html }).select().single()
   return (data as BlogPost) ?? null
@@ -61,7 +61,9 @@ export async function updatePost(id: string, payload: BlogPostUpdate & { body_md
   const supabase = getSupabase(true)
   if (!supabase) return null
   const update = { ...payload }
-  if (payload.body_md) {
+  if (payload.body_html) {
+    update.body_html = payload.body_html
+  } else if (payload.body_md) {
     update.body_html = await marked.parse(payload.body_md)
   }
   delete (update as any).body_md
