@@ -17,10 +17,8 @@ const trust = [
 
 <section
   id="home"
-  class="bg-mesh relative flex min-h-[calc(100svh-5rem)] items-center overflow-hidden px-4 scroll-mt-20 lg:scroll-mt-32"
+  class="relative flex min-h-[calc(100svh-5rem)] items-center overflow-hidden px-4 scroll-mt-20 lg:scroll-mt-32 bg-background"
 >
-  <div class="bg-grid pointer-events-none absolute inset-0 opacity-60"></div>
-
   <div class="relative z-10 mx-auto flex w-full max-w-5xl flex-col items-center gap-8 py-12 sm:py-16">
     <div
       class="hero-content w-full text-center opacity-0 translate-y-8 transition-all duration-700 ease-smooth"
@@ -43,7 +41,7 @@ const trust = [
         style="font-size: clamp(2.25rem, 7vw, 4.5rem); line-height: 1.05;"
       >
         {t('home.hero.titleLead')}{' '}
-        <span class="text-gradient-brand">{t('home.hero.titleAccent')}</span>{' '}
+        <span class="text-primary">{t('home.hero.titleAccent')}</span>{' '}
         {t('home.hero.titleTail')}
       </h1>
 
