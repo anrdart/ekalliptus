@@ -198,6 +198,17 @@ export default function BlogEditor({ initialContent = '' }: BlogEditorProps) {
     },
   });
 
+  // Ensure content update if initialContent changes after mounting
+  React.useEffect(() => {
+    if (editor && initialContent !== editor.getHTML() && initialContent !== '') {
+      // Prevent recursive updates if user is typing
+      if (!editor.isFocused) {
+        editor.commands.setContent(initialContent);
+        setContentHtml(initialContent);
+      }
+    }
+  }, [initialContent, editor]);
+
   return (
     <div className="border border-border rounded-lg bg-background">
       <MenuBar editor={editor} />
@@ -205,7 +216,7 @@ export default function BlogEditor({ initialContent = '' }: BlogEditorProps) {
       {/* Hidden input to ensure HTML value is submitted along with the regular Astro Form */}
       <input type="hidden" name="body_html" value={contentHtml} />
       {/* Fallback empty markdown or sync plain text if needed */}
-      <input type="hidden" name="body_md" value={editor?.getText() || ''} />
+      <input type="hidden" name="body_md" value="" />
     </div>
   );
 }
