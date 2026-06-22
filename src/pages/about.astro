@@ -63,7 +63,7 @@ const breadcrumbSchema = {
       <header class="text-center mb-12">
         <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4">Tentang Ekalliptus Digital</h1>
         <p class="article-intro text-base sm:text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-          <strong>Ekalliptus Digital</strong> adalah digital agency Global yang berbasis di <strong>Global, Jawa Tengah</strong>, didirikan pada tahun 2023. Kami spesialis dalam pembuatan website, aplikasi mobile, WordPress development, UI/UX design, dan multimedia editing untuk bisnis di seluruh Global.
+          <strong>Ekalliptus Digital</strong> adalah digital agency global yang didirikan pada tahun 2023. Kami spesialis dalam pembuatan website, aplikasi mobile, serta maintenance server dan web untuk bisnis di seluruh dunia.
         </p>
       </header>
 
@@ -144,8 +144,7 @@ const breadcrumbSchema = {
           {[
             { key: 'websiteDevelopment', href: '/services/website' },
             { key: 'mobileAppDevelopment', href: '/services/mobile-app' },
-            { key: 'wordpressDevelopment', href: '/services/wordpress' },
-            { key: 'uiUxDesign', href: '/services/ui-ux' }
+            { key: 'websiteMaintenance', href: '/services/maintenance' }
           ].map(service => (
             <a href={service.href} class="glass-panel rounded-xl p-4 bg-card/10 border border-border/20 hover:border-primary/30 transition text-center group">
               <span class="text-sm font-medium text-foreground group-hover:text-primary transition">{t(`services.cards.${service.key}.title`, locale)}</span>

@@ -2,17 +2,15 @@ import type { ServiceType, Urgency } from '../types/database'
 
 export const SERVICE_TYPE_MAP: Record<string, ServiceType> = {
   'web': 'website',
-  'wordpress': 'wordpress',
   'mobile': 'mobile',
-  'uiux': 'editing',
+  'maintenance': 'service_device',
   'service_device': 'service_device'
 }
 
 export const SERVICE_PRICES: Record<string, number> = {
   'web': 2500000,
-  'wordpress': 1500000,
   'mobile': 5000000,
-  'uiux': 1000000,
+  'maintenance': 1500000,
   'service_device': 500000
 }
 

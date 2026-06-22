@@ -3,7 +3,7 @@ import { createOrder } from '../../lib/supabase'
 import { SERVICE_TYPE_MAP, SERVICE_PRICES } from '../../utils/pricing'
 import { createLead } from '../../lib/admin/leads'
 
-const VALID_SERVICES = ['web', 'mobile', 'wordpress', 'uiux']
+const VALID_SERVICES = ['web', 'mobile', 'maintenance']
 
 export const POST: APIRoute = async ({ request }) => {
   try {

@@ -44,7 +44,7 @@ const dir = getDir(locale)
             <label class="block text-sm font-medium text-foreground mb-2">
               {t('order.selectService', locale)}
             </label>
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
               <button type="button" data-service="web" data-price="2500000" class="service-btn glass-panel rounded-xl p-3 sm:p-4 text-center transition hover:scale-105 active:scale-[0.98] min-h-[44px]">
                 <span class="block font-medium text-sm sm:text-base">{t('order.serviceCards.web.title', locale)}</span>
                 <span class="text-[0.65rem] sm:text-xs text-muted-foreground">Rp 2.500.000</span>
@@ -53,13 +53,9 @@ const dir = getDir(locale)
                 <span class="block font-medium text-sm sm:text-base">{t('order.serviceCards.mobile.title', locale)}</span>
                 <span class="text-[0.65rem] sm:text-xs text-muted-foreground">Rp 5.000.000</span>
               </button>
-              <button type="button" data-service="wordpress" data-price="1500000" class="service-btn glass-panel rounded-xl p-3 sm:p-4 text-center transition hover:scale-105 active:scale-[0.98] min-h-[44px]">
-                <span class="block font-medium text-sm sm:text-base">{t('order.serviceCards.wordpress.title', locale)}</span>
+              <button type="button" data-service="maintenance" data-price="1500000" class="service-btn glass-panel rounded-xl p-3 sm:p-4 text-center transition hover:scale-105 active:scale-[0.98] min-h-[44px]">
+                <span class="block font-medium text-sm sm:text-base">{t('order.serviceCards.maintenance.title', locale)}</span>
                 <span class="text-[0.65rem] sm:text-xs text-muted-foreground">Rp 1.500.000</span>
-              </button>
-              <button type="button" data-service="uiux" data-price="1000000" class="service-btn glass-panel rounded-xl p-3 sm:p-4 text-center transition hover:scale-105 active:scale-[0.98] min-h-[44px]">
-                <span class="block font-medium text-sm sm:text-base">{t('order.serviceCards.uiux.title', locale)}</span>
-                <span class="text-[0.65rem] sm:text-xs text-muted-foreground">Rp 1.000.000</span>
               </button>
             </div>
             <input type="hidden" name="service" id="selected-service" />
@@ -129,15 +125,13 @@ const dir = getDir(locale)
   const SERVICE_LABELS: Record<string, string> = {
     web: 'Website Development',
     mobile: 'Mobile App Development',
-    wordpress: 'WordPress Development',
-    uiux: 'UI/UX Design'
+    maintenance: 'Maintenance Server & Web'
   }
 
   const SERVICE_PRICES: Record<string, number> = {
     web: 2500000,
     mobile: 5000000,
-    wordpress: 1500000,
-    uiux: 1000000
+    maintenance: 1500000
   }
 
   function formatPrice(n: number): string {
