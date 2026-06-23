@@ -1,5 +1,6 @@
 ---
 import { MessageCircle, Phone, Mail, Navigation, ArrowRight } from 'lucide-astro'
+import { waLink } from '../lib/constants'
 
 interface Props {
   t: (key: string) => string
@@ -26,7 +27,7 @@ const { t } = Astro.props
 
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 mb-8 sm:mb-10">
         <a
-          href="https://wa.me/6281999900306"
+          href={waLink()}
           target="_blank"
           rel="noopener noreferrer"
           class="glass-panel rounded-2xl p-5 sm:p-6 hover:bg-card/30 transition-all cursor-interactive group active:scale-[0.99]"
