@@ -1,7 +1,6 @@
 ---
 import AdminLayout from '../_layout.astro'
 import PipelineKanban from '../../../components/admin/PipelineKanban.astro'
-import Button from '../../../components/admin/ui/Button.astro'
 import { listLeadsByStage, totalEstimatedValueOpen, countLeadsByStage } from '../../../lib/admin/leads'
 import { Plus } from 'lucide-astro'
 import { formatIDR } from '../../../lib/format'
@@ -12,36 +11,46 @@ const totalOpen = await totalEstimatedValueOpen()
 const totalLeads = Object.values(counts).reduce((s, n) => s + n, 0)
 ---
 <AdminLayout title="Pipeline">
-  <div class="mb-5 flex items-center justify-between">
-    <div>
-      <p class="text-sm text-muted-foreground">
-        <span class="font-semibold text-foreground">{totalLeads}</span> lead aktif · Estimasi nilai terbuka
-        <span class="font-semibold text-primary">{formatIDR(totalOpen)}</span>
-      </p>
+  <div class="glass-panel rounded-2xl p-4 mb-4 flex items-center justify-between">
+    <div class="flex items-center gap-4 text-xs">
+      <div>
+        <span class="text-muted-foreground">Lead aktif</span>
+        <span class="font-bold text-foreground ml-1.5">{totalLeads}</span>
+      </div>
+      <div class="hidden sm:block w-px h-4 bg-border"></div>
+      <div class="hidden sm:block">
+        <span class="text-muted-foreground">Estimasi nilai</span>
+        <span class="font-bold text-primary ml-1.5">{formatIDR(totalOpen)}</span>
+      </div>
     </div>
-    <Button id="new-lead-btn" size="sm">
-      <Plus class="h-4 w-4" /> Lead Baru
-    </Button>
+    <button id="new-lead-btn" class="inline-flex items-center gap-1.5 rounded-lg bg-primary px-3 py-1.5 text-xs font-semibold text-primary-foreground hover:bg-primary/90 transition active:scale-[0.98]">
+      <Plus class="h-3.5 w-3.5" /> Lead Baru
+    </button>
   </div>
 
   <PipelineKanban board={board} />
 
   <!-- Modal: New Lead -->
-  <dialog id="new-lead-dialog" class="rounded-2xl p-0 backdrop:bg-black/50">
-    <form id="new-lead-form" class="bg-background p-6 w-[420px] max-w-[90vw]">
-      <h2 class="text-lg font-semibold mb-4">Lead Baru</h2>
-      <div class="space-y-3">
-        <input name="name" required placeholder="Nama" class="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm" />
-        <input name="whatsapp" placeholder="WhatsApp" class="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm" />
-        <input name="email" type="email" placeholder="Email" class="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm" />
-        <input name="company" placeholder="Perusahaan" class="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm" />
-        <input name="service_interest" placeholder="Layanan yang diminati" class="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm" />
-        <input name="estimated_value" type="number" placeholder="Estimasi nilai (Rp)" class="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm" />
-        <textarea name="notes" placeholder="Catatan" rows="3" class="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm"></textarea>
+  <dialog id="new-lead-dialog" class="rounded-2xl p-0 backdrop:bg-black/50 max-w-[90vw]">
+    <form id="new-lead-form" class="glass-panel p-6 w-[400px] max-w-[90vw]">
+      <h2 class="text-base font-semibold mb-4">Lead Baru</h2>
+      <div class="space-y-2.5">
+        <input name="name" required placeholder="Nama" class="w-full rounded-lg border border-border bg-input px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" />
+        <input name="whatsapp" placeholder="WhatsApp" class="w-full rounded-lg border border-border bg-input px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" />
+        <input name="email" type="email" placeholder="Email" class="w-full rounded-lg border border-border bg-input px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" />
+        <input name="company" placeholder="Perusahaan" class="w-full rounded-lg border border-border bg-input px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" />
+        <select name="service_interest" class="w-full rounded-lg border border-border bg-input px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30">
+          <option value="">Pilih layanan...</option>
+          <option value="website">Website Development</option>
+          <option value="mobile">Mobile App Development</option>
+          <option value="service_device">Maintenance</option>
+        </select>
+        <input name="estimated_value" type="number" placeholder="Estimasi nilai (Rp)" class="w-full rounded-lg border border-border bg-input px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30" />
+        <textarea name="notes" placeholder="Catatan" rows="2" class="w-full rounded-lg border border-border bg-input px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 resize-none"></textarea>
       </div>
       <div class="mt-4 flex justify-end gap-2">
-        <button type="button" id="cancel-new-lead" class="rounded-lg border border-border px-4 py-2 text-sm">Batal</button>
-        <button type="submit" class="rounded-lg bg-primary px-4 py-2 text-sm text-primary-foreground">Simpan</button>
+        <button type="button" id="cancel-new-lead" class="rounded-lg border border-border px-3 py-1.5 text-sm hover:bg-accent/40 transition">Batal</button>
+        <button type="submit" class="rounded-lg bg-primary px-3 py-1.5 text-sm font-semibold text-primary-foreground hover:bg-primary/90 transition">Simpan</button>
       </div>
     </form>
   </dialog>

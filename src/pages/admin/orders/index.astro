@@ -5,10 +5,8 @@ import Pagination from '../../../components/admin/Pagination.astro'
 import EmptyState from '../../../components/admin/EmptyState.astro'
 import DataTable from '../../../components/admin/ui/DataTable.astro'
 import StatusBadge from '../../../components/admin/ui/StatusBadge.astro'
-import Badge from '../../../components/admin/ui/Badge.astro'
 import { ShoppingCart, Eye } from 'lucide-astro'
 import { getSupabase } from '../../../lib/supabase'
-import { formatIDR } from '../../../lib/format'
 
 const url = new URL(Astro.request.url)
 const search = url.searchParams.get('search') ?? ''
@@ -18,6 +16,8 @@ const page = Math.max(1, Number(url.searchParams.get('page') ?? '1'))
 const pageSize = 20
 const from = (page - 1) * pageSize
 const to = from + pageSize - 1
+
+const SERVICE_LABEL: Record<string, string> = { website: 'Website', mobile: 'Mobile App', service_device: 'Maintenance', wordpress: 'Web', editing: 'Other' }
 
 const supabase = getSupabase(true)
 let orders: any[] = []
@@ -44,24 +44,23 @@ const baseUrl = `/admin/orders?search=${encodeURIComponent(search)}&service=${se
       { name: 'service', label: 'Layanan', selected: service, options: [
         { value: '', label: 'Semua Layanan' },
         { value: 'website', label: 'Website' },
-        { value: 'wordpress', label: 'WordPress' },
         { value: 'mobile', label: 'Mobile App' },
-        { value: 'editing', label: 'UI/UX Design' }
+        { value: 'service_device', label: 'Maintenance' }
       ]},
       { name: 'status', label: 'Status', selected: status, options: [
         { value: '', label: 'Semua Status' },
-        { value: 'new', label: 'New' },
-        { value: 'contacted', label: 'Contacted' },
-        { value: 'in_progress', label: 'In Progress' },
-        { value: 'done', label: 'Done' },
-        { value: 'cancelled', label: 'Cancelled' }
+        { value: 'new', label: 'Baru' },
+        { value: 'contacted', label: 'Dihubungi' },
+        { value: 'in_progress', label: 'Dikerjakan' },
+        { value: 'done', label: 'Selesai' },
+        { value: 'cancelled', label: 'Dibatalkan' }
       ]}
     ]}
   />
 
-  <div class="glass-card rounded-2xl p-6">
-    <div class="mb-4 flex items-center justify-between">
-      <h2 class="text-lg font-semibold"><span class="text-primary">{total}</span> order</h2>
+  <div class="glass-panel rounded-2xl p-5">
+    <div class="mb-4">
+      <h2 class="text-sm font-semibold uppercase tracking-wide text-muted-foreground"><span class="text-primary">{total}</span> order</h2>
     </div>
     {orders.length === 0 ? (
       <EmptyState icon={ShoppingCart} title="Belum ada order" description="Order yang masuk akan muncul di sini." />
@@ -69,18 +68,18 @@ const baseUrl = `/admin/orders?search=${encodeURIComponent(search)}&service=${se
       <>
         <DataTable>
           <Fragment slot="head">
-            <th>Order ID</th><th>Customer</th><th>Layanan</th><th class="text-right">Harga</th><th>Status</th><th></th>
+            <th>Order</th><th>Customer</th><th>Layanan</th><th>Status</th><th>Tanggal</th><th></th>
           </Fragment>
           {orders.map((o) => (
             <tr class="dt-row">
               <td class="dt-cell font-mono text-xs">ORD-{o.id.slice(0, 8)}</td>
               <td class="dt-cell">
-                <div class="font-medium">{o.customer_name}</div>
+                <div class="font-medium text-sm">{o.customer_name}</div>
                 <div class="text-xs text-muted-foreground">{o.whatsapp}</div>
               </td>
-              <td class="dt-cell"><Badge variant="primary">{o.service_type}</Badge></td>
-              <td class="dt-cell text-right font-medium">{formatIDR(Number((o as any).price ?? (o.pricing as any)?.grand_total ?? 0))}</td>
+              <td class="dt-cell"><span class="rounded-md bg-primary/10 px-2 py-0.5 text-xs font-medium text-primary">{SERVICE_LABEL[o.service_type] ?? o.service_type}</span></td>
               <td class="dt-cell"><StatusBadge status={o.status} /></td>
+              <td class="dt-cell text-xs text-muted-foreground">{o.created_at ? new Date(o.created_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'short' }) : '-'}</td>
               <td class="dt-cell text-right">
                 <a href={`/admin/orders/${o.id}`} class="inline-flex items-center gap-1 text-xs text-primary hover:underline">
                   <Eye class="h-3.5 w-3.5" /> Detail

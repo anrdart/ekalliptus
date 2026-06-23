@@ -33,10 +33,8 @@ const baseUrl = `/admin/customers?search=${encodeURIComponent(search)}&service=$
         options: [
           { value: '', label: 'Semua Layanan' },
           { value: 'website', label: 'Website' },
-          { value: 'wordpress', label: 'WordPress' },
           { value: 'mobile', label: 'Mobile App' },
-          { value: 'editing', label: 'Editing' },
-          { value: 'service_device', label: 'Service Device' }
+          { value: 'service_device', label: 'Maintenance' }
         ]
       },
       {
@@ -52,41 +50,32 @@ const baseUrl = `/admin/customers?search=${encodeURIComponent(search)}&service=$
     ]}
   />
 
-  <div class="glass-card rounded-2xl p-6">
-    <div class="mb-4 flex items-center justify-between">
-      <h2 class="text-lg font-semibold"><span class="text-primary">{total}</span> pelanggan</h2>
+  <div class="glass-panel rounded-2xl p-5">
+    <div class="mb-4">
+      <h2 class="text-sm font-semibold uppercase tracking-wide text-muted-foreground"><span class="text-primary">{total}</span> pelanggan</h2>
     </div>
 
     {customers.length === 0 ? (
-      <EmptyState
-        icon={Users}
-        title="Belum ada pelanggan"
-        description="Pelanggan akan muncul di sini setelah ada order pertama masuk."
-      />
+      <EmptyState icon={Users} title="Belum ada pelanggan" description="Pelanggan muncul setelah order pertama masuk." />
     ) : (
       <>
         <DataTable>
           <Fragment slot="head">
-            <th>Nama</th>
-            <th>Kontak</th>
-            <th>Layanan</th>
-            <th class="text-right">Total Order</th>
-            <th class="text-right">Total Spend</th>
-            <th></th>
+            <th>Nama</th><th>Kontak</th><th>Layanan</th><th class="text-right">Order</th><th class="text-right">Spend</th><th></th>
           </Fragment>
           {customers.map((c) => (
             <tr class="dt-row">
               <td class="dt-cell">
-                <div class="font-medium">{c.customer_name}</div>
+                <div class="font-medium text-sm">{c.customer_name}</div>
                 {c.company && <div class="text-xs text-muted-foreground">{c.company}</div>}
               </td>
               <td class="dt-cell text-xs text-muted-foreground">
                 {c.email && <div>{c.email}</div>}
                 <div>{c.whatsapp}</div>
               </td>
-              <td class="dt-cell"><Badge variant="primary">{c.primary_service}</Badge></td>
-              <td class="dt-cell text-right font-medium">{c.total_orders}</td>
-              <td class="dt-cell text-right font-semibold text-emerald-600 dark:text-emerald-400">{formatIDR(c.total_spent)}</td>
+              <td class="dt-cell"><span class="rounded-md bg-primary/10 px-2 py-0.5 text-xs font-medium text-primary">{c.primary_service}</span></td>
+              <td class="dt-cell text-right font-medium text-sm">{c.total_orders}</td>
+              <td class="dt-cell text-right font-semibold text-sm">{formatIDR(c.total_spent)}</td>
               <td class="dt-cell text-right">
                 <a href={`/admin/customers/${c.id}`} class="inline-flex items-center gap-1 text-xs text-primary hover:underline">
                   <Eye class="h-3.5 w-3.5" /> Detail

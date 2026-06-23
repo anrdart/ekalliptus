@@ -4,7 +4,6 @@ import SearchFilter from '../../../components/admin/SearchFilter.astro'
 import Pagination from '../../../components/admin/Pagination.astro'
 import EmptyState from '../../../components/admin/EmptyState.astro'
 import StatusBadge from '../../../components/admin/ui/StatusBadge.astro'
-import Button from '../../../components/admin/ui/Button.astro'
 import { FileText, Plus } from 'lucide-astro'
 import { listPosts } from '../../../lib/admin/blog'
 import { formatDate } from '../../../lib/format'
@@ -22,13 +21,14 @@ const { posts, total, totalPages } = await listPosts({
   page
 })
 const baseUrl = `/admin/blog?search=${encodeURIComponent(search)}&status=${status}&locale=${locale}`
+const LOCALE_FLAG: Record<string, string> = { id: '🇮🇩', en: '🇬🇧', ja: '🇯🇵', ko: '🇰🇷', ru: '🇷🇺', ar: '🇸🇦', tr: '🇹🇷' }
 ---
 <AdminLayout title="Blog">
   <div class="mb-4 flex items-center justify-between">
-    <h2 class="text-lg font-semibold"><span class="text-primary">{total}</span> post</h2>
-    <Button href="/admin/blog/new" size="sm">
-      <Plus class="h-4 w-4" /> Tulis Post Baru
-    </Button>
+    <h2 class="text-sm font-semibold uppercase tracking-wide text-muted-foreground"><span class="text-primary">{total}</span> post</h2>
+    <a href="/admin/blog/new" class="inline-flex items-center gap-1.5 rounded-lg bg-primary px-3 py-1.5 text-xs font-semibold text-primary-foreground hover:bg-primary/90 transition active:scale-[0.98]">
+      <Plus class="h-3.5 w-3.5" /> Tulis Post Baru
+    </a>
   </div>
 
   <SearchFilter
@@ -45,27 +45,27 @@ const baseUrl = `/admin/blog?search=${encodeURIComponent(search)}&status=${statu
       ]},
       { name: 'locale', label: 'Bahasa', selected: locale, options: [
         { value: '', label: 'Semua Bahasa' },
-        { value: 'id', label: 'Global' },
-        { value: 'en', label: 'English' },
-        { value: 'ja', label: '日本語' },
-        { value: 'ko', label: '한국어' },
-        { value: 'ru', label: 'Русский' },
-        { value: 'ar', label: 'العربية' },
-        { value: 'tr', label: 'Türkçe' }
+        { value: 'id', label: '🇮🇩 Indonesia' },
+        { value: 'en', label: '🇬🇧 English' },
+        { value: 'ja', label: '🇯🇵 日本語' },
+        { value: 'ko', label: '🇰🇷 한국어' },
+        { value: 'ru', label: '🇷🇺 Русский' },
+        { value: 'ar', label: '🇸🇦 العربية' },
+        { value: 'tr', label: '🇹🇷 Türkçe' }
       ]}
     ]}
   />
 
-  <div class="glass-card rounded-2xl p-6">
+  <div class="glass-panel rounded-2xl p-5">
     {posts.length === 0 ? (
       <EmptyState icon={FileText} title="Belum ada post" ctaLabel="Tulis Post Pertama" ctaHref="/admin/blog/new" />
     ) : (
       <ul class="divide-y divide-border/40">
         {posts.map((p) => (
-          <li class="flex items-center justify-between gap-3 py-3">
+          <li class="flex items-center justify-between gap-3 py-3 group">
             <div class="min-w-0">
-              <a href={`/admin/blog/${p.id}`} class="font-medium hover:text-primary">{p.title}</a>
-              <div class="text-xs text-muted-foreground">{p.category} · {p.locale} · diperbarui {formatDate(p.updated_at)}</div>
+              <a href={`/admin/blog/${p.id}`} class="text-sm font-medium hover:text-primary transition">{p.title}</a>
+              <div class="text-xs text-muted-foreground mt-0.5">{LOCALE_FLAG[p.locale] ?? '🌐'} {p.category ?? 'Uncategorized'} · {formatDate(p.updated_at)}</div>
             </div>
             <StatusBadge status={p.status} />
           </li>

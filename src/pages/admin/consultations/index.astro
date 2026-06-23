@@ -16,18 +16,18 @@ const supabaseAnonKey = supabaseEnv.anonKey || ''
     </>
   )}
   <div class="grid grid-cols-1 lg:grid-cols-[360px,1fr] gap-6">
-    <section class="glass-card rounded-2xl p-5 min-h-[520px]">
+    <section class="glass-panel rounded-2xl p-5 min-h-[520px]">
       <div class="flex items-center justify-between mb-4">
         <div>
-          <h2 class="text-lg font-semibold">Conversations</h2>
-          <p class="text-sm text-muted-foreground">Recent visitor handoffs</p>
+          <h2 class="text-sm font-semibold uppercase tracking-wide text-muted-foreground">Conversations</h2>
+          <p class="text-xs text-muted-foreground/70">Visitor handoffs</p>
         </div>
         <button
           id="refresh-consultations"
-          class="h-9 w-9 rounded-xl glass-panel inline-flex items-center justify-center hover:bg-accent cursor-interactive"
+          class="h-8 w-8 rounded-lg glass-panel inline-flex items-center justify-center hover:bg-accent cursor-interactive"
           aria-label="Refresh consultations"
         >
-          <RefreshCw class="h-4 w-4" />
+          <RefreshCw class="h-3.5 w-3.5" />
         </button>
       </div>
       <div id="consultation-list" class="space-y-3"></div>
@@ -40,7 +40,7 @@ const supabaseAnonKey = supabaseEnv.anonKey || ''
       </div>
     </section>
 
-    <section class="glass-card rounded-2xl p-5 min-h-[520px] flex flex-col">
+    <section class="glass-panel rounded-2xl p-5 min-h-[520px] flex flex-col">
       <div id="thread-empty" class="flex flex-1 flex-col items-center justify-center text-center">
         <div class="mb-4 h-16 w-16 rounded-full bg-primary/10 flex items-center justify-center">
           <MessageSquare class="h-8 w-8 text-primary" />
@@ -50,23 +50,23 @@ const supabaseAnonKey = supabaseEnv.anonKey || ''
       </div>
 
       <div id="thread-panel" class="hidden flex-1 flex-col min-h-0">
-        <div class="border-b border-border pb-4 mb-4">
-          <h2 id="thread-title" class="text-lg font-semibold"></h2>
-          <p id="thread-meta" class="text-sm text-muted-foreground"></p>
+        <div class="border-b border-border pb-3 mb-3">
+          <h2 id="thread-title" class="text-base font-semibold"></h2>
+          <p id="thread-meta" class="text-xs text-muted-foreground"></p>
         </div>
 
         <div id="message-list" class="flex-1 min-h-[320px] overflow-y-auto space-y-3 pr-1 custom-scrollbar"></div>
 
-        <form id="reply-form" class="mt-4 flex gap-3 border-t border-border pt-4">
+        <form id="reply-form" class="mt-4 flex gap-2 border-t border-border pt-3">
           <textarea
             id="reply-input"
             rows="2"
-            class="glass-input flex-1 resize-none rounded-xl px-4 py-3 text-sm outline-none"
-            placeholder="Write a reply..."
+            class="glass-input flex-1 resize-none rounded-lg px-3 py-2 text-sm outline-none"
+            placeholder="Tulis balasan..."
           ></textarea>
           <button
             type="submit"
-            class="h-12 w-12 rounded-xl bg-primary text-primary-foreground inline-flex items-center justify-center hover:bg-primary/90 cursor-interactive"
+            class="h-11 w-11 rounded-lg bg-primary text-primary-foreground inline-flex items-center justify-center hover:bg-primary/90 cursor-interactive flex-shrink-0"
             aria-label="Send reply"
           >
             <Send class="h-4 w-4" />
