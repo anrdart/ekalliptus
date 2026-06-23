@@ -15,19 +15,7 @@ export default defineConfig({
   integrations: [
     react(),
     sitemap({
-      filter: (page) => !page.includes('/admin'),
-      i18n: {
-        defaultLocale: 'id',
-        locales: {
-          id: 'id-ID',
-          en: 'en-US',
-          ja: 'ja-JP',
-          ko: 'ko-KR',
-          ru: 'ru-RU',
-          ar: 'ar-SA',
-          tr: 'tr-TR'
-        }
-      }
+      filter: (page) => !page.includes('/admin')
     })
   ],
   vite: {

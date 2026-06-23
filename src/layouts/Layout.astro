@@ -55,15 +55,6 @@ const ogLocaleMap: Record<string, string> = {
 const ogLocale = ogLocaleMap[lang] ?? 'id_ID'
 const ogLocaleAlternates = Object.values(ogLocaleMap).filter(l => l !== ogLocale)
 
-const locales = ['id', 'en', 'ja', 'ko', 'ru', 'ar', 'tr']
-const path = Astro.url.pathname
-
-function localePath(l: string) {
-  const pathWithoutSlash = path.replace(/^\//, '')
-  if (l === 'id') return `${siteUrl}/${pathWithoutSlash}`
-  return `${siteUrl}/${l}/${pathWithoutSlash}`
-}
-
 const publishedYMD = publishedTime ? publishedTime.slice(0, 10).replace(/-/g, '/') : undefined
 ---
 
@@ -91,11 +82,6 @@ const publishedYMD = publishedTime ? publishedTime.slice(0, 10).replace(/-/g, '/
     <link rel="manifest" href="/site.webmanifest" />
     <link rel="canonical" href={canonical} />
     <link rel="sitemap" type="application/xml" href="/sitemap-index.xml" />
-
-    {locales.map(l => (
-      <link rel="alternate" hreflang={l} href={localePath(l)} />
-    ))}
-    <link rel="alternate" hreflang="x-default" href={localePath('id')} />
 
     <link rel="preload" as="font" type="font/woff2" href="/fonts/inter-latin-400-normal.woff2" crossorigin />
     <link rel="preload" as="font" type="font/woff2" href="/fonts/inter-latin-600-normal.woff2" crossorigin />
@@ -137,8 +123,23 @@ const publishedYMD = publishedTime ? publishedTime.slice(0, 10).replace(/-/g, '/
 
     <slot name="head" />
 
-    <!-- Google AdSense -->
-    <script is:inline async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9374589831001594" crossorigin="anonymous"></script>
+    <!-- Google AdSense — idle-loaded to avoid blocking critical render -->
+    <script is:inline>
+      const loadAds = () => {
+        if (window.__adsLoaded) return;
+        window.__adsLoaded = true;
+        const s = document.createElement('script');
+        s.async = true;
+        s.crossOrigin = 'anonymous';
+        s.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9374589831001594';
+        document.head.appendChild(s);
+      };
+      if ('requestIdleCallback' in window) {
+        requestIdleCallback(loadAds, { timeout: 5000 });
+      } else {
+        window.addEventListener('load', () => setTimeout(loadAds, 2000), { once: true });
+      }
+    </script>
 
     <!-- Google Analytics 4 — deferred to idle to avoid blocking critical render -->
     <script is:inline>
