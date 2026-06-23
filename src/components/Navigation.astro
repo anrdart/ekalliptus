@@ -41,31 +41,31 @@ const isHomePage = currentPath === '/'
 <header class="pointer-events-none fixed left-1/2 top-0 z-40 w-full max-w-md sm:max-w-4xl -translate-x-1/2 px-2 sm:px-6 lg:px-8 pt-2 sm:pt-3 safe-top">
   <nav
     id="main-nav"
-    class="pointer-events-auto flex items-center justify-between rounded-full px-3 sm:px-4 py-1.5 sm:py-2 transition-all duration-300 glass-nav"
+    class="pointer-events-auto flex items-center justify-between rounded-full px-2.5 sm:px-3.5 py-1 transition-all duration-300 glass-nav"
   >
     <a
       href="/"
-      class="cursor-interactive flex items-center space-x-3 rounded-full px-2 py-1 transition text-foreground"
+      class="cursor-interactive flex items-center rounded-full px-1 py-0.5 transition text-foreground"
     >
       <img
         src="/logo_mobile.webp"
         alt="Ekalliptus Digital Logo"
-        width="60"
-        height="40"
-        class="h-[60px] w-auto transition-opacity hover:opacity-90 invert dark:invert-0"
+        width="48"
+        height="32"
+        class="h-[44px] sm:h-[48px] w-auto transition-opacity hover:opacity-90 invert dark:invert-0"
         loading="eager"
         fetchpriority="high"
         decoding="async"
       />
     </a>
 
-    <div class="hidden items-center gap-1 md:flex" id="desktop-nav">
+    <div class="hidden items-center gap-0.5 md:flex" id="desktop-nav">
       {sectionLinks.map((item) => (
         item.dropdown ? (
           <div class="relative group">
             <button
               type="button"
-              class="nav-link cursor-interactive rounded-full px-4 py-2 text-sm font-medium text-foreground/80 transition hover:bg-foreground/10 hover:text-foreground"
+              class="nav-link cursor-interactive rounded-full px-3 py-1 text-[13px] font-medium text-foreground/80 transition hover:bg-foreground/10 hover:text-foreground"
               data-hash={item.hash}
             >
               {t(`nav.${item.key}`)}
@@ -84,7 +84,7 @@ const isHomePage = currentPath === '/'
         ) : item.external ? (
           <a
             href={item.href}
-            class="nav-link cursor-interactive rounded-full px-4 py-2 text-sm font-medium text-foreground/80 transition hover:bg-foreground/10 hover:text-foreground"
+            class="nav-link cursor-interactive rounded-full px-3 py-1 text-[13px] font-medium text-foreground/80 transition hover:bg-foreground/10 hover:text-foreground"
           >
             {t(`nav.${item.key}`)}
           </a>
@@ -92,14 +92,14 @@ const isHomePage = currentPath === '/'
           <button
             type="button"
             data-hash={item.hash}
-            class="nav-link cursor-interactive rounded-full px-4 py-2 text-sm font-medium text-foreground/80 transition hover:bg-foreground/10 hover:text-foreground"
+            class="nav-link cursor-interactive rounded-full px-3 py-1 text-[13px] font-medium text-foreground/80 transition hover:bg-foreground/10 hover:text-foreground"
           >
             {t(`nav.${item.key}`)}
           </button>
         ) : (
           <a
             href={`/${item.hash}`}
-            class="nav-link cursor-interactive rounded-full px-4 py-2 text-sm font-medium text-foreground/80 transition hover:bg-foreground/10 hover:text-foreground"
+            class="nav-link cursor-interactive rounded-full px-3 py-1 text-[13px] font-medium text-foreground/80 transition hover:bg-foreground/10 hover:text-foreground"
           >
             {t(`nav.${item.key}`)}
           </a>
@@ -107,29 +107,29 @@ const isHomePage = currentPath === '/'
       ))}
     </div>
 
-    <div class="flex items-center gap-2">
+    <div class="flex items-center gap-1.5">
       <button
         id="theme-toggle"
-        class="cursor-interactive hidden h-10 w-10 items-center justify-center rounded-full transition hover:bg-card/20 md:flex"
+        class="cursor-interactive hidden h-9 w-9 items-center justify-center rounded-full transition hover:bg-card/20 md:flex"
         aria-label="Toggle theme"
       >
-        <Moon class="h-[18px] w-[18px] dark-icon" />
-        <Sun class="h-[18px] w-[18px] light-icon hidden" />
+        <Moon class="h-[17px] w-[17px] dark-icon" />
+        <Sun class="h-[17px] w-[17px] light-icon hidden" />
       </button>
 
       <button
         id="lang-toggle"
-        class="cursor-interactive hidden items-center gap-2 rounded-full px-3 py-2.5 text-sm font-medium transition hover:bg-card/20 md:flex"
+        class="cursor-interactive hidden items-center gap-1.5 rounded-full px-2.5 py-1.5 text-sm font-medium transition hover:bg-card/20 md:flex"
         aria-label="Change language"
       >
-        <span class="text-base">{currentLanguage.flag}</span>
+        <span class="text-sm">{currentLanguage.flag}</span>
         <span class="hidden lg:inline text-xs">{currentLanguage.nativeName}</span>
-        <Languages class="h-4 w-4" />
+        <Languages class="h-3.5 w-3.5" />
       </button>
 
       <button
         id="mobile-menu-toggle"
-        class="cursor-interactive flex h-10 w-10 items-center justify-center rounded-full glass-panel transition md:hidden"
+        class="cursor-interactive flex h-9 w-9 items-center justify-center rounded-full glass-panel transition md:hidden"
         aria-label="Toggle menu"
       >
         <Menu class="h-5 w-5 menu-icon" />
