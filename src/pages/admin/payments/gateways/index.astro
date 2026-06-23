@@ -15,7 +15,7 @@ import { CreditCard } from 'lucide-astro'
   </div>
 
   <!-- Empty State -->
-  <div id="empty-state" class="hidden glass-card rounded-2xl p-12 text-center">
+  <div id="empty-state" class="hidden glass-panel rounded-2xl p-12 text-center">
     <div class="inline-flex h-16 w-16 items-center justify-center rounded-full bg-accent/10 mb-4">
       <CreditCard class="h-8 w-8 text-muted-foreground" />
     </div>
@@ -24,14 +24,14 @@ import { CreditCard } from 'lucide-astro'
   </div>
 
   <!-- Loading State -->
-  <div id="loading-state" class="glass-card rounded-2xl p-12 text-center">
+  <div id="loading-state" class="glass-panel rounded-2xl p-12 text-center">
     <div class="inline-flex h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent mb-4"></div>
     <p class="text-sm text-muted-foreground">Loading payment gateways...</p>
   </div>
 
   <!-- Configure Modal -->
   <div id="configure-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
-    <div class="glass-card rounded-2xl p-6 max-w-md w-full max-h-[90vh] overflow-y-auto">
+    <div class="glass-panel rounded-2xl p-6 max-w-md w-full max-h-[90vh] overflow-y-auto">
       <h2 id="modal-title" class="text-xl font-bold mb-4">Configure Gateway</h2>
       <div id="modal-content">
         <!-- Modal content will be rendered here -->
@@ -175,7 +175,7 @@ import { CreditCard } from 'lucide-astro'
 
   function createGatewayCard(gateway: GatewayRow) {
     const card = document.createElement('div')
-    card.className = 'gateway-card glass-card rounded-2xl p-6'
+    card.className = 'gateway-card glass-panel rounded-2xl p-6'
 
     const isActive = gateway.is_active
     const statusText = isActive ? 'Active' : 'Inactive'

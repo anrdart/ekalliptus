@@ -26,7 +26,7 @@ const seriesForChart = series.map((p) => ({ day: p.bucket, value: p.value }))
 const fmt = formatIDR
 ---
 <AdminLayout title="Reports">
-  <form method="GET" action="/admin/reports" class="glass-card rounded-2xl p-4 mb-6 flex flex-wrap gap-3 items-end">
+  <form method="GET" action="/admin/reports" class="glass-panel rounded-2xl p-4 mb-6 flex flex-wrap gap-3 items-end">
     <label class="block">
       <span class="text-xs text-muted-foreground">Dari</span>
       <input type="date" name="from" value={from} class="block mt-1 rounded-lg border border-border bg-background px-2 py-1 text-sm" />
@@ -53,18 +53,18 @@ const fmt = formatIDR
   </form>
 
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
-    <div class="lg:col-span-2 glass-card rounded-2xl p-6">
+    <div class="lg:col-span-2 glass-panel rounded-2xl p-6">
       <h2 class="text-lg font-semibold mb-4">Revenue</h2>
       <RevenueChart series={seriesForChart} height={260} />
     </div>
-    <div class="glass-card rounded-2xl p-6">
+    <div class="glass-panel rounded-2xl p-6">
       <h2 class="text-lg font-semibold mb-4">Conversion Funnel</h2>
       <FunnelChart stages={stages} />
     </div>
   </div>
 
   <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-    <div class="glass-card rounded-2xl p-6">
+    <div class="glass-panel rounded-2xl p-6">
       <h2 class="text-lg font-semibold mb-4">Breakdown per Layanan</h2>
       <table class="w-full border-collapse text-sm">
         <thead><tr class="border-b border-border text-left text-xs font-semibold uppercase tracking-wider text-muted-foreground [&>th]:pb-2"><th>Layanan</th><th class="text-right">Order</th><th class="text-right">Revenue</th></tr></thead>
@@ -79,7 +79,7 @@ const fmt = formatIDR
         </tbody>
       </table>
     </div>
-    <div class="glass-card rounded-2xl p-6">
+    <div class="glass-panel rounded-2xl p-6">
       <h2 class="text-lg font-semibold mb-4">Top Customers</h2>
       <table class="w-full border-collapse text-sm">
         <thead><tr class="border-b border-border text-left text-xs font-semibold uppercase tracking-wider text-muted-foreground [&>th]:pb-2"><th>Customer</th><th class="text-right">Order</th><th class="text-right">Spend</th></tr></thead>
@@ -94,7 +94,7 @@ const fmt = formatIDR
         </tbody>
       </table>
     </div>
-    <div class="glass-card rounded-2xl p-6">
+    <div class="glass-panel rounded-2xl p-6">
       <h2 class="text-lg font-semibold mb-4">Sumber Lead</h2>
       <table class="w-full border-collapse text-sm">
         <thead><tr class="border-b border-border text-left text-xs font-semibold uppercase tracking-wider text-muted-foreground [&>th]:pb-2"><th>Source</th><th class="text-right">Jumlah</th></tr></thead>

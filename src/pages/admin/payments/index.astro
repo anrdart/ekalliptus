@@ -59,9 +59,9 @@ const baseUrl = `/admin/payments?status=${status}&gateway=${gateway}`
     ]}
   />
 
-  <div class="glass-card rounded-2xl p-6">
-    <div class="mb-4 flex items-center justify-between">
-      <h2 class="text-lg font-semibold"><span class="text-primary">{total}</span> payment</h2>
+  <div class="glass-panel rounded-2xl p-5">
+    <div class="mb-4">
+      <h2 class="text-sm font-semibold uppercase tracking-wide text-muted-foreground"><span class="text-primary">{total}</span> payment</h2>
     </div>
     {payments.length === 0 ? (
       <EmptyState icon={CreditCard} title="Belum ada payment" />

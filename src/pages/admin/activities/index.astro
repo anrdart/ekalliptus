@@ -29,7 +29,7 @@ const fmt = (s: string | null) => (s ? formatDateTime(s) : '-')
     ))}
   </div>
 
-  <div class="glass-card rounded-2xl p-6">
+  <div class="glass-panel rounded-2xl p-6">
     {activities.length === 0 ? (
       <EmptyState icon={CheckSquare} title="Tidak ada aktivitas" description="Aktivitas akan muncul setelah ada follow-up atau task yang dibuat." />
     ) : (

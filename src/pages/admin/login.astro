@@ -1,6 +1,5 @@
 ---
 import '../../styles/global.css'
-import { LayoutDashboard } from 'lucide-astro'
 
 const next = Astro.url.searchParams.get('next') ?? '/admin'
 const error = Astro.url.searchParams.get('error')
@@ -21,34 +20,33 @@ const errorMessage = error ? (errorMessages[error] ?? 'Login gagal. Coba lagi.')
   <title>Admin Login | Ekalliptus Digital</title>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 </head>
-<body class="bg-mesh min-h-screen text-foreground flex items-center justify-center p-4" data-admin="true">
-  <div class="bg-grid pointer-events-none fixed inset-0 opacity-50"></div>
-  <main class="glass-card relative z-10 w-full max-w-sm overflow-hidden rounded-3xl p-7">
-    <div class="bg-primary pointer-events-none absolute inset-x-0 top-0 h-1 opacity-80"></div>
-    <div class="bg-primary mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl shadow-lg">
-      <LayoutDashboard class="h-7 w-7 text-white" />
+<body class="bg-background min-h-screen text-foreground flex items-center justify-center p-4" data-admin="true">
+  <main class="glass-panel relative z-10 w-full max-w-sm rounded-3xl p-8">
+    <div class="flex flex-col items-center mb-6">
+      <img src="/logo_mobile.webp" alt="Ekalliptus Digital" width="48" height="32" class="h-12 w-auto mb-4 invert dark:invert-0" />
+      <h1 class="text-xl font-bold tracking-tight">Admin Login</h1>
+      <p class="text-xs text-muted-foreground mt-0.5">Ekalliptus Digital</p>
     </div>
-    <h1 class="mb-1 text-center text-xl font-bold tracking-tight">Admin Login</h1>
-    <p class="mb-6 text-center text-sm text-muted-foreground">Ekalliptus Digital</p>
     {errorMessage && (
       <div class="mb-4 rounded-lg border border-destructive/40 bg-destructive/10 px-3 py-2 text-sm text-destructive">
         {errorMessage}
       </div>
     )}
-    <form method="POST" action="/api/admin/login" class="space-y-3">
+    <form method="POST" action="/api/admin/login" class="space-y-4">
       <input type="hidden" name="next" value={next} />
       <label class="block">
-        <span class="text-xs font-medium text-muted-foreground">Email</span>
-        <input type="email" name="email" required autocomplete="username" class="mt-1 block w-full rounded-lg border border-border bg-background px-3 py-2 text-sm" />
+        <span class="text-[11px] font-medium text-muted-foreground uppercase tracking-wide">Email</span>
+        <input type="email" name="email" required autocomplete="username" class="mt-1.5 block w-full rounded-lg border border-border bg-input px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 transition" />
       </label>
       <label class="block">
-        <span class="text-xs font-medium text-muted-foreground">Password</span>
-        <input type="password" name="password" required autocomplete="current-password" class="mt-1 block w-full rounded-lg border border-border bg-background px-3 py-2 text-sm" />
+        <span class="text-[11px] font-medium text-muted-foreground uppercase tracking-wide">Password</span>
+        <input type="password" name="password" required autocomplete="current-password" class="mt-1.5 block w-full rounded-lg border border-border bg-input px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 transition" />
       </label>
-      <button type="submit" class="inline-flex w-full items-center justify-center rounded-xl bg-primary px-4 py-3 text-sm font-semibold text-primary-foreground hover:bg-primary/90">
+      <button type="submit" class="inline-flex w-full items-center justify-center rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground hover:bg-primary/90 transition active:scale-[0.98]">
         Masuk
       </button>
     </form>
+    <a href="/" class="mt-5 block text-center text-xs text-muted-foreground hover:text-foreground transition">← Kembali ke beranda</a>
   </main>
 </body>
 </html>

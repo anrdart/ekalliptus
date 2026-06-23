@@ -24,11 +24,11 @@ const cards = [
           </>
         )
         return c.href ? (
-          <a href={c.href} class="glass-card relative overflow-hidden rounded-2xl p-5 transition hover:-translate-y-0.5 hover:bg-accent/40 cursor-interactive">
+          <a href={c.href} class="glass-panel relative overflow-hidden rounded-2xl p-5 transition hover:-translate-y-0.5 hover:bg-accent/40 cursor-interactive">
             {inner}
           </a>
         ) : (
-          <div class="glass-card relative overflow-hidden rounded-2xl p-5">{inner}</div>
+          <div class="glass-panel relative overflow-hidden rounded-2xl p-5">{inner}</div>
         )
       })
     }

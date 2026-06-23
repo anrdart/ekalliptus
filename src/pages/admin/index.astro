@@ -5,7 +5,7 @@ import RevenueChart from '../../components/admin/RevenueChart.astro'
 import EmptyState from '../../components/admin/EmptyState.astro'
 import StatusBadge from '../../components/admin/ui/StatusBadge.astro'
 import ActivityFeed from '../../components/admin/ActivityFeed.tsx'
-import { DollarSign, Package, Activity, TrendingUp, ArrowUpRight, ShoppingCart } from 'lucide-astro'
+import { Package, MessageSquare, Users, TrendingUp, ArrowUpRight, ShoppingCart } from 'lucide-astro'
 import { getSupabase } from '../../lib/supabase'
 import { formatIDR } from '../../lib/format'
 import { countLeadsByStage, LEAD_STAGE_LABELS, LEAD_STAGE_ORDER } from '../../lib/admin/leads'
@@ -17,32 +17,28 @@ const todayStart = new Date(now); todayStart.setHours(0, 0, 0, 0)
 const monthStart = new Date(now.getFullYear(), now.getMonth(), 1)
 const sevenDaysAgo = new Date(now); sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 6); sevenDaysAgo.setHours(0, 0, 0, 0)
 
-let stats = { todayRevenue: 'Rp 0', monthlyOrders: '0', pendingPayments: '0', conversionRate: '0%' }
+let stats = { newOrders: '0', activeChats: '0', openLeads: '0', conversionRate: '0%' }
 let series: Array<{ day: string; value: number }> = []
 let recentOrders: any[] = []
-let topServices: Array<{ name: string; orders: number; revenue: number }> = []
 let leadCounts: Record<string, number> = {}
 
 if (supabase) {
-  const [paidToday, monthlyOrdersRes, pendingRes, paidRes, recentRes, weekly, monthOrdersRes] = await Promise.all([
-    supabase.from('payments').select('amount').eq('status', 'paid').gte('paid_at', todayStart.toISOString()),
+  const [newOrdersRes, monthOrdersRes, chatsRes, recentRes, weekly, paidRes] = await Promise.all([
+    supabase.from('orders').select('id', { count: 'exact', head: true }).gte('created_at', todayStart.toISOString()),
     supabase.from('orders').select('id', { count: 'exact', head: true }).gte('created_at', monthStart.toISOString()),
-    supabase.from('payments').select('id', { count: 'exact', head: true }).in('status', ['pending', 'processing']),
-    supabase.from('payments').select('id', { count: 'exact', head: true }).eq('status', 'paid').gte('created_at', monthStart.toISOString()),
-    supabase.from('orders').select('id, customer_name, service_type, pricing, status, created_at').order('created_at', { ascending: false }).limit(5),
+    supabase.from('consultations').select('id', { count: 'exact', head: true }).in('status', ['scheduled']),
+    supabase.from('orders').select('id, customer_name, whatsapp, service_type, status, created_at').order('created_at', { ascending: false }).limit(5),
     supabase.from('payments').select('amount, paid_at').eq('status', 'paid').gte('paid_at', sevenDaysAgo.toISOString()),
-    supabase.from('orders').select('service_type, pricing').gte('created_at', monthStart.toISOString())
+    supabase.from('payments').select('id', { count: 'exact', head: true }).eq('status', 'paid').gte('created_at', monthStart.toISOString())
   ])
 
-  const todayRev = (paidToday.data ?? []).reduce((s, p) => s + Number(p.amount ?? 0), 0)
-  const orderCount = monthlyOrdersRes.count ?? 0
-  const pending = pendingRes.count ?? 0
+  const orderCount = monthOrdersRes.count ?? 0
   const paid = paidRes.count ?? 0
   stats = {
-    todayRevenue: formatIDR(todayRev),
-    monthlyOrders: String(orderCount),
-    pendingPayments: String(pending),
-    conversionRate: orderCount > 0 ? `${((paid / orderCount) * 100).toFixed(1)}%` : '0%'
+    newOrders: String(newOrdersRes.count ?? 0),
+    activeChats: String(chatsRes.count ?? 0),
+    openLeads: '0',
+    conversionRate: orderCount > 0 ? `${((paid / orderCount) * 100).toFixed(0)}%` : '0%'
   }
 
   const buckets = new Map<string, number>()
@@ -56,114 +52,89 @@ if (supabase) {
   }
   series = Array.from(buckets.entries()).map(([day, value]) => ({ day, value }))
   recentOrders = recentRes.data ?? []
-
-  const svc = new Map<string, { orders: number; revenue: number }>()
-  for (const o of monthOrdersRes.data ?? []) {
-    const cur = svc.get(o.service_type) ?? { orders: 0, revenue: 0 }
-    cur.orders += 1
-    cur.revenue += Number((o.pricing as any)?.grand_total ?? 0)
-    svc.set(o.service_type, cur)
-  }
-  topServices = Array.from(svc.entries()).map(([name, v]) => ({ name, ...v })).sort((a, b) => b.revenue - a.revenue).slice(0, 5)
   leadCounts = await countLeadsByStage()
+  const openStages = LEAD_STAGE_ORDER.filter(s => s !== 'won' && s !== 'lost')
+  stats.openLeads = String(openStages.reduce((sum, s) => sum + (leadCounts[s] ?? 0), 0))
 }
 
-const fmt = formatIDR
-const today = new Intl.DateTimeFormat('id-ID', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }).format(now)
+const SERVICE_LABEL: Record<string, string> = { website: 'Web', mobile: 'Mobile', service_device: 'Maintenance', wordpress: 'Web', editing: 'Other' }
+const today = new Intl.DateTimeFormat('id-ID', { weekday: 'long', day: 'numeric', month: 'long' }).format(now)
 ---
 <AdminLayout title="Dashboard">
-  <!-- Welcome banner -->
-  <div class="relative mb-6 overflow-hidden rounded-2xl p-6 sm:p-7">
-    <div class="bg-primary absolute inset-0 opacity-95"></div>
-    <div class="bg-grid absolute inset-0 opacity-20"></div>
-    <div class="relative z-10">
-      <p class="text-xs font-medium uppercase tracking-wider text-white/80">{today}</p>
-      <h2 class="mt-1 text-2xl font-bold text-white sm:text-3xl">Selamat datang kembali 👋</h2>
-      <p class="mt-1 max-w-lg text-sm text-white/85">Ringkasan performa bisnis Anda hari ini. Pantau revenue, order, dan pipeline dalam satu tempat.</p>
+  <!-- Welcome banner (slim) -->
+  <div class="glass-panel rounded-2xl p-5 sm:p-6 mb-6 relative overflow-hidden">
+    <div class="bg-primary/10 absolute inset-0"></div>
+    <div class="relative z-10 flex flex-wrap items-center justify-between gap-3">
+      <div>
+        <p class="text-[11px] font-medium uppercase tracking-wider text-muted-foreground">{today}</p>
+        <h2 class="mt-0.5 text-xl font-bold tracking-tight">Selamat datang kembali 👋</h2>
+        <p class="text-xs text-muted-foreground mt-0.5">Ringkasan aktivitas bisnis Anda hari ini.</p>
+      </div>
     </div>
   </div>
 
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-    <StatCard icon={DollarSign} value={stats.todayRevenue} label="Revenue Hari Ini" valueId="stat-today-revenue" />
-    <StatCard icon={Package} iconColorClass="text-blue-500" value={stats.monthlyOrders} label="Order Bulan Ini" valueId="stat-monthly-orders" />
-    <StatCard icon={Activity} iconColorClass="text-orange-500" value={stats.pendingPayments} label="Payment Pending" valueId="stat-pending-payments" />
-    <StatCard icon={TrendingUp} iconColorClass="text-purple-500" value={stats.conversionRate} label="Conversion Rate" valueId="stat-conversion" />
+  <!-- KPI cards (relevant to public flow: orders, chats, leads, conversion) -->
+  <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-6">
+    <StatCard icon={Package} value={stats.newOrders} label="Order Baru Hari Ini" valueId="stat-today-revenue" />
+    <StatCard icon={MessageSquare} iconColorClass="text-blue-500" value={stats.activeChats} label="Chat Aktif" valueId="stat-monthly-orders" />
+    <StatCard icon={Users} iconColorClass="text-purple-500" value={stats.openLeads} label="Leads Open" valueId="stat-pending-payments" />
+    <StatCard icon={TrendingUp} iconColorClass="text-green-500" value={stats.conversionRate} label="Konversi" valueId="stat-conversion" />
   </div>
 
-  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
-    <div class="lg:col-span-2 glass-card rounded-2xl p-6">
-      <h2 class="text-lg font-semibold mb-4">Revenue 7 Hari Terakhir</h2>
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 mb-6">
+    <div class="lg:col-span-2 glass-panel rounded-2xl p-5">
+      <h2 class="text-sm font-semibold mb-4 text-muted-foreground uppercase tracking-wide">Revenue 7 Hari</h2>
       <RevenueChart series={series} />
     </div>
-    <div class="flex flex-col gap-6">
-      <div class="glass-card rounded-2xl p-6">
-        <div class="flex items-center justify-between mb-4">
-          <h2 class="text-lg font-semibold">Pipeline</h2>
-          <a href="/admin/pipeline" class="text-xs text-primary hover:underline">Lihat board →</a>
+    <div class="flex flex-col gap-4 sm:gap-6">
+      <div class="glass-panel rounded-2xl p-5">
+        <div class="flex items-center justify-between mb-3">
+          <h2 class="text-sm font-semibold uppercase tracking-wide text-muted-foreground">Pipeline</h2>
+          <a href="/admin/pipeline" class="text-[11px] text-primary hover:underline">Board →</a>
         </div>
-        <div class="space-y-2 text-sm">
+        <div class="space-y-1.5 text-sm">
           {LEAD_STAGE_ORDER.map((stage) => (
-            <div class="flex items-center justify-between py-1.5 border-b border-border/40 last:border-0">
-              <span class="text-muted-foreground">{LEAD_STAGE_LABELS[stage]}</span>
-              <span class="font-bold">{leadCounts[stage] ?? 0}</span>
+            <div class="flex items-center justify-between py-1">
+              <span class="text-muted-foreground text-xs">{LEAD_STAGE_LABELS[stage]}</span>
+              <span class="font-semibold text-sm">{leadCounts[stage] ?? 0}</span>
             </div>
           ))}
         </div>
       </div>
-      <div class="h-auto">
+      <div>
         <ActivityFeed client:only="react" />
       </div>
     </div>
   </div>
 
-  <div class="glass-card rounded-2xl p-6 mb-6 cv-auto">
-    <h2 class="text-lg font-semibold mb-4">Top Services Bulan Ini</h2>
-    {topServices.length === 0 ? (
-      <p class="text-sm text-muted-foreground">Belum ada order bulan ini.</p>
-    ) : (
-      <div class="space-y-3">
-        {topServices.map((s, i) => (
-          <div class="flex items-center justify-between p-2 rounded-lg hover:bg-accent/40">
-            <div class="flex items-center gap-3">
-              <div class="h-7 w-7 rounded-md bg-primary/10 text-primary text-sm font-bold flex items-center justify-center">{i + 1}</div>
-              <div>
-                <p class="text-sm font-medium">{s.name}</p>
-                <p class="text-xs text-muted-foreground">{s.orders} order</p>
-              </div>
-            </div>
-            <span class="text-sm font-semibold">{fmt(s.revenue)}</span>
-          </div>
-        ))}
-      </div>
-    )}
-  </div>
-
-  <div class="glass-card rounded-2xl p-6 cv-auto">
+  <!-- Recent Orders (no prominent price — focus service + status) -->
+  <div class="glass-panel rounded-2xl p-5 cv-auto">
     <div class="flex items-center justify-between mb-4">
-      <h2 class="text-lg font-semibold">Recent Orders</h2>
-      <a href="/admin/orders" class="flex items-center gap-1 text-sm text-primary hover:underline">Lihat semua <ArrowUpRight class="h-4 w-4" /></a>
+      <h2 class="text-sm font-semibold uppercase tracking-wide text-muted-foreground">Order Terbaru</h2>
+      <a href="/admin/orders" class="flex items-center gap-1 text-xs text-primary hover:underline">Semua <ArrowUpRight class="h-3.5 w-3.5" /></a>
     </div>
     {recentOrders.length === 0 ? (
-      <EmptyState icon={ShoppingCart} title="Belum ada order" description="Order baru akan muncul di sini secara real-time." />
+      <EmptyState icon={ShoppingCart} title="Belum ada order" description="Order baru akan muncul di sini." />
     ) : (
-      <table class="w-full border-collapse text-sm">
-        <thead>
-          <tr class="border-b border-border text-left text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-            <th class="pb-3">Order ID</th><th class="pb-3">Customer</th><th class="pb-3">Layanan</th><th class="pb-3 text-right">Total</th><th class="pb-3">Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          {recentOrders.map((o) => (
-            <tr class="dt-row">
-              <td class="dt-cell font-mono text-xs">ORD-{o.id.slice(0, 8)}</td>
-              <td class="dt-cell">{o.customer_name}</td>
-              <td class="dt-cell">{o.service_type}</td>
-              <td class="dt-cell text-right font-medium">{fmt(Number((o.pricing as any)?.grand_total ?? 0))}</td>
-              <td class="dt-cell"><StatusBadge status={o.status} /></td>
+      <div class="overflow-x-auto">
+        <table class="w-full border-collapse text-sm">
+          <thead>
+            <tr class="border-b border-border text-left text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+              <th class="pb-2 pr-3 font-semibold">Order</th><th class="pb-2 pr-3 font-semibold">Customer</th><th class="pb-2 pr-3 font-semibold">Layanan</th><th class="pb-2 font-semibold">Status</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {recentOrders.map((o) => (
+              <tr class="dt-row">
+                <td class="dt-cell font-mono text-xs py-2 pr-3">ORD-{o.id.slice(0, 8)}</td>
+                <td class="dt-cell py-2 pr-3">{o.customer_name}</td>
+                <td class="dt-cell py-2 pr-3"><span class="rounded-md bg-primary/10 px-2 py-0.5 text-xs font-medium text-primary">{SERVICE_LABEL[o.service_type] ?? o.service_type}</span></td>
+                <td class="dt-cell py-2"><StatusBadge status={o.status} /></td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     )}
   </div>
 <script>

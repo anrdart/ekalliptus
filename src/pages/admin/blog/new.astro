@@ -3,64 +3,64 @@ import AdminLayout from '../_layout.astro'
 import BlogEditor from '../../../components/admin/editor/BlogEditor.tsx'
 ---
 <AdminLayout title="Post Baru">
-  <form id="new-post-form" class="glass-card rounded-2xl p-6 max-w-3xl space-y-4">
-    <div class="grid grid-cols-2 gap-3">
+  <form id="new-post-form" class="glass-panel rounded-2xl p-5 sm:p-6 max-w-3xl space-y-4">
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
       <label class="block">
-        <span class="text-xs text-muted-foreground">Judul</span>
-        <input name="title" required class="mt-1 block w-full rounded-lg border border-border bg-background px-3 py-2 text-sm" />
+        <span class="text-[11px] font-medium text-muted-foreground uppercase tracking-wide">Judul</span>
+        <input name="title" required class="mt-1.5 block w-full rounded-lg border border-border bg-input px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 transition" />
       </label>
       <label class="block">
-        <span class="text-xs text-muted-foreground">Slug</span>
-        <input name="slug" required class="mt-1 block w-full rounded-lg border border-border bg-background px-3 py-2 text-sm" />
+        <span class="text-[11px] font-medium text-muted-foreground uppercase tracking-wide">Slug</span>
+        <input name="slug" required class="mt-1.5 block w-full rounded-lg border border-border bg-input px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 transition" />
       </label>
     </div>
-    <div class="grid grid-cols-3 gap-3">
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
       <label class="block">
-        <span class="text-xs text-muted-foreground">Bahasa</span>
-        <select name="locale" required class="mt-1 block w-full rounded-lg border border-border bg-background px-3 py-2 text-sm">
-          <option value="id">Global</option><option value="en">English</option><option value="ja">日本語</option>
-          <option value="ko">한국어</option><option value="ru">Русский</option><option value="ar">العربية</option><option value="tr">Türkçe</option>
+        <span class="text-[11px] font-medium text-muted-foreground uppercase tracking-wide">Bahasa</span>
+        <select name="locale" required class="mt-1.5 block w-full rounded-lg border border-border bg-input px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30">
+          <option value="id">🇮🇩 Indonesia</option><option value="en">🇬🇧 English</option><option value="ja">🇯🇵 日本語</option>
+          <option value="ko">🇰🇷 한국어</option><option value="ru">🇷🇺 Русский</option><option value="ar">🇸🇦 العربية</option><option value="tr">🇹🇷 Türkçe</option>
         </select>
       </label>
       <label class="block">
-        <span class="text-xs text-muted-foreground">Kategori</span>
-        <input name="category" class="mt-1 block w-full rounded-lg border border-border bg-background px-3 py-2 text-sm" />
+        <span class="text-[11px] font-medium text-muted-foreground uppercase tracking-wide">Kategori</span>
+        <input name="category" class="mt-1.5 block w-full rounded-lg border border-border bg-input px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 transition" />
       </label>
       <label class="block">
-        <span class="text-xs text-muted-foreground">Tags (pisah koma)</span>
-        <input name="tags" class="mt-1 block w-full rounded-lg border border-border bg-background px-3 py-2 text-sm" />
+        <span class="text-[11px] font-medium text-muted-foreground uppercase tracking-wide">Tags (pisah koma)</span>
+        <input name="tags" class="mt-1.5 block w-full rounded-lg border border-border bg-input px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 transition" />
       </label>
     </div>
     <label class="block">
-      <span class="text-xs text-muted-foreground">Deskripsi (meta)</span>
-      <textarea name="description" rows="2" class="mt-1 block w-full rounded-lg border border-border bg-background px-3 py-2 text-sm"></textarea>
+      <span class="text-[11px] font-medium text-muted-foreground uppercase tracking-wide">Deskripsi (meta)</span>
+      <textarea name="description" rows="2" class="mt-1.5 block w-full rounded-lg border border-border bg-input px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 resize-none transition"></textarea>
     </label>
     <div class="block">
-      <span class="text-xs text-muted-foreground mb-1 block">Body Content</span>
+      <span class="text-[11px] font-medium text-muted-foreground uppercase tracking-wide mb-1.5 block">Konten</span>
       <BlogEditor client:only="react" />
     </div>
-    <div class="grid grid-cols-3 gap-3">
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
       <label class="block">
-        <span class="text-xs text-muted-foreground">Image URL</span>
-        <input name="image" class="mt-1 block w-full rounded-lg border border-border bg-background px-3 py-2 text-sm" />
+        <span class="text-[11px] font-medium text-muted-foreground uppercase tracking-wide">Image URL</span>
+        <input name="image" class="mt-1.5 block w-full rounded-lg border border-border bg-input px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 transition" />
       </label>
       <label class="block">
-        <span class="text-xs text-muted-foreground">Image Alt</span>
-        <input name="image_alt" class="mt-1 block w-full rounded-lg border border-border bg-background px-3 py-2 text-sm" />
+        <span class="text-[11px] font-medium text-muted-foreground uppercase tracking-wide">Image Alt</span>
+        <input name="image_alt" class="mt-1.5 block w-full rounded-lg border border-border bg-input px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 transition" />
       </label>
       <label class="block">
-        <span class="text-xs text-muted-foreground">Status</span>
-        <select name="status" class="mt-1 block w-full rounded-lg border border-border bg-background px-3 py-2 text-sm">
+        <span class="text-[11px] font-medium text-muted-foreground uppercase tracking-wide">Status</span>
+        <select name="status" class="mt-1.5 block w-full rounded-lg border border-border bg-input px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30">
           <option value="draft">Draft</option><option value="published">Published</option><option value="archived">Archived</option>
         </select>
       </label>
     </div>
     <label class="flex items-center gap-2 text-sm">
-      <input type="checkbox" name="featured" /> Featured
+      <input type="checkbox" name="featured" class="rounded border-border" /> Featured
     </label>
-    <div class="flex justify-end gap-2">
-      <a href="/admin/blog" class="rounded-lg border border-border px-4 py-2 text-sm">Batal</a>
-      <button type="submit" class="rounded-lg bg-primary px-4 py-2 text-sm text-primary-foreground">Simpan</button>
+    <div class="flex justify-end gap-2 pt-2">
+      <a href="/admin/blog" class="rounded-lg border border-border px-3 py-1.5 text-sm hover:bg-accent/40 transition">Batal</a>
+      <button type="submit" class="rounded-lg bg-primary px-4 py-1.5 text-sm font-semibold text-primary-foreground hover:bg-primary/90 transition">Simpan</button>
     </div>
   </form>
 

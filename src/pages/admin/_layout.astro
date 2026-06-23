@@ -9,17 +9,21 @@ interface Props {
 
 const { title = 'Dashboard' } = Astro.props
 
-const sidebarLinks = [
+// Two nav groups: primary mirrors the public flow, business is supporting tooling.
+const primaryLinks = [
   { key: 'dashboard', href: '/admin', icon: LayoutDashboard, label: 'Dashboard' },
-  { key: 'customers', href: '/admin/customers', icon: Users, label: 'Customers' },
-  { key: 'pipeline', href: '/admin/pipeline', icon: Columns3, label: 'Pipeline' },
-  { key: 'activities', href: '/admin/activities', icon: CheckSquare, label: 'Activities' },
   { key: 'orders', href: '/admin/orders', icon: ShoppingCart, label: 'Orders' },
+  { key: 'pipeline', href: '/admin/pipeline', icon: Columns3, label: 'Pipeline' },
+  { key: 'consultations', href: '/admin/consultations', icon: MessageSquare, label: 'Live Chat' },
+  { key: 'blog', href: '/admin/blog', icon: FileText, label: 'Blog' }
+]
+
+const businessLinks = [
+  { key: 'customers', href: '/admin/customers', icon: Users, label: 'Customers' },
   { key: 'payments', href: '/admin/payments', icon: Payment, label: 'Payments' },
-  { key: 'consultations', href: '/admin/consultations', icon: MessageSquare, label: 'Consultations' },
-  { key: 'reports', href: '/admin/reports', icon: BarChart3, label: 'Reports' },
-  { key: 'blog', href: '/admin/blog', icon: FileText, label: 'Blog' },
   { key: 'vouchers', href: '/admin/vouchers', icon: Ticket, label: 'Vouchers' },
+  { key: 'activities', href: '/admin/activities', icon: CheckSquare, label: 'Activities' },
+  { key: 'reports', href: '/admin/reports', icon: BarChart3, label: 'Reports' },
   { key: 'audit', href: '/admin/audit-logs', icon: History, label: 'Audit Logs' },
   { key: 'settings', href: '/admin/settings', icon: Settings, label: 'Settings' }
 ]
@@ -36,7 +40,8 @@ function canSee(key: string): boolean {
   return false
 }
 
-const visibleLinks = sidebarLinks.filter((l) => canSee(l.key))
+const visiblePrimary = primaryLinks.filter((l) => canSee(l.key))
+const visibleBusiness = businessLinks.filter((l) => canSee(l.key))
 
 const currentPath = Astro.url.pathname
 
@@ -56,34 +61,63 @@ function isActivePath(href: string): boolean {
   <!-- Mobile backdrop -->
   <div id="admin-backdrop" class="fixed inset-0 bg-background/80 backdrop-blur-sm z-40 md:hidden hidden"></div>
 
-  <!-- Mobile menu -->
-  <div id="admin-mobile-menu" class="fixed inset-x-4 top-4 z-50 max-h-[calc(100vh-2rem)] overflow-y-auto rounded-2xl glass-panel p-4 md:hidden hidden custom-scrollbar">
-    <div class="flex items-center justify-between mb-4">
-      <h2 class="text-lg font-semibold">Admin Menu</h2>
+  <!-- Mobile drawer -->
+  <div id="admin-mobile-menu" class="fixed inset-y-0 left-0 z-50 w-72 max-w-[85vw] overflow-y-auto glass-panel border-r border-border p-4 md:hidden hidden custom-scrollbar translate-x-[-100%] transition-transform duration-300">
+    <div class="flex items-center justify-between mb-4 px-1">
+      <a href="/admin" class="flex items-center gap-2">
+        <img src="/logo_mobile.webp" alt="Ekalliptus Digital" width="32" height="21" class="h-8 w-auto invert dark:invert-0" />
+        <span class="font-semibold text-sm">Admin</span>
+      </a>
       <button id="close-mobile-menu" class="h-8 w-8 rounded-full flex items-center justify-center hover:bg-accent transition cursor-pointer" aria-label="Close menu">
         <X class="h-4 w-4" />
       </button>
     </div>
-    <nav class="flex flex-col gap-1">
-      {visibleLinks.map((link) => (
+    <nav class="flex flex-col gap-0.5">
+      {visiblePrimary.map((link) => (
         <a
           href={link.href}
           class:list={[
-            'flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium transition hover:bg-accent cursor-interactive sidebar-link',
+            'flex items-center gap-2.5 rounded-lg px-3 py-2 text-[13px] font-medium transition hover:bg-accent/40 cursor-interactive sidebar-link',
             { active: isActivePath(link.href) }
           ]}
         >
-          <link.icon class="h-5 w-5" />
+          <link.icon class="h-4 w-4 flex-shrink-0" />
           {link.label}
         </a>
       ))}
+      {visibleBusiness.length > 0 && (
+        <>
+          <div class="px-3 pt-4 pb-1 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground/60">Bisnis</div>
+          {visibleBusiness.map((link) => (
+            <a
+              href={link.href}
+              class:list={[
+                'flex items-center gap-2.5 rounded-lg px-3 py-2 text-[13px] font-medium transition hover:bg-accent/40 cursor-interactive sidebar-link',
+                { active: isActivePath(link.href) }
+              ]}
+            >
+              <link.icon class="h-4 w-4 flex-shrink-0" />
+              {link.label}
+            </a>
+          ))}
+        </>
+      )}
     </nav>
     <div class="mt-4 pt-4 border-t border-border">
+      <div class="flex items-center gap-2.5 mb-3 px-1">
+        <div class="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center">
+          <User class="h-4 w-4 text-primary" />
+        </div>
+        <div class="flex-1 min-w-0">
+          <p class="text-xs font-medium truncate">{session?.displayName ?? 'Admin'}</p>
+          <p class="text-[10px] text-muted-foreground truncate">{role}</p>
+        </div>
+      </div>
       <button
         id="mobile-logout-btn"
-        class="flex w-full items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium text-destructive transition hover:bg-destructive/10 cursor-interactive"
+        class="flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-[13px] font-medium text-destructive transition hover:bg-destructive/10 cursor-interactive"
       >
-        <LogOut class="h-5 w-5" />
+        <LogOut class="h-4 w-4" />
         Logout
       </button>
     </div>
@@ -91,101 +125,111 @@ function isActivePath(href: string): boolean {
 
   <div class="flex min-h-screen">
     <!-- Desktop Sidebar -->
-    <aside class="hidden md:flex md:w-64 lg:w-72 flex-col fixed h-full glass-panel border-r border-border m-4 rounded-2xl overflow-hidden">
-      <!-- accent rail -->
-      <div class="bg-primary absolute inset-y-0 left-0 w-1 opacity-80"></div>
+    <aside class="hidden md:flex md:w-60 flex-col fixed h-full glass-panel border-r border-border overflow-hidden">
       <!-- Logo -->
-      <div class="p-6 border-b border-border">
-        <a href="/admin" class="flex items-center gap-3">
+      <div class="px-5 py-4 border-b border-border">
+        <a href="/admin" class="flex items-center gap-2.5">
           <img
             src="/logo_mobile.webp"
             alt="Ekalliptus Digital"
-            width="40"
-            height="26"
-            class="h-10 w-auto invert dark:invert-0"
+            width="32"
+            height="21"
+            class="h-8 w-auto invert dark:invert-0"
           />
-          <div>
-            <h1 class="font-bold text-lg">Admin</h1>
-            <p class="text-xs text-muted-foreground">Ekalliptus Digital</p>
+          <div class="leading-tight">
+            <h1 class="font-semibold text-sm">Admin</h1>
+            <p class="text-[10px] text-muted-foreground">Ekalliptus Digital</p>
           </div>
         </a>
       </div>
 
       <!-- Navigation -->
-      <nav class="flex-1 p-4 space-y-1 overflow-y-auto custom-scrollbar">
-        {visibleLinks.map((link) => (
+      <nav class="flex-1 px-3 py-4 space-y-0.5 overflow-y-auto custom-scrollbar">
+        {visiblePrimary.map((link) => (
           <a
             href={link.href}
             class:list={[
-              'sidebar-link flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium transition cursor-interactive',
+              'sidebar-link flex items-center gap-2.5 rounded-lg px-3 py-2 text-[13px] font-medium transition cursor-interactive',
               { active: isActivePath(link.href) }
             ]}
           >
-            <link.icon class="h-5 w-5 flex-shrink-0" />
+            <link.icon class="h-4 w-4 flex-shrink-0" />
+            {link.label}
+          </a>
+        ))}
+        {visibleBusiness.length > 0 && (
+          <div class="px-3 pt-5 pb-1 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground/60">Bisnis</div>
+        )}
+        {visibleBusiness.map((link) => (
+          <a
+            href={link.href}
+            class:list={[
+              'sidebar-link flex items-center gap-2.5 rounded-lg px-3 py-2 text-[13px] font-medium transition cursor-interactive',
+              { active: isActivePath(link.href) }
+            ]}
+          >
+            <link.icon class="h-4 w-4 flex-shrink-0" />
             {link.label}
           </a>
         ))}
       </nav>
 
-      <!-- User profile -->
-      <div class="p-4 border-t border-border">
-        <div class="flex items-center gap-3 mb-3">
-          <div class="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center">
-            <User class="h-5 w-5 text-primary" />
+      <!-- User footer -->
+      <div class="px-3 py-3 border-t border-border">
+        <div class="flex items-center gap-2.5 mb-2">
+          <div class="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+            <User class="h-4 w-4 text-primary" />
           </div>
           <div class="flex-1 min-w-0">
-            <p class="text-sm font-medium truncate">{session?.displayName ?? 'Admin User'}</p>
-            <p class="text-xs text-muted-foreground truncate">{session?.user.email ?? ''} · {role}</p>
+            <p class="text-xs font-medium truncate">{session?.displayName ?? 'Admin User'}</p>
+            <p class="text-[10px] text-muted-foreground truncate">{session?.user.email ?? ''}</p>
           </div>
         </div>
         <button
           id="desktop-logout-btn"
-          class="flex w-full items-center justify-center gap-2 rounded-xl border border-border px-4 py-2.5 text-sm font-medium text-destructive transition hover:bg-destructive/10 cursor-interactive"
+          class="flex w-full items-center justify-center gap-2 rounded-lg border border-border px-3 py-1.5 text-[13px] font-medium text-destructive transition hover:bg-destructive/10 cursor-interactive"
         >
-          <LogOut class="h-4 w-4" />
+          <LogOut class="h-3.5 w-3.5" />
           Logout
         </button>
       </div>
     </aside>
 
     <!-- Main content -->
-    <div class="flex-1 md:ml-72 lg:ml-80">
+    <div class="flex-1 md:ml-60">
       <!-- Top bar -->
-      <header class="sticky top-0 z-30 glass-panel border-b border-border m-4 mb-0 rounded-t-2xl">
-        <div class="flex items-center justify-between px-6 py-4">
-          <div class="flex items-center gap-4">
-            <button
-              id="mobile-menu-toggle"
-              class="md:hidden h-10 w-10 rounded-full glass-panel flex items-center justify-center cursor-pointer hover:bg-accent transition"
-              aria-label="Toggle menu"
-            >
-              <Menu class="h-5 w-5" />
-            </button>
-            <div>
-              <h1 class="text-xl font-bold tracking-tight" id="page-title">{title}</h1>
-              <p class="text-sm text-muted-foreground hidden sm:block">Kelola bisnis Anda</p>
-            </div>
-          </div>
+      <header class="sticky top-0 z-30 glass-panel border-b border-border">
+        <div class="flex items-center justify-between px-4 sm:px-6 h-14">
           <div class="flex items-center gap-3">
             <button
+              id="mobile-menu-toggle"
+              class="md:hidden h-9 w-9 rounded-full glass-panel flex items-center justify-center cursor-pointer hover:bg-accent transition"
+              aria-label="Toggle menu"
+            >
+              <Menu class="h-4 w-4" />
+            </button>
+            <h1 class="text-base font-semibold tracking-tight" id="page-title">{title}</h1>
+          </div>
+          <div class="flex items-center gap-2">
+            <button
               id="admin-theme-toggle"
-              class="h-10 w-10 rounded-full glass-panel flex items-center justify-center hover:bg-accent transition cursor-pointer"
+              class="h-9 w-9 rounded-full glass-panel flex items-center justify-center hover:bg-accent transition cursor-pointer"
               aria-label="Toggle theme"
             >
               <Sun class="h-4 w-4 dark-icon" />
               <Moon class="h-4 w-4 light-icon hidden" />
             </button>
             <NotificationBell />
-            <div class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full glass-pill">
-              <div class="h-2 w-2 rounded-full bg-primary animate-pulse"></div>
-              <span class="text-xs font-medium">Online</span>
+            <div class="hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-full glass-pill">
+              <div class="h-1.5 w-1.5 rounded-full bg-primary animate-pulse"></div>
+              <span class="text-[11px] font-medium">Online</span>
             </div>
           </div>
         </div>
       </header>
 
       <!-- Page content -->
-      <main class="p-4 md:p-6">
+      <main class="p-4 sm:p-6">
         <slot />
       </main>
     </div>
@@ -205,15 +249,15 @@ function isActivePath(href: string): boolean {
     .sidebar-link.active {
       background: linear-gradient(
         100deg,
-        hsl(var(--primary) / 0.16),
-        hsl(var(--accent-2) / 0.12)
+        hsl(var(--primary) / 0.14),
+        hsl(var(--accent-2) / 0.10)
       );
       color: hsl(var(--primary));
-      border: 1px solid hsl(var(--primary) / 0.22);
-      box-shadow: 0 4px 18px -6px hsl(var(--primary) / 0.25);
+      border: 1px solid hsl(var(--primary) / 0.2);
+      box-shadow: 0 4px 14px -6px hsl(var(--primary) / 0.22);
     }
 
-    /* active indicator bar */
+    /* active indicator rail */
     .sidebar-link.active::before {
       content: '';
       position: absolute;
@@ -221,16 +265,13 @@ function isActivePath(href: string): boolean {
       top: 50%;
       transform: translateY(-50%);
       height: 60%;
-      width: 3px;
-      border-radius: 0 4px 4px 0;
+      width: 2px;
+      border-radius: 0 3px 3px 0;
       background: hsl(var(--primary));
     }
 
-    @media (max-width: 767px) {
-      .sidebar-link.active {
-        background: hsl(var(--primary) / 0.15);
-        border: 1px solid hsl(var(--primary) / 0.2);
-      }
+    #admin-mobile-menu:not(.hidden) {
+      transform: translateX(0);
     }
   </style>
 
