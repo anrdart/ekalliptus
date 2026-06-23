@@ -19,13 +19,13 @@ const primaryLinks = [
 ]
 
 const businessLinks = [
-  { key: 'customers', href: '/admin/customers', icon: Users, label: 'Customers' },
-  { key: 'payments', href: '/admin/payments', icon: Payment, label: 'Payments' },
-  { key: 'vouchers', href: '/admin/vouchers', icon: Ticket, label: 'Vouchers' },
-  { key: 'activities', href: '/admin/activities', icon: CheckSquare, label: 'Activities' },
-  { key: 'reports', href: '/admin/reports', icon: BarChart3, label: 'Reports' },
-  { key: 'audit', href: '/admin/audit-logs', icon: History, label: 'Audit Logs' },
-  { key: 'settings', href: '/admin/settings', icon: Settings, label: 'Settings' }
+  { key: 'customers', href: '/admin/customers', icon: Users, label: 'Customers', disabled: false },
+  { key: 'payments', href: '/admin/payments', icon: Payment, label: 'Payments', disabled: true, disabledReason: 'Order tanpa pembayaran online' },
+  { key: 'vouchers', href: '/admin/vouchers', icon: Ticket, label: 'Vouchers', disabled: true, disabledReason: 'Order tanpa harga' },
+  { key: 'activities', href: '/admin/activities', icon: CheckSquare, label: 'Activities', disabled: true, disabledReason: 'Tidak ada input dari public' },
+  { key: 'reports', href: '/admin/reports', icon: BarChart3, label: 'Reports', disabled: true, disabledReason: 'Metric dari payment yang nonaktif' },
+  { key: 'audit', href: '/admin/audit-logs', icon: History, label: 'Audit Logs', disabled: false },
+  { key: 'settings', href: '/admin/settings', icon: Settings, label: 'Settings', disabled: false }
 ]
 
 const session = Astro.locals.adminSession
@@ -89,16 +89,27 @@ function isActivePath(href: string): boolean {
         <>
           <div class="px-3 pt-4 pb-1 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground/60">Bisnis</div>
           {visibleBusiness.map((link) => (
-            <a
-              href={link.href}
-              class:list={[
-                'flex items-center gap-2.5 rounded-lg px-3 py-2 text-[13px] font-medium transition hover:bg-accent/40 cursor-interactive sidebar-link',
-                { active: isActivePath(link.href) }
-              ]}
-            >
-              <link.icon class="h-4 w-4 flex-shrink-0" />
-              {link.label}
-            </a>
+            link.disabled ? (
+              <span
+                title={`Nonaktif — ${link.disabledReason}`}
+                class="sidebar-link-disabled flex items-center gap-2.5 rounded-lg px-3 py-2 text-[13px] font-medium cursor-not-allowed"
+              >
+                <link.icon class="h-4 w-4 flex-shrink-0" />
+                {link.label}
+                <span class="ml-auto text-[9px] uppercase tracking-wide opacity-60">off</span>
+              </span>
+            ) : (
+              <a
+                href={link.href}
+                class:list={[
+                  'flex items-center gap-2.5 rounded-lg px-3 py-2 text-[13px] font-medium transition hover:bg-accent/40 cursor-interactive sidebar-link',
+                  { active: isActivePath(link.href) }
+                ]}
+              >
+                <link.icon class="h-4 w-4 flex-shrink-0" />
+                {link.label}
+              </a>
+            )
           ))}
         </>
       )}
@@ -161,16 +172,27 @@ function isActivePath(href: string): boolean {
           <div class="px-3 pt-5 pb-1 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground/60">Bisnis</div>
         )}
         {visibleBusiness.map((link) => (
-          <a
-            href={link.href}
-            class:list={[
-              'sidebar-link flex items-center gap-2.5 rounded-lg px-3 py-2 text-[13px] font-medium transition cursor-interactive',
-              { active: isActivePath(link.href) }
-            ]}
-          >
-            <link.icon class="h-4 w-4 flex-shrink-0" />
-            {link.label}
-          </a>
+          link.disabled ? (
+            <span
+              title={`Nonaktif — ${link.disabledReason}`}
+              class="sidebar-link-disabled flex items-center gap-2.5 rounded-lg px-3 py-2 text-[13px] font-medium cursor-not-allowed"
+            >
+              <link.icon class="h-4 w-4 flex-shrink-0" />
+              {link.label}
+              <span class="ml-auto text-[9px] uppercase tracking-wide opacity-60">off</span>
+            </span>
+          ) : (
+            <a
+              href={link.href}
+              class:list={[
+                'sidebar-link flex items-center gap-2.5 rounded-lg px-3 py-2 text-[13px] font-medium transition cursor-interactive',
+                { active: isActivePath(link.href) }
+              ]}
+            >
+              <link.icon class="h-4 w-4 flex-shrink-0" />
+              {link.label}
+            </a>
+          )
         ))}
       </nav>
 
@@ -244,6 +266,10 @@ function isActivePath(href: string): boolean {
     .sidebar-link:hover {
       background: hsl(var(--accent) / 0.1);
       color: hsl(var(--foreground));
+    }
+
+    .sidebar-link-disabled {
+      color: hsl(var(--muted-foreground) / 0.4);
     }
 
     .sidebar-link.active {
