@@ -58,7 +58,6 @@
     "description": "Kami hadir untuk menghadirkan produk digital yang terasa futuristik namun tetap humanis. Menggabungkan micro-interaction, elemen glassmorphism, dan animasi halus.",
     "subdescription": "Dapatkan keuntungan lebih dan penawaran menarik dengan menggunakan jasa kami!",
     "fokus": "Fokus kami saat ini:",
-    "uiUxDesign": "UI/UX Design Futuristik",
     "digitalExperience": "Pengalaman Digital Imersif",
     "web3d": "Website dengan Sentuhan 3D",
     "branding": "Strategi Branding Holistik",
@@ -107,28 +106,6 @@
           "Custom Domain"
         ]
       },
-      "wordpressDevelopment": {
-        "category": "Pengembangan",
-        "title": "WordPress Development",
-        "description": "Kustomisasi WordPress sesuai kebutuhan dengan tema dan plugin terbaik.",
-        "features": [
-          "Custom Theme",
-          "Plugin Integration",
-          "E-commerce Ready",
-          "Content Management"
-        ]
-      },
-      "berduPlatform": {
-        "category": "Platform",
-        "title": "Berdu Platform",
-        "description": "Solusi platform berdu yang powerful untuk kebutuhan bisnis modern.",
-        "features": [
-          "Admin Dashboard",
-          "User Management",
-          "Data Analytics",
-          "Cloud Hosting"
-        ]
-      },
       "mobileAppDevelopment": {
         "category": "Pengembangan",
         "title": "Mobile App Development",
@@ -138,39 +115,6 @@
           "Native Performance",
           "Push Notifications",
           "App Store Ready"
-        ]
-      },
-      "serviceHpLaptop": {
-        "category": "Layanan",
-        "title": "Service Perangkat",
-        "description": "Perbaikan perangkat oleh teknisi berpengalaman dengan dukungan suku cadang original.",
-        "features": [
-          "Diagnosa Cepat",
-          "Sparepart Original",
-          "Perbaikan Software & Hardware",
-          "Garansi Layanan"
-        ]
-      },
-      "photoVideoEditing": {
-        "category": "Multimedia",
-        "title": "Photo & Video Editing",
-        "description": "Editing profesional untuk foto dan video dengan hasil berkualitas tinggi.",
-        "features": [
-          "Color Grading",
-          "Motion Graphics",
-          "Audio Mixing",
-          "4K Quality"
-        ]
-      },
-      "uiUxDesign": {
-        "category": "Desain",
-        "title": "UI/UX Design",
-        "description": "Desain antarmuka yang elegan dan pengalaman pengguna yang intuitif untuk produk digital Anda.",
-        "features": [
-          "Wireframe & Prototype",
-          "User Research",
-          "Design System",
-          "Figma Ready"
         ]
       },
       "websiteMaintenance": {
@@ -192,14 +136,14 @@
     "quality": "Kualitas Terjamin",
     "team": "Tim Profesional",
     "innovationDesc": "Ekalliptus adalah digital agency berbasis di Global yang spesialis dalam transformasi digital untuk bisnis modern. Dengan pengalaman lebih dari 5 tahun di industri, kami telah membantu ratusan klien dari UMKM hingga enterprise mencapai visi digital mereka.",
-    "qualityDesc": "Layanan kami mencakup website development yang responsif dan SEO-friendly, custom WordPress dengan plugin integrasi lengkap, pengembangan aplikasi mobile cross-platform menggunakan React Native dan Flutter.",
-    "teamDesc": "Service perbaikan HP dan laptop dengan teknisi bersertifikat, serta editing foto dan video profesional untuk konten marketing yang impactful menggunakan software seperti Adobe Premiere, After Effects, dan Photoshop.",
+    "qualityDesc": "Layanan kami mencakup website development yang responsif dan SEO-friendly, mobile app cross-platform, dan maintenance server & web berkualitas tinggi.",
+    "teamDesc": "Maintenance server & web berkualitas dengan monitoring keamanan, backup berkala, dan technical support untuk menjaga aplikasi tetap prima.",
     "whyChoose": "Mengapa Memilih Ekalliptus?",
     "technology": "Teknologi Terdepan",
     "local": "Fokus Lokal",
     "results": "Hasil Terjamin",
     "technologyDesc": "Kami menyediakan jasa pembuatan website Global yang terjangkau namun berkualitas tinggi dengan teknologi modern.",
-    "localDesc": "Spesialis WordPress custom Jakarta untuk kebutuhan bisnis lokal dan mobile app development untuk startup hingga enterprise.",
+    "localDesc": "Spesialis website development dan mobile app development untuk kebutuhan bisnis dari startup hingga enterprise.",
     "resultsDesc": "Dengan fokus pada digital agency yang profesional, Ekalliptus telah menjadi pilihan utama untuk service HP laptop di Jakarta dan sekitarnya.",
     "commitment": "Kami mengutamakan kepuasan klien dengan memberikan hasil yang tidak hanya estetis namun juga fungsional. Setiap proyek website development Global yang kami kerjakan selalu mengikuti best practices SEO terbaru untuk memastikan visibilitas maksimal di mesin pencari Google.",
     "contactForm": "Hubungi kami melalui form order untuk konsultasi gratis dan dapatkan proposal custom sesuai kebutuhan bisnis Anda di Global."
@@ -214,43 +158,6 @@
     "rating": "Skor Klien",
     "interactive": "Interaktif",
     "support": "Dukungan Penuh"
-  },
-  "appPurpose": {
-    "badge": "Tujuan Aplikasi",
-    "title": "Apa itu Ekalliptus?",
-    "description": "Ekalliptus adalah platform digital agency profesional berbasis di Global yang membantu bisnis dan individu mengakses berbagai layanan digital. Aplikasi kami menyediakan antarmuka yang mudah digunakan untuk memesan layanan digital, mengelola proyek, dan berkomunikasi dengan tim kami.",
-    "whatWeDo": {
-      "title": "Apa yang Kami Lakukan",
-      "description": "Ekalliptus menyediakan solusi digital komprehensif termasuk pengembangan website, pengembangan aplikasi mobile, kustomisasi WordPress, editing foto & video, dan layanan perbaikan perangkat. Kami membantu bisnis membangun dan meningkatkan kehadiran digital mereka dengan desain modern yang berpusat pada pengguna."
-    },
-    "ourServices": {
-      "title": "Layanan Kami",
-      "service1": "Pengembangan website profesional (company profile, e-commerce, landing page)",
-      "service2": "Pengembangan aplikasi mobile cross-platform (Android & iOS)",
-      "service3": "Pengembangan WordPress dengan tema dan plugin custom",
-      "service4": "Editing foto & video untuk konten marketing"
-    },
-    "dataUsage": {
-      "title": "Bagaimana Kami Menggunakan Data Anda",
-      "description": "Kami hanya mengumpulkan informasi yang diperlukan untuk memproses pesanan layanan Anda dan memberikan dukungan pelanggan. Data Anda digunakan semata-mata untuk memberikan layanan yang Anda minta, mengomunikasikan pembaruan proyek, dan meningkatkan kualitas layanan kami. Kami tidak pernah menjual atau membagikan informasi pribadi Anda kepada pihak ketiga untuk tujuan pemasaran."
-    },
-    "howItWorks": {
-      "title": "Cara Kerja Aplikasi Kami",
-      "orderProcess": {
-        "title": "Proses Pemesanan Layanan",
-        "step1": "Jelajahi layanan kami dan pilih yang Anda butuhkan",
-        "step2": "Isi formulir pesanan dengan detail proyek Anda",
-        "step3": "Tim kami meninjau dan menghubungi Anda dalam 24 jam",
-        "step4": "Kami menyelesaikan proyek Anda dengan dukungan berkelanjutan"
-      },
-      "privacyCommitment": {
-        "title": "Komitmen Privasi Kami",
-        "point1": "Data Anda dienkripsi dan disimpan dengan aman",
-        "point2": "Kami mematuhi regulasi perlindungan data",
-        "point3": "Anda dapat meminta penghapusan data kapan saja"
-      }
-    },
-    "learnMore": "Untuk detail lebih lanjut tentang bagaimana kami menangani informasi Anda, silakan tinjau kebijakan kami:"
   },
   "consultation": {
     "statusOnline": "Online",
@@ -281,7 +188,7 @@
   "faq": {
     "pill": "FAQ",
     "title": "Pertanyaan yang Sering Diajukan",
-    "description": "Temukan jawaban untuk pertanyaan umum seputar layanan website development Global, WordPress custom, mobile app development, dan layanan digital lainnya dari ekalliptus.",
+    "description": "Temukan jawaban untuk pertanyaan umum seputar layanan website development, mobile app development, dan maintenance dari ekalliptus.",
     "items": [
       {
         "question": "Berapa lama waktu pengerjaan untuk website development?",
@@ -292,8 +199,8 @@
         "answer": "Ya, kami menyediakan paket maintenance website yang mencakup update rutin, backup data, monitoring keamanan, dan technical support. Paket maintenance dapat disesuaikan dengan kebutuhan bisnis Anda, mulai dari maintenance bulanan hingga tahunan."
       },
       {
-        "question": "Apakah WordPress development cocok untuk bisnis skala besar?",
-        "answer": "Absolut! WordPress development yang kami kerjakan dapat di-scale untuk bisnis enterprise dengan custom plugin, optimasi performa tinggi, dan integrasi sistem yang kompleks. Banyak brand besar menggunakan WordPress sebagai CMS mereka berkat fleksibilitas dan ekosistem plugin yang kuat."
+        "question": "Apakah website yang dibuat sudah responsif dan SEO-friendly?",
+        "answer": "Tentu! Semua website yang kami buat bersifat responsif (mobile-friendly) dan dioptimasi untuk SEO sejak awal. Kami menggunakan teknologi modern seperti Astro dan React untuk performa tinggi, kecepatan loading cepat, dan struktur yang ramah mesin pencari."
       },
       {
         "question": "Bagaimana proses order layanan di ekalliptus?",
@@ -312,8 +219,8 @@
         "answer": "Ya, kami melayani service untuk berbagai merk HP dan laptop termasuk Apple, Samsung, Xiaomi, ASUS, Lenovo, HP, Dell, dan lainnya. Tim teknisi kami berpengalaman menangani berbagai masalah hardware dan software dengan sparepart original dan garansi resmi."
       },
       {
-        "question": "Berapa biaya untuk photo & video editing profesional?",
-        "answer": "Biaya editing foto dan video bervariasi tergantung jumlah file, durasi, dan kompleksitas editing yang dibutuhkan. Untuk editing foto berkisar mulai dari Rp 50.000/foto, sedangkan video mulai dari Rp 500.000 untuk durasi pendek dengan editing standar. Hubungi kami untuk quotation detail berdasarkan kebutuhan proyek Anda."
+        "question": "Apa saja yang termasuk dalam paket maintenance website?",
+        "answer": "Paket maintenance kami meliputi update rutin, backup berkala, monitoring keamanan 24/7, perbaikan bug, dan technical support. Kami memastikan website Anda tetap cepat, aman, dan up-to-date. Hubungi kami untuk penawaran sesuai kebutuhan Anda."
       }
     ]
   },
@@ -331,7 +238,7 @@
     "title": "Order Layanan Digital",
     "formTitle": "Permintaan Penawaran",
     "subtitle": "Dapatkan penawaran terbaik untuk proyek digital Anda. Tim ahli siap membantu dari konsultasi hingga implementasi.",
-    "description": "Ceritakan kebutuhan proyek website development Global, WordPress custom, mobile app development, atau layanan digital lainnya secara detail. Data akan otomatis masuk ke dashboard internal kami dan notifikasi email akan dikirim ke tim ekalliptus untuk memberikan proposal dalam 24 jam.",
+    "description": "Ceritakan kebutuhan proyek website development, mobile app development, atau maintenance secara detail. Data akan otomatis masuk ke dashboard internal kami dan tim kami menghubungi Anda via WhatsApp untuk konsultasi & penawaran.",
     "heading": "Order Layanan Digital",
     "subheading": "Dapatkan penawaran terbaik untuk proyek digital Anda",
     "selectService": "Pilih Layanan",
@@ -367,21 +274,9 @@
         "title": "Mobile App Development",
         "description": "Aplikasi Android & iOS dengan React Native/Flutter"
       },
-      "wordpress": {
-        "title": "WordPress Development",
-        "description": "Custom theme, plugin, WooCommerce"
-      },
-      "video": {
-        "title": "Video & Photo Editing",
-        "description": "Video promosi, editing foto, motion graphics"
-      },
-      "uiux": {
-        "title": "UI/UX Design",
-        "description": "Desain interface modern dan user-friendly"
-      },
       "maintenance": {
-        "title": "Service Perangkat",
-        "description": "Perbaikan dan maintenance perangkat"
+        "title": "Maintenance Website & Server",
+        "description": "Update, backup, dan monitoring keamanan website"
       }
     },
     "attachments": {
@@ -451,7 +346,6 @@
       "expressNote": "Termasuk biaya Express +25%",
       "priorityNote": "Termasuk biaya Priority +50%"
     },
-    "descriptionSecondary": "Kami melayani berbagai kebutuhan digital: jasa pembuatan website Global, WordPress custom, mobile app development untuk Android dan iOS, service HP laptop profesional, serta editing foto video berkualitas tinggi. Pilih layanan yang sesuai dan isi form di bawah ini.",
     "basicInfo": {
       "title": "Informasi Dasar"
     },
@@ -494,11 +388,6 @@
         "label": "Layanan Utama",
         "placeholder": "Pilih layanan"
       },
-      "serviceDetails": {
-        "title": "Detail Layanan",
-        "description": "Isi kebutuhan spesifik sesuai layanan website development Global, WordPress custom, mobile app development, service HP laptop, atau editing foto video agar tim kami dapat meninjau dengan cepat dan akurat.",
-        "emptyState": "Pilih layanan website development Global, WordPress custom, mobile app development, service HP laptop, atau editing foto video terlebih dahulu untuk menampilkan form rinci sesuai kebutuhan proyek Anda."
-      },
       "contactPreference": {
         "label": "Preferensi Komunikasi"
       },
@@ -530,436 +419,6 @@
         "helper": "Jadwalkan sesi meeting melalui Zoom/Meet."
       }
     },
-    "serviceOptions": {
-      "websiteDevelopment": "Website Development",
-      "wordpressDevelopment": "WordPress Development",
-      "berduPlatform": "Berdu Platform",
-      "mobileAppDevelopment": "Mobile App Development",
-      "serviceHpLaptop": "Service Perangkat",
-      "photoVideoEditing": "Photo & Video Editing",
-      "other": "Layanan Lainnya"
-    },
-    "serviceDetails": {
-      "common": {
-        "select": "Pilih...",
-        "yes": "Ya",
-        "no": "Tidak",
-        "notSure": "Belum tahu",
-        "dontHave": "Belum punya",
-        "alreadyHave": "Sudah punya",
-        "needHelp": "Butuh bantuan pilih",
-        "pages1to5": "1-5 halaman",
-        "pages6to10": "6-10 halaman",
-        "pages11to20": "11-20 halaman",
-        "pages20plus": "20+ halaman"
-      },
-      "web": {
-        "title": "Detail Website",
-        "websiteType": "Tipe Website",
-        "pageCount": "Jumlah Halaman",
-        "features": "Fitur yang Dibutuhkan",
-        "referenceUrl": "Referensi Website (Opsional)",
-        "referenceUrlPlaceholder": "https://contoh-website.com",
-        "needDomain": "Butuh Domain?",
-        "needHosting": "Butuh Hosting?",
-        "options": {
-          "companyProfile": "Company Profile",
-          "ecommerce": "E-commerce/Toko Online",
-          "landingPage": "Landing Page",
-          "portfolio": "Portfolio",
-          "blog": "Blog",
-          "custom": "Custom/Lainnya",
-          "contactForm": "Form Kontak",
-          "gallery": "Galeri",
-          "multilang": "Multi-bahasa",
-          "cms": "CMS/Admin Panel"
-        }
-      },
-      "mobile": {
-        "title": "Detail Aplikasi Mobile",
-        "platform": "Platform",
-        "appType": "Tipe Aplikasi",
-        "features": "Fitur yang Dibutuhkan",
-        "apiIntegration": "Integrasi API?",
-        "adminPanel": "Butuh Admin Panel?",
-        "referenceApp": "Referensi Aplikasi (Opsional)",
-        "referenceAppPlaceholder": "Nama app atau link Play Store/App Store",
-        "options": {
-          "android": "Android saja",
-          "ios": "iOS saja",
-          "both": "Android & iOS",
-          "native": "Native",
-          "crossPlatform": "Cross-platform (Flutter/React Native)",
-          "auth": "Login/Register",
-          "pushNotif": "Push Notification",
-          "payment": "Payment Gateway",
-          "maps": "Maps/Lokasi",
-          "socialLogin": "Social Login",
-          "chat": "Chat/Messaging"
-        }
-      },
-      "wordpress": {
-        "title": "Detail WordPress",
-        "wpType": "Tipe Pekerjaan",
-        "wpEcommerce": "E-commerce (WooCommerce)?",
-        "plugins": "Plugin yang Dibutuhkan",
-        "existingUrl": "URL Website Existing (Opsional)",
-        "existingUrlPlaceholder": "https://website-anda.com",
-        "options": {
-          "newSite": "Website Baru",
-          "themeCustom": "Kustomisasi Theme",
-          "pluginDev": "Pembuatan Plugin",
-          "maintenance": "Maintenance/Perbaikan",
-          "seo": "SEO (Yoast/Rank Math)",
-          "backup": "Backup",
-          "security": "Security",
-          "contactForm": "Contact Form",
-          "gallery": "Gallery",
-          "multilang": "Multilingual (WPML)"
-        }
-      },
-      "video": {
-        "title": "Detail Video & Photo Editing",
-        "mediaType": "Jenis Pekerjaan",
-        "duration": "Durasi Video (jika video)",
-        "quantity": "Jumlah Video/Foto",
-        "quantityPlaceholder": "Contoh: 5",
-        "purpose": "Tujuan Penggunaan",
-        "outputFormat": "Format Output",
-        "styleRef": "Referensi Style (Opsional)",
-        "styleRefPlaceholder": "Link video/foto referensi atau deskripsi style",
-        "options": {
-          "videoEdit": "Video Editing",
-          "photoEdit": "Photo Editing",
-          "motionGraphics": "Motion Graphics",
-          "all": "Semua",
-          "under1min": "< 1 menit",
-          "1to3min": "1-3 menit",
-          "3to5min": "3-5 menit",
-          "5to10min": "5-10 menit",
-          "over10min": "> 10 menit",
-          "socialMedia": "Social Media",
-          "marketing": "Marketing/Iklan",
-          "event": "Wedding/Event",
-          "product": "Produk",
-          "corporate": "Corporate/Perusahaan",
-          "instagram": "Instagram",
-          "youtube": "YouTube",
-          "tiktok": "TikTok",
-          "facebook": "Facebook",
-          "print": "Print/Cetak"
-        }
-      },
-      "uiux": {
-        "title": "Detail UI/UX Design",
-        "platform": "Platform",
-        "screenCount": "Jumlah Screen/Halaman",
-        "deliverables": "Deliverables",
-        "designStyle": "Style Desain",
-        "brandGuidelines": "Brand Guidelines",
-        "designRef": "Referensi Desain (Opsional)",
-        "designRefPlaceholder": "Link dribbble, behance, atau website referensi",
-        "options": {
-          "web": "Web",
-          "mobile": "Mobile App",
-          "both": "Keduanya",
-          "1to5": "1-5 screen",
-          "6to10": "6-10 screen",
-          "11to20": "11-20 screen",
-          "20plus": "20+ screen",
-          "wireframe": "Wireframe",
-          "mockup": "Mockup/Visual Design",
-          "prototype": "Prototype Interaktif",
-          "designSystem": "Design System",
-          "modern": "Modern/Minimalist",
-          "corporate": "Corporate/Professional",
-          "playful": "Playful/Fun",
-          "luxury": "Luxury/Premium",
-          "custom": "Custom",
-          "createNew": "Belum ada (buat baru)"
-        }
-      },
-      "maintenance": {
-        "title": "Detail Service Perangkat",
-        "deviceType": "Tipe Perangkat",
-        "brand": "Merk",
-        "brandPlaceholder": "Contoh: iPhone, Samsung, Asus, Lenovo",
-        "model": "Model",
-        "modelPlaceholder": "Contoh: iPhone 13, Galaxy S23, ROG Strix",
-        "serialNumber": "Nomor Seri (Opsional)",
-        "serialNumberPlaceholder": "Nomor seri/IMEI perangkat jika ada",
-        "deviceCondition": "Kondisi Perangkat",
-        "problemType": "Jenis Masalah",
-        "problemDesc": "Deskripsi Masalah",
-        "problemDescPlaceholder": "Jelaskan masalah perangkat Anda secara detail: kapan mulai terjadi, apa yang sudah dicoba, dll...",
-        "warrantyStatus": "Status Garansi",
-        "backupStatus": "Status Backup Data",
-        "pickupMethod": "Metode Pengambilan",
-        "pickupAddress": "Alamat Pengambilan/Antar",
-        "pickupAddressPlaceholder": "Masukkan alamat lengkap jika memilih pengambilan atau layanan on-site...",
-        "urgency": "Tingkat Urgensi",
-        "options": {
-          "smartphone": "Smartphone",
-          "laptop": "Laptop",
-          "tablet": "Tablet",
-          "desktop": "PC Desktop",
-          "allinone": "PC All-in-One",
-          "other": "Perangkat Lainnya",
-          "canTurnOn": "Bisa Menyala Normal",
-          "cannotTurnOn": "Tidak Bisa Menyala",
-          "intermittent": "Menyala Tapi Tidak Stabil",
-          "bootLoop": "Boot Loop / Restart Terus",
-          "screen": "Layar/LCD",
-          "battery": "Baterai",
-          "charging": "Port Charging",
-          "speaker": "Speaker",
-          "microphone": "Mikrofon",
-          "camera": "Kamera",
-          "keyboard": "Keyboard",
-          "touchpad": "Touchpad/Mouse",
-          "wifi": "WiFi",
-          "bluetooth": "Bluetooth",
-          "storage": "Storage/SSD/HDD",
-          "ram": "RAM",
-          "software": "Software/OS",
-          "virus": "Virus/Malware",
-          "performance": "Performa Lambat",
-          "overheating": "Overheat/Panas Berlebih",
-          "hardware": "Hardware Lainnya",
-          "inWarranty": "Masih Dalam Garansi",
-          "outWarranty": "Sudah Habis Garansi",
-          "notSure": "Tidak Yakin",
-          "backupDone": "Sudah Di-backup",
-          "noBackup": "Belum Di-backup (Data Penting)",
-          "helpBackup": "Butuh Bantuan Backup",
-          "dropOff": "Antar ke Lokasi Kami",
-          "pickup": "Jemput di Lokasi Saya",
-          "onsite": "Layanan On-Site",
-          "standard": "Standard (3-7 hari kerja)",
-          "express": "Express (1-2 hari kerja) +25%",
-          "sameDay": "Same Day (hari ini) +50%"
-        }
-      }
-    },
-    "services": {
-      "websiteDevelopment": {
-        "namaBisnisBrand": {
-          "label": "Nama bisnis/brand",
-          "placeholder": "Contoh: Ekalliptus Studio"
-        },
-        "jenisBisnis": {
-          "label": "Jenis bisnis",
-          "placeholder": "Contoh: Agency kreatif, UMKM kuliner, SaaS, dll"
-        },
-        "tujuanWebsite": {
-          "label": "Tujuan website",
-          "placeholder": "Informasi perusahaan, e-commerce, company profile, platform reservasi, dll"
-        },
-        "preferensiDesainWarna": {
-          "label": "Preferensi desain/warna",
-          "placeholder": "Sebutkan gaya visual atau palet warna yang diinginkan"
-        },
-        "domainDiinginkan": {
-          "label": "Domain yang diinginkan",
-          "placeholder": "Contoh: ekalliptus.com"
-        },
-        "fiturKhusus": {
-          "label": "Fitur khusus",
-          "placeholder": "Blog, galeri, form kontak, booking, multi bahasa, dsb"
-        },
-        "budgetEstimasiWaktu": {
-          "label": "Budget/estimasi waktu",
-          "placeholder": "Perkirakan budget & target waktu penyelesaian"
-        },
-        "kontakDapatDihubungi": {
-          "label": "Kontak yang dapat dihubungi",
-          "placeholder": "Nama & nomor/akun yang nyaman dihubungi"
-        },
-        "catatanTambahan": {
-          "label": "Catatan tambahan / referensi",
-          "placeholder": "Tambahkan link referensi, moodboard, atau catatan khusus lainnya."
-        }
-      },
-      "wordpressDevelopment": {
-        "namaBrandSitus": {
-          "label": "Nama/brand situs",
-          "placeholder": "Contoh: Ekalliptus Blog"
-        },
-        "jenisWebsite": {
-          "label": "Jenis website",
-          "placeholder": "Blog, toko online, edukasi, portfolio, katalog produk, dll"
-        },
-        "pilihanTema": {
-          "label": "Pilihan tema",
-          "placeholder": "Custom design atau rekomendasi tema yang disukai"
-        },
-        "kebutuhanPlugin": {
-          "label": "Kebutuhan plugin",
-          "placeholder": "E-commerce, SEO, membership, LMS, automasi, dsb"
-        },
-        "kontenAwal": {
-          "label": "Konten awal",
-          "placeholder": "Artikel, kategori produk, data produk, asset visual, dsb"
-        },
-        "akunAdmin": {
-          "label": "Akun admin",
-          "placeholder": "Informasi akun admin yang dibutuhkan atau struktur akses"
-        },
-        "budgetDeadline": {
-          "label": "Budget & deadline",
-          "placeholder": "Estimasikan budget dan target live"
-        },
-        "catatanTambahan": {
-          "label": "Catatan tambahan / referensi",
-          "placeholder": "Cantumkan akses staging, asset branding, atau kebutuhan khusus lainnya."
-        }
-      },
-      "berduPlatform": {
-        "namaBisnis": {
-          "label": "Nama bisnis",
-          "placeholder": "Contoh: Ekalliptus Ventures"
-        },
-        "jenisUsaha": {
-          "label": "Jenis usaha",
-          "placeholder": "Retail, layanan, distribusi, reseller, dsb"
-        },
-        "jumlahUserKelola": {
-          "label": "Jumlah user yang akan dikelola",
-          "placeholder": "Berapa banyak admin/agen/operator yang akan menggunakan sistem"
-        },
-        "kebutuhanFiturDashboard": {
-          "label": "Kebutuhan fitur dashboard admin",
-          "placeholder": "Contoh: manajemen order, stok, user role, laporan, dsb"
-        },
-        "jenisDataAnalytics": {
-          "label": "Jenis data bisnis/analytics",
-          "placeholder": "Sebutkan KPI utama, laporan atau analitik yang perlu tersedia"
-        },
-        "preferensiIntegrasi": {
-          "label": "Preferensi integrasi",
-          "placeholder": "Integrasi ke penyimpanan cloud, marketplace, payment gateway, dll"
-        },
-        "kontakPic": {
-          "label": "Kontak PIC",
-          "placeholder": "Nama penanggung jawab & kontaknya"
-        },
-        "catatanTambahan": {
-          "label": "Catatan tambahan",
-          "placeholder": "Tambahkan SOP, integrasi prioritas, atau catatan implementasi lainnya."
-        }
-      },
-      "mobileAppDevelopment": {
-        "namaAplikasi": {
-          "label": "Nama aplikasi",
-          "placeholder": "Contoh: Ekalliptus Mobile"
-        },
-        "platformTarget": {
-          "label": "Platform target",
-          "placeholder": "Android, iOS, atau keduanya"
-        },
-        "tujuanAplikasi": {
-          "label": "Tujuan aplikasi",
-          "placeholder": "Bisnis, edukasi, komunitas, internal tools, dsb"
-        },
-        "fiturUtama": {
-          "label": "Fitur utama yang diinginkan",
-          "placeholder": "Minimal 3 fitur inti yang harus tersedia"
-        },
-        "mockupDesain": {
-          "label": "Mockup/desain awal",
-          "placeholder": "Cantumkan link figma, gambar, atau catatan desain jika ada"
-        },
-        "integrasiLayanan": {
-          "label": "Integrasi dengan layanan lain atau API",
-          "placeholder": "Contoh: payment gateway, CRM, sistem internal, dsb"
-        },
-        "estimasiJumlahPengguna": {
-          "label": "Estimasi jumlah pengguna",
-          "placeholder": "Perkirakan jumlah user aktif dalam 3-6 bulan pertama"
-        },
-        "kontak": {
-          "label": "Kontak",
-          "placeholder": "Nama & nomor/email PIC proyek"
-        },
-        "catatanTambahan": {
-          "label": "Catatan tambahan",
-          "placeholder": "Lampirkan referensi desain, repo existing, atau catatan scope lainnya."
-        }
-      },
-      "serviceHpLaptop": {
-        "namaLengkap": {
-          "label": "Nama lengkap",
-          "placeholder": "Contoh: Budi Santoso"
-        },
-        "jenisPerangkat": {
-          "label": "Jenis perangkat",
-          "placeholder": "HP/Laptop, merk, dan tipe"
-        },
-        "masalahUtama": {
-          "label": "Masalah/kendala utama",
-          "placeholder": "Contoh: layar blank, baterai drop, install ulang OS, dsb"
-        },
-        "informasiGaransi": {
-          "label": "Informasi garansi/suku cadang",
-          "placeholder": "Masih bergaransi, ingin pakai sparepart original/opsi lain"
-        },
-        "pilihanLayanan": {
-          "label": "Pilihan layanan",
-          "placeholder": "Hardware, software, upgrade, konsultasi, dsb"
-        },
-        "lokasiLayanan": {
-          "label": "Lokasi/area layanan",
-          "placeholder": "Contoh: Jakarta Timur, Bekasi, on-site/antar jemput"
-        },
-        "kontak": {
-          "label": "Kontak yang bisa dihubungi",
-          "placeholder": "Nomor telepon/WhatsApp alternatif"
-        },
-        "catatanTambahan": {
-          "label": "Catatan tambahan",
-          "placeholder": "Tuliskan catatan servis lain, riwayat perbaikan, atau permintaan khusus."
-        }
-      },
-      "photoVideoEditing": {
-        "namaProyek": {
-          "label": "Nama proyek",
-          "placeholder": "Contoh: Campaign Ramadan 2024"
-        },
-        "jenisEditing": {
-          "label": "Jenis editing",
-          "placeholder": "Foto, video, reels, long-form, dokumentasi, dsb"
-        },
-        "jumlahFile": {
-          "label": "Jumlah file yang akan diedit",
-          "placeholder": "Sebutkan jumlah file dan durasi/ukuran bila relevan"
-        },
-        "kebutuhanSpesifik": {
-          "label": "Kebutuhan spesifik",
-          "placeholder": "Color grading, motion graphic, audio mixing, subtitle, dsb"
-        },
-        "resolusiFormatOutput": {
-          "label": "Resolusi/format output",
-          "placeholder": "Contoh: 4K, MP4, JPG, PNG, rasio tertentu"
-        },
-        "deadline": {
-          "label": "Deadline",
-          "placeholder": "Sebutkan target tanggal atau rentang waktu"
-        },
-        "kontak": {
-          "label": "Kontak",
-          "placeholder": "PIC proyek yang dapat dihubungi"
-        },
-        "catatanTambahan": {
-          "label": "Catatan tambahan / referensi",
-          "placeholder": "Tambahkan link folder asset, moodboard, atau catatan revisi."
-        }
-      }
-    },
-    "notes": {
-      "title": "Catatan",
-      "description": "Dokumen langsung tersinkron ke Sheet internal ekalliptus untuk website development Global, WordPress custom, mobile app development, service HP laptop, dan editing foto video. Jika ingin mengirim lampiran tambahan (wireframe, requirement, dsb), balas email konfirmasi yang Anda terima setelah pengiriman formulir ini.",
-      "privacy": "Kami menjaga kerahasiaan data Anda dan hanya menggunakan informasi ini untuk keperluan komunikasi proyek website development, WordPress custom, mobile app, dan layanan digital lainnya."
-    },
     "actions": {
       "submitting": "Mengirim...",
       "submit": "Kirim Order",
@@ -972,7 +431,7 @@
     "sections": {
       "introduction": {
         "title": "1. Pendahuluan",
-        "content": "Selamat datang di ekalliptus (\"kami,\" \"perusahaan,\" atau \"milik kami\"). Kebijakan Privasi ini menjelaskan bagaimana kami mengumpulkan, menggunakan, mengungkapkan, dan melindungi informasi Anda ketika Anda mengunjungi website kami ekalliptus.com dan menggunakan layanan digital kami, termasuk pengembangan website, pengembangan aplikasi mobile, dan layanan editing multimedia.",
+        "content": "Selamat datang di ekalliptus (\"kami,\" \"perusahaan,\" atau \"milik kami\"). Kebijakan Privasi ini menjelaskan bagaimana kami mengumpulkan, menggunakan, mengungkapkan, dan melindungi informasi Anda ketika Anda mengunjungi website kami ekalliptus.com dan menggunakan layanan digital kami, termasuk pengembangan website, pengembangan aplikasi mobile, dan maintenance server & web.",
         "content2": "Kami berkomitmen untuk melindungi data pribadi Anda dan menghormati privasi Anda sesuai dengan hukum perlindungan data yang berlaku, termasuk Regulasi Perlindungan Data Umum (GDPR) dan Undang-Undang Privasi Konsumen California (CCPA)."
       },
       "informationWeCollect": {
@@ -1125,16 +584,7 @@
       },
       "description": {
         "title": "2. Deskripsi Layanan",
-        "content": "ekalliptus menyediakan layanan agensi digital termasuk tetapi tidak terbatas pada:",
-        "items": [
-          "Pengembangan dan desain website",
-          "Kustomisasi dan pengembangan WordPress",
-          "Pengembangan aplikasi mobile",
-          "Layanan editing multimedia",
-          "Konsultasi dan strategi digital",
-          "Layanan optimasi SEO",
-          "Dukungan teknis dan pemeliharaan"
-        ]
+        "content": "ekalliptus menyediakan layanan agensi digital termasuk tetapi tidak terbatas pada:"
       },
       "userResponsibilities": {
         "title": "3. Tanggung Jawab Pengguna",
@@ -1317,21 +767,6 @@
     "expiresIn": "Kadaluarsa dalam",
     "checkStatus": "Cek Status Pembayaran"
   },
-  "seo": {
-    "home": {
-      "title": "Ekalliptus Digital | Web & Mobile App",
-      "description": "Digital agency Global spesialis website development, WordPress, mobile app, dan multimedia editing. Transformasi bisnis Anda dengan teknologi terdepan.",
-      "keywords": "digital agency Global, web development, wordpress, mobile app, website development Global, jasa pembuatan website"
-    },
-    "order": {
-      "title": "Order Layanan Digital - ekalliptus | Pesan Sekarang",
-      "description": "Pesan layanan digital ekalliptus - Web Development, Mobile App, WordPress, editing foto video. Dapatkan penawaran terbaik untuk proyek digital Anda.",
-      "keywords": "order layanan digital, pesan website, jasa website murah, order web development"
-    },
-    "title": "Ekalliptus Digital — Website, WordPress, Mobile App Global",
-    "description": "Ekalliptus - Solusi digital terdepan untuk website development, WordPress, mobile app, dan editing foto/video profesional di Global. Hubungi kami untuk transformasi digital bisnis Anda.",
-    "keywords": "website development Global, WordPress custom, mobile app development, photo editing service, video editing profesional, digital agency Jakarta, jasa pembuatan website, aplikasi mobile Android iOS, editing foto video berkualitas"
-  },
   "qrPayment": {
     "title": "Pembayaran dengan QR Code",
     "description": "Silakan scan QR code di bawah ini untuk melakukan pembayaran",
@@ -1358,7 +793,7 @@
       "titleLead": "Bangun Produk Digital",
       "titleAccent": "yang Menjual",
       "titleTail": "untuk Bisnis Anda",
-      "subtitle": "Jasa pembuatan website, aplikasi mobile, WordPress, dan UI/UX design profesional. Cepat, modern, dan dioptimasi untuk SEO sejak hari pertama.",
+      "subtitle": "Jasa pembuatan website profesional, aplikasi mobile, dan maintenance server & web. Cepat, modern, dan dioptimasi untuk SEO sejak hari pertama.",
       "ctaPrimary": "Konsultasi Gratis",
       "ctaSecondary": "Lihat Layanan",
       "trustRating": "Rating klien",

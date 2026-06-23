@@ -79,8 +79,8 @@ const services = [
     description: 'Layanan pembuatan website company profile, e-commerce, dan aplikasi web custom dengan teknologi modern.',
     url: `${siteUrl}/services/website`,
     provider: { '@id': `${siteUrl}#organization` },
-    areaServed: { '@type': 'Country', name: 'Global' },
-    offers: { '@type': 'Offer', priceCurrency: 'IDR', price: '1500000', availability: 'https://schema.org/InStock' }
+    areaServed: [{ '@type': 'Country', name: 'Indonesia' }, 'Global'],
+    offers: { '@type': 'Offer', availability: 'https://schema.org/InStock', url: `${siteUrl}/order` }
   },
   {
     '@type': 'Service',
@@ -88,8 +88,8 @@ const services = [
     description: 'Pengembangan aplikasi mobile cross-platform dengan React Native dan Flutter untuk iOS dan Android.',
     url: `${siteUrl}/services/mobile-app`,
     provider: { '@id': `${siteUrl}#organization` },
-    areaServed: { '@type': 'Country', name: 'Global' },
-    offers: { '@type': 'Offer', priceCurrency: 'IDR', price: '5000000', availability: 'https://schema.org/InStock' }
+    areaServed: [{ '@type': 'Country', name: 'Indonesia' }, 'Global'],
+    offers: { '@type': 'Offer', availability: 'https://schema.org/InStock', url: `${siteUrl}/order` }
   },
   {
     '@type': 'Service',
@@ -97,8 +97,8 @@ const services = [
     description: 'Paket maintenance website rutin meliputi update, backup, monitoring keamanan, dan technical support.',
     url: `${siteUrl}/services/maintenance`,
     provider: { '@id': `${siteUrl}#organization` },
-    areaServed: { '@type': 'Country', name: 'Global' },
-    offers: { '@type': 'Offer', priceCurrency: 'IDR', price: '500000', availability: 'https://schema.org/InStock' }
+    areaServed: [{ '@type': 'Country', name: 'Indonesia' }, 'Global'],
+    offers: { '@type': 'Offer', availability: 'https://schema.org/InStock', url: `${siteUrl}/order` }
   }
 ]
 

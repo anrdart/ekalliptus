@@ -58,7 +58,6 @@
     "description": "We are here to deliver digital products that feel futuristic yet human. Combining micro-interactions, glassmorphism elements, and smooth animations.",
     "subdescription": "Get more benefits and attractive offers by using our services!",
     "fokus": "Our current focus:",
-    "uiUxDesign": "Futuristic UI/UX Design",
     "digitalExperience": "Immersive Digital Experience",
     "web3d": "3D-Touched Websites",
     "branding": "Holistic Branding Strategy",
@@ -107,28 +106,6 @@
           "Custom Domain"
         ]
       },
-      "wordpressDevelopment": {
-        "category": "Development",
-        "title": "WordPress Development",
-        "description": "Customize WordPress to match your needs with premium themes and plugins.",
-        "features": [
-          "Custom Theme",
-          "Plugin Integration",
-          "E-commerce Ready",
-          "Content Management"
-        ]
-      },
-      "berduPlatform": {
-        "category": "Platform",
-        "title": "Berdu Platform",
-        "description": "Powerful Berdu-based platform solutions for modern business operations.",
-        "features": [
-          "Admin Dashboard",
-          "User Management",
-          "Data Analytics",
-          "Cloud Hosting"
-        ]
-      },
       "mobileAppDevelopment": {
         "category": "Development",
         "title": "Mobile App Development",
@@ -138,39 +115,6 @@
           "Native Performance",
           "Push Notifications",
           "App Store Ready"
-        ]
-      },
-      "serviceHpLaptop": {
-        "category": "Service",
-        "title": "Device Repair Service",
-        "description": "Certified technicians providing trusted repair for phones and laptops.",
-        "features": [
-          "Quick Diagnostics",
-          "Original Spare Parts",
-          "Software & Hardware Repair",
-          "Service Warranty"
-        ]
-      },
-      "photoVideoEditing": {
-        "category": "Multimedia",
-        "title": "Photo & Video Editing",
-        "description": "Professional editing services delivering high-quality visual results.",
-        "features": [
-          "Color Grading",
-          "Motion Graphics",
-          "Audio Mixing",
-          "4K Quality"
-        ]
-      },
-      "uiUxDesign": {
-        "category": "Design",
-        "title": "UI/UX Design",
-        "description": "Elegant interface design and intuitive user experience for your digital products.",
-        "features": [
-          "Wireframe & Prototype",
-          "User Research",
-          "Design System",
-          "Figma Ready"
         ]
       },
       "websiteMaintenance": {
@@ -192,14 +136,14 @@
     "quality": "Guaranteed Quality",
     "team": "Professional Team",
     "innovationDesc": "Ekalliptus is an Global-based digital agency specializing in digital transformation for modern businesses. With over 5 years of industry experience, we have helped hundreds of clients from SMEs to enterprises achieve their digital vision.",
-    "qualityDesc": "Our services include responsive and SEO-friendly website development, custom WordPress with complete plugin integration, cross-platform mobile app development using React Native and Flutter.",
-    "teamDesc": "HP and laptop repair services with certified technicians, as well as professional photo and video editing for impactful marketing content using software like Adobe Premiere, After Effects, and Photoshop.",
+    "qualityDesc": "Our services cover responsive and SEO-friendly website development, cross-platform mobile apps, and high-quality server & web maintenance.",
+    "teamDesc": "High-quality server & web maintenance with security monitoring, periodic backups, and technical support to keep your applications running smoothly.",
     "whyChoose": "Why Choose Ekalliptus?",
     "technology": "Leading Technology",
     "local": "Local Focus",
     "results": "Guaranteed Results",
     "technologyDesc": "We provide affordable yet high-quality website development services in Global using modern technology.",
-    "localDesc": "Specialists in WordPress custom Jakarta for local business needs and mobile app development for startups to enterprises.",
+    "localDesc": "Specialists in website development and mobile app development for businesses from startup to enterprise.",
     "resultsDesc": "With a focus on professional digital agency, Ekalliptus has become the top choice for HP laptop services in Jakarta and surrounding areas.",
     "commitment": "We prioritize client satisfaction by providing results that are not only aesthetic but also functional. Every website development Global project we work on always follows the latest SEO best practices to ensure maximum visibility on Google search engines.",
     "contactForm": "Contact us through the order form for free consultation and get a custom proposal according to your business needs in Global."
@@ -214,43 +158,6 @@
     "rating": "Client Rating",
     "interactive": "Interactive",
     "support": "Full Support"
-  },
-  "appPurpose": {
-    "badge": "Application Purpose",
-    "title": "What is Ekalliptus?",
-    "description": "Ekalliptus is a professional digital agency platform based in Global that helps businesses and individuals access various digital services. Our application provides an easy-to-use interface for ordering digital services, managing projects, and communicating with our team.",
-    "whatWeDo": {
-      "title": "What We Do",
-      "description": "Ekalliptus provides comprehensive digital solutions including website development, mobile app development, WordPress customization, photo & video editing, and device repair services. We help businesses establish and enhance their digital presence with modern, user-centric designs."
-    },
-    "ourServices": {
-      "title": "Our Services",
-      "service1": "Professional website development (company profile, e-commerce, landing pages)",
-      "service2": "Cross-platform mobile app development (Android & iOS)",
-      "service3": "WordPress development with custom themes and plugins",
-      "service4": "Photo & video editing for marketing content"
-    },
-    "dataUsage": {
-      "title": "How We Use Your Data",
-      "description": "We only collect information necessary to process your service orders and provide customer support. Your data is used solely to deliver the services you request, communicate project updates, and improve our service quality. We never sell or share your personal information with third parties for marketing purposes."
-    },
-    "howItWorks": {
-      "title": "How Our Application Works",
-      "orderProcess": {
-        "title": "Service Order Process",
-        "step1": "Browse our services and select what you need",
-        "step2": "Fill out the order form with your project details",
-        "step3": "Our team reviews and contacts you within 24 hours",
-        "step4": "We deliver your project with ongoing support"
-      },
-      "privacyCommitment": {
-        "title": "Our Privacy Commitment",
-        "point1": "Your data is encrypted and stored securely",
-        "point2": "We comply with data protection regulations",
-        "point3": "You can request data deletion at any time"
-      }
-    },
-    "learnMore": "For more details about how we handle your information, please review our policies:"
   },
   "consultation": {
     "statusOnline": "Online",
@@ -281,7 +188,7 @@
   "faq": {
     "pill": "FAQ",
     "title": "Frequently Asked Questions",
-    "description": "Find answers to common questions about our website development, custom WordPress, mobile app development, and other digital services at ekalliptus.",
+    "description": "Find answers to common questions about our website development, mobile app, and maintenance services at ekalliptus.",
     "items": [
       {
         "question": "How long does website development take?",
@@ -292,8 +199,8 @@
         "answer": "Yes, we offer maintenance packages that include regular updates, data backups, security monitoring, and technical support. Packages are tailored to your business needs, from monthly to annual maintenance."
       },
       {
-        "question": "Is WordPress development suitable for large-scale businesses?",
-        "answer": "Absolutely! Our WordPress solutions scale for enterprise needs with custom plugins, high-performance optimization, and complex system integrations. Many leading brands rely on WordPress as their CMS thanks to its flexibility and robust plugin ecosystem."
+        "question": "Are the websites you build responsive and SEO-friendly?",
+        "answer": "Absolutely! All websites we build are responsive (mobile-friendly) and SEO-optimized from the start. We use modern technologies like Astro and React for high performance, fast loading, and a search-engine-friendly structure."
       },
       {
         "question": "What is the ordering process at ekalliptus?",
@@ -312,8 +219,8 @@
         "answer": "Yes, we service a wide range of phone and laptop brands including Apple, Samsung, Xiaomi, ASUS, Lenovo, HP, Dell, and more. Our certified technicians handle diverse hardware and software issues with original spare parts and official warranties."
       },
       {
-        "question": "How much does professional photo & video editing cost?",
-        "answer": "Pricing depends on the number of files, duration, and editing complexity. Photo editing starts from IDR 50,000 per photo, while video editing starts from IDR 500,000 for short standard edits. Contact us for a detailed quote tailored to your project."
+        "question": "What's included in the website maintenance package?",
+        "answer": "Our maintenance package includes regular updates, periodic backups, 24/7 security monitoring, bug fixes, and technical support. We keep your website fast, secure, and up-to-date. Contact us for a quote tailored to your needs."
       }
     ]
   },
@@ -331,7 +238,7 @@
     "title": "Digital Service Order",
     "formTitle": "Request Quote",
     "subtitle": "Get the best offer for your digital project. Expert team ready to help from consultation to implementation.",
-    "description": "Tell us about your website development, custom WordPress, mobile app, or other digital needs in detail. Submissions sync to our internal dashboard and notify the ekalliptus team so we can respond with a proposal within 24 hours.",
+    "description": "Describe your website development, mobile app, or maintenance project in detail. Your data is saved to our internal dashboard and our team will contact you via WhatsApp for consultation & a quote.",
     "heading": "Digital Service Order",
     "subheading": "Get the best offer for your digital project",
     "selectService": "Select Service",
@@ -367,21 +274,9 @@
         "title": "Mobile App Development",
         "description": "Android & iOS apps with React Native/Flutter"
       },
-      "wordpress": {
-        "title": "WordPress Development",
-        "description": "Custom themes, plugins, WooCommerce"
-      },
-      "video": {
-        "title": "Video & Photo Editing",
-        "description": "Promotional videos, photo editing, motion graphics"
-      },
-      "uiux": {
-        "title": "UI/UX Design",
-        "description": "Modern and user-friendly interface design"
-      },
       "maintenance": {
-        "title": "Device Repair Service",
-        "description": "Device repair and maintenance"
+        "title": "Website & Server Maintenance",
+        "description": "Updates, backups, and website security monitoring"
       }
     },
     "attachments": {
@@ -451,7 +346,6 @@
       "expressNote": "Includes Express fee +25%",
       "priorityNote": "Includes Priority fee +50%"
     },
-    "descriptionSecondary": "We support a wide range of digital needs: Globaln website development, custom WordPress, Android and iOS mobile apps, professional device repair, and high-quality photo & video editing. Choose the service that fits and complete the form below.",
     "basicInfo": {
       "title": "Basic Information"
     },
@@ -493,11 +387,6 @@
         "label": "Primary Service",
         "placeholder": "Select a service"
       },
-      "serviceDetails": {
-        "title": "Service Details",
-        "description": "Share the specifics for website development, custom WordPress, mobile apps, device repair, or photo/video editing so our team can review quickly and accurately.",
-        "emptyState": "Choose a service first to reveal detailed questions tailored to your project needs."
-      },
       "contactPreference": {
         "label": "Preferred Communication"
       },
@@ -529,436 +418,6 @@
         "helper": "Arrange a session via Zoom or Google Meet."
       }
     },
-    "serviceOptions": {
-      "websiteDevelopment": "Website Development",
-      "wordpressDevelopment": "WordPress Development",
-      "berduPlatform": "Berdu Platform",
-      "mobileAppDevelopment": "Mobile App Development",
-      "serviceHpLaptop": "Device Repair Service",
-      "photoVideoEditing": "Photo & Video Editing",
-      "other": "Other Services"
-    },
-    "serviceDetails": {
-      "common": {
-        "select": "Select...",
-        "yes": "Yes",
-        "no": "No",
-        "notSure": "Not sure",
-        "dontHave": "Don't have",
-        "alreadyHave": "Already have",
-        "needHelp": "Need help choosing",
-        "pages1to5": "1-5 pages",
-        "pages6to10": "6-10 pages",
-        "pages11to20": "11-20 pages",
-        "pages20plus": "20+ pages"
-      },
-      "web": {
-        "title": "Website Details",
-        "websiteType": "Website Type",
-        "pageCount": "Number of Pages",
-        "features": "Features Needed",
-        "referenceUrl": "Reference Website (Optional)",
-        "referenceUrlPlaceholder": "https://example-website.com",
-        "needDomain": "Need Domain?",
-        "needHosting": "Need Hosting?",
-        "options": {
-          "companyProfile": "Company Profile",
-          "ecommerce": "E-commerce/Online Store",
-          "landingPage": "Landing Page",
-          "portfolio": "Portfolio",
-          "blog": "Blog",
-          "custom": "Custom/Other",
-          "contactForm": "Contact Form",
-          "gallery": "Gallery",
-          "multilang": "Multi-language",
-          "cms": "CMS/Admin Panel"
-        }
-      },
-      "mobile": {
-        "title": "Mobile App Details",
-        "platform": "Platform",
-        "appType": "App Type",
-        "features": "Features Needed",
-        "apiIntegration": "API Integration?",
-        "adminPanel": "Need Admin Panel?",
-        "referenceApp": "Reference App (Optional)",
-        "referenceAppPlaceholder": "App name or Play Store/App Store link",
-        "options": {
-          "android": "Android only",
-          "ios": "iOS only",
-          "both": "Android & iOS",
-          "native": "Native",
-          "crossPlatform": "Cross-platform (Flutter/React Native)",
-          "auth": "Login/Register",
-          "pushNotif": "Push Notification",
-          "payment": "Payment Gateway",
-          "maps": "Maps/Location",
-          "socialLogin": "Social Login",
-          "chat": "Chat/Messaging"
-        }
-      },
-      "wordpress": {
-        "title": "WordPress Details",
-        "wpType": "Work Type",
-        "wpEcommerce": "E-commerce (WooCommerce)?",
-        "plugins": "Required Plugins",
-        "existingUrl": "Existing Website URL (Optional)",
-        "existingUrlPlaceholder": "https://your-website.com",
-        "options": {
-          "newSite": "New Website",
-          "themeCustom": "Theme Customization",
-          "pluginDev": "Plugin Development",
-          "maintenance": "Maintenance/Repair",
-          "seo": "SEO (Yoast/Rank Math)",
-          "backup": "Backup",
-          "security": "Security",
-          "contactForm": "Contact Form",
-          "gallery": "Gallery",
-          "multilang": "Multilingual (WPML)"
-        }
-      },
-      "video": {
-        "title": "Video & Photo Editing Details",
-        "mediaType": "Work Type",
-        "duration": "Video Duration (if video)",
-        "quantity": "Number of Videos/Photos",
-        "quantityPlaceholder": "Example: 5",
-        "purpose": "Purpose",
-        "outputFormat": "Output Format",
-        "styleRef": "Style Reference (Optional)",
-        "styleRefPlaceholder": "Video/photo reference link or style description",
-        "options": {
-          "videoEdit": "Video Editing",
-          "photoEdit": "Photo Editing",
-          "motionGraphics": "Motion Graphics",
-          "all": "All",
-          "under1min": "< 1 minute",
-          "1to3min": "1-3 minutes",
-          "3to5min": "3-5 minutes",
-          "5to10min": "5-10 minutes",
-          "over10min": "> 10 minutes",
-          "socialMedia": "Social Media",
-          "marketing": "Marketing/Ads",
-          "event": "Wedding/Event",
-          "product": "Product",
-          "corporate": "Corporate",
-          "instagram": "Instagram",
-          "youtube": "YouTube",
-          "tiktok": "TikTok",
-          "facebook": "Facebook",
-          "print": "Print"
-        }
-      },
-      "uiux": {
-        "title": "UI/UX Design Details",
-        "platform": "Platform",
-        "screenCount": "Number of Screens",
-        "deliverables": "Deliverables",
-        "designStyle": "Design Style",
-        "brandGuidelines": "Brand Guidelines",
-        "designRef": "Design Reference (Optional)",
-        "designRefPlaceholder": "Dribbble, Behance, or website reference link",
-        "options": {
-          "web": "Web",
-          "mobile": "Mobile App",
-          "both": "Both",
-          "1to5": "1-5 screens",
-          "6to10": "6-10 screens",
-          "11to20": "11-20 screens",
-          "20plus": "20+ screens",
-          "wireframe": "Wireframe",
-          "mockup": "Mockup/Visual Design",
-          "prototype": "Interactive Prototype",
-          "designSystem": "Design System",
-          "modern": "Modern/Minimalist",
-          "corporate": "Corporate/Professional",
-          "playful": "Playful/Fun",
-          "luxury": "Luxury/Premium",
-          "custom": "Custom",
-          "createNew": "Don't have (create new)"
-        }
-      },
-      "maintenance": {
-        "title": "Device Repair Details",
-        "deviceType": "Device Type",
-        "brand": "Brand",
-        "brandPlaceholder": "Example: iPhone, Samsung, Asus, Lenovo",
-        "model": "Model",
-        "modelPlaceholder": "Example: iPhone 13, Galaxy S23, ROG Strix",
-        "serialNumber": "Serial Number (Optional)",
-        "serialNumberPlaceholder": "Device serial number/IMEI if available",
-        "deviceCondition": "Device Condition",
-        "problemType": "Problem Type",
-        "problemDesc": "Problem Description",
-        "problemDescPlaceholder": "Describe your device problem in detail: when it started, what you've tried, etc...",
-        "warrantyStatus": "Warranty Status",
-        "backupStatus": "Data Backup Status",
-        "pickupMethod": "Pickup Method",
-        "pickupAddress": "Pickup/Delivery Address",
-        "pickupAddressPlaceholder": "Enter full address if you choose pickup or on-site service...",
-        "urgency": "Urgency Level",
-        "options": {
-          "smartphone": "Smartphone",
-          "laptop": "Laptop",
-          "tablet": "Tablet",
-          "desktop": "PC Desktop",
-          "allinone": "All-in-One PC",
-          "other": "Other Device",
-          "canTurnOn": "Can Turn On Normally",
-          "cannotTurnOn": "Cannot Turn On",
-          "intermittent": "Turns On But Unstable",
-          "bootLoop": "Boot Loop / Keeps Restarting",
-          "screen": "Screen/LCD",
-          "battery": "Battery",
-          "charging": "Charging Port",
-          "speaker": "Speaker",
-          "microphone": "Microphone",
-          "camera": "Camera",
-          "keyboard": "Keyboard",
-          "touchpad": "Touchpad/Mouse",
-          "wifi": "WiFi",
-          "bluetooth": "Bluetooth",
-          "storage": "Storage/SSD/HDD",
-          "ram": "RAM",
-          "software": "Software/OS",
-          "virus": "Virus/Malware",
-          "performance": "Slow Performance",
-          "overheating": "Overheating",
-          "hardware": "Other Hardware",
-          "inWarranty": "Still Under Warranty",
-          "outWarranty": "Out of Warranty",
-          "notSure": "Not Sure",
-          "backupDone": "Already Backed Up",
-          "noBackup": "Not Backed Up (Important Data)",
-          "helpBackup": "Need Help with Backup",
-          "dropOff": "Drop Off at Our Location",
-          "pickup": "Pick Up from My Location",
-          "onsite": "On-Site Service",
-          "standard": "Standard (3-7 business days)",
-          "express": "Express (1-2 business days) +25%",
-          "sameDay": "Same Day +50%"
-        }
-      }
-    },
-    "services": {
-      "websiteDevelopment": {
-        "namaBisnisBrand": {
-          "label": "Business or brand name",
-          "placeholder": "Example: Ekalliptus Studio"
-        },
-        "jenisBisnis": {
-          "label": "Business type",
-          "placeholder": "Example: Creative agency, F&B SME, SaaS, etc."
-        },
-        "tujuanWebsite": {
-          "label": "Website goals",
-          "placeholder": "Company profile, e-commerce, reservation platform, etc."
-        },
-        "preferensiDesainWarna": {
-          "label": "Design / color preferences",
-          "placeholder": "Describe preferred visual style or color palette"
-        },
-        "domainDiinginkan": {
-          "label": "Desired domain",
-          "placeholder": "Example: ekalliptus.com"
-        },
-        "fiturKhusus": {
-          "label": "Special features",
-          "placeholder": "Blog, gallery, contact form, booking, multi-language, etc."
-        },
-        "budgetEstimasiWaktu": {
-          "label": "Budget / timeline",
-          "placeholder": "Share estimated budget and target go-live date"
-        },
-        "kontakDapatDihubungi": {
-          "label": "Primary contact",
-          "placeholder": "Name and phone/email we can reach"
-        },
-        "catatanTambahan": {
-          "label": "Additional notes / references",
-          "placeholder": "Add moodboards, inspiration links, or other special notes"
-        }
-      },
-      "wordpressDevelopment": {
-        "namaBrandSitus": {
-          "label": "Site or brand name",
-          "placeholder": "Example: Ekalliptus Blog"
-        },
-        "jenisWebsite": {
-          "label": "Website type",
-          "placeholder": "Blog, online store, education, portfolio, product catalog, etc."
-        },
-        "pilihanTema": {
-          "label": "Theme preference",
-          "placeholder": "Custom design or theme recommendations you like"
-        },
-        "kebutuhanPlugin": {
-          "label": "Required plugins",
-          "placeholder": "E-commerce, SEO, membership, LMS, automation, etc."
-        },
-        "kontenAwal": {
-          "label": "Initial content",
-          "placeholder": "Articles, product categories, product data, visual assets, etc."
-        },
-        "akunAdmin": {
-          "label": "Admin accounts",
-          "placeholder": "Access structure or credentials we should prepare"
-        },
-        "budgetDeadline": {
-          "label": "Budget & deadline",
-          "placeholder": "Share target budget and launch date"
-        },
-        "catatanTambahan": {
-          "label": "Additional notes / references",
-          "placeholder": "Add staging access, branding assets, or special requirements"
-        }
-      },
-      "berduPlatform": {
-        "namaBisnis": {
-          "label": "Business name",
-          "placeholder": "Example: Ekalliptus Ventures"
-        },
-        "jenisUsaha": {
-          "label": "Business category",
-          "placeholder": "Retail, services, distribution, reseller, etc."
-        },
-        "jumlahUserKelola": {
-          "label": "Number of users to manage",
-          "placeholder": "How many admins/agents/operators will use the system"
-        },
-        "kebutuhanFiturDashboard": {
-          "label": "Dashboard requirements",
-          "placeholder": "Example: order management, inventory, user roles, reports, etc."
-        },
-        "jenisDataAnalytics": {
-          "label": "Required data / analytics",
-          "placeholder": "List key KPIs, reports, or analytics that must be available"
-        },
-        "preferensiIntegrasi": {
-          "label": "Integration preferences",
-          "placeholder": "Cloud storage, marketplace, payment gateway integrations, etc."
-        },
-        "kontakPic": {
-          "label": "Contact person",
-          "placeholder": "Point of contact name and details"
-        },
-        "catatanTambahan": {
-          "label": "Additional notes",
-          "placeholder": "Include SOPs, priority integrations, or other implementation notes"
-        }
-      },
-      "mobileAppDevelopment": {
-        "namaAplikasi": {
-          "label": "App name",
-          "placeholder": "Example: Ekalliptus Mobile"
-        },
-        "platformTarget": {
-          "label": "Target platform",
-          "placeholder": "Android, iOS, or both"
-        },
-        "tujuanAplikasi": {
-          "label": "App objective",
-          "placeholder": "Business, education, community, internal tools, etc."
-        },
-        "fiturUtama": {
-          "label": "Key features",
-          "placeholder": "List at least three core features that must exist"
-        },
-        "mockupDesain": {
-          "label": "Initial mockups / design",
-          "placeholder": "Share Figma links, images, or design notes if available"
-        },
-        "integrasiLayanan": {
-          "label": "External integrations",
-          "placeholder": "Example: payment gateway, CRM, internal systems, etc."
-        },
-        "estimasiJumlahPengguna": {
-          "label": "Estimated user base",
-          "placeholder": "Projected active users for the first 3–6 months"
-        },
-        "kontak": {
-          "label": "Project contact",
-          "placeholder": "PIC name and phone/email"
-        },
-        "catatanTambahan": {
-          "label": "Additional notes",
-          "placeholder": "Provide design references, existing repos, or scope notes"
-        }
-      },
-      "serviceHpLaptop": {
-        "namaLengkap": {
-          "label": "Full name",
-          "placeholder": "Example: Budi Santoso"
-        },
-        "jenisPerangkat": {
-          "label": "Device type",
-          "placeholder": "Phone/laptop brand and model"
-        },
-        "masalahUtama": {
-          "label": "Main issue",
-          "placeholder": "Example: blank screen, battery drain, OS reinstall, etc."
-        },
-        "informasiGaransi": {
-          "label": "Warranty / spare-part info",
-          "placeholder": "Still under warranty, prefer original parts, alternative options, etc."
-        },
-        "pilihanLayanan": {
-          "label": "Service selection",
-          "placeholder": "Hardware, software, upgrade, consultation, etc."
-        },
-        "lokasiLayanan": {
-          "label": "Service location",
-          "placeholder": "Example: East Jakarta, Bekasi, on-site / pick-up"
-        },
-        "kontak": {
-          "label": "Reachable contact",
-          "placeholder": "Alternative phone number or WhatsApp"
-        },
-        "catatanTambahan": {
-          "label": "Additional notes",
-          "placeholder": "Service history, special requests, or extra details"
-        }
-      },
-      "photoVideoEditing": {
-        "namaProyek": {
-          "label": "Project name",
-          "placeholder": "Example: Ramadan Campaign 2024"
-        },
-        "jenisEditing": {
-          "label": "Editing type",
-          "placeholder": "Photos, videos, reels, long-form, documentation, etc."
-        },
-        "jumlahFile": {
-          "label": "Number of files",
-          "placeholder": "State total files and duration/size if relevant"
-        },
-        "kebutuhanSpesifik": {
-          "label": "Specific requirements",
-          "placeholder": "Color grading, motion graphics, audio mixing, subtitles, etc."
-        },
-        "resolusiFormatOutput": {
-          "label": "Desired resolution / format",
-          "placeholder": "Example: 4K, MP4, JPG, PNG, specific ratio"
-        },
-        "deadline": {
-          "label": "Deadline",
-          "placeholder": "Target date or timeframe"
-        },
-        "kontak": {
-          "label": "Project contact",
-          "placeholder": "PIC we should coordinate with"
-        },
-        "catatanTambahan": {
-          "label": "Additional notes / references",
-          "placeholder": "Add asset folders, moodboards, or revision notes"
-        }
-      }
-    },
-    "notes": {
-      "title": "Notes",
-      "description": "Documents sync directly to our internal sheet for website development, custom WordPress, mobile apps, device repair, and photo/video editing. If you need to send additional assets (wireframes, requirements, etc.), reply to the confirmation email after submitting this form.",
-      "privacy": "We keep your data confidential and use it only to communicate about your website, WordPress, mobile app, or digital service project."
-    },
     "actions": {
       "submitting": "Sending...",
       "submit": "Submit Order",
@@ -971,7 +430,7 @@
     "sections": {
       "introduction": {
         "title": "1. Introduction",
-        "content": "Welcome to ekalliptus (\"we,\" \"us,\" or \"our\"). This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website ekalliptus.com and use our digital services, including website development, mobile app development, and multimedia editing services.",
+        "content": "Welcome to ekalliptus (\"we,\" \"the company,\" or \"ours\"). This Privacy Policy explains how we collect, use, disclose, and protect your information when you visit our website ekalliptus.com and use our digital services, including website development, mobile app development, and server & web maintenance.",
         "content2": "We are committed to protecting your personal data and respecting your privacy in accordance with applicable data protection laws, including the General Data Protection Regulation (GDPR), the California Consumer Privacy Act (CCPA), the Personal Data Protection Act (PDPA) of Singapore, and other relevant regional regulations.",
         "content3": "This Privacy Policy applies to all information collected through our website, mobile applications, email communications, and any other digital platforms operated by ekalliptus."
       },
@@ -1248,16 +707,7 @@
       },
       "description": {
         "title": "2. Description of Services",
-        "content": "ekalliptus provides digital agency services including but not limited to:",
-        "items": [
-          "Website development and design",
-          "WordPress customization and development",
-          "Mobile application development",
-          "Multimedia editing services",
-          "Digital consulting and strategy",
-          "SEO optimization services",
-          "Technical support and maintenance"
-        ]
+        "content": "ekalliptus provides digital agency services including but not limited to:"
       },
       "userResponsibilities": {
         "title": "3. User Responsibilities",
@@ -1525,21 +975,6 @@
       }
     }
   },
-  "seo": {
-    "home": {
-      "title": "Ekalliptus Digital | Web & Mobile App",
-      "description": "Global digital agency specializing in website development, WordPress, mobile apps, and multimedia editing. Transform your business with cutting-edge technology.",
-      "keywords": "digital agency Global, web development, wordpress, mobile app, website development Global, website creation service"
-    },
-    "order": {
-      "title": "Order Digital Services - ekalliptus | Order Now",
-      "description": "Order ekalliptus digital services - Web Development, Mobile App, WordPress, photo video editing. Get the best offer for your digital project.",
-      "keywords": "order digital services, order website, affordable website service, order web development"
-    },
-    "title": "Ekalliptus Digital — Website, WordPress, Mobile App Global",
-    "description": "Ekalliptus - Leading digital solutions for website development, WordPress, mobile app, and professional photo/video editing in Global. Contact us for your business digital transformation.",
-    "keywords": "website development Global, WordPress custom, mobile app development, photo editing service, video editing professional, digital agency Jakarta, website creation service, mobile app Android iOS, quality photo video editing"
-  },
   "orderSuccess": {
     "title": "Order Successful",
     "heading": "Thank You!",
@@ -1606,7 +1041,7 @@
       "titleLead": "Build Digital Products",
       "titleAccent": "that Sell",
       "titleTail": "for Your Business",
-      "subtitle": "Professional website, mobile app, WordPress, and UI/UX design services. Fast, modern, and SEO-optimized from day one.",
+      "subtitle": "Professional website development, mobile app, and server & web maintenance. Fast, modern, and SEO-optimized from day one.",
       "ctaPrimary": "Free Consultation",
       "ctaSecondary": "View Services",
       "trustRating": "Client rating",
