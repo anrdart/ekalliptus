@@ -234,12 +234,6 @@
     .reveal { opacity: 1; transform: none; transition: none; }
   }
 
-  /* Vanta canvas — fade in/out during theme swap to mask WebGL re-render jank */
-  html.theme-transitioning #vanta-canvas {
-    transition: opacity 200ms ease;
-    opacity: 0.6;
-  }
-
   @media (prefers-reduced-motion: reduce) {
     html {
       scroll-behavior: auto;

@@ -1,7 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro'
 import Navigation from '../components/Navigation.astro'
-import VantaBackground from '../components/VantaBackground.astro'
 import PreLoader from '../components/PreLoader.astro'
 import { ArrowRight } from 'lucide-astro'
 
@@ -16,7 +15,6 @@ const dir = 'ltr'
   dir={dir}
   noindex={true}
 >
-  <VantaBackground />
   <PreLoader />
   <Navigation t={(key: string) => key} currentLang={locale} />
   

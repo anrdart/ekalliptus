@@ -160,40 +160,6 @@ const publishedYMD = publishedTime ? publishedTime.slice(0, 10).replace(/-/g, '/
       }
     </script>
 
-    <!-- Vanta 3D background — desktop only, lazy-loaded on idle -->
-    <script is:inline>
-      (function () {
-        const isTouchOnly = window.matchMedia('(pointer: coarse)').matches && window.innerWidth < 1024;
-        const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        const lowMemory = (navigator.deviceMemory && navigator.deviceMemory < 4);
-        const saveData = (navigator.connection && navigator.connection.saveData);
-        if (isTouchOnly || reducedMotion || lowMemory || saveData) return;
-
-        const inject = (src) => new Promise((resolve, reject) => {
-          const s = document.createElement('script');
-          s.src = src;
-          s.defer = true;
-          s.onload = resolve;
-          s.onerror = reject;
-          document.head.appendChild(s);
-        });
-
-        const loadVanta = async () => {
-          try {
-            await inject('/vendor/three.min.js');
-            await inject('/vendor/vanta.net.min.js');
-            window.dispatchEvent(new CustomEvent('vanta-ready'));
-          } catch (_) {}
-        };
-
-        if ('requestIdleCallback' in window) {
-          requestIdleCallback(loadVanta, { timeout: 3000 });
-        } else {
-          window.addEventListener('load', () => setTimeout(loadVanta, 800), { once: true });
-        }
-      })();
-    </script>
-
     <script is:inline>
       const theme = localStorage.getItem('ekal-theme') || 'dark'
       document.documentElement.classList.toggle('dark', theme === 'dark')

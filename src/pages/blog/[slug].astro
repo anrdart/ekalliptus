@@ -3,7 +3,6 @@ import Layout from '../../layouts/Layout.astro'
 import { fetchPostBySlug, normalizeBlogImage } from '../../lib/supabase'
 import { getLocaleFromRequest, getDir } from '../../i18n'
 import Navigation from '../../components/Navigation.astro'
-import VantaBackground from '../../components/VantaBackground.astro'
 import PreLoader from '../../components/PreLoader.astro'
 import SocialShare from '../../components/SocialShare.astro'
 import AdUnit from '../../components/AdUnit.astro'
@@ -132,7 +131,6 @@ while ((tocMatch = tocRe.exec(processedHtml)) !== null) {
     <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)}></script>
   </Fragment>
   <div id="reading-progress-bar" class="fixed top-0 left-0 h-1 bg-primary z-[100] transition-all duration-150" style="width:0%"></div>
-  <VantaBackground />
   <PreLoader />
   <Navigation t={(key: string) => t(key, locale)} currentLang={locale} />
 
