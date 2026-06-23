@@ -1,9 +1,20 @@
 ---
 import AdminLayout from '../_layout.astro'
 import { MessageSquare, RefreshCw, Send } from 'lucide-astro'
+import { readSupabaseEnv } from '../../../lib/runtime-env'
+
+const supabaseEnv = readSupabaseEnv()
+const supabaseUrl = supabaseEnv.url || ''
+const supabaseAnonKey = supabaseEnv.anonKey || ''
 ---
 
 <AdminLayout title="Consultations">
+  {supabaseUrl && supabaseAnonKey && (
+    <>
+      <meta name="supabase-url" content={supabaseUrl} />
+      <meta name="supabase-anon-key" content={supabaseAnonKey} />
+    </>
+  )}
   <div class="grid grid-cols-1 lg:grid-cols-[360px,1fr] gap-6">
     <section class="glass-card rounded-2xl p-5 min-h-[520px]">
       <div class="flex items-center justify-between mb-4">
@@ -124,8 +135,11 @@ import { MessageSquare, RefreshCw, Send } from 'lucide-astro'
     name.textContent = consultation.visitor_name || 'Pengunjung'
 
     const badge = document.createElement('span')
-    badge.className = 'rounded-full bg-primary/10 px-2 py-0.5 text-[11px] font-medium text-primary'
-    badge.textContent = consultation.status
+    const isUnread = consultation.unread_count > 0
+    badge.className = isUnread
+      ? 'rounded-full bg-red-500 px-2 py-0.5 text-[11px] font-semibold text-white'
+      : 'rounded-full bg-primary/10 px-2 py-0.5 text-[11px] font-medium text-primary'
+    badge.textContent = isUnread ? String(consultation.unread_count) : consultation.status
 
     title.appendChild(name)
     title.appendChild(badge)
@@ -240,5 +254,47 @@ import { MessageSquare, RefreshCw, Send } from 'lucide-astro'
     }
   })
 
+  // ---- Realtime: auto-refresh when a visitor sends a new message ----
+  function subscribeRealtime() {
+    const url = document.querySelector('meta[name="supabase-url"]')?.getAttribute('content') || ''
+    const key = document.querySelector('meta[name="supabase-anon-key"]')?.getAttribute('content') || ''
+    if (!url || !key) return
+
+    let debounceTimer: number | undefined
+    const debouncedReload = () => {
+      window.clearTimeout(debounceTimer)
+      debounceTimer = window.setTimeout(loadConsultations, 400)
+    }
+
+    const script = document.createElement('script')
+    script.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js'
+    script.onload = () => {
+      try {
+        const client = (window as any).supabase.createClient(url, key)
+        client
+          .channel('admin-consultations')
+          .on(
+            'postgres_changes',
+            { event: 'INSERT', schema: 'public', table: 'consultation_messages' },
+            (payload: any) => {
+              if (payload.new && payload.new.sender_type === 'visitor') {
+                debouncedReload()
+              }
+            }
+          )
+          .on(
+            'postgres_changes',
+            { event: 'UPDATE', schema: 'public', table: 'consultations' },
+            debouncedReload
+          )
+          .subscribe()
+      } catch (e) {
+        console.error('[admin] realtime subscribe failed:', e)
+      }
+    }
+    document.head.appendChild(script)
+  }
+
   loadConsultations()
+  subscribeRealtime()
 </script>

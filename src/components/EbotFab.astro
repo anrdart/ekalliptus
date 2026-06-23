@@ -1,15 +1,16 @@
 ---
-import { X, Sparkles } from 'lucide-astro'
+import { X, MessageCircle } from 'lucide-astro'
 ---
 
 <!--
   Floating eBot AI button + greeting card.
-  Opens the existing ConsultationDialog via window.consultDialog.open().
-  Render on pages that include <ConsultationDialog /> (e.g. homepage).
+  - Greeting appears on FIRST scroll (not on load).
+  - Opens the existing ConsultationDialog via window.consultDialog.open().
+  - Render on pages that include <ConsultationDialog /> (e.g. homepage).
 -->
 <div id="ebot-fab" class="fixed bottom-5 right-5 sm:bottom-6 sm:right-6 z-40 flex flex-col items-end gap-3 safe-bottom" aria-live="polite">
-  <!-- Greeting card -->
-  <div id="ebot-greeting" class="ebot-greeting glass-panel rounded-2xl rounded-br-sm px-4 py-3 shadow-xl max-w-[270px]">
+  <!-- Greeting card (hidden until first scroll) -->
+  <div id="ebot-greeting" class="ebot-greeting glass-panel rounded-2xl rounded-br-sm px-4 py-3 shadow-xl max-w-[270px] ebot-hidden">
     <button id="ebot-greeting-close" class="absolute -top-2 -right-2 h-6 w-6 rounded-full bg-card border border-border flex items-center justify-center transition hover:bg-accent cursor-interactive" aria-label="Tutup sapaan">
       <X class="h-3.5 w-3.5 text-muted-foreground" />
     </button>
@@ -24,28 +25,29 @@ import { X, Sparkles } from 'lucide-astro'
     aria-label="Buka chat eBot"
   >
     <span class="absolute inset-0 rounded-full bg-primary animate-ping opacity-20"></span>
-    <span class="relative flex items-center gap-2">
-      <img src="/ekalliptus_rounded.webp" alt="eBot" class="h-7 w-7 sm:h-8 sm:w-8 rounded-full object-cover" />
-      <span class="sr-only">eBot</span>
-    </span>
+    <MessageCircle class="relative h-6 w-6 sm:h-7 sm:w-7" />
+    <span class="sr-only">eBot</span>
   </button>
 </div>
 
 <style>
   .ebot-greeting {
     position: relative;
-    animation: ebotSlideIn 0.4s ease-out;
     transform-origin: bottom right;
   }
   .ebot-greeting.ebot-hidden {
     display: none;
+  }
+  .ebot-greeting.ebot-show {
+    display: block;
+    animation: ebotSlideIn 0.4s ease-out;
   }
   @keyframes ebotSlideIn {
     from { opacity: 0; transform: translateY(10px) scale(0.95); }
     to { opacity: 1; transform: translateY(0) scale(1); }
   }
   @media (prefers-reduced-motion: reduce) {
-    .ebot-greeting { animation: none; }
+    .ebot-greeting.ebot-show { animation: none; }
   }
 </style>
 
@@ -57,21 +59,40 @@ import { X, Sparkles } from 'lucide-astro'
 
     if (!trigger) return
 
-    // Dismiss greeting card (auto-collapse after a delay too)
+    // Show greeting on FIRST scroll only (once per session).
+    const SESSION_KEY = 'ebot-greeting-seen'
+    let scrollHandled = false
+
+    function showGreetingOnce() {
+      if (scrollHandled) return
+      scrollHandled = true
+      if (sessionStorage.getItem(SESSION_KEY)) {
+        greeting?.classList.add('ebot-hidden')
+        return
+      }
+      sessionStorage.setItem(SESSION_KEY, '1')
+      greeting?.classList.remove('ebot-hidden')
+      greeting?.classList.add('ebot-show')
+    }
+
+    // Trigger on first scroll, or after 8s if the user never scrolls.
+    window.addEventListener('scroll', showGreetingOnce, { once: true, passive: true })
+    const fallbackTimer = window.setTimeout(showGreetingOnce, 8000)
+
+    // Dismiss greeting card.
     const hideGreeting = () => greeting?.classList.add('ebot-hidden')
     greetingClose?.addEventListener('click', hideGreeting)
-    const autoHide = window.setTimeout(hideGreeting, 12000)
 
     // Open the ConsultationDialog when the FAB is clicked.
     const openDialog = () => {
+      window.clearTimeout(fallbackTimer)
       const dlg = (window as any).consultDialog
       if (dlg && typeof dlg.open === 'function') {
-        window.clearTimeout(autoHide)
         dlg.open()
       } else {
-        // Fallback: scroll to contact section
         document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })
       }
+      hideGreeting()
     }
     trigger.addEventListener('click', openDialog)
   })()

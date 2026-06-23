@@ -10,10 +10,11 @@ const { t } = Astro.props
 
 <div id="consult-dialog" class="fixed inset-0 z-50 hidden">
   <div id="consult-backdrop" class="fixed inset-0 modal-backdrop transition-opacity duration-300"></div>
-  
-  <div class="fixed inset-0 flex items-end sm:items-center justify-center p-0 sm:p-4">
-    <div id="consult-panel" class="relative w-full sm:max-w-lg h-[calc(100dvh-2rem)] sm:h-auto sm:max-h-[75vh] flex flex-col bg-card border border-border rounded-t-3xl sm:rounded-2xl shadow-2xl overflow-hidden transition-transform duration-300 translate-y-full sm:translate-y-8 opacity-0 mb-safe">
-      
+
+  <!-- Panel anchored bottom-right near the FAB -->
+  <div class="fixed inset-0 flex items-end justify-end p-0 sm:p-0 pointer-events-none">
+    <div id="consult-panel" class="pointer-events-auto relative w-full sm:w-[400px] h-[100dvh] sm:h-[600px] sm:max-h-[calc(100dvh-7rem)] flex flex-col bg-card border border-border rounded-t-3xl sm:rounded-3xl shadow-2xl overflow-hidden transition-transform duration-300 translate-y-full opacity-0 sm:mb-2 sm:mr-2 mb-safe">
+
       <div class="flex items-center justify-between p-4 border-b border-border bg-card/80 backdrop-blur-xl">
         <div class="flex items-center gap-3">
           <div class="h-9 w-9 rounded-full bg-primary/20 flex items-center justify-center overflow-hidden">
@@ -40,6 +41,18 @@ const { t } = Astro.props
           <div class="glass-panel rounded-2xl rounded-tl-md px-4 py-3 max-w-[80%]">
             <p class="text-sm text-foreground leading-relaxed">{t('consultation.greeting')}</p>
           </div>
+        </div>
+        <!-- Quick action: chat with admin -->
+        <div id="consult-quick-actions" class="flex flex-wrap gap-2 pt-1">
+          <button type="button" data-quick-admin class="quick-pill glass-panel rounded-full px-3 py-1.5 text-xs font-medium text-foreground transition hover:bg-accent/40 cursor-interactive border border-border">
+            💬 Chat dengan Admin
+          </button>
+          <a href="/order" class="quick-pill glass-panel rounded-full px-3 py-1.5 text-xs font-medium text-foreground transition hover:bg-accent/40 border border-border">
+            📋 Buat Order
+          </a>
+          <a href="https://wa.me/6281999900306" target="_blank" rel="noopener" class="quick-pill glass-panel rounded-full px-3 py-1.5 text-xs font-medium text-foreground transition hover:bg-accent/40 border border-border">
+            🟢 WhatsApp
+          </a>
         </div>
       </div>
 
@@ -438,6 +451,20 @@ ATURAN:
     btn.addEventListener('click', (e) => {
       e.preventDefault()
       open()
+    })
+  })
+
+  // Quick action: chat with admin (explicit handoff, no need to type "chat admin").
+  document.querySelectorAll('[data-quick-admin]').forEach(btn => {
+    btn.addEventListener('click', async (e) => {
+      e.preventDefault()
+      const handoffMsg = 'Baik, saya akan menghubungkan Anda dengan admin Ekalliptus. Mohon tunggu sebentar...'
+      addMessage(handoffMsg, false)
+      conversationHistory.push({ role: 'assistant', content: handoffMsg })
+      await sendToAdmin('Halo, saya ingin chat dengan admin.')
+      switchToAdmin()
+      // Hide quick actions once handed off to admin.
+      document.getElementById('consult-quick-actions')?.classList.add('hidden')
     })
   })
 
