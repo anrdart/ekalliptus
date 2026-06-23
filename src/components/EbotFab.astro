@@ -1,0 +1,78 @@
+---
+import { X, Sparkles } from 'lucide-astro'
+---
+
+<!--
+  Floating eBot AI button + greeting card.
+  Opens the existing ConsultationDialog via window.consultDialog.open().
+  Render on pages that include <ConsultationDialog /> (e.g. homepage).
+-->
+<div id="ebot-fab" class="fixed bottom-5 right-5 sm:bottom-6 sm:right-6 z-40 flex flex-col items-end gap-3 safe-bottom" aria-live="polite">
+  <!-- Greeting card -->
+  <div id="ebot-greeting" class="ebot-greeting glass-panel rounded-2xl rounded-br-sm px-4 py-3 shadow-xl max-w-[270px]">
+    <button id="ebot-greeting-close" class="absolute -top-2 -right-2 h-6 w-6 rounded-full bg-card border border-border flex items-center justify-center transition hover:bg-accent cursor-interactive" aria-label="Tutup sapaan">
+      <X class="h-3.5 w-3.5 text-muted-foreground" />
+    </button>
+    <p class="font-semibold text-primary mb-1 text-sm">Halo! 👋</p>
+    <p class="text-sm text-foreground/80 leading-relaxed">Ada yang bisa kami bantu? Konsultasi gratis seputar kebutuhan digital Anda.</p>
+  </div>
+
+  <!-- Floating button -->
+  <button
+    id="ebot-trigger"
+    class="group relative flex h-14 w-14 sm:h-16 sm:w-16 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-lg shadow-primary/30 transition-all duration-300 hover:scale-105 hover:bg-primary/90 active:scale-95 cursor-interactive"
+    aria-label="Buka chat eBot"
+  >
+    <span class="absolute inset-0 rounded-full bg-primary animate-ping opacity-20"></span>
+    <span class="relative flex items-center gap-2">
+      <img src="/ekalliptus_rounded.webp" alt="eBot" class="h-7 w-7 sm:h-8 sm:w-8 rounded-full object-cover" />
+      <span class="sr-only">eBot</span>
+    </span>
+  </button>
+</div>
+
+<style>
+  .ebot-greeting {
+    position: relative;
+    animation: ebotSlideIn 0.4s ease-out;
+    transform-origin: bottom right;
+  }
+  .ebot-greeting.ebot-hidden {
+    display: none;
+  }
+  @keyframes ebotSlideIn {
+    from { opacity: 0; transform: translateY(10px) scale(0.95); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ebot-greeting { animation: none; }
+  }
+</style>
+
+<script>
+  (function () {
+    const greeting = document.getElementById('ebot-greeting')
+    const greetingClose = document.getElementById('ebot-greeting-close')
+    const trigger = document.getElementById('ebot-trigger')
+
+    if (!trigger) return
+
+    // Dismiss greeting card (auto-collapse after a delay too)
+    const hideGreeting = () => greeting?.classList.add('ebot-hidden')
+    greetingClose?.addEventListener('click', hideGreeting)
+    const autoHide = window.setTimeout(hideGreeting, 12000)
+
+    // Open the ConsultationDialog when the FAB is clicked.
+    const openDialog = () => {
+      const dlg = (window as any).consultDialog
+      if (dlg && typeof dlg.open === 'function') {
+        window.clearTimeout(autoHide)
+        dlg.open()
+      } else {
+        // Fallback: scroll to contact section
+        document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })
+      }
+    }
+    trigger.addEventListener('click', openDialog)
+  })()
+</script>
