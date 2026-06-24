@@ -1,49 +1,38 @@
 # Ekalliptus Digital
-> Jasa website, aplikasi mobile, WordPress, dan multimedia editing di Indonesia.
-> Berbasis di Tegal, Jawa Tengah. Melayani seluruh Indonesia.
+
+> Jasa pembuatan website, aplikasi mobile, dan maintenance server & web profesional.
+> Berbasis di Indonesia, melayani seluruh Indonesia. Konsultasi gratis.
 > Didirikan tahun 2023.
 
 ## About
-Ekalliptus Digital adalah digital agency Indonesia yang spesialis dalam web development, mobile app development, WordPress, UI/UX design, dan multimedia editing. Kami melayani UMKM hingga enterprise di seluruh Indonesia dengan harga terjangkau dan kualitas profesional.
+Ekalliptus Digital adalah digital agency Indonesia yang spesialis dalam website development, mobile app development, dan maintenance server & web. Kami melayani UMKM hingga enterprise di seluruh Indonesia dengan kualitas profesional. Konsultasi gratis untuk semua kebutuhan digital Anda.
 
 ## Services
 - Website Development: https://ekalliptus.com/services/website
 - Mobile App Development: https://ekalliptus.com/services/mobile-app
-- WordPress Development: https://ekalliptus.com/services/wordpress
-- UI/UX Design: https://ekalliptus.com/services/ui-ux
-- Photo & Video Editing: https://ekalliptus.com/services/multimedia
-- Website Maintenance: https://ekalliptus.com/services/maintenance
+- Website & Server Maintenance: https://ekalliptus.com/services/maintenance
 
-## Pricing
-- Landing Page: starting Rp 500,000
-- Company Profile Website: starting Rp 1,500,000
-- E-Commerce Website: starting Rp 3,000,000
-- Mobile App MVP: starting Rp 5,000,000
-- WordPress Custom: starting Rp 2,000,000
-- UI/UX Design: starting Rp 1,000,000
-- Video Editing: starting Rp 50,000 per video
-- Website Maintenance: starting Rp 500,000 per month
+## Order
+- Order Form (konsultasi gratis, redirect WhatsApp): https://ekalliptus.com/order
 
 ## Blog
 - Blog Index: https://ekalliptus.com/blog
 - RSS Feed: https://ekalliptus.com/blog/rss.xml
 - Sitemap: https://ekalliptus.com/sitemap-index.xml
+- Blog Sitemap: https://ekalliptus.com/blog/sitemap.xml
 
 ## Contact
 - Email: support@ekalliptus.com
 - WhatsApp: +62 819-9990-0306
-- Phone: +62 819-9990-0306
-- Location: Tegal, Jawa Tengah 52100, Indonesia
-- Hours: Monday-Friday 09:00-17:00 WIB
+- Lokasi: Indonesia (online service)
+- Jam: Senin-Jumat 09:00-17:00 WIB
 
 ## Tech Stack
-- Frontend: Astro, Next.js, React, Vue.js, Tailwind CSS
-- Mobile: React Native, Flutter, Expo
-- Backend: Node.js, PHP Laravel, Supabase
-- Database: PostgreSQL, MySQL
-- CMS: WordPress, WooCommerce
-- Design: Figma, Adobe Creative Cloud
-- Deployment: Cloudflare, Vercel, Netlify
+- Frontend: Astro, Next.js, React, Tailwind CSS
+- Mobile: React Native, Flutter
+- Backend: Node.js, Supabase
+- Database: PostgreSQL
+- Deployment: Cloudflare
 
 ## Optional
 - Privacy Policy: https://ekalliptus.com/privacy-policy
