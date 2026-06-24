@@ -90,6 +90,46 @@ const { t } = Astro.props
 </div>
 
 <script>
+// Lazy-loaded dialog logic. The heavy init (SYSTEM_PROMPT, form binding, realtime)
+// runs only on first open() to avoid blocking initial page render (PageSpeed TBT).
+let _dialogInited = false
+function initDialog() {
+  if (_dialogInited) return
+  _dialogInited = true
+  _doInitDialog()
+}
+
+// Lightweight stub: expose open/close immediately so the FAB and consult-open
+// buttons work without waiting for the heavy module to parse.
+;(window as any).consultDialog = {
+  open: () => { initDialog(); _openDialog() },
+  close: () => { _closeDialog() }
+}
+
+// Open/close before init (just toggles visibility).
+let _isOpen = false
+function _openDialog() {
+  const d = document.getElementById('consult-dialog')
+  const p = document.getElementById('consult-panel')
+  if (!d || !p) return
+  _isOpen = true
+  d.classList.remove('hidden')
+  requestAnimationFrame(() => {
+    p.classList.remove('translate-y-full', 'opacity-0')
+    p.classList.add('translate-y-0', 'opacity-100')
+  })
+}
+function _closeDialog() {
+  const d = document.getElementById('consult-dialog')
+  const p = document.getElementById('consult-panel')
+  if (!d || !p) return
+  _isOpen = false
+  p.classList.remove('translate-y-0', 'opacity-100')
+  p.classList.add('translate-y-full', 'opacity-0')
+  setTimeout(() => d.classList.add('hidden'), 300)
+}
+
+function _doInitDialog() {
 (function() {
   const dialog = document.getElementById('consult-dialog')
   const backdrop = document.getElementById('consult-backdrop')
@@ -468,8 +508,12 @@ ATURAN:
     })
   })
 
+  // Re-bind window.consultDialog to the full open/close now that init ran.
   ;(window as any).consultDialog = { open, close }
+  // If the dialog was opened before init finished, open it now.
+  if (_isOpen) open()
 })()
+} // end _doInitDialog
 
 // GA4 Custom Events
 function trackEvent(eventName: string, params?: Record<string, unknown>) {
