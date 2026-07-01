@@ -4,6 +4,10 @@ main = "./app/entry.worker.ts"
 compatibility_date = "2026-03-12"
 compatibility_flags = ["nodejs_compat"]
 
+[vars]
+SUPABASE_URL = "https://muyzxygtlwsfegzyvgcm.supabase.co"
+SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im11eXp4eWd0bHdzZmVnenl2Z2NtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE3MTk1NjEsImV4cCI6MjA3NzI5NTU2MX0.Lqxbm_8nmLqSf7kLvCdwfqNMzVi-zl50zS5PeM8U3fo"
+
 [assets]
 directory = "./build/client"
 binding = "ASSETS"
