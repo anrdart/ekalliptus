@@ -1,0 +1,16 @@
+name = "ekalliptus-admin"
+account_id = "f24eb3f70bf59379632e280f8756b9e4"
+main = "./app/entry.worker.ts"
+compatibility_date = "2026-03-12"
+compatibility_flags = ["nodejs_compat"]
+
+[assets]
+directory = "./build/client"
+binding = "ASSETS"
+
+[[kv_namespaces]]
+binding = "SESSION"
+id = "fa54633d534d4662a0365aaffe577c75"
+
+[observability]
+enabled = true
