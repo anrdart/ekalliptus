@@ -7,6 +7,7 @@
         "packages/*"
     ],
     "scripts": {
+        "build": "bun run build:web && bun run build:admin",
         "dev:web": "bun --cwd apps/web run dev",
         "dev:admin": "bun --cwd apps/admin run dev",
         "build:web": "bun --cwd apps/web run build",
