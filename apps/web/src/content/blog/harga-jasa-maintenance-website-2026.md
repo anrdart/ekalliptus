@@ -21,7 +21,7 @@ Website yang sudah online bukan berarti pekerjaan selesai. Tanpa **maintenance r
 
 Banyak pemilik website menganggap "sudah jadi = selesai". Faktanya, website adalah aset digital yang butuh perawatan seperti mobil atau rumah. Berikut risiko website tanpa maintenance:
 
-- **Keamanan**: 30.000+ website diretas setiap hari. Plugin/theme yang tidak di-update adalah pintu masuk utama hacker.
+- **Keamanan**: Plugin atau tema yang tidak diperbarui dapat membuka celah keamanan.
 - **Performa**: Database yang membengkak dan file sampah memperlambat loading, yang juga merusak SEO.
 - **Uptime**: Server error, konfigurasi salah, atau domain/hosting kedaluwarsa bikin website down tanpa peringatan.
 - **SEO**: Google menurunkan ranking website yang lambat, tidak aman (non-HTTPS), atau broken links.
@@ -36,11 +36,11 @@ Update CMS (jika pakai), plugin, tema, dan dependency server ke versi terbaru ya
 ### 2. Backup Berkala
 Backup otomatis harian atau mingguan ke penyimpanan terpisah (bukan di server yang sama). Backup ini menyelamatkan data Anda jika terjadi bencana — baik hack, error server, maupun human error.
 
-### 3. Monitoring Keamanan 24/7
+### 3. Monitoring Keamanan
 Pemindaian malware, deteksi intrusi, firewall aplikasi web (WAF), dan alert dini jika ada aktivitas mencurigakan. Termasuk pemasangan SSL certificate dan force HTTPS.
 
 ### 4. Monitoring Uptime & Performa
-Notifikasi instan jika website down, plus monitoring kecepatan loading dari berbagai lokasi. Idealnya uptime target 99.9%+.
+Pemantauan dapat memberi notifikasi ketika website tidak tersedia dan membantu mengevaluasi performa dari lokasi yang relevan.
 
 ### 5. Technical Support
 Bantuan teknis untuk perubahan konten kecil, troubleshooting error, konsultasi fitur baru, dan jawaban atas pertanyaan tim Anda.
@@ -66,8 +66,8 @@ Biaya maintenance website bervariasi tergantung kompleksitas, traffic, dan jenis
 ### 1. Cek Portfolio & Testimoni
 Pilih penyedia yang punya track record jelas. Tanyakan website apa saja yang pernah mereka maintain dan minta testimoni klien.
 
-### 2. Pastikan Ada SLA (Service Level Agreement)
-SLA menjamin waktu respons saat ada masalah. Misal: "down time ditangani dalam 2 jam" atau "respons support dalam 1×24 jam".
+### 2. Perjelas Ruang Lingkup Layanan
+Pastikan proposal menjelaskan cakupan pekerjaan, jalur komunikasi, prioritas penanganan, dan batas tanggung jawab penyedia.
 
 ### 3. Backup Harian adalah Wajib
 Jangan pakai jasa yang hanya backup bulanan. Data adalah aset paling berharga — backup harian otomatis ke lokasi terpisah adalah standar minimum.
@@ -76,7 +76,7 @@ Jangan pakai jasa yang hanya backup bulanan. Data adalah aset paling berharga �
 Penyedia baik akan memberi laporan bulanan: apa yang di-update, status keamanan, uptime percentage, dan performa. Hindari yang "set and forget".
 
 ### 5. Komunikasi Mudah
-Pilih jasa yang responsif via WhatsApp atau email. Saat website bermasalah jam 9 malam, Anda butuh respons cepat, bukan menunggu Senin pagi.
+Pilih penyedia dengan kanal komunikasi dan waktu penanganan yang dijelaskan sejak awal.
 
 ### 6. Hindari Harga Terlalu Murah
 Maintenance Rp 50.000/bulan hampir pasti berarti "login sekali sebulan, klik update, selesai". Maintenance berkualitas butuh waktu, monitoring, dan keahlian nyata.

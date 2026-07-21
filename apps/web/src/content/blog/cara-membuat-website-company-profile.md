@@ -135,7 +135,7 @@ Tim Ekalliptus Digital siap membantu:
 
 - **Konsultasi gratis** — diskusi kebutuhan tanpa kewajiban
 - **Design custom** — bukan template generik
-- **Garansi 30 hari** + maintenance 3 bulan
+- Ketentuan revisi dan maintenance sesuai proposal
 - **Harga mulai Rp 1,5 juta**
 
 **Hubungi kami:**

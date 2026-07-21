@@ -41,13 +41,13 @@ Ada dua pendekatan dalam pembuatan aplikasi mobile:
 
 #### **Native Development** (Terpisah)
 - Android (Kotlin) dan iOS (Swift) dibuat terpisah
-- **Biaya:** 2x lebih mahal
+- **Biaya:** Memerlukan tim dan pengembangan terpisah
 - **Waktu:** Lebih lama
 - **Keunggulan:** Performa maksimal, akses fitur lengkap
 
 #### **Cross-Platform Development** (Satu Kode)
 - React Native atau Flutter untuk kedua platform
-- **Biaya:** Lebih hemat 40-60%
+- **Biaya:** Satu basis kode dapat menyederhanakan pengembangan
 - **Waktu:** Lebih cepat
 - **Keunggulan:** Cost-effective, maintain lebih mudah
 
@@ -157,7 +157,7 @@ Kami spesialis dalam **Cross-Platform Development** untuk efisiensi biaya:
 - Scaling untuk 10k+ user
 
 **Estimasi:**
-- Development: Rp 60 - 120+ juta
+- Development: ditentukan berdasarkan ruang lingkup dan kompleksitas fitur
 - Waktu: 4-6 bulan
 - Maintenance: Rp 3 - 5 juta/bulan
 
@@ -248,7 +248,7 @@ Ya, full source code diberikan saat handover beserta dokumentasi teknis.
 ## Tips Hemat Biaya Pembuatan Aplikasi
 
 1. **Mulai dengan MVP** - Fokus fitur core dulu, tambah fitur lain setelah launch
-2. **Pilih Cross-Platform** - Lebih hemat 40-60% dibanding native
+2. **Pertimbangkan Cross-Platform** - Satu basis kode dapat menyederhanakan pengembangan untuk dua platform
 3. **Gunakan Template UI** - Kurangi waktu desain hingga 30%
 4. **Leverage Third-Party APIs** - Jangan build dari nol jika sudah ada service
 5. **Prioritaskan User Experience** - Aplikasi simple yang user-friendly lebih baik daripada aplikasi kompleks yang membingungkan
