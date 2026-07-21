@@ -94,20 +94,20 @@
   "about": {
     "title": "회사 소개",
     "innovation": "지속적인 혁신",
-    "quality": "품질 보장",
+    "quality": "Quality Focus",
     "team": "전문 팀",
-    "innovationDesc": "Ekalliptus는 인도네시아를 기반으로 하는 디지털 에이전시로 현대 비즈니스의 디지털 혁신을 전문으로 합니다. 5년 이상의 업계 경험으로 중소기업부터 대기업까지 수백 개의 클라이언트의 디지털 비전을 실현하는 데 도움을 주었습니다.",
+    "innovationDesc": "Ekalliptus is an Indonesia-based digital agency providing website development, mobile apps, and website and server maintenance.",
     "qualityDesc": "우리의 서비스는 반응형 SEO 친화적인 웹사이트 개발, 크로스 플랫폼 모바일 앱, 고품질 서버 및 웹 유지보수를 포함합니다.",
     "teamDesc": "보안 모니터링, 정기 백업, 기술 지원을 갖춘 고품질 서버 및 웹 유지보수로 애플리케이션이 원활하게 실행되도록 유지합니다.",
     "whyChoose": "왜 Ekalliptus를 선택할까요?",
-    "technology": "선도 기술",
+    "technology": "Technology We Use",
     "local": "현지 초점",
-    "results": "보장된 결과",
-    "technologyDesc": "현대 기술을 사용한 저렴하면서도 고품질 인도네시아 웹사이트 개발 서비스를 제공합니다.",
+    "results": "Project Approach",
+    "technologyDesc": "We develop websites and applications for businesses in Indonesia using technology suited to the project scope.",
     "localDesc": "현지 비즈니스 요구를 위한 커스텀 자카르타 전문가, 스타트업부터 대기업까지 모바일 앱 개발.",
-    "resultsDesc": "전문 디지털 에이전시에 초점을 맞춰 Ekalliptus는 자카르타 및 주변 지역의 HP 랩톱 서비스에서 최고의 선택이 되었습니다.",
-    "commitment": "미학적일 뿐만 아니라 기능적인 결과로 클라이언트 만족을 최우선으로 합니다. 우리가 진행하는 모든 인도네시아 웹사이트 개발 프로젝트는 Google 검색 엔진에서 최대 가시성을 보장하기 위해 최신 SEO 모범 사례를 따릅니다.",
-    "contactForm": "인도네시아에서 귀하의 비즈니스 요구에 맞는 맞춤 제안을 무료 상담으로 받으려면 주문 양식을 통해 연락하십시오."
+    "resultsDesc": "We discuss requirements, scope, and project goals before preparing a proposal.",
+    "commitment": "We focus on functional design, maintainable implementation, and technical SEO fundamentals.",
+    "contactForm": "Contact us through the order form to discuss your business needs in Indonesia."
   },
   "contact": {
     "insights": "통찰",
@@ -176,12 +176,12 @@
         "answer": "최신 기술과 사용자 중심 디자인을 결합한다는 점입니다. 깔끔한 코드뿐 아니라 3D 요소, 글래스모피즘, 마이크로 인터랙션을 활용한 기억에 남는 경험에 집중합니다. 각 프로젝트마다 전담 팀이 배정되어 성공까지 긴밀히 지원합니다."
       },
       {
-        "question": "디바이스 수리 서비스는 어떤 브랜드까지 지원하나요?",
-        "answer": "Apple, Samsung, Xiaomi, ASUS, Lenovo, HP, Dell 등 다양한 브랜드의 스마트폰과 노트북을 취급합니다. 인증된 기술자가 정품 부품을 사용해 하드웨어와 소프트웨어 문제를 모두 해결합니다."
+        "question": "상담을 시작하려면 어떤 정보가 필요한가요?",
+        "answer": "서비스 유형, 프로젝트 목표, 주요 기능, 대상 사용자, 예산, 희망 일정을 알려 주세요. 검토 후 제안서를 준비합니다."
       },
       {
-        "question": "전문 사진·영상 편집 비용은 얼마인가요?",
-        "answer": "파일 수, 길이, 편집 난이도에 따라 달라집니다. 사진 편집은 장당 약 5만 루피아부터, 영상 편집은 기본적인 단편 기준 약 50만 루피아부터 시작합니다. 프로젝트 세부 내용을 알려주시면 맞춤 견적을 드립니다."
+        "question": "비용과 일정은 어떻게 정하나요?",
+        "answer": "합의한 작업 범위에 따라 정하며, 작업 시작 전 제안서에 명시합니다."
       }
     ]
   },
@@ -419,11 +419,11 @@
   },
   "home": {
     "hero": {
-      "badge": "Digital Agency • Based in Global",
+      "badge": "Digital Agency • Based in Indonesia",
       "titleLead": "Build Digital Products",
       "titleAccent": "that Sell",
       "titleTail": "for Your Business",
-      "subtitle": "Professional website, mobile app, and design services. Fast, modern, and SEO-optimized from day one.",
+      "subtitle": "Website development, mobile apps, and website and server maintenance for businesses in Indonesia.",
       "ctaPrimary": "Free Consultation",
       "ctaSecondary": "View Services",
       "trustRating": "Client rating",
@@ -461,7 +461,7 @@
       "step3Title": "Production",
       "step3Desc": "Our team builds your project with regular progress updates.",
       "step4Title": "Review & Handover",
-      "step4Desc": "Revisions as needed, then handover with a warranty."
+      "step4Desc": "Review, revisions within the agreed scope, then project handover."
     },
     "testimonials": {
       "eyebrow": "Testimonials",
@@ -482,7 +482,7 @@
       "secondary": "Chat on WhatsApp"
     },
     "footer": {
-      "tagline": "A digital agency helping Globaln businesses grow through classy websites, apps, and design.",
+      "tagline": "An Indonesia-based digital agency for websites, apps, and maintenance.",
       "servicesHeading": "Services",
       "companyHeading": "Company",
       "resourcesHeading": "Resources",

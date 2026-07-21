@@ -94,20 +94,20 @@
   "about": {
     "title": "О нас",
     "innovation": "Непрерывные инновации",
-    "quality": "Гарантированное качество",
+    "quality": "Quality Focus",
     "team": "Профессиональная команда",
-    "innovationDesc": "Ekalliptus - цифровое агентство, базирующееся в Индонезии, специализирующееся на цифровой трансформации для современного бизнеса. С более чем 5-летним опытом в отрасли мы помогли сотням клиентов от МСП до корпораций достичь их цифрового видения.",
+    "innovationDesc": "Ekalliptus is an Indonesia-based digital agency providing website development, mobile apps, and website and server maintenance.",
     "qualityDesc": "Наши услуги включают адаптивную и SEO-оптимизированную веб-разработку, кроссплатформенные мобильные приложения и качественное обслуживание серверов и сайтов.",
     "teamDesc": "Качественное обслуживание серверов и сайтов с мониторингом безопасности, периодическим резервным копированием и технической поддержкой для бесперебойной работы приложений.",
     "whyChoose": "Почему выбрать Ekalliptus?",
-    "technology": "Ведущие технологии",
+    "technology": "Technology We Use",
     "local": "Локальный фокус",
-    "results": "Гарантированные результаты",
-    "technologyDesc": "Мы предоставляем доступные, но высококачественные услуги по разработке веб-сайтов в Индонезии с использованием современных технологий.",
+    "results": "Project Approach",
+    "technologyDesc": "We develop websites and applications for businesses in Indonesia using technology suited to the project scope.",
     "localDesc": "Специалисты по индивидуальному в Джакарте для местных бизнес-потребностей и разработке мобильных приложений для стартапов до корпораций.",
-    "resultsDesc": "Сосредоточившись на профессиональном цифровом агентстве, Ekalliptus стал ведущим выбором для услуг HP ноутбуков в Джакарте и прилегающих районах.",
-    "commitment": "Мы уделяем приоритетное внимание удовлетворенности клиентов, предоставляя результаты, которые являются не только эстетичными, но и функциональными. Каждый проект по разработке веб-сайтов в Индонезии, над которым мы работаем, всегда следует новейшим передовым практикам SEO для обеспечения максимальной видимости в поисковых системах Google.",
-    "contactForm": "Свяжитесь с нами через форму заказа для бесплатной консультации и получите индивидуальное предложение в соответствии с потребностями вашего бизнеса в Индонезии."
+    "resultsDesc": "We discuss requirements, scope, and project goals before preparing a proposal.",
+    "commitment": "We focus on functional design, maintainable implementation, and technical SEO fundamentals.",
+    "contactForm": "Contact us through the order form to discuss your business needs in Indonesia."
   },
   "contact": {
     "insights": "Прозрения",
@@ -176,12 +176,12 @@
         "answer": "Мы объединяем современные технологии и ориентированный на пользователя дизайн. Помимо аккуратного кода, делаем акцент на впечатляющем опыте с 3D-элементами, глассморфизмом и микроанимациями. Над каждым проектом работает выделенная команда до полного успеха."
       },
       {
-        "question": "Ремонтируете ли вы устройства любых марок?",
-        "answer": "Да. Работаем с телефонами и ноутбуками Apple, Samsung, Xiaomi, ASUS, Lenovo, HP, Dell и др. Сертифицированные инженеры используют оригинальные запчасти и решают проблемы как по железу, так и по программному обеспечению."
+        "question": "Какая информация нужна для консультации?",
+        "answer": "Укажите тип услуги, цели, основные функции, аудиторию, бюджет и желаемые сроки. После проверки мы подготовим предложение."
       },
       {
-        "question": "Сколько стоит профессиональный монтаж фото и видео?",
-        "answer": "Стоимость зависит от количества файлов, длительности и сложности. Ретушь фото начинается от 50 000 рупий за изображение, монтаж видео — от 500 000 рупий за короткие ролики со стандартной обработкой. Для точного расчёта свяжитесь с нами."
+        "question": "Как определяются стоимость и сроки?",
+        "answer": "Они зависят от согласованного объёма работ и фиксируются в предложении до начала работ."
       }
     ]
   },
@@ -419,11 +419,11 @@
   },
   "home": {
     "hero": {
-      "badge": "Digital Agency • Based in Global",
+      "badge": "Digital Agency • Based in Indonesia",
       "titleLead": "Build Digital Products",
       "titleAccent": "that Sell",
       "titleTail": "for Your Business",
-      "subtitle": "Professional website, mobile app, and design services. Fast, modern, and SEO-optimized from day one.",
+      "subtitle": "Website development, mobile apps, and website and server maintenance for businesses in Indonesia.",
       "ctaPrimary": "Free Consultation",
       "ctaSecondary": "View Services",
       "trustRating": "Client rating",
@@ -461,7 +461,7 @@
       "step3Title": "Production",
       "step3Desc": "Our team builds your project with regular progress updates.",
       "step4Title": "Review & Handover",
-      "step4Desc": "Revisions as needed, then handover with a warranty."
+      "step4Desc": "Review, revisions within the agreed scope, then project handover."
     },
     "testimonials": {
       "eyebrow": "Testimonials",
@@ -482,7 +482,7 @@
       "secondary": "Chat on WhatsApp"
     },
     "footer": {
-      "tagline": "A digital agency helping Globaln businesses grow through classy websites, apps, and design.",
+      "tagline": "An Indonesia-based digital agency for websites, apps, and maintenance.",
       "servicesHeading": "Services",
       "companyHeading": "Company",
       "resourcesHeading": "Resources",
