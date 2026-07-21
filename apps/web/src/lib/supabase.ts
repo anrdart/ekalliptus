@@ -1,6 +1,7 @@
 import { createClient, type SupabaseClient } from '@supabase/supabase-js'
 import type { Database, Order, OrderInsert, OrderAttachment, OrderAttachmentInsert, ServiceType, OrderStatus } from '../types/database'
 import { readSupabaseEnv } from './runtime-env'
+import { excludeNoindex, mapBlogPost, queryResult, type BlogPost, type QueryResult } from './blog'
 
 let supabaseClient: SupabaseClient<Database> | null = null
 let supabaseAdminClient: SupabaseClient<Database> | null = null
@@ -192,77 +193,25 @@ export function normalizeBlogImage(img: string | null | undefined): string {
   return `/blog/${trimmed.replace(/^blog\//, '')}`
 }
 
-export interface BlogPost {
-  id: string
-  slug: string
-  locale: string
-  title: string
-  description: string
-  body_html: string
-  publish_date: string
-  update_date: string | null
-  category: string
-  tags: string[]
-  author: string
-  image: string | null
-  image_alt: string | null
-  featured: boolean
-  seo_meta_title: string | null
-  seo_meta_description: string | null
-  seo_noindex: boolean | null
-  status: string
-  created_at: string
-  updated_at: string
-}
-
+export type { BlogPost, QueryResult }
 export type BlogPostFlat = BlogPost
 
-export async function fetchPublishedPosts(locale?: string): Promise<BlogPost[]> {
+const BLOG_METADATA = 'id,slug,locale,title,description,body_html,publish_date,update_date,category,tags,author,image,image_alt,featured,seo_meta_title,seo_meta_description,seo_noindex,status,created_at,updated_at'
+
+export async function fetchPublishedPosts(locale?: string): Promise<QueryResult<BlogPost[]>> {
   const supabase = getSupabase()
-  if (!supabase) return []
+  if (!supabase) return { status: 'error', error: 'Supabase client not initialized' }
 
-  const builder = supabase
-    .from('blog_posts')
-    .select('*')
-    .eq('status', 'published')
-  if (locale) {
-    builder.filter('locale', 'eq', locale)
-  }
+  let builder = supabase.from('blog_posts').select(BLOG_METADATA).eq('status', 'published').eq('seo_noindex', false)
+  if (locale) builder = builder.eq('locale', locale)
   const { data, error } = await builder.order('publish_date', { ascending: false })
-  if (error) {
-    console.error('fetchPublishedPosts error:', error)
-    return []
-  }
-
-  const posts = (data || []) as unknown as BlogPost[]
-  // Normalize data shape if necessary and ensure required fields exist
-  return posts.map(p => ({
-    id: p.slug,
-    slug: p.slug,
-    locale: p.locale,
-    title: p.title,
-    description: p.description,
-    body_html: p.body_html,
-    publish_date: p.publish_date,
-    update_date: p.update_date,
-    category: p.category,
-    tags: p.tags ?? [],
-    author: p.author,
-    image: p.image ?? null,
-    image_alt: p.image_alt ?? null,
-    featured: p.featured ?? false,
-    seo_meta_title: p.seo_meta_title ?? null,
-    seo_meta_description: p.seo_meta_description ?? null,
-    seo_noindex: p.seo_noindex ?? null,
-    status: p.status,
-    created_at: p.created_at,
-    updated_at: p.updated_at,
-  }))
+  if (error) return { status: 'error', error: error.message }
+  return { status: 'ok', data: excludeNoindex((data ?? []).map(mapBlogPost)) }
 }
 
-export async function fetchPostBySlug(slug: string, locale: string): Promise<BlogPost | null> {
+export async function fetchPostBySlug(slug: string, locale: string): Promise<QueryResult<BlogPost>> {
   const supabase = getSupabase()
-  if (!supabase) return null
+  if (!supabase) return { status: 'error', error: 'Supabase client not initialized' }
 
   const { data, error } = await supabase
     .from('blog_posts')
@@ -270,76 +219,25 @@ export async function fetchPostBySlug(slug: string, locale: string): Promise<Blo
     .eq('slug', slug)
     .eq('locale', locale)
     .eq('status', 'published')
-    .single()
+    .maybeSingle()
 
-  if (error || !data) {
-    console.error('fetchPostBySlug error:', error)
-    return null
-  }
-
-  const p = data as BlogPost
-  // Normalize to include id as slug for linking, per requirement
-  return {
-    id: p.slug,
-    slug: p.slug,
-    locale: p.locale,
-    title: p.title,
-    description: p.description,
-    body_html: p.body_html,
-    publish_date: p.publish_date,
-    update_date: p.update_date,
-    category: p.category,
-    tags: p.tags ?? [],
-    author: p.author,
-    image: p.image ?? null,
-    image_alt: p.image_alt ?? null,
-    featured: p.featured ?? false,
-    seo_meta_title: p.seo_meta_title ?? null,
-    seo_meta_description: p.seo_meta_description ?? null,
-    seo_noindex: p.seo_noindex ?? null,
-    status: p.status,
-    created_at: p.created_at,
-    updated_at: p.updated_at,
-  }
+  return queryResult(data, error)
 }
 
-export async function fetchPostsByTag(tag: string, locale: string = 'id'): Promise<BlogPost[]> {
+export async function fetchPostsByTag(tag: string, locale = 'id'): Promise<QueryResult<BlogPost[]>> {
   const supabase = getSupabase()
-  if (!supabase) return []
+  if (!supabase) return { status: 'error', error: 'Supabase client not initialized' }
 
   const { data, error } = await supabase
     .from('blog_posts')
-    .select('*')
+    .select(BLOG_METADATA)
     .eq('status', 'published')
+    .eq('seo_noindex', false)
     .eq('locale', locale)
     .contains('tags', [tag])
     .order('publish_date', { ascending: false })
 
-  if (error) {
-    console.error('fetchPostsByTag error:', error)
-    return []
-  }
-
-  return (data || []).map((p: any) => ({
-    id: p.slug,
-    slug: p.slug,
-    locale: p.locale,
-    title: p.title,
-    description: p.description,
-    body_html: p.body_html,
-    publish_date: p.publish_date,
-    update_date: p.update_date,
-    category: p.category,
-    tags: p.tags ?? [],
-    author: p.author,
-    image: p.image ?? null,
-    image_alt: p.image_alt ?? null,
-    featured: p.featured ?? false,
-    seo_meta_title: p.seo_meta_title ?? null,
-    seo_meta_description: p.seo_meta_description ?? null,
-    seo_noindex: p.seo_noindex ?? null,
-    status: p.status,
-    created_at: p.created_at,
-    updated_at: p.updated_at,
-  }))
+  if (error) return { status: 'error', error: error.message }
+  const posts = excludeNoindex((data ?? []).map(mapBlogPost))
+  return posts.length ? { status: 'ok', data: posts } : { status: 'not_found' }
 }
