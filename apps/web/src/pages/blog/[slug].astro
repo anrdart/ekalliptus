@@ -1,22 +1,25 @@
 ---
 import Layout from '../../layouts/Layout.astro'
 import '../../styles/prose.css'
-import { fetchPostBySlug, normalizeBlogImage } from '../../lib/supabase'
+import { fetchPostBySlug, fetchPublishedPosts, normalizeBlogImage } from '../../lib/supabase'
+import { blogPath, relatedPosts, tagPath } from '../../lib/blog'
 import { getLocaleFromRequest, getDir } from '../../i18n'
 import Navigation from '../../components/Navigation.astro'
-import PreLoader from '../../components/PreLoader.astro'
 import SocialShare from '../../components/SocialShare.astro'
 import AdUnit from '../../components/AdUnit.astro'
 import { waLink } from '../../lib/constants'
 import { Calendar, User, Tag, ArrowLeft, Clock, List } from 'lucide-astro'
 import { t } from '../../i18n'
+import { resolveAuthor } from '../../data/authors'
 
 export const prerender = false
 
-const locale = getLocaleFromRequest(Astro.request)
+const locale = Astro.locals.locale ?? 'id'
 const dir = getDir(locale)
-const postData = await fetchPostBySlug(Astro.params.slug as string, 'id')
-if (!postData) return Astro.redirect('/blog')
+const postResult = await fetchPostBySlug(Astro.params.slug as string, 'id')
+if (postResult.status === 'not_found') return new Response('Not found', { status: 404 })
+if (postResult.status === 'error') return new Response('Blog temporarily unavailable', { status: 503 })
+const postData = postResult.data
 
 const post = {
   id: postData.slug,
@@ -43,7 +46,7 @@ const post = {
 }
 
 const siteUrl = 'https://ekalliptus.com'
-const canonical = new URL(Astro.url.pathname, siteUrl).toString()
+const canonical = new URL(Astro.locals.publicPathname ?? Astro.url.pathname, siteUrl).toString()
 
 const metaTitle = post.data.seo?.metaTitle || post.data.title
 const metaDescription = post.data.seo?.metaDescription || post.data.description
@@ -53,7 +56,8 @@ const ogImage = post.data.image && !post.data.image.endsWith('.svg')
   : '/og-image.webp'
 const ogImageAlt = post.data.imageAlt || post.data.title
 
-const articleKeywords = (post.data.tags || []).join(', ')
+const author = resolveAuthor(post.data.author)
+const schemaImage = new URL(ogImage, siteUrl).toString()
 
 // JSON-LD structured data
 const blogPostSchema = {
@@ -61,31 +65,16 @@ const blogPostSchema = {
   '@type': 'BlogPosting',
   headline: post.data.title,
   description: post.data.description,
-  image: post.data.image ? `${siteUrl}${post.data.image}` : undefined,
+  image: schemaImage,
   url: canonical,
   datePublished: post.data.publishDate.toISOString(),
   dateModified: (post.data.updateDate || post.data.publishDate).toISOString(),
-  author: {
-    '@type': 'Person',
-    name: post.data.author
-  },
-  publisher: {
-    '@type': 'Organization',
-    name: 'Ekalliptus Digital',
-    logo: {
-      '@type': 'ImageObject',
-      url: `${siteUrl}/ekalliptus_rounded.webp`
-    }
-  },
+  author: { '@id': author.id },
+  publisher: { '@id': author.id },
   mainEntityOfPage: { '@type': 'WebPage', '@id': canonical },
   inLanguage: locale,
-  keywords: articleKeywords,
   wordCount: (post.body_html || '').replace(/<[^>]*>/g, '').trim().split(/\s+/).length,
   articleSection: post.data.category,
-  speakable: {
-    '@type': 'SpeakableSpecification',
-    cssSelector: ['.article-intro', 'h1', 'h2']
-  },
 }
 
 const breadcrumbSchema = {
@@ -106,6 +95,9 @@ const processedHtml = (post.body_html || '').replace(headingIdRe, (match, tag, a
   return `<${tag}${attrs} id="${id}">${inner}</${tag}>`
 })
 
+const relatedResult = await fetchPublishedPosts('id')
+const related = relatedResult.status === 'ok' ? relatedPosts(postData, relatedResult.data) : []
+
 const processedTocHeadings: Array<{ depth: number; slug: string; text: string }> = []
 const tocRe = /<(h[2-4])\s[^>]*id="([^"]+)"[^>]*>([\s\S]*?)<\/\1>/gi
 let tocMatch: RegExpExecArray | null
@@ -125,15 +117,14 @@ while ((tocMatch = tocRe.exec(processedHtml)) !== null) {
   type="article"
   publishedTime={post.data.publishDate.toISOString()}
   modifiedTime={(post.data.updateDate || post.data.publishDate).toISOString()}
-  author={post.data.author}
-  keywords={articleKeywords}
+  author={author.name}
+  adsense
 >
   <Fragment slot="head">
     <script type="application/ld+json" set:html={JSON.stringify(blogPostSchema)}></script>
     <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)}></script>
   </Fragment>
   <div id="reading-progress-bar" class="fixed top-0 left-0 h-1 bg-primary z-[100] transition-all duration-150" style="width:0%"></div>
-  <PreLoader />
   <Navigation t={(key: string) => t(key, locale)} currentLang={locale} />
 
   <main class="container mx-auto px-4 pt-24 pb-6">
@@ -144,7 +135,7 @@ while ((tocMatch = tocRe.exec(processedHtml)) !== null) {
         <nav class="text-sm mb-3" aria-label="Breadcrumb">
           <a href="/" class="text-muted-foreground hover:text-foreground">Home</a>
           <span class="mx-2 text-muted-foreground">/</span>
-          <a href="/blog" class="text-muted-foreground hover:text-foreground">Blog</a>
+          <a href="/id/blog" class="text-muted-foreground hover:text-foreground">Blog</a>
           <span class="mx-2 text-muted-foreground">/</span>
           <span aria-current="page" class="text-foreground">{post.data.title}</span>
         </nav>
@@ -198,13 +189,13 @@ while ((tocMatch = tocRe.exec(processedHtml)) !== null) {
         </div>
 
         <div class="mb-6">
-          <img src={post.data.image} alt={post.data.imageAlt || post.data.title} class="w-full rounded-xl object-cover bg-card/30" onerror="this.src='/blog/placeholder.svg'" />
+          <img src={post.data.image} alt={post.data.imageAlt || post.data.title} width="1200" height="630" class="aspect-[40/21] w-full rounded-xl object-cover bg-card/30" loading="eager" fetchpriority="high" decoding="async" onerror="this.onerror=null;this.src='/blog/placeholder.svg'" />
         </div>
 
         {post.data.tags?.length > 0 && (
           <div class="flex flex-wrap gap-2 mb-6">
             {post.data.tags.map((tag: string) => (
-              <a href={`/blog/tag/${encodeURIComponent(tag)}`} class="glass-pill rounded-full px-2 py-0.5 text-xs font-semibold uppercase tracking-wider text-muted-foreground border-border/10">#{tag}</a>
+              <a href={tagPath(tag)} class="glass-pill rounded-full px-2 py-0.5 text-xs font-semibold uppercase tracking-wider text-muted-foreground border-border/10">#{tag}</a>
             ))}
           </div>
         )}
@@ -263,17 +254,29 @@ while ((tocMatch = tocRe.exec(processedHtml)) !== null) {
         <div class="flex items-center gap-3">
           <div class="h-12 w-12 rounded-full bg-card/30 flex items-center justify-center">A</div>
           <div>
-            <div class="font-semibold">{post.data.author}</div>
-            <div class="text-xs text-muted-foreground">Author</div>
+            <a href="/about" class="font-semibold hover:text-primary">{author.name}</a>
+            <div class="text-xs text-muted-foreground">Tim editorial</div>
           </div>
         </div>
-        <p class="mt-3 text-sm">{post.data.description}</p>
+        <p class="mt-3 text-sm text-muted-foreground">{author.bio}</p>
+        <a href="/editorial-policy" class="mt-2 inline-block text-sm font-semibold text-primary hover:text-primary/80">Kebijakan editorial</a>
       </div>
     </section>
 
+    {related.length > 0 && (
+      <section class="px-4 pb-8">
+        <div class="mx-auto max-w-5xl">
+          <h2 class="mb-4 text-2xl font-bold">Artikel terkait</h2>
+          <ul class="grid gap-3 sm:grid-cols-3">
+            {related.map(item => <li><a class="text-primary hover:underline" href={blogPath(item.slug)}>{item.title}</a></li>)}
+          </ul>
+        </div>
+      </section>
+    )}
+
     <!-- Back to blog CTA -->
     <section class="px-4 pb-12">
-      <a href="/blog" class="text-sm font-semibold text-primary hover:text-primary/80">← {t('blog.backToBlog', locale) || 'Back to Blog'}</a>
+      <a href="/id/blog" class="text-sm font-semibold text-primary hover:text-primary/80">← {t('blog.backToBlog', locale) || 'Back to Blog'}</a>
     </section>
 
     <!-- Mobile TOC floating button & panel -->
