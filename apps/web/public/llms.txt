@@ -1,40 +1,20 @@
 # Ekalliptus Digital
 
-> Jasa pembuatan website, aplikasi mobile, dan maintenance server & web profesional.
-> Berbasis di Indonesia, melayani seluruh Indonesia. Konsultasi gratis.
-> Didirikan tahun 2023.
-
-## About
-Ekalliptus Digital adalah digital agency Indonesia yang spesialis dalam website development, mobile app development, dan maintenance server & web. Kami melayani UMKM hingga enterprise di seluruh Indonesia dengan kualitas profesional. Konsultasi gratis untuk semua kebutuhan digital Anda.
+> Agensi digital berbasis di Indonesia.
 
 ## Services
 - Website Development: https://ekalliptus.com/services/website
 - Mobile App Development: https://ekalliptus.com/services/mobile-app
 - Website & Server Maintenance: https://ekalliptus.com/services/maintenance
 
-## Order
-- Order Form (konsultasi gratis, redirect WhatsApp): https://ekalliptus.com/order
-
-## Blog
-- Blog Index: https://ekalliptus.com/blog
-- RSS Feed: https://ekalliptus.com/blog/rss.xml
-- Sitemap: https://ekalliptus.com/sitemap-index.xml
-- Blog Sitemap: https://ekalliptus.com/blog/sitemap.xml
-
 ## Contact
+- Order Form: https://ekalliptus.com/order
 - Email: support@ekalliptus.com
 - WhatsApp: +62 819-9990-0306
-- Lokasi: Indonesia (online service)
-- Jam: Senin-Jumat 09:00-17:00 WIB
+- Service area: Indonesia
 
-## Tech Stack
-- Frontend: Astro, Next.js, React, Tailwind CSS
-- Mobile: React Native, Flutter
-- Backend: Node.js, Supabase
-- Database: PostgreSQL
-- Deployment: Cloudflare
-
-## Optional
+## Resources
+- Blog: https://ekalliptus.com/blog
 - Privacy Policy: https://ekalliptus.com/privacy-policy
 - Terms of Service: https://ekalliptus.com/terms-of-service
 - About: https://ekalliptus.com/about
