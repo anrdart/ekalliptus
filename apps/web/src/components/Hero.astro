@@ -1,18 +1,11 @@
 ---
-import { ArrowRight, Play, Star, Users, Clock, Zap } from 'lucide-astro'
+import { ArrowRight, Play } from 'lucide-astro'
 
 interface Props {
   t: (key: string) => string
 }
 
 const { t } = Astro.props
-
-const trust = [
-  { icon: Star, value: '4.9/5', label: t('home.hero.trustRating') },
-  { icon: Users, value: '120+', label: t('home.hero.trustClients') },
-  { icon: Clock, value: '3+', label: t('home.hero.trustYears') },
-  { icon: Zap, value: '< 24 jam', label: t('home.hero.trustResponse') },
-]
 ---
 
 <section
@@ -20,10 +13,7 @@ const trust = [
   class="relative flex min-h-[calc(100svh-5rem)] items-center overflow-hidden px-4 scroll-mt-20 lg:scroll-mt-32 bg-background"
 >
   <div class="relative z-10 mx-auto flex w-full max-w-5xl flex-col items-center gap-8 py-12 sm:py-16">
-    <div
-      class="hero-content w-full text-center opacity-0 translate-y-8 transition-all duration-700 ease-smooth"
-      style="transition-delay: 100ms"
-    >
+    <div class="hero-content w-full text-center">
       <!-- Eyebrow badge -->
       <span
         class="glass-pill mb-6 inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-medium text-foreground/80 sm:text-sm"
@@ -70,22 +60,6 @@ const trust = [
         </a>
       </div>
     </div>
-
-    <!-- Trust strip -->
-    <div
-      class="hero-content grid w-full max-w-3xl grid-cols-2 gap-3 opacity-0 translate-y-8 transition-all duration-700 ease-smooth sm:grid-cols-4 sm:gap-4"
-      style="transition-delay: 260ms"
-    >
-      {
-        trust.map((item) => (
-          <div class="glass-card flex flex-col items-center gap-1 rounded-2xl px-3 py-4 text-center">
-            <item.icon class="h-5 w-5 text-primary" />
-            <span class="text-lg font-bold text-foreground sm:text-xl">{item.value}</span>
-            <span class="text-[0.7rem] leading-tight text-muted-foreground sm:text-xs">{item.label}</span>
-          </div>
-        ))
-      }
-    </div>
   </div>
 
   <!-- Scroll cue -->
@@ -95,17 +69,3 @@ const trust = [
     </svg>
   </div>
 </section>
-
-<script>
-  const heroEls = document.querySelectorAll('.hero-content')
-
-  const reveal = (el: Element) => {
-    el.classList.remove('opacity-0', 'translate-y-8')
-    el.classList.add('opacity-100', 'translate-y-0')
-  }
-
-  if (heroEls.length) {
-    // Hero is above the fold — reveal immediately, but keep the transition.
-    requestAnimationFrame(() => heroEls.forEach(reveal))
-  }
-</script>
