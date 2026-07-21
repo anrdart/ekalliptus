@@ -85,7 +85,7 @@
       "startProject": "Mulai Proyek Digital Anda",
       "viewServices": "Lihat Layanan Kami",
       "contactUs": "Hubungi Kami",
-      "note": "Hubungi kami melalui form order untuk konsultasi gratis dan dapatkan proposal custom sesuai kebutuhan bisnis Anda di Global."
+      "note": "Hubungi kami melalui form order untuk konsultasi gratis dan dapatkan proposal custom sesuai kebutuhan bisnis Anda di Indonesia."
     }
   },
   "services": {
@@ -133,20 +133,20 @@
   "about": {
     "title": "Tentang Kami",
     "innovation": "Inovasi Berkelanjutan",
-    "quality": "Kualitas Terjamin",
+    "quality": "Fokus pada Kualitas",
     "team": "Tim Profesional",
-    "innovationDesc": "Ekalliptus adalah digital agency berbasis di Global yang spesialis dalam transformasi digital untuk bisnis modern. Dengan pengalaman lebih dari 5 tahun di industri, kami telah membantu ratusan klien dari UMKM hingga enterprise mencapai visi digital mereka.",
+    "innovationDesc": "Ekalliptus adalah agensi digital berbasis di Indonesia yang menyediakan pengembangan website, aplikasi mobile, serta maintenance website dan server.",
     "qualityDesc": "Layanan kami mencakup website development yang responsif dan SEO-friendly, mobile app cross-platform, dan maintenance server & web berkualitas tinggi.",
     "teamDesc": "Maintenance server & web berkualitas dengan monitoring keamanan, backup berkala, dan technical support untuk menjaga aplikasi tetap prima.",
     "whyChoose": "Mengapa Memilih Ekalliptus?",
-    "technology": "Teknologi Terdepan",
+    "technology": "Teknologi yang Digunakan",
     "local": "Fokus Lokal",
-    "results": "Hasil Terjamin",
-    "technologyDesc": "Kami menyediakan jasa pembuatan website Global yang terjangkau namun berkualitas tinggi dengan teknologi modern.",
+    "results": "Pendekatan Proyek",
+    "technologyDesc": "Kami mengembangkan website dan aplikasi untuk kebutuhan bisnis di Indonesia dengan teknologi yang sesuai ruang lingkup proyek.",
     "localDesc": "Spesialis website development dan mobile app development untuk kebutuhan bisnis dari startup hingga enterprise.",
-    "resultsDesc": "Dengan fokus pada digital agency yang profesional, Ekalliptus telah menjadi pilihan utama untuk service HP laptop di Jakarta dan sekitarnya.",
-    "commitment": "Kami mengutamakan kepuasan klien dengan memberikan hasil yang tidak hanya estetis namun juga fungsional. Setiap proyek website development Global yang kami kerjakan selalu mengikuti best practices SEO terbaru untuk memastikan visibilitas maksimal di mesin pencari Google.",
-    "contactForm": "Hubungi kami melalui form order untuk konsultasi gratis dan dapatkan proposal custom sesuai kebutuhan bisnis Anda di Global."
+    "resultsDesc": "Kami membahas kebutuhan, ruang lingkup, dan target proyek sebelum menyusun proposal.",
+    "commitment": "Kami mengutamakan desain yang fungsional, implementasi yang dapat dipelihara, dan praktik dasar SEO teknis.",
+    "contactForm": "Hubungi kami melalui formulir order untuk membahas kebutuhan bisnis Anda di Indonesia."
   },
   "contact": {
     "insights": "Wawasan",
@@ -215,12 +215,12 @@
         "answer": "ekalliptus menggabungkan teknologi terkini dengan desain yang user-centric. Kami tidak hanya fokus pada kode yang clean, tetapi juga user experience yang memorable dengan elemen 3D, glassmorphism, dan micro-interactions. Setiap proyek diperlakukan secara personal dengan tim dedicated yang siap support hingga proyek sukses."
       },
       {
-        "question": "Apakah layanan service HP & laptop tersedia untuk semua merk?",
-        "answer": "Ya, kami melayani service untuk berbagai merk HP dan laptop termasuk Apple, Samsung, Xiaomi, ASUS, Lenovo, HP, Dell, dan lainnya. Tim teknisi kami berpengalaman menangani berbagai masalah hardware dan software dengan sparepart original dan garansi resmi."
+        "question": "Informasi apa yang diperlukan untuk memulai konsultasi?",
+        "answer": "Jelaskan jenis layanan, tujuan proyek, fitur utama, target pengguna, anggaran, dan target waktu. Kami akan meninjau kebutuhan tersebut sebelum menyusun proposal."
       },
       {
-        "question": "Apa saja yang termasuk dalam paket maintenance website?",
-        "answer": "Paket maintenance kami meliputi update rutin, backup berkala, monitoring keamanan 24/7, perbaikan bug, dan technical support. Kami memastikan website Anda tetap cepat, aman, dan up-to-date. Hubungi kami untuk penawaran sesuai kebutuhan Anda."
+        "question": "Bagaimana biaya dan jadwal proyek ditentukan?",
+        "answer": "Biaya dan jadwal ditentukan setelah ruang lingkup dibahas. Rinciannya dicantumkan dalam proposal dan disepakati sebelum pengerjaan dimulai."
       }
     ]
   },
@@ -632,7 +632,7 @@
         },
         "materials": {
           "title": "5.3 Materi Klien",
-          "content": "Klien memberikan ekalliptus lisensi non-eksklusif, worldwide, bebas royalti untuk menggunakan materi apa pun yang disediakan oleh klien untuk tujuan penyampaian Layanan."
+          "content": "Klien mengizinkan ekalliptus menggunakan materi yang diberikan sejauh diperlukan untuk menyediakan Layanan. Izin ini bersifat non-eksklusif dan berlaku selama diperlukan untuk pekerjaan yang disepakati."
         }
       },
       "confidentiality": {
@@ -687,11 +687,11 @@
         "title": "11. Penyelesaian Sengketa",
         "governingLaw": {
           "title": "11.1 Hukum yang Mengatur",
-          "content": "Syarat ini akan diatur dan ditafsirkan sesuai dengan hukum Global, tanpa memperhatikan prinsip konflik hukumnya."
+          "content": "Syarat ini akan diatur dan ditafsirkan sesuai dengan hukum Indonesia, tanpa memperhatikan prinsip konflik hukumnya."
         },
         "arbitration": {
-          "title": "11.2 Arbitrase",
-          "content": "Setiap sengketa yang timbul dari atau terkait dengan Syarat atau Layanan akan diselesaikan melalui arbitrase yang mengikat sesuai dengan aturan Asosiasi Arbitrase Global. Arbitrase akan dilakukan dalam bahasa Global dan diadakan di Jakarta, Global."
+          "title": "11.2 Penyelesaian Sengketa",
+          "content": "Para pihak akan terlebih dahulu berupaya menyelesaikan sengketa melalui musyawarah. Jika tidak tercapai kesepakatan, penyelesaian dilakukan melalui mekanisme yang disepakati para pihak dan sesuai hukum Indonesia."
         },
         "classActionWaiver": {
           "title": "11.3 Pelepasan Gugatan Kelas",
@@ -723,7 +723,7 @@
         "content": "Jika Anda memiliki pertanyaan tentang Syarat dan Ketentuan Layanan ini, harap hubungi kami:",
         "email": "Email: legal{'@'}ekalliptus.com",
         "website": "Website: www.ekalliptus.com",
-        "businessHours": "Jam Kerja: Senin - Jumat, 09:00 - 18:00 WIB (Waktu Global Barat)"
+        "businessHours": "Jam Kerja: Senin - Jumat, 09:00 - 18:00 WIB (Waktu Indonesia Barat)"
       }
     }
   },
@@ -789,11 +789,11 @@
   },
   "home": {
     "hero": {
-      "badge": "Digital Agency • Berbasis di Global",
+      "badge": "Agensi Digital • Berbasis di Indonesia",
       "titleLead": "Bangun Produk Digital",
       "titleAccent": "yang Menjual",
       "titleTail": "untuk Bisnis Anda",
-      "subtitle": "Jasa pembuatan website profesional, aplikasi mobile, dan maintenance server & web. Cepat, modern, dan dioptimasi untuk SEO sejak hari pertama.",
+      "subtitle": "Pengembangan website, aplikasi mobile, serta maintenance website dan server untuk bisnis di Indonesia.",
       "ctaPrimary": "Konsultasi Gratis",
       "ctaSecondary": "Lihat Layanan",
       "trustRating": "Rating klien",
@@ -831,7 +831,7 @@
       "step3Title": "Pengerjaan",
       "step3Desc": "Tim kami mengerjakan project dengan update progres berkala.",
       "step4Title": "Review & Handover",
-      "step4Desc": "Revisi sesuai kebutuhan, lalu serah terima beserta garansi."
+      "step4Desc": "Review, revisi sesuai ruang lingkup, lalu serah terima proyek."
     },
     "testimonials": {
       "eyebrow": "Testimoni",
@@ -852,7 +852,7 @@
       "secondary": "Chat WhatsApp"
     },
     "footer": {
-      "tagline": "Agensi digital yang membantu bisnis Global tumbuh lewat website, aplikasi, dan desain yang berkelas.",
+      "tagline": "Agensi digital berbasis di Indonesia untuk pengembangan website, aplikasi, dan maintenance.",
       "servicesHeading": "Layanan",
       "companyHeading": "Perusahaan",
       "resourcesHeading": "Sumber Daya",
