@@ -1,5 +1,6 @@
 ---
 import { Menu, X, Moon, Sun, ArrowUpRight, Languages } from 'lucide-astro'
+import { localizedPath, type Locale } from '../lib/locale-routing'
 
 interface Props {
   t: (key: string) => string
@@ -23,7 +24,7 @@ const serviceItems = [
 ]
 
 const languages = [
-  { code: 'id', name: 'Bahasa Global', flag: '🇮🇩', nativeName: 'Global' },
+  { code: 'id', name: 'Bahasa Indonesia', flag: '🇮🇩', nativeName: 'Indonesia' },
   { code: 'en', name: 'English', flag: '🇺🇸', nativeName: 'English' },
   { code: 'ja', name: '日本語', flag: '🇯🇵', nativeName: '日本語' },
   { code: 'ko', name: '한국어', flag: '🇰🇷', nativeName: '한국어' },
@@ -34,8 +35,9 @@ const languages = [
 
 const currentLanguage = languages.find(lang => lang.code === currentLang) || languages[0]
 
-const currentPath = Astro.url.pathname
-const isHomePage = currentPath === '/'
+const currentPath = Astro.locals.publicPathname ?? Astro.url.pathname
+const publicPath = (path: string) => localizedPath(path, currentLang as Locale)
+const isHomePage = currentPath === publicPath('/')
 ---
 
 <header class="pointer-events-none fixed left-1/2 top-0 z-40 w-full max-w-md sm:max-w-4xl -translate-x-1/2 px-2 sm:px-6 lg:px-8 pt-2 sm:pt-3 safe-top">
@@ -44,7 +46,7 @@ const isHomePage = currentPath === '/'
     class="pointer-events-auto flex items-center justify-between rounded-full px-2.5 sm:px-3.5 py-1 transition-all duration-300 glass-nav"
   >
     <a
-      href="/"
+      href={publicPath("/")}
       class="cursor-interactive flex items-center rounded-full px-1 py-0.5 transition text-foreground"
     >
       <img
@@ -73,7 +75,7 @@ const isHomePage = currentPath === '/'
             <div class="absolute left-1/2 top-full -translate-x-1/2 mt-2 w-60 rounded-2xl glass-panel border border-border/20 p-2 opacity-0 invisible -translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-300 z-50">
               {serviceItems.map((s) => (
                 <a
-                  href={s.href}
+                  href={publicPath(s.href)}
                   class="service-link relative block overflow-hidden rounded-lg px-3 py-2.5 text-sm font-medium text-foreground/80 transition-colors duration-500"
                 >
                   <span class="relative z-10 truncate">{t(`services.cards.${s.key}.title`)}</span>
@@ -83,7 +85,7 @@ const isHomePage = currentPath === '/'
           </div>
         ) : item.external ? (
           <a
-            href={item.href}
+            href={publicPath(item.href!)}
             class="nav-link cursor-interactive rounded-full px-3 py-1 text-[13px] font-medium text-foreground/80 transition hover:bg-foreground/10 hover:text-foreground"
           >
             {t(`nav.${item.key}`)}
@@ -98,7 +100,7 @@ const isHomePage = currentPath === '/'
           </button>
         ) : (
           <a
-            href={`/${item.hash}`}
+            href={`${publicPath("/")}${item.hash}`}
             class="nav-link cursor-interactive rounded-full px-3 py-1 text-[13px] font-medium text-foreground/80 transition hover:bg-foreground/10 hover:text-foreground"
           >
             {t(`nav.${item.key}`)}
@@ -161,7 +163,7 @@ const isHomePage = currentPath === '/'
             </button>
           ) : (
             <a
-              href={`/${item.hash}`}
+              href={`${publicPath("/")}${item.hash}`}
               class="nav-link cursor-interactive rounded-lg px-4 py-3 text-left text-sm font-medium text-foreground/80 transition hover:bg-accent hover:text-foreground active:bg-accent/80"
             >
               {t(`nav.${item.key}`)}
@@ -169,7 +171,7 @@ const isHomePage = currentPath === '/'
           )}
           <div class="ml-4 flex flex-col gap-1 mb-1">
             {serviceItems.map(s => (
-              <a href={s.href} class="rounded-lg px-3 py-2 text-xs text-foreground/70 hover:bg-accent hover:text-foreground transition">
+              <a href={publicPath(s.href)} class="rounded-lg px-3 py-2 text-xs text-foreground/70 hover:bg-accent hover:text-foreground transition">
                 {t(`services.cards.${s.key}.title`)}
               </a>
             ))}
@@ -177,7 +179,7 @@ const isHomePage = currentPath === '/'
         </>
       ) : item.external ? (
         <a
-          href={item.href}
+          href={publicPath(item.href!)}
           class="nav-link cursor-interactive rounded-lg px-4 py-3 text-left text-sm font-medium text-foreground/80 transition hover:bg-accent hover:text-foreground active:bg-accent/80"
         >
           {t(`nav.${item.key}`)}
@@ -192,7 +194,7 @@ const isHomePage = currentPath === '/'
         </button>
       ) : (
         <a
-          href={`/${item.hash}`}
+          href={`${publicPath("/")}${item.hash}`}
           class="nav-link cursor-interactive rounded-lg px-4 py-3 text-left text-sm font-medium text-foreground/80 transition hover:bg-accent hover:text-foreground active:bg-accent/80"
         >
           {t(`nav.${item.key}`)}
@@ -209,7 +211,8 @@ const isHomePage = currentPath === '/'
     </span>
     <div class="grid grid-cols-2 gap-2 px-1">
       {languages.map((lang) => (
-        <button
+        <a
+          href={localizedPath(currentPath, lang.code as Locale)}
           data-lang={lang.code}
           class:list={[
             'lang-btn flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm transition active:scale-[0.98]',
@@ -219,7 +222,7 @@ const isHomePage = currentPath === '/'
         >
           <span class="text-base">{lang.flag}</span>
           <span class="text-xs truncate">{lang.name}</span>
-        </button>
+        </a>
       ))}
     </div>
   </div>
@@ -227,7 +230,7 @@ const isHomePage = currentPath === '/'
   <div class="my-2 border-t border-border"></div>
 
   <a
-    href="/order"
+    href={publicPath("/order")}
     class="flex w-full items-center justify-center gap-2 rounded-lg bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90 active:bg-primary/80 min-h-[44px]"
   >
     {t('nav.consultation')}
@@ -262,7 +265,8 @@ const isHomePage = currentPath === '/'
 
     <div class="grid grid-cols-2 gap-3">
       {languages.map((lang) => (
-        <button
+        <a
+          href={localizedPath(currentPath, lang.code as Locale)}
           data-lang={lang.code}
           class:list={[
             'lang-modal-btn language-button group flex flex-col items-center gap-2 rounded-xl px-3 py-4 text-center transition-all duration-300',
@@ -277,7 +281,7 @@ const isHomePage = currentPath === '/'
             <span class="text-sm font-medium leading-tight">{lang.nativeName}</span>
             <span class="text-xs text-muted-foreground leading-tight">{lang.name}</span>
           </div>
-        </button>
+        </a>
       ))}
     </div>
 
@@ -438,16 +442,6 @@ const isHomePage = currentPath === '/'
       })
     })
   }
-  
-  document.querySelectorAll('.lang-btn, .lang-modal-btn').forEach(function(btn) {
-    btn.addEventListener('click', function(e) {
-      var lang = e.currentTarget.dataset.lang
-      if (lang) {
-        document.cookie = 'i18n_redirected=' + lang + ';path=/;max-age=31536000'
-        window.location.reload()
-      }
-    })
-  })
   
   document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') {
