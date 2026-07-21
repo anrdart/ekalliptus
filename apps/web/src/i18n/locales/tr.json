@@ -94,20 +94,20 @@
   "about": {
     "title": "Hakkımızda",
     "innovation": "Sürekli Yenilik",
-    "quality": "Garantili Kalite",
+    "quality": "Quality Focus",
     "team": "Profesyonel Takım",
-    "innovationDesc": "Ekalliptus, modern işletmeler için dijital dönüşümü uzmanlaşan Endonezya merkezli bir dijital ajanstır. 5 yıldan fazla sektör deneyimiyle, KOBİ'lerden işletmelere kadar yüzlerce müşterinin dijital vizyonunu gerçekleştirmesine yardımcı olduk.",
+    "innovationDesc": "Ekalliptus is an Indonesia-based digital agency providing website development, mobile apps, and website and server maintenance.",
     "qualityDesc": "Hizmetlerimiz; duyarlı ve SEO dostu web sitesi geliştirme, platformlar arası mobil uygulamalar ve yüksek kaliteli sunucu ve web bakımını kapsar.",
     "teamDesc": "Güvenlik izleme, periyodik yedekleme ve uygulamalarınızın sorunsuz çalışmasını sağlamak için teknik destek içeren yüksek kaliteli sunucu ve web bakımı.",
     "whyChoose": "Neden Ekalliptus'u Seçmelisiniz?",
-    "technology": "Öncü Teknoloji",
+    "technology": "Technology We Use",
     "local": "Yerel Odak",
-    "results": "Garantili Sonuçlar",
-    "technologyDesc": "Modern teknoloji kullanarak uygun maliyetli ama yüksek kaliteli Endonezya web sitesi geliştirme hizmetleri sağlıyoruz.",
+    "results": "Project Approach",
+    "technologyDesc": "We develop websites and applications for businesses in Indonesia using technology suited to the project scope.",
     "localDesc": "Yerel iş ihtiyaçları için özel Jakarta uzmanları, startup'lardan işletmelere kadar mobil uygulama geliştirme.",
-    "resultsDesc": "Profesyonel dijital ajansa odaklanarak, Ekalliptus Jakarta ve çevresindeki HP dizüstü bilgisayar hizmetlerinde en iyi seçim haline geldi.",
-    "commitment": "Hem estetik hem de fonksiyonel sonuçlar sağlayarak müşteri memnuniyetini en öncelikli tutuyoruz. Üzerinde çalıştığımız her Endonezya web sitesi geliştirme projesi, Google arama motorlarında maksimum görünürlük sağlamak için en son SEO en iyi uygulamalarını takip eder.",
-    "contactForm": "Endonezya'daki işletme ihtiyaçlarınıza göre özelleştirilmiş teklifi ücretsiz danışmanlıkla almak için sipariş formu aracılığıyla bizimle iletişime geçin."
+    "resultsDesc": "We discuss requirements, scope, and project goals before preparing a proposal.",
+    "commitment": "We focus on functional design, maintainable implementation, and technical SEO fundamentals.",
+    "contactForm": "Contact us through the order form to discuss your business needs in Indonesia."
   },
   "contact": {
     "insights": "İçgörüler",
@@ -176,12 +176,12 @@
         "answer": "En yeni teknolojileri kullanıcı odaklı tasarım anlayışıyla birleştiriyoruz. Temiz koda ek olarak 3D öğeler, cam morfizmi ve mikro etkileşimlerle akılda kalıcı deneyimler yaratıyoruz. Her projeye başarıya kadar eşlik eden özel bir ekip atanıyor."
       },
       {
-        "question": "Cihaz onarım hizmetiniz tüm markaları kapsıyor mu?",
-        "answer": "Evet. Apple, Samsung, Xiaomi, ASUS, Lenovo, HP, Dell ve daha birçok marka için telefon ve dizüstü tamiri yapıyoruz. Sertifikalı teknisyenlerimiz orijinal yedek parçalarla hem donanım hem yazılım sorunlarını çözüyor."
+        "question": "Danışmaya başlamak için hangi bilgiler gerekir?",
+        "answer": "Hizmet türünü, proje hedeflerini, temel özellikleri, hedef kullanıcıları, bütçeyi ve istenen süreyi paylaşın. Tekliften önce bunları inceleriz."
       },
       {
-        "question": "Profesyonel fotoğraf ve video düzenleme ücretleri nedir?",
-        "answer": "Dosya sayısı, süre ve düzenleme karmaşıklığına göre değişir. Fotoğraf düzenleme fotoğraf başına yaklaşık 50.000 IDR'den, video düzenleme ise standart kısa videolar için 500.000 IDR'den başlar. Projenize özel fiyat için bizimle iletişime geçin."
+        "question": "Maliyet ve süre nasıl belirlenir?",
+        "answer": "Anlaşılan iş kapsamına göre belirlenir ve çalışma başlamadan önce teklifte yazılır."
       }
     ]
   },
@@ -419,11 +419,11 @@
   },
   "home": {
     "hero": {
-      "badge": "Digital Agency • Based in Global",
+      "badge": "Digital Agency • Based in Indonesia",
       "titleLead": "Build Digital Products",
       "titleAccent": "that Sell",
       "titleTail": "for Your Business",
-      "subtitle": "Professional website, mobile app, and design services. Fast, modern, and SEO-optimized from day one.",
+      "subtitle": "Website development, mobile apps, and website and server maintenance for businesses in Indonesia.",
       "ctaPrimary": "Free Consultation",
       "ctaSecondary": "View Services",
       "trustRating": "Client rating",
@@ -461,7 +461,7 @@
       "step3Title": "Production",
       "step3Desc": "Our team builds your project with regular progress updates.",
       "step4Title": "Review & Handover",
-      "step4Desc": "Revisions as needed, then handover with a warranty."
+      "step4Desc": "Review, revisions within the agreed scope, then project handover."
     },
     "testimonials": {
       "eyebrow": "Testimonials",
@@ -482,7 +482,7 @@
       "secondary": "Chat on WhatsApp"
     },
     "footer": {
-      "tagline": "A digital agency helping Globaln businesses grow through classy websites, apps, and design.",
+      "tagline": "An Indonesia-based digital agency for websites, apps, and maintenance.",
       "servicesHeading": "Services",
       "companyHeading": "Company",
       "resourcesHeading": "Resources",

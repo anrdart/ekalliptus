@@ -10,22 +10,8 @@ const locales: Record<string, any> = { id, en, ja, ko, ru, ar, tr }
 
 export const defaultLocale = 'id'
 
-export function getLocaleFromRequest(request: Request): string {
-  const cookie = request.headers.get('cookie') || ''
-  const match = cookie.match(/i18n_redirected=([^;]+)/)
-  if (match && locales[match[1]]) {
-    return match[1]
-  }
-  
-  const acceptLang = request.headers.get('accept-language') || ''
-  if (acceptLang.includes('id')) return 'id'
-  if (acceptLang.includes('en')) return 'en'
-  if (acceptLang.includes('ja')) return 'ja'
-  if (acceptLang.includes('ko')) return 'ko'
-  if (acceptLang.includes('ru')) return 'ru'
-  if (acceptLang.includes('ar')) return 'ar'
-  if (acceptLang.includes('tr')) return 'tr'
-  
+/** @deprecated Locale comes from the public URL via Astro.locals.locale. */
+export function getLocaleFromRequest(_request: Request): string {
   return defaultLocale
 }
 
