@@ -293,7 +293,7 @@ Bisa via Google Drive, Dropbox, atau WeTransfer. Kami akan share folder untuk pr
 | **Professional** | Editor berpengalaman 3+ tahun |
 | **Fair Price** | Transparan, no hidden fee |
 | **Easy Communication** | Updates via WhatsApp |
-| **Satisfaction Guarantee** | Revision sampai puas |
+| **Revisi** | Sesuai ruang lingkup yang disepakati |
 
 ---
 
@@ -308,7 +308,7 @@ Video yang engaging = lebih views = lebih engagement = lebih followers = lebih s
 ### Dapatkan:
 - ✅ Free consultation
 - ✅ Content strategy session
-- ✅ Best price guarantee
+- Penawaran sesuai ruang lingkup
 
 ---
 

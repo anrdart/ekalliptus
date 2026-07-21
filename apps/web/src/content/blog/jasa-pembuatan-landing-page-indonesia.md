@@ -35,7 +35,7 @@ Platform iklan memberi skor kualitas berdasarkan relevansi landing page. Landing
 Karena landing page sederhana, mudah di-A/B test: ubah headline, gambar, atau warna tombol → ukur mana yang konversi lebih tinggi. Optimasi berkelanjutan.
 
 ### 4. Loading Cepat (Penting untuk Mobile)
-Landing page profesional ringan — idealnya load dalam 2 detik di mobile. Kecepatan = konversi (setiap detik keterlambatan menurunkan konversi ~7%).
+Landing page profesional perlu ringan dan cepat dimuat di perangkat mobile agar pengunjung dapat segera memahami penawaran.
 
 ### 5. SEO-Friendly
 Landing page yang dioptimasi bisa rank di Google untuk keyword spesifik, membawa traffic organik gratis selain dari iklan.
@@ -58,10 +58,10 @@ Satu tombol CTA yang menonjol (warna kontras), dengan teks action-oriented: "Mul
 Testimoni klien, logo brand yang pernah pakai, jumlah user, rating bintang. Social proof membangun trust dan mengurangi kekhawatiran pembeli.
 
 ### Benefit-Oriented Copy
-Jelaskan manfaat, bukan sekadar fitur. Bukan "fitur A, fitur B" tapi "hemat 10 jam/minggu", "tingkatkan penjualan 30%".
+Jelaskan manfaat, bukan sekadar daftar fitur. Gunakan hasil yang dapat dibuktikan dan relevan bagi calon pelanggan.
 
 ### Mobile-First Design
-70%+ traffic Indonesia dari mobile. Landing page harus sempurna di layar kecil: tombol cukup besar untuk jempol, teks terbaca tanpa zoom, form minimal.
+Banyak pengunjung mengakses web dari perangkat mobile. Tombol harus mudah disentuh, teks terbaca tanpa zoom, dan form tetap ringkas.
 
 ### Form yang Singkat
 Minta info yang benar-benar perlu. Setiap field tambahan menurunkan konversi. Untuk lead gen: nama + WhatsApp cukup. Untuk checkout: sebisa mungkin minimal.
@@ -97,13 +97,13 @@ Desain bagus tapi copy jelek = konversi rendah. Jasa terbaik akan konsultasi ten
 | Traffic source | Iklan, email, sosmed | SEO, direct, branded search |
 | Jumlah CTA | 1 | Beberapa |
 | Navigasi | Minimal/hilang | Penuh menu |
-| Konversi untuk kampanye | Tinggi (5-20%) | Rendah (1-3%) |
+| Fokus konversi kampanye | Lebih terarah | Lebih umum |
 
 **Aturan praktis**: Untuk iklan atau kampanye penjualan spesifik → landing page. Untuk identitas brand & traffic organik → homepage.
 
 ## Kesimpulan
 
-Landing page yang profesional adalah investasi dengan ROI paling mudah diukur di dunia digital. Beda dengan iklan (biaya berulang), landing page yang baik adalah aset yang bekerja 24/7.
+Landing page yang profesional memudahkan pengukuran hasil kampanye dan dapat terus digunakan sebagai aset digital.
 
 Mencari jasa pembuatan landing page profesional di Indonesia? [Ekalliptus Digital](https://ekalliptus.com) merancang landing page yang **cepat, SEO-friendly, dan dioptimasi untuk konversi**. [Konsultasi gratis](https://ekalliptus.com/order) untuk diskusikan landing page bisnis Anda.
 

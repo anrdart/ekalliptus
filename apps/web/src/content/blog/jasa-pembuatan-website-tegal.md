@@ -17,7 +17,7 @@ seo:
 
 ## Mengapa Bisnis di Tegal Butuh Website Profesional?
 
-Di era digital saat ini, memiliki website profesional bukan lagi pilihan, melainkan keharusan. Bagi bisnis di Tegal dan sekitarnya, website menjadi etalase digital yang beroperasi 24/7, menjangkau pelanggan tidak hanya lokal tetapi juga nasional bahkan internasional.
+Di era digital saat ini, memiliki website profesional bukan lagi pilihan, melainkan keharusan. Bagi bisnis di Tegal dan sekitarnya, website menjadi etalase digital yang dapat diakses pelanggan dari berbagai wilayah.
 
 Tegal sebagai kota berkembang di Jawa Tengah telah melihat pertumbuhan signifikan dalam adopsi teknologi digital. Dari UMKM hingga perusahaan besar, semakin banyak yang menyadari pentingnya kehadiran online yang kuat.
 
@@ -25,8 +25,8 @@ Tegal sebagai kota berkembang di Jawa Tengah telah melihat pertumbuhan signifika
 
 1. **Jangkauan Lebih Luas** - Website memungkinkan bisnis Anda menjangkau pelanggan di luar Tegal
 2. **Kredibilitas Meningkat** - Website profesional memberikan kesan serius dan terpercaya
-3. **Marketing 24/7** - Website bekerja terus-menerus mempromosikan bisnis Anda
-4. **Biaya Efisien** - Jauh lebih hemat dibandingkan iklan tradisional jangka panjang
+3. **Informasi Mudah Diakses** - Pelanggan dapat melihat penawaran melalui website
+4. **Kanal Milik Bisnis** - Konten dan informasi dapat dikelola sesuai kebutuhan
 
 ---
 
@@ -40,7 +40,7 @@ Website company profile adalah pondasi digital untuk bisnis Anda. Kami membuat w
 - 5-10 halaman (Home, About, Services, Portfolio, Contact)
 - Desain responsif (mobile-friendly)
 - Basic SEO optimization
-- Free domain 1 tahun (.com)
+- Opsi domain dibahas dalam proposal
 - Hosting Indonesia (cepat diakses)
 - Integration WhatsApp & Google Maps
 
@@ -129,7 +129,7 @@ Kami memastikan setiap project transparan dan terstruktur:
 5. **Launch & Maintenance**
    - Deploy ke production
    - Handover documentation
-   - Garansi 30 hari
+   - Perbaikan bug sesuai ruang lingkup proposal
 
 ---
 
@@ -167,8 +167,8 @@ Kami menggunakan teknologi terbaru untuk performa dan security maksimal:
 - Tidak ada biaya tersembunyi
 - Package fleksibel sesuai budget
 
-### Garansi & Support
-- **Garansi 30 hari** untuk bug fixing
+### Dukungan Setelah Peluncuran
+- Perbaikan bug sesuai ruang lingkup dan periode dalam proposal
 - **Free consultation** untuk maintenance
 - **Technical support** via WhatsApp
 
@@ -189,7 +189,7 @@ Ya, kami berikan 3x revisi gratis untuk setiap project. Revisi tambahan dapat di
 Kami terima transfer bank (BCA, Mandiri, BRI), e-wallet (GoPay, OVO, Dana), dan juga pembayaran bertahap (DP 50%, pelunasan saat handover).
 
 ### Apakah termasuk domain dan hosting?
-Ya, package kami sudah termasuk free domain 1 tahun (.com) dan hosting Indonesia untuk tahun pertama.
+Kebutuhan domain dan hosting dibahas dalam proposal sesuai ruang lingkup proyek.
 
 ---
 
