@@ -1,41 +1,25 @@
 ---
 interface Props {
   locale?: string
-  page?: 'home' | 'faq' | 'service'
   faqItems?: Array<{ question: string; answer: string }>
-  /** Only pass when derived from REAL verified testimonials. Gated downstream. */
-  aggregateRating?: { ratingValue: string; reviewCount: number } | null
-  reviews?: Array<{ author: string; rating: number; body: string }>
 }
 
-const { locale = 'id', page = 'home', faqItems = [], aggregateRating = null, reviews = [] } = Astro.props
-
+const { locale = 'id', faqItems = [] } = Astro.props
 const siteUrl = 'https://ekalliptus.com'
+const organizationId = `${siteUrl}#organization`
 
 const organization = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
-  '@id': `${siteUrl}#organization`,
+  '@id': organizationId,
   name: 'Ekalliptus Digital',
   url: siteUrl,
   logo: `${siteUrl}/ekalliptus_rounded.webp`,
-  description: 'Digital agency spesialis website development, mobile app, dan maintenance server & web.',
+  description: 'Digital agency Indonesia untuk pengembangan website, aplikasi mobile, serta maintenance server dan web.',
   email: 'support@ekalliptus.com',
   telephone: '+6281999900306',
   foundingDate: '2023',
-  numberOfEmployees: { '@type': 'QuantitativeValue', minValue: 1, maxValue: 10 },
-  knowsAbout: [
-    'Web Development',
-    'Mobile App Development',
-    'Website Maintenance',
-    'Astro Framework',
-    'React Native',
-    'Flutter'
-  ],
-  areaServed: [
-    { '@type': 'Country', name: 'Indonesia' },
-    'Global'
-  ],
+  areaServed: { '@type': 'Country', name: 'Indonesia' },
   sameAs: [
     'https://www.linkedin.com/company/ekalliptus',
     'https://github.com/ekalliptus',
@@ -49,74 +33,11 @@ const webSite = {
   '@id': `${siteUrl}#website`,
   name: 'Ekalliptus Digital',
   url: siteUrl,
-  description: 'Digital agency spesialis website development, mobile app, dan maintenance server & web.',
   inLanguage: locale,
-  publisher: { '@id': `${siteUrl}#organization` },
-  potentialAction: {
-    '@type': 'SearchAction',
-    target: {
-      '@type': 'EntryPoint',
-      urlTemplate: `${siteUrl}/blog?q={search_term_string}`
-    },
-    'query-input': 'required name=search_term_string'
-  }
+  publisher: { '@id': organizationId }
 }
 
-const teamPerson = {
-  '@context': 'https://schema.org',
-  '@type': 'Person',
-  '@id': `${siteUrl}#tim-ekalliptus`,
-  name: 'Tim Ekalliptus',
-  jobTitle: 'Digital Agency Team',
-  worksFor: { '@id': `${siteUrl}#organization` },
-  url: `${siteUrl}/about`
-}
-
-const services = [
-  {
-    '@type': 'Service',
-    name: 'Website Development',
-    description: 'Layanan pembuatan website company profile, e-commerce, dan aplikasi web custom dengan teknologi modern.',
-    url: `${siteUrl}/services/website`,
-    provider: { '@id': `${siteUrl}#organization` },
-    areaServed: [{ '@type': 'Country', name: 'Indonesia' }, 'Global'],
-    offers: { '@type': 'Offer', availability: 'https://schema.org/InStock', url: `${siteUrl}/order` }
-  },
-  {
-    '@type': 'Service',
-    name: 'Mobile App Development',
-    description: 'Pengembangan aplikasi mobile cross-platform dengan React Native dan Flutter untuk iOS dan Android.',
-    url: `${siteUrl}/services/mobile-app`,
-    provider: { '@id': `${siteUrl}#organization` },
-    areaServed: [{ '@type': 'Country', name: 'Indonesia' }, 'Global'],
-    offers: { '@type': 'Offer', availability: 'https://schema.org/InStock', url: `${siteUrl}/order` }
-  },
-  {
-    '@type': 'Service',
-    name: 'Maintenance Website',
-    description: 'Paket maintenance website rutin meliputi update, backup, monitoring keamanan, dan technical support.',
-    url: `${siteUrl}/services/maintenance`,
-    provider: { '@id': `${siteUrl}#organization` },
-    areaServed: [{ '@type': 'Country', name: 'Indonesia' }, 'Global'],
-    offers: { '@type': 'Offer', availability: 'https://schema.org/InStock', url: `${siteUrl}/order` }
-  }
-]
-
-const howToOrder = {
-  '@context': 'https://schema.org',
-  '@type': 'HowTo',
-  name: 'Cara Order Layanan Ekalliptus Digital',
-  description: 'Panduan langkah demi langkah untuk memesan layanan digital di Ekalliptus.',
-  totalTime: 'PT15M',
-  step: [
-    { '@type': 'HowToStep', position: 1, name: 'Isi Form Order', text: 'Pilih layanan dan isi form order dengan detail kebutuhan project Anda.' },
-    { '@type': 'HowToStep', position: 2, name: 'Konsultasi & Briefing', text: 'Tim kami akan menghubungi Anda untuk konsultasi dan menyusun brief project.' },
-    { '@type': 'HowToStep', position: 3, name: 'Pengerjaan Project', text: 'Project dikerjakan sesuai timeline yang disepakati dengan update berkala.' },
-    { '@type': 'HowToStep', position: 4, name: 'Review & Handover', text: 'Review hasil, revisi jika perlu, lalu handover beserta dokumentasi lengkap.' }
-  ]
-}
-
-const faqSchema = faqItems.length > 0 ? {
+const faqSchema = faqItems.length ? {
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
   mainEntity: faqItems.map(item => ({
@@ -126,40 +47,7 @@ const faqSchema = faqItems.length > 0 ? {
   }))
 } : null
 
-// Review / AggregateRating — emitted ONLY when real verified data is provided.
-// No fabricated reviews: if aggregateRating is null, nothing is attached.
-const ratingSchema = aggregateRating ? {
-  '@context': 'https://schema.org',
-  '@type': 'Organization',
-  '@id': `${siteUrl}#organization`,
-  aggregateRating: {
-    '@type': 'AggregateRating',
-    ratingValue: aggregateRating.ratingValue,
-    reviewCount: aggregateRating.reviewCount,
-    bestRating: '5',
-    worstRating: '1'
-  },
-  ...(reviews.length > 0 ? {
-    review: reviews.map(r => ({
-      '@type': 'Review',
-      author: { '@type': 'Person', name: r.author },
-      reviewRating: { '@type': 'Rating', ratingValue: String(r.rating), bestRating: '5', worstRating: '1' },
-      reviewBody: r.body
-    }))
-  } : {})
-} : null
-
-const schemas = [
-  JSON.stringify(organization),
-  JSON.stringify(webSite),
-  JSON.stringify(teamPerson),
-  JSON.stringify({ '@context': 'https://schema.org', '@type': 'ItemList', name: 'Layanan Ekalliptus Digital', itemListElement: services.map((s, i) => ({ ...s, position: i + 1 })) }),
-  ...(page === 'home' ? [JSON.stringify(howToOrder)] : []),
-  ...(faqSchema ? [JSON.stringify(faqSchema)] : []),
-  ...(ratingSchema ? [JSON.stringify(ratingSchema)] : [])
-]
+const schemas = [organization, webSite, ...(faqSchema ? [faqSchema] : [])]
 ---
 
-{schemas.map(schema => (
-  <script type="application/ld+json" set:html={schema} />
-))}
+{schemas.map(schema => <script type="application/ld+json" set:html={JSON.stringify(schema)} />)}
