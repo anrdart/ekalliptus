@@ -229,7 +229,7 @@ Website yang tidak dirawat bisa menyebabkan kerugian bisnis: traffic turun, secu
 - ✅ Performance optimization
 - ✅ Phone support (4 jam response)
 - ✅ Emergency support
-- ✅ Uptime guarantee 99.9%
+- Pemantauan uptime sesuai paket
 
 **Best for:** High-traffic website, e-commerce scale-up, lead generation
 
@@ -331,7 +331,7 @@ Jangan sampai website Anda menjadi "liability" bukan "asset" untuk bisnis. Profe
 ### Dapatkan:
 - ✅ Free website health check
 - ✅ Maintenance recommendation
-- ✅ Best price guarantee
+- Penawaran sesuai ruang lingkup
 
 ### Promo New Client:
 - Diskon 20% untuk 3 bulan pertama

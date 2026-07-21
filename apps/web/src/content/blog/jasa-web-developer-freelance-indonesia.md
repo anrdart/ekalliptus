@@ -53,7 +53,7 @@ Digital agency adalah tim profesional dengan struktur organisasi: project manage
 - **Process terstruktur** — ada SOP, milestone, dan dokumentasi yang clear
 - **Kapasitas besar** — bisa handle multiple project paralel atau project besar
 - **Backup tim** — kalau satu orang sakit, ada yang ambil alih
-- **Garansi & support** — biasanya ada SLA dan after-sales support yang formal
+- **Dukungan** — ketentuannya perlu dicantumkan dalam perjanjian
 
 ### Kekurangan Agency
 
@@ -110,7 +110,7 @@ Digital agency adalah tim profesional dengan struktur organisasi: project manage
 Sebagai **digital agency yang dimulai dari freelance**, kami memahami kebutuhan klien dari kedua sisi. Kami menawarkan:
 
 - **Harga sekompetitif freelance** — tim kecil, overhead minimal
-- **Reliability seperti agency** — SOP, garansi, backup tim
+- **Proses kerja** — SOP dan pembagian tanggung jawab yang jelas
 - **Komunikasi langsung** — tidak ada layer berlapis
 
 Lihat [jasa pembuatan website profesional](/services/website) atau baca [panduan harga website Tegal](/blog/jasa-pembuatan-website-tegal).

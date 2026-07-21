@@ -129,7 +129,7 @@ Sebelum membeli, pastikan domain tidak melanggar merek dagang terdaftar. Cek di 
 
 ### Uptime Guarantee
 
-**Uptime** adalah persentase waktu server online dan accessible. Standar industri minimum adalah **99.9% uptime**, yang berarti website Anda hanya offline maksimal 8.7 jam per tahun. Pilih provider yang memberikan **SLA (Service Level Agreement)** tertulis.
+**Uptime** adalah persentase waktu server tersedia. Bandingkan catatan ketersediaan dan ketentuan layanan tertulis dari setiap penyedia.
 
 ### Kecepatan Server
 
@@ -137,7 +137,7 @@ Lokasi server mempengaruhi kecepatan loading. Untuk target audiens Indonesia, pi
 
 ### Customer Support
 
-Support 24/7 via live chat atau telepon sangat penting, terutama jika Anda bukan orang teknis. Test kecepatan respons support sebelum membeli — coba chat mereka dan lihat berapa lama mereka merespons.
+Periksa kanal dan jadwal dukungan penyedia, lalu uji respons mereka sebelum membeli.
 
 ### Skalabilitas
 
@@ -164,7 +164,7 @@ Fitur keamanan yang harus ada:
 
 Berikut beberapa provider hosting populer di Indonesia beserta keunggulannya:
 
-- **Niagahoster**: Shared hosting terjangkau dengan support 24/7, server di Indonesia
+- **Niagahoster**: Opsi shared hosting dengan server di Indonesia
 - **IDCloudHost**: Cloud hosting lokal dengan data center Jakarta dan harga kompetitif
 - **Dewaweb**: Fokus pada keamanan dan kecepatan, tersertifikasi ISO 27001
 - **Hostinger**: Harga agresif untuk shared hosting, data center Singapore

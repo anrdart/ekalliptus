@@ -26,7 +26,7 @@ Menurut laporan McKinsey, personalisasi berbasis AI dapat meningkatkan **revenue
 
 - **Rekomendasi produk** yang disesuaikan berdasarkan riwayat browsing
 - **Dynamic content** yang berubah berdasarkan segmen pengunjung
-- **Chatbot AI** yang memberikan customer support 24/7
+- **Chatbot AI** yang membantu menjawab pertanyaan pelanggan
 - **Layout adaptif** yang menyesuaikan dengan preferensi pengguna
 
 Platform seperti Shopify dan WordPress sudah mulai mengintegrasikan fitur AI ke dalam builder mereka, membuat teknologi ini semakin accessible untuk bisnis kecil dan menengah.
@@ -71,7 +71,7 @@ Catatan penting: elemen 3D harus dioptimasi agar tidak mengorbankan **kecepatan 
 
 ## 5. Mobile-First & Responsive Design
 
-Menurut data Statcounter Global Stats, **58.67% traffic website global** berasal dari perangkat mobile per 2025. Di Indonesia, angka ini bahkan lebih tinggi — **mencapai 70%** menurut data We Are Social.
+Data Statcounter Global Stats menunjukkan perangkat mobile menyumbang porsi besar traffic website global. Karena itu, pengalaman mobile perlu menjadi pertimbangan utama dalam desain.
 
 Mobile-first design bukan lagi opsional melainkan keharusan. Prinsip utamanya:
 
