@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css'
 import { waLink } from '../lib/constants'
+import { alternateLinks, canonicalUrl } from '../lib/locale-routing'
 
 interface Props {
   title: string
@@ -17,10 +18,10 @@ interface Props {
   publishedTime?: string
   modifiedTime?: string
   author?: string
-  keywords?: string
   /** Search Console / Bing site verification tokens (optional). */
   googleVerification?: string
   bingVerification?: string
+  adsense?: boolean
 }
 
 const {
@@ -37,13 +38,16 @@ const {
   publishedTime,
   modifiedTime,
   author,
-  keywords,
   googleVerification = import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION ?? '',
-  bingVerification = import.meta.env.PUBLIC_BING_SITE_VERIFICATION ?? ''
+  bingVerification = import.meta.env.PUBLIC_BING_SITE_VERIFICATION ?? '',
+  adsense = false
 } = Astro.props
 
 const siteUrl = 'https://ekalliptus.com'
-const canonical = new URL(Astro.url.pathname, siteUrl).toString()
+const publicPathname = Astro.locals.publicPathname ?? Astro.url.pathname
+const canonical = canonicalUrl(publicPathname, siteUrl)
+const alternates = alternateLinks(publicPathname)
+const shouldNoindex = noindex || Astro.locals.indexable === false
 const ogImage = new URL(image, siteUrl).toString()
 const ogImageWidth = String(imageWidth)
 const ogImageHeight = String(imageHeight)
@@ -53,22 +57,19 @@ const ogLocaleMap: Record<string, string> = {
   ko: 'ko_KR', ru: 'ru_RU', ar: 'ar_SA', tr: 'tr_TR'
 }
 const ogLocale = ogLocaleMap[lang] ?? 'id_ID'
-const ogLocaleAlternates = Object.values(ogLocaleMap).filter(l => l !== ogLocale)
 
 const publishedYMD = publishedTime ? publishedTime.slice(0, 10).replace(/-/g, '/') : undefined
 ---
 
 <!DOCTYPE html>
-<html lang={lang} dir={dir} class="scroll-smooth">
+<html lang={lang} dir={dir} class="scroll-smooth" data-adsense={adsense ? 'true' : undefined}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="description" content={description} />
-    {keywords && <meta name="keywords" content={keywords} />}
     {author && <meta name="author" content={author} />}
     <meta name="format-detection" content="telephone=no" />
-    <meta http-equiv="content-language" content={lang} />
-    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    {shouldNoindex && <meta name="robots" content="noindex" />}
     <meta name="theme-color" content="#0c1222" media="(prefers-color-scheme: dark)" />
     <meta name="theme-color" content="#f1f5f9" media="(prefers-color-scheme: light)" />
     <meta name="mobile-web-app-capable" content="yes" />
@@ -81,10 +82,10 @@ const publishedYMD = publishedTime ? publishedTime.slice(0, 10).replace(/-/g, '/
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
     <link rel="canonical" href={canonical} />
+    {alternates.map(({ locale, href }) => <link rel="alternate" hreflang={locale} href={href} />)}
     <link rel="sitemap" type="application/xml" href="/sitemap-index.xml" />
 
     <link rel="preload" as="font" type="font/woff2" href="/fonts/inter-latin-400-normal.woff2" crossorigin />
-    <link rel="preload" as="font" type="font/woff2" href="/fonts/inter-latin-600-normal.woff2" crossorigin />
 
     <title>{title}</title>
 
@@ -99,7 +100,6 @@ const publishedYMD = publishedTime ? publishedTime.slice(0, 10).replace(/-/g, '/
     <meta property="og:image:type" content="image/webp" />
     <meta property="og:image:alt" content={imageAlt} />
     <meta property="og:locale" content={ogLocale} />
-    {ogLocaleAlternates.map(l => <meta property="og:locale:alternate" content={l} />)}
 
     {type === 'article' && publishedTime && <meta property="article:published_time" content={publishedTime} />}
     {type === 'article' && modifiedTime && <meta property="article:modified_time" content={modifiedTime} />}
@@ -132,12 +132,14 @@ const publishedYMD = publishedTime ? publishedTime.slice(0, 10).replace(/-/g, '/
           if (loaded) return;
           loaded = true;
 
-          // Google AdSense
-          var ads = document.createElement('script');
-          ads.async = true;
-          ads.crossOrigin = 'anonymous';
-          ads.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9374589831001594';
-          document.head.appendChild(ads);
+          // Google AdSense, only on pages that render ad units.
+          if (document.documentElement.dataset.adsense === 'true') {
+            var ads = document.createElement('script');
+            ads.async = true;
+            ads.crossOrigin = 'anonymous';
+            ads.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9374589831001594';
+            document.head.appendChild(ads);
+          }
 
           // Google Analytics 4
           window.dataLayer = window.dataLayer || [];
@@ -152,14 +154,13 @@ const publishedYMD = publishedTime ? publishedTime.slice(0, 10).replace(/-/g, '/
           document.head.appendChild(ga);
         }
 
-        // Trigger on first interaction (scroll, click, touch, keydown) — fallback after 6s.
-        var events = ['scroll', 'click', 'touchstart', 'keydown', 'mouseover'];
+        // Trigger only after a real user interaction; no automatic fallback.
+        var events = ['scroll', 'click', 'touchstart', 'keydown'];
         function onInteract() {
           loadThirdParty();
           events.forEach(function (e) { document.removeEventListener(e, onInteract, true); });
         }
         events.forEach(function (e) { document.addEventListener(e, onInteract, { passive: true, capture: true }); });
-        setTimeout(loadThirdParty, 6000);
       })();
     </script>
 
