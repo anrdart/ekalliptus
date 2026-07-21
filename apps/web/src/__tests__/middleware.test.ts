@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest'
-import { isProtectedPath, isLoginPath } from '../middleware'
+import { onRequest } from '../middleware'
+import { isProtectedPath, isLoginPath } from '../lib/admin-paths'
 
 describe('admin middleware path matching', () => {
   it('protects /admin and /admin/* but not /admin/login', () => {
@@ -20,5 +21,35 @@ describe('admin middleware path matching', () => {
   it('identifies the login page', () => {
     expect(isLoginPath('/admin/login')).toBe(true)
     expect(isLoginPath('/admin')).toBe(false)
+  })
+})
+
+describe('locale middleware responses', () => {
+  it('returns an actual 404 and prevents caching for unsupported routes', async () => {
+    const response = await onRequest({
+      url: new URL('https://ekalliptus.com/en/blog/example'),
+      locals: {},
+      rewrite: async () => new Response('not found'),
+      redirect: () => { throw new Error('unexpected redirect') },
+    } as never, async () => new Response('next'))
+
+    expect(response).toBeInstanceOf(Response)
+    if (!response) throw new Error('middleware returned no response')
+    expect(response.status).toBe(404)
+    expect(response.headers.get('Cache-Control')).toBe('no-store')
+  })
+
+  it('prevents caching for translated noindex pages', async () => {
+    const response = await onRequest({
+      url: new URL('https://ekalliptus.com/en/about'),
+      locals: {},
+      rewrite: async () => new Response('about'),
+      redirect: () => { throw new Error('unexpected redirect') },
+    } as never, async () => new Response('next'))
+
+    expect(response).toBeInstanceOf(Response)
+    if (!response) throw new Error('middleware returned no response')
+    expect(response.status).toBe(200)
+    expect(response.headers.get('Cache-Control')).toBe('no-store')
   })
 })
