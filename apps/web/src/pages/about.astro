@@ -1,7 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro'
 import Navigation from '../components/Navigation.astro'
-import PreLoader from '../components/PreLoader.astro'
 import JsonLd from '../components/JsonLd.astro'
 import { waLink, WA_DISPLAY_PHONE } from '../lib/constants'
 import { t, getLocaleFromRequest, getDir } from '../i18n'
@@ -9,18 +8,18 @@ import { ArrowRight, Award, Users, Clock, Heart } from 'lucide-astro'
 
 export const prerender = false
 
-const locale = getLocaleFromRequest(Astro.request)
+const locale = Astro.locals.locale ?? 'id'
 const dir = getDir(locale)
 
 const siteUrl = 'https://ekalliptus.com'
-const canonical = new URL(Astro.url.pathname, siteUrl).toString()
+const canonical = new URL(Astro.locals.publicPathname ?? Astro.url.pathname, siteUrl).toString()
 
 const aboutSchema = {
   '@context': 'https://schema.org',
   '@type': 'AboutPage',
   url: canonical,
   name: 'Tentang Ekalliptus Digital',
-  description: 'Cerita dan profil Ekalliptus Digital — digital agency Global yang berbasis di Global, Jawa Tengah.',
+  description: 'Profil Ekalliptus Digital, penyedia layanan digital untuk bisnis di Indonesia.',
   mainEntity: { '@id': `${siteUrl}#organization` }
 }
 
@@ -35,19 +34,17 @@ const breadcrumbSchema = {
 ---
 
 <Layout
-  title="Tentang Ekalliptus Digital | Digital Agency Global Berbasis Global"
-  description="Profil Ekalliptus Digital — digital agency Global spesialis web, mobile app, WordPress, UI/UX. Berbasis di Global, Jawa Tengah, melayani klien seluruh Global."
+  title="Tentang Ekalliptus Digital | Layanan Digital Indonesia"
+  description="Profil Ekalliptus Digital, penyedia layanan website, aplikasi mobile, WordPress, UI/UX, dan maintenance untuk bisnis di Indonesia."
   lang={locale}
   dir={dir}
-  keywords="tentang ekalliptus, profil digital agency Global, agency Global, web developer Global"
 >
   <Fragment slot="head">
     <script type="application/ld+json" set:html={JSON.stringify(aboutSchema)} />
     <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
   </Fragment>
 
-  <JsonLd locale={locale} page="home" />
-  <PreLoader />
+  <JsonLd locale={locale} />
   <Navigation t={(key: string) => t(key, locale)} currentLang={locale} />
 
   <main class="relative z-0 flex min-h-screen flex-col pt-14 sm:pt-16 md:pt-20">
@@ -62,7 +59,7 @@ const breadcrumbSchema = {
       <header class="text-center mb-12">
         <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4">Tentang Ekalliptus Digital</h1>
         <p class="article-intro text-base sm:text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-          <strong>Ekalliptus Digital</strong> adalah digital agency global yang didirikan pada tahun 2023. Kami spesialis dalam pembuatan website, aplikasi mobile, serta maintenance server dan web untuk bisnis di seluruh dunia.
+          <strong>Ekalliptus Digital</strong> menyediakan layanan pembuatan website, aplikasi mobile, serta maintenance server dan web untuk bisnis di Indonesia.
         </p>
       </header>
 
@@ -70,7 +67,7 @@ const breadcrumbSchema = {
         <h2 class="text-2xl sm:text-3xl font-semibold text-foreground mb-6 text-center">Misi Kami</h2>
         <div class="glass-panel rounded-2xl p-6 sm:p-8 bg-card/10 border border-border/20">
           <p class="text-muted-foreground leading-relaxed text-base sm:text-lg">
-            Membantu UMKM dan bisnis Global bertransformasi digital dengan teknologi modern yang <strong>terjangkau, berkualitas, dan reliable</strong>. Kami percaya setiap bisnis — besar atau kecil — pantas memiliki kehadiran digital profesional tanpa harus membayar harga selangit.
+            Membantu UMKM dan bisnis Indonesia membangun kehadiran digital dengan teknologi yang sesuai kebutuhan. Ruang lingkup, jadwal, dan biaya dibahas dalam proposal proyek.
           </p>
         </div>
       </section>
@@ -80,18 +77,18 @@ const breadcrumbSchema = {
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div class="glass-panel rounded-2xl p-5 bg-card/10 border border-border/20">
             <div class="rounded-full bg-primary/10 p-3 w-fit mb-3"><Award class="h-5 w-5 text-primary" /></div>
-            <h3 class="text-lg font-semibold text-foreground mb-2">Tim Lokal Global</h3>
-            <p class="text-sm text-muted-foreground">Berbasis di Global — bisa meeting offline, memahami pasar lokal, support cepat dalam Bahasa Global.</p>
+            <h3 class="text-lg font-semibold text-foreground mb-2">Komunikasi dalam Bahasa Indonesia</h3>
+            <p class="text-sm text-muted-foreground">Diskusi kebutuhan dan perkembangan proyek dilakukan melalui kanal komunikasi yang disepakati.</p>
           </div>
           <div class="glass-panel rounded-2xl p-5 bg-card/10 border border-border/20">
             <div class="rounded-full bg-primary/10 p-3 w-fit mb-3"><Users class="h-5 w-5 text-primary" /></div>
             <h3 class="text-lg font-semibold text-foreground mb-2">Layanan Nasional</h3>
-            <p class="text-sm text-muted-foreground">Klien dari seluruh Global. Komunikasi via WhatsApp, Zoom, Google Meet — kerja remote tanpa kompromi kualitas.</p>
+            <p class="text-sm text-muted-foreground">Layanan tersedia bagi bisnis di Indonesia melalui komunikasi dan pengerjaan jarak jauh.</p>
           </div>
           <div class="glass-panel rounded-2xl p-5 bg-card/10 border border-border/20">
             <div class="rounded-full bg-primary/10 p-3 w-fit mb-3"><Clock class="h-5 w-5 text-primary" /></div>
-            <h3 class="text-lg font-semibold text-foreground mb-2">Garansi 30 Hari</h3>
-            <p class="text-sm text-muted-foreground">Setiap project dilengkapi garansi 30 hari untuk bug fixing dan free maintenance 3 bulan pertama.</p>
+            <h3 class="text-lg font-semibold text-foreground mb-2">Dukungan Proyek</h3>
+            <p class="text-sm text-muted-foreground">Ketentuan revisi, perbaikan bug, dan maintenance dicantumkan dalam proposal proyek.</p>
           </div>
           <div class="glass-panel rounded-2xl p-5 bg-card/10 border border-border/20">
             <div class="rounded-full bg-primary/10 p-3 w-fit mb-3"><Heart class="h-5 w-5 text-primary" /></div>
@@ -118,19 +115,14 @@ const breadcrumbSchema = {
         <div class="glass-panel rounded-2xl p-6 bg-card/10 border border-border/20">
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <h3 class="font-semibold text-foreground mb-3">Alamat</h3>
-              <p class="text-sm text-muted-foreground">
-                Ekalliptus Digital<br />
-                Global, Jawa Tengah 52100<br />
-                Global
-              </p>
+              <h3 class="font-semibold text-foreground mb-3">Wilayah Layanan</h3>
+              <p class="text-sm text-muted-foreground">Indonesia</p>
             </div>
             <div>
               <h3 class="font-semibold text-foreground mb-3">Kontak</h3>
               <ul class="space-y-1 text-sm text-muted-foreground">
                 <li><strong>Email:</strong> <a href="mailto:support@ekalliptus.com" class="text-primary hover:underline">support@ekalliptus.com</a></li>
                 <li><strong>WhatsApp:</strong> <a href={waLink()} class="text-primary hover:underline">{WA_DISPLAY_PHONE}</a></li>
-                <li><strong>Jam Kerja:</strong> Senin-Jumat 09:00-17:00 WIB</li>
               </ul>
             </div>
           </div>
