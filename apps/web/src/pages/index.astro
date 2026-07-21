@@ -1,24 +1,20 @@
 ---
 import Layout from '../layouts/Layout.astro'
 import Hero from '../components/Hero.astro'
-import StatsBand from '../components/StatsBand.astro'
 import Services from '../components/Services.astro'
 import ProcessSteps from '../components/ProcessSteps.astro'
-import Testimonials from '../components/Testimonials.astro'
 import TrustBand from '../components/TrustBand.astro'
 import FAQ from '../components/FAQ.astro'
 import ContactCTA from '../components/ContactCTA.astro'
 import ConsultationDialog from '../components/ConsultationDialog.astro'
 import EbotFab from '../components/EbotFab.astro'
 import Navigation from '../components/Navigation.astro'
-import PreLoader from '../components/PreLoader.astro'
 import JsonLd from '../components/JsonLd.astro'
 import { t, getLocaleFromRequest, getDir } from '../i18n'
-import { aggregateRating, verifiedTestimonials } from '../data/testimonials'
 import { ArrowRight, ArrowUpRight, Mail, Phone, MapPin } from 'lucide-astro'
 import { waLink, WA_DISPLAY_PHONE } from '../lib/constants'
 
-const locale = getLocaleFromRequest(Astro.request)
+const locale = Astro.locals.locale ?? 'id'
 const dir = getDir(locale)
 
 const FAQ_COUNT = 8
@@ -31,10 +27,6 @@ for (let i = 0; i < FAQ_COUNT; i++) {
   }
 }
 
-// Review schema only from REAL verified testimonials (null otherwise → no schema).
-const rating = aggregateRating()
-const reviews = verifiedTestimonials.map((r) => ({ author: r.name, rating: r.rating, body: r.quote }))
-
 const serviceLinks = [
   { label: t('services.cards.websiteDevelopment.title', locale), href: '/services/website' },
   { label: t('services.cards.mobileAppDevelopment.title', locale), href: '/services/mobile-app' },
@@ -44,22 +36,18 @@ const year = new Date().getFullYear()
 ---
 
 <Layout
-  title="Ekalliptus Digital | Jasa Website & Aplikasi Mobile Terbaik"
-  description="Jasa pembuatan website profesional, aplikasi mobile, dan maintenance server & web. Melayani seluruh Indonesia. Konsultasi GRATIS!"
+  title="Ekalliptus Digital | Jasa Website & Aplikasi Mobile Indonesia"
+  description="Pengembangan website, aplikasi mobile, serta maintenance website dan server untuk bisnis di Indonesia."
   lang={locale}
   dir={dir}
-  keywords="jasa pembuatan website, jasa aplikasi mobile, web developer indonesia, digital agency, maintenance website, jasa maintenance server"
 >
-  <JsonLd locale={locale} page="home" faqItems={faqItems} aggregateRating={rating} reviews={reviews} />
-  <PreLoader />
+  <JsonLd locale={locale} faqItems={faqItems} />
   <Navigation t={(key: string) => t(key, locale)} currentLang={locale} />
 
   <main class="relative z-0 flex min-h-screen flex-col pt-14 sm:pt-16 md:pt-20">
     <Hero t={(key: string) => t(key, locale)} />
-    <StatsBand t={(key: string) => t(key, locale)} />
     <Services t={(key: string) => t(key, locale)} />
     <ProcessSteps t={(key: string) => t(key, locale)} />
-    <Testimonials t={(key: string) => t(key, locale)} />
     <TrustBand t={(key: string) => t(key, locale)} />
     <FAQ t={(key: string) => t(key, locale)} />
     <ContactCTA t={(key: string) => t(key, locale)} />
@@ -76,7 +64,7 @@ const year = new Date().getFullYear()
             <p class="mt-2 max-w-2xl text-base text-muted-foreground">{t('blog.description', locale)}</p>
           </div>
           <a
-            href="/blog"
+            href="/id/blog"
             class="hidden flex-shrink-0 items-center gap-2 rounded-full border border-border/40 bg-card/20 px-5 py-2.5 text-sm font-semibold text-foreground/80 transition hover:bg-card/30 sm:inline-flex cursor-interactive"
           >
             {t('blog.readMore', locale)}
@@ -85,31 +73,31 @@ const year = new Date().getFullYear()
         </div>
 
         <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
-          <a href="/blog/jasa-pembuatan-website-global" class="group glass-card overflow-hidden rounded-3xl transition-all hover:-translate-y-1 hover:shadow-lg hover:shadow-primary/5 cursor-interactive">
+          <a href="/id/blog/jasa-pembuatan-website-tegal" class="group glass-card overflow-hidden rounded-3xl transition-all hover:-translate-y-1 hover:shadow-lg hover:shadow-primary/5 cursor-interactive">
             <div class="skel-shimmer aspect-video overflow-hidden bg-card/30">
-              <img src="/blog/jasa-website-global.svg" alt="Jasa Pembuatan Website Global" width="640" height="360" class="img-skel h-full w-full object-cover transition-transform duration-300 group-hover:scale-105" loading="lazy" decoding="async" onload="this.classList.add('img-loaded')" onerror="this.onerror=null;this.src='/blog/placeholder.svg'" />
+              <img src="/blog/jasa-website-tegal.svg" alt="Jasa Pembuatan Website Tegal" width="640" height="360" class="img-skel h-full w-full object-cover transition-transform duration-300 group-hover:scale-105" loading="lazy" decoding="async" onload="this.classList.add('img-loaded')" onerror="this.onerror=null;this.src='/blog/placeholder.svg'" />
             </div>
             <div class="p-5 sm:p-6">
               <span class="rounded-full bg-primary/10 px-3 py-1 text-[0.65rem] font-semibold uppercase tracking-wider text-primary">{t('blog.categories.web-development', locale)}</span>
-              <h3 class="mt-3 text-lg font-semibold text-foreground transition-colors group-hover:text-primary">Jasa Pembuatan Website Global: Harga & Portfolio 2026</h3>
-              <p class="mt-2 line-clamp-2 text-sm text-muted-foreground">Temukan layanan pembuatan website profesional di Global dengan harga terjangkau. Mulai dari Rp 1,5 juta untuk company profile.</p>
+              <h3 class="mt-3 text-lg font-semibold text-foreground transition-colors group-hover:text-primary">Jasa Pembuatan Website di Tegal</h3>
+              <p class="mt-2 line-clamp-2 text-sm text-muted-foreground">Panduan memilih layanan pembuatan website untuk bisnis di Tegal dan Indonesia.</p>
             </div>
           </a>
 
-          <a href="/blog/biaya-pembuatan-aplikasi-android-ios" class="group glass-card overflow-hidden rounded-3xl transition-all hover:-translate-y-1 hover:shadow-lg hover:shadow-primary/5 cursor-interactive">
+          <a href="/id/blog/biaya-pembuatan-aplikasi-android-ios" class="group glass-card overflow-hidden rounded-3xl transition-all hover:-translate-y-1 hover:shadow-lg hover:shadow-primary/5 cursor-interactive">
             <div class="skel-shimmer aspect-video overflow-hidden bg-card/30">
               <img src="/blog/biaya-aplikasi-mobile.svg" alt="Biaya Pembuatan Aplikasi Mobile" width="640" height="360" class="img-skel h-full w-full object-cover transition-transform duration-300 group-hover:scale-105" loading="lazy" decoding="async" onload="this.classList.add('img-loaded')" onerror="this.onerror=null;this.src='/blog/placeholder.svg'" />
             </div>
             <div class="p-5 sm:p-6">
               <span class="rounded-full bg-accent/10 px-3 py-1 text-[0.65rem] font-semibold uppercase tracking-wider text-accent">{t('blog.categories.mobile-app', locale)}</span>
-              <h3 class="mt-3 text-lg font-semibold text-foreground transition-colors group-hover:text-primary">Biaya Pembuatan Aplikasi Android & iOS di Global</h3>
+              <h3 class="mt-3 text-lg font-semibold text-foreground transition-colors group-hover:text-primary">Biaya Pembuatan Aplikasi Android & iOS di Indonesia</h3>
               <p class="mt-2 line-clamp-2 text-sm text-muted-foreground">Panduan lengkap estimasi biaya pembuatan aplikasi mobile cross-platform dengan React Native dan Flutter.</p>
             </div>
           </a>
         </div>
 
         <div class="mt-8 text-center sm:hidden">
-          <a href="/blog" class="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90">
+          <a href="/id/blog" class="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition hover:bg-primary/90">
             {t('blog.readMore', locale)}
             <ArrowRight class="h-4 w-4" />
           </a>
@@ -144,9 +132,10 @@ const year = new Date().getFullYear()
             <h3 class="mb-4 text-sm font-semibold text-foreground">{t('home.footer.companyHeading', locale)}</h3>
             <ul class="space-y-2.5 text-sm">
               <li><a href="/about" class="text-muted-foreground transition-colors hover:text-primary">{t('home.footer.aboutLink', locale)}</a></li>
-              <li><a href="/blog" class="text-muted-foreground transition-colors hover:text-primary">{t('home.footer.blogLink', locale)}</a></li>
+              <li><a href="/id/blog" class="text-muted-foreground transition-colors hover:text-primary">{t('home.footer.blogLink', locale)}</a></li>
               <li><a href="https://bio.ekalliptus.com" target="_blank" rel="noopener noreferrer" class="text-muted-foreground transition-colors hover:text-primary">{t('home.footer.bioLink', locale)}</a></li>
               <li><a href="/order" class="text-muted-foreground transition-colors hover:text-primary">{t('home.footer.orderLink', locale)}</a></li>
+              <li><a href="/editorial-policy" class="text-muted-foreground transition-colors hover:text-primary">Kebijakan Editorial</a></li>
               <li><a href="/privacy-policy" class="text-muted-foreground transition-colors hover:text-primary">{t('home.footer.privacyLink', locale)}</a></li>
               <li><a href="/terms-of-service" class="text-muted-foreground transition-colors hover:text-primary">{t('home.footer.termsLink', locale)}</a></li>
             </ul>
@@ -165,7 +154,7 @@ const year = new Date().getFullYear()
                   <Phone class="h-4 w-4 flex-shrink-0" /> {WA_DISPLAY_PHONE}
                 </a>
               </li>
-              <li class="inline-flex items-center gap-2"><MapPin class="h-4 w-4 flex-shrink-0" /> Global</li>
+              <li class="inline-flex items-center gap-2"><MapPin class="h-4 w-4 flex-shrink-0" /> Indonesia</li>
             </ul>
           </div>
         </div>

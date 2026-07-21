@@ -1,7 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro'
 import Navigation from '../../components/Navigation.astro'
-import PreLoader from '../../components/PreLoader.astro'
 import ConsultationDialog from '../../components/ConsultationDialog.astro'
 import { t, getLocaleFromRequest, getDir } from '../../i18n'
 import { waLink } from '../../lib/constants'
@@ -9,17 +8,17 @@ import { Check, ArrowRight, Shield, Zap, Bell, Clock } from 'lucide-astro'
 
 export const prerender = false
 
-const locale = getLocaleFromRequest(Astro.request)
+const locale = Astro.locals.locale ?? 'id'
 const dir = getDir(locale)
 const siteUrl = 'https://ekalliptus.com'
-const canonical = new URL(Astro.url.pathname, siteUrl).toString()
+const canonical = new URL(Astro.locals.publicPathname ?? Astro.url.pathname, siteUrl).toString()
 
 const faqs = [
   { question: 'Apa saja yang dilakukan dalam maintenance website?', answer: 'Update core/plugin/theme, backup mingguan, monitoring keamanan dan uptime, optimasi performa, fix bug minor, technical support via WhatsApp/email.' },
-  { question: 'Berapa kali backup dilakukan?', answer: 'Backup harian otomatis (incremental) + backup mingguan full. File backup tersimpan di cloud terpisah dengan retention 30 hari.' },
-  { question: 'Apakah include penambahan content?', answer: 'Untuk paket Basic dan Standard tidak. Paket Premium include penambahan 5 halaman/post baru per bulan.' },
-  { question: 'Bagaimana jika website saya hack?', answer: 'Kami handle restore dari backup, identifikasi root cause, patch keamanan, dan re-harden site. Termasuk dalam semua paket tanpa biaya tambahan.' },
-  { question: 'Apakah bisa cancel kapan saja?', answer: 'Ya, paket bulanan tanpa kontrak jangka panjang. Cancel anytime dengan notice 7 hari.' },
+  { question: 'Berapa kali backup dilakukan?', answer: 'Jadwal dan retensi backup disesuaikan dengan paket dan kebutuhan website.' },
+  { question: 'Apakah termasuk penambahan konten?', answer: 'Penambahan konten dapat dimasukkan dalam ruang lingkup paket yang disepakati.' },
+  { question: 'Bagaimana jika website diretas?', answer: 'Penanganan dapat mencakup pemulihan backup, pemeriksaan penyebab, dan penguatan keamanan sesuai ruang lingkup layanan.' },
+  { question: 'Bagaimana ketentuan penghentian layanan?', answer: 'Periode layanan dan ketentuan penghentian dicantumkan dalam proposal atau perjanjian.' },
   { question: 'Maintenance untuk website non-WordPress?', answer: 'Tentu — kami support custom website (Astro, Next.js, Laravel), hosting management, dan database maintenance.' }
 ]
 
@@ -30,8 +29,7 @@ const serviceSchema = {
   serviceType: 'Website Maintenance',
   description: 'Jasa maintenance website bulanan: update, backup berkala, monitoring keamanan, dan technical support untuk WordPress, custom site, dan e-commerce.',
   provider: { '@id': `${siteUrl}#organization` },
-  areaServed: [{ '@type': 'Country', name: 'Global' }, { '@type': 'City', name: 'Global' }],
-  offers: { '@type': 'AggregateOffer', priceCurrency: 'IDR', lowPrice: '500000', highPrice: '2000000', availability: 'https://schema.org/InStock' },
+  areaServed: { '@type': 'Country', name: 'Indonesia' },
   url: canonical
 }
 
@@ -46,18 +44,16 @@ const breadcrumbSchema = {
   '@type': 'BreadcrumbList',
   itemListElement: [
     { '@type': 'ListItem', position: 1, name: 'Home', item: siteUrl },
-    { '@type': 'ListItem', position: 2, name: 'Layanan', item: `${siteUrl}/services/maintenance` },
-    { '@type': 'ListItem', position: 3, name: 'Website Maintenance', item: canonical }
+    { '@type': 'ListItem', position: 2, name: 'Website Maintenance', item: canonical }
   ]
 }
 ---
 
 <Layout
   title="Jasa Maintenance Website & Server Bulanan Indonesia | Update, Backup, Monitoring - Ekalliptus"
-  description="Jasa maintenance website & server bulanan: update rutin, backup berkala, monitoring keamanan 24/7, technical support. Untuk semua jenis website. Konsultasi gratis."
+  description="Jasa maintenance website dan server: update rutin, backup berkala, pemantauan keamanan, dan dukungan teknis sesuai kebutuhan."
   lang={locale}
   dir={dir}
-  keywords="jasa maintenance website, pemeliharaan website bulanan, maintenance wordpress, update website, backup website, monitoring keamanan website"
 >
   <Fragment slot="head">
     <script type="application/ld+json" set:html={JSON.stringify(serviceSchema)} />
@@ -65,7 +61,6 @@ const breadcrumbSchema = {
     <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
   </Fragment>
 
-  <PreLoader />
   <Navigation t={(key: string) => t(key, locale)} currentLang={locale} />
 
   <main class="relative z-0 flex min-h-screen flex-col pt-14 sm:pt-16 md:pt-20">
@@ -80,7 +75,7 @@ const breadcrumbSchema = {
       <header class="mb-12 text-center">
         <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4">Jasa Maintenance Website Bulanan</h1>
         <p class="article-intro text-base sm:text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-          <strong>Jasa maintenance website</strong> adalah layanan pemeliharaan rutin yang mencakup update sistem, backup berkala, monitoring keamanan, dan technical support. Ekalliptus Digital menyediakan paket <strong>maintenance bulanan untuk WordPress, custom website, dan e-commerce</strong> mulai dari <strong>Rp 500rb per bulan</strong>, mencegah downtime dan menjaga performa website Anda tetap optimal.
+          <strong>Jasa maintenance website</strong> mencakup pembaruan sistem, backup berkala, pemantauan keamanan, dan dukungan teknis. Ekalliptus Digital menyediakan maintenance untuk WordPress, custom website, dan e-commerce sesuai kebutuhan.
         </p>
       </header>
 
@@ -95,7 +90,7 @@ const breadcrumbSchema = {
           <div class="glass-panel rounded-2xl p-5 bg-card/10 border border-border/20">
             <div class="rounded-full bg-primary/10 p-3 w-fit mb-4"><Bell class="h-5 w-5 text-primary" /></div>
             <h3 class="text-lg font-semibold text-foreground mb-2">Uptime Monitoring</h3>
-            <p class="text-sm text-muted-foreground">Alert real-time jika website down, response time dalam 30 menit.</p>
+            <p class="text-sm text-muted-foreground">Pemantauan membantu mendeteksi gangguan agar dapat ditindaklanjuti.</p>
           </div>
           <div class="glass-panel rounded-2xl p-5 bg-card/10 border border-border/20">
             <div class="rounded-full bg-primary/10 p-3 w-fit mb-4"><Zap class="h-5 w-5 text-primary" /></div>
@@ -105,18 +100,17 @@ const breadcrumbSchema = {
           <div class="glass-panel rounded-2xl p-5 bg-card/10 border border-border/20">
             <div class="rounded-full bg-primary/10 p-3 w-fit mb-4"><Clock class="h-5 w-5 text-primary" /></div>
             <h3 class="text-lg font-semibold text-foreground mb-2">Backup Rutin</h3>
-            <p class="text-sm text-muted-foreground">Backup harian otomatis ke cloud dengan retention 30 hari.</p>
+            <p class="text-sm text-muted-foreground">Jadwal dan retensi backup disesuaikan dengan paket.</p>
           </div>
         </div>
       </section>
 
       <section class="mb-12">
-        <h2 class="text-2xl sm:text-3xl font-semibold text-foreground mb-6 text-center">Paket & Harga Maintenance</h2>
+        <h2 class="text-2xl sm:text-3xl font-semibold text-foreground mb-6 text-center">Pilihan Layanan Maintenance</h2>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div class="glass-panel rounded-2xl p-6 bg-card/10 border border-border/20">
             <h3 class="text-xl font-bold text-foreground mb-2">Basic</h3>
-            <p class="text-2xl font-bold text-primary mb-1">Rp 500rb</p>
-            <p class="text-xs text-muted-foreground mb-4">/bulan</p>
+            <p class="text-sm text-muted-foreground mb-4">Pemeliharaan rutin dasar</p>
             <ul class="space-y-2 text-sm text-muted-foreground">
               <li class="flex gap-2"><Check class="h-4 w-4 text-primary flex-shrink-0" /> Update core & plugins</li>
               <li class="flex gap-2"><Check class="h-4 w-4 text-primary flex-shrink-0" /> Backup mingguan</li>
@@ -126,8 +120,7 @@ const breadcrumbSchema = {
           </div>
           <div class="glass-panel neon-border rounded-2xl p-6 bg-card/10">
             <h3 class="text-xl font-bold text-foreground mb-2">Standard</h3>
-            <p class="text-2xl font-bold text-primary mb-1">Rp 1jt</p>
-            <p class="text-xs text-muted-foreground mb-4">/bulan</p>
+            <p class="text-sm text-muted-foreground mb-4">Pemantauan dan dukungan tambahan</p>
             <ul class="space-y-2 text-sm text-muted-foreground">
               <li class="flex gap-2"><Check class="h-4 w-4 text-primary flex-shrink-0" /> Semua paket Basic</li>
               <li class="flex gap-2"><Check class="h-4 w-4 text-primary flex-shrink-0" /> Backup harian</li>
@@ -137,13 +130,12 @@ const breadcrumbSchema = {
           </div>
           <div class="glass-panel rounded-2xl p-6 bg-card/10 border border-border/20">
             <h3 class="text-xl font-bold text-foreground mb-2">Premium</h3>
-            <p class="text-2xl font-bold text-primary mb-1">Rp 2jt</p>
-            <p class="text-xs text-muted-foreground mb-4">/bulan</p>
+            <p class="text-sm text-muted-foreground mb-4">Ruang lingkup lanjutan sesuai kebutuhan</p>
             <ul class="space-y-2 text-sm text-muted-foreground">
               <li class="flex gap-2"><Check class="h-4 w-4 text-primary flex-shrink-0" /> Semua paket Standard</li>
               <li class="flex gap-2"><Check class="h-4 w-4 text-primary flex-shrink-0" /> 5 halaman content/bulan</li>
               <li class="flex gap-2"><Check class="h-4 w-4 text-primary flex-shrink-0" /> Performance optimization</li>
-              <li class="flex gap-2"><Check class="h-4 w-4 text-primary flex-shrink-0" /> Priority response 2 jam</li>
+              <li class="flex gap-2"><Check class="h-4 w-4 text-primary flex-shrink-0" /> Prioritas penanganan sesuai kesepakatan</li>
             </ul>
           </div>
         </div>
@@ -196,12 +188,12 @@ const breadcrumbSchema = {
       <section class="mb-12">
         <h2 class="text-2xl sm:text-3xl font-semibold text-foreground mb-6 text-center">Artikel Terkait</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <a href="/blog/website-maintenance-rutin" class="glass-panel rounded-2xl p-6 bg-card/10 border border-border/20 hover:border-primary/30 transition group">
+          <a href="/id/blog/website-maintenance-rutin" class="glass-panel rounded-2xl p-6 bg-card/10 border border-border/20 hover:border-primary/30 transition group">
             <h3 class="font-semibold text-foreground mb-2 group-hover:text-primary transition">5 Tanda Website Anda Butuh Redesign & Maintenance Rutin</h3>
             <p class="text-sm text-muted-foreground">Kenali tanda website perlu perhatian sebelum terlambat →</p>
           </a>
-          <a href="/blog/tips-optimasi-website-seo-untuk-umkm" class="glass-panel rounded-2xl p-6 bg-card/10 border border-border/20 hover:border-primary/30 transition group">
-            <h3 class="font-semibold text-foreground mb-2 group-hover:text-primary transition">10 Tips Optimasi Website SEO untuk UMKM Global</h3>
+          <a href="/id/blog/tips-optimasi-website-seo-untuk-umkm" class="glass-panel rounded-2xl p-6 bg-card/10 border border-border/20 hover:border-primary/30 transition group">
+            <h3 class="font-semibold text-foreground mb-2 group-hover:text-primary transition">10 Tips Optimasi Website SEO untuk UMKM</h3>
             <p class="text-sm text-muted-foreground">Panduan SEO praktis untuk bisnis Anda →</p>
           </a>
         </div>
