@@ -1,6 +1,6 @@
 // Ekalliptus service worker — runtime cache for static assets
 // Versioning: bump CACHE_VERSION when you change cache strategy or want to invalidate clients
-const CACHE_VERSION = 'v2-2026-05-07'
+const CACHE_VERSION = 'v3-2026-07-20'
 const STATIC_CACHE = `ekal-static-${CACHE_VERSION}`
 const RUNTIME_CACHE = `ekal-runtime-${CACHE_VERSION}`
 
@@ -70,21 +70,6 @@ self.addEventListener('fetch', (event) => {
     return
   }
 
-  // Stale-while-revalidate for HTML and other GETs
-  if (req.headers.get('accept')?.includes('text/html')) {
-    event.respondWith(
-      caches.match(req).then((cached) => {
-        const fetchPromise = fetch(req)
-          .then((res) => {
-            if (res.ok) {
-              const clone = res.clone()
-              caches.open(RUNTIME_CACHE).then((c) => c.put(req, clone))
-            }
-            return res
-          })
-          .catch(() => cached)
-        return cached || fetchPromise
-      })
-    )
-  }
+  // Locale navigation must always reach the server; never cache HTML.
+  if (req.mode === 'navigate' || req.headers.get('accept')?.includes('text/html')) return
 })
