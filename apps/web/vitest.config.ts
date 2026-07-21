@@ -17,7 +17,8 @@ export default defineConfig({
     alias: {
       '~': resolve(__dirname, '.'),
       '@': resolve(__dirname, '.'),
-      'astro:middleware': resolve(__dirname, 'src/__mocks__/astro-middleware.ts')
+      'astro:middleware': resolve(__dirname, 'src/__mocks__/astro-middleware.ts'),
+      'cloudflare:workers': resolve(__dirname, 'src/__mocks__/cloudflare-workers.ts')
     }
   }
 })
