@@ -1,65 +1,25 @@
 import { fetchPublishedPosts } from '../../lib/supabase'
+import { absoluteUrl, blogPath, cdata, escapeXml } from '../../lib/blog'
 
 export const prerender = false
+const siteUrl = 'https://ekalliptus.com'
 
-export async function GET(context) {
-  const siteUrl = 'https://ekalliptus.com'
-
-  // Fetch published posts from Supabase and map to RSS items
-  const posts = await fetchPublishedPosts()
-  const rssPosts = posts
-    .filter(post => post.locale === 'id')
-    .sort((a, b) => new Date(b.publish_date).valueOf() - new Date(a.publish_date).valueOf())
-    .slice(0, 20)
-
-  const body = generateRss(rssPosts, siteUrl)
-
-  return new Response(body, {
-    headers: {
-      'Content-Type': 'application/xml',
-      'Cache-Control': 'public, max-age=86400, s-maxage=86400',
-    },
-  })
-}
-
-function generateRss(posts, siteUrl) {
+export function generateRss(posts, now = new Date()) {
   return `<?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
-  <channel>
-    <title>Ekalliptus Digital Blog</title>
-    <description>Artikel & insight tentang web development, mobile app, WordPress, dan multimedia editing</description>
-    <link>${siteUrl}/blog</link>
-    <atom:link href="${siteUrl}/blog/rss.xml" rel="self" type="application/rss+xml"/>
-    <language>id</language>
-    <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
-    ${posts
-      .map(post => `
-      <item>
-        <title>${post.title}</title>
-        <link>${siteUrl}/blog/${post.slug}</link>
-        <guid isPermaLink="true">${siteUrl}/blog/${post.slug}</guid>
-        <description>${post.description}</description>
-        <content:encoded><![CDATA[${generatePostContent(post, siteUrl)}]]></content:encoded>
-        <category>${post.category}</category>
-        ${post.tags.map(tag => `<category>${tag}</category>`).join('')}
-        <pubDate>${new Date(post.publish_date).toUTCString()}</pubDate>
-        ${post.update_date ? `<lastBuildDate>${new Date(post.update_date).toUTCString()}</lastBuildDate>` : ''}
-        <author>${post.author}</author>
-      </item>`).join('')}
-  </channel>
-</rss>`
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel>
+<title>Ekalliptus Digital Blog</title><description>Artikel &amp; insight tentang web development, mobile app, WordPress, dan multimedia editing</description><link>${siteUrl}/id/blog</link>
+<atom:link href="${siteUrl}/id/blog/rss.xml" rel="self" type="application/rss+xml"/><language>id</language><lastBuildDate>${now.toUTCString()}</lastBuildDate>
+${posts.slice(0, 20).map(post => {
+    const url = absoluteUrl(blogPath(post.slug), siteUrl)
+    const image = post.image ? `<img src="${escapeXml(absoluteUrl(post.image, siteUrl))}" alt="${escapeXml(post.image_alt || post.title)}" />` : ''
+    const content = `${post.body_html || `<p>${escapeXml(post.description)}</p>`}${image}<p>Baca selengkapnya di: <a href="${escapeXml(url)}">${escapeXml(post.title)}</a></p>`
+    return `<item><title>${escapeXml(post.title)}</title><link>${escapeXml(url)}</link><guid isPermaLink="true">${escapeXml(url)}</guid><description>${escapeXml(post.description)}</description><content:encoded>${cdata(content)}</content:encoded><category>${escapeXml(post.category)}</category>${post.tags.map(tag => `<category>${escapeXml(tag)}</category>`).join('')}<pubDate>${new Date(post.publish_date).toUTCString()}</pubDate><author>${escapeXml(post.author)}</author></item>`
+  }).join('')}
+</channel></rss>`
 }
 
-function generatePostContent(post, siteUrl) {
-  const bodyHtml = post.body_html || ''
-  const imageUrl = post.image ? `${siteUrl}${post.image}` : ''
-  const imageTag = imageUrl ? `<img src="${imageUrl}" alt="${post.image_alt || post.title}" />` : ''
-  const excerptHtml = post.description ? `<p>${post.description}</p>` : ''
-  const content = bodyHtml ? bodyHtml : excerptHtml
-
-  return `
-    ${content}
-    ${imageTag}
-    <p>Baca selengkapnya di: <a href="${siteUrl}/blog/${post.slug}">${post.title}</a></p>
-  `.trim()
+export async function GET() {
+  const result = await fetchPublishedPosts('id')
+  if (result.status === 'error') return new Response('Feed temporarily unavailable', { status: 503 })
+  return new Response(generateRss(result.status === 'ok' ? result.data : []), { headers: { 'Content-Type': 'application/xml', 'Cache-Control': 'public, max-age=86400, s-maxage=86400' } })
 }
