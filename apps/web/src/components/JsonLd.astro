@@ -10,16 +10,32 @@ const organizationId = `${siteUrl}#organization`
 
 const organization = {
   '@context': 'https://schema.org',
-  '@type': 'Organization',
+  '@type': ['Organization', 'ProfessionalService'],
   '@id': organizationId,
   name: 'Ekalliptus Digital',
   url: siteUrl,
   logo: `${siteUrl}/ekalliptus_rounded.webp`,
-  description: 'Digital agency Indonesia untuk pengembangan website, aplikasi mobile, serta maintenance server dan web.',
+  image: `${siteUrl}/og-image.webp`,
+  description: 'Digital agency Indonesia untuk pengembangan website, aplikasi mobile, UI/UX design, serta maintenance server dan web.',
   email: 'support@ekalliptus.com',
   telephone: '+6281999900306',
   foundingDate: '2023',
+  priceRange: 'IDR 1000000 - 50000000',
+  address: {
+    '@type': 'PostalAddress',
+    addressCountry: 'ID'
+  },
   areaServed: { '@type': 'Country', name: 'Indonesia' },
+  knowsAbout: [
+    'Web Development',
+    'Mobile App Development',
+    'UI/UX Design',
+    'Progressive Web Apps (PWA)',
+    'Website Maintenance',
+    'WordPress Optimization',
+    'Search Engine Optimization (SEO)',
+    'Generative Engine Optimization (GEO)'
+  ],
   sameAs: [
     'https://www.linkedin.com/company/ekalliptus',
     'https://github.com/ekalliptus',

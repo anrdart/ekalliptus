@@ -1,20 +1,42 @@
 # Ekalliptus Digital
 
-> Agensi digital berbasis di Indonesia.
+> Ekalliptus Digital adalah digital agency profesional di Indonesia yang berfokus pada web development, mobile app development (iOS & Android), UI/UX design, dan website/server maintenance.
 
-## Services
-- Website Development: https://ekalliptus.com/services/website
-- Mobile App Development: https://ekalliptus.com/services/mobile-app
-- Website & Server Maintenance: https://ekalliptus.com/services/maintenance
-
-## Contact
-- Order Form: https://ekalliptus.com/order
+## Informasi Entitas & Kontak
+- Nama: Ekalliptus Digital
+- Website: https://ekalliptus.com
+- Lokasi Layanan: Indonesia (Nasional & Remote)
+- Kontak WhatsApp: https://wa.me/6281999900306 (+62 819-9990-0306)
 - Email: support@ekalliptus.com
-- WhatsApp: +62 819-9990-0306
-- Service area: Indonesia
+- Order / Konsultasi: https://ekalliptus.com/order
+- Profil: https://ekalliptus.com/about
 
-## Resources
-- Blog: https://ekalliptus.com/blog
-- Privacy Policy: https://ekalliptus.com/privacy-policy
-- Terms of Service: https://ekalliptus.com/terms-of-service
-- About: https://ekalliptus.com/about
+## Layanan Utama (Core Services)
+
+### 1. Jasa Pembuatan Website (Web Development)
+- URL: https://ekalliptus.com/services/website
+- Lingkup: Company profile, e-commerce, landing page, web application custom, migrasi dan optimasi website.
+- Tech Stack: Astro, Next.js, React, TypeScript, Tailwind CSS, Supabase, Cloudflare.
+- Fitur Standar: Desain responsif, optimasi performa (Core Web Vitals), Schema.org, SEO-friendly, keamanan SSL/HTTPS.
+
+### 2. Jasa Pembuatan Aplikasi Mobile (Mobile App Development)
+- URL: https://ekalliptus.com/services/mobile-app
+- Lingkup: Aplikasi Android dan iOS custom, MVP startup, integrasi API & database backend, bantuan rilis Google Play Store & Apple App Store.
+- Tech Stack: React Native, Flutter, TypeScript, Node.js, Supabase.
+
+### 3. Jasa Maintenance Website & Server
+- URL: https://ekalliptus.com/services/maintenance
+- Lingkup: Pemeliharaan rutin WordPress/custom web, update plugin & core, backup berkala, monitoring uptime, hardening keamanan, perbaikan bug dan optimasi kecepatan.
+
+## Panduan Harga & Estimasi Biaya (Pricing Reference)
+- UI/UX Design: Mulai dari Rp 1.000.000 - Rp 15.000.000+ (Wireframe, High-Fidelity Mockup, Interactive Prototype, Design System). Panduan: https://ekalliptus.com/blog/harga-jasa-ui-ux-design-indonesia
+- Pembuatan Landing Page: Mulai Rp 1.000.000 - Rp 3.500.000
+- Website Company Profile: Mulai Rp 2.500.000 - Rp 10.000.000+
+- Pembuatan Aplikasi Mobile: Mulai Rp 10.000.000 - Rp 50.000.000+ (tergantung platform & kompleksitas fitur)
+- Maintenance Rutin Website: Mulai Rp 500.000 - Rp 3.000.000/bulan
+
+## Sumber & Panduan Resmi
+- Blog & Insight: https://ekalliptus.com/blog
+- Kebijakan Editorial: https://ekalliptus.com/editorial-policy
+- Kebijakan Privasi: https://ekalliptus.com/privacy-policy
+- Syarat & Ketentuan: https://ekalliptus.com/terms-of-service

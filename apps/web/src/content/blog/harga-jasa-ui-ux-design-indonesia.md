@@ -11,8 +11,8 @@ featured: false
 image: '/blog/harga-jasa-ui-ux.svg'
 imageAlt: 'Harga Jasa UI/UX Design di Indonesia 2026'
 seo:
-  metaTitle: 'Harga Jasa UI/UX Design Indonesia 2026 | Mulai Rp 1 Juta'
-  metaDescription: 'Panduan lengkap harga jasa UI/UX design di Indonesia 2026. Pricing per fase: wireframe, mockup, prototype, design system. Konsultasi gratis.'
+  metaTitle: 'Harga Jasa Desain UI/UX Indonesia 2026: Biaya & Paket Mulai Rp 1 Jt'
+  metaDescription: 'Daftar harga jasa desain UI/UX di Indonesia 2026. Biaya wireframe, mockup Figma, prototipe interaktif & design system. Estimasi transparan & konsultasi gratis.'
 ---
 
 ## Berapa Harga Jasa UI/UX Design di Indonesia?
@@ -117,7 +117,20 @@ ROI UI/UX yang baik datang dari:
 | UI Mockup | Rp 2,5 - 7 juta | High-fidelity, prototype |
 | Full UI/UX + Design System | Rp 7 juta+ | Research, tokens, components |
 
-Lihat [layanan UI/UX design](/services/ui-ux) atau baca [panduan cara membuat website company profile](/blog/cara-membuat-website-company-profile).
+Lihat [layanan pembuatan website](/services/website), baca [perbedaan wireframe, mockup, dan prototype](/blog/perbedaan-wireframe-mockup-prototype), atau pelajari estimasi [biaya redesign website & aplikasi](/blog/biaya-redesign-website-dan-aplikasi).
+
+---
+
+## Pertanyaan Seputar Harga Jasa UI/UX (FAQ)
+
+### Berapa rata-rata biaya jasa desain UI/UX di Indonesia?
+Biaya rata-rata untuk proyek aplikasi atau website skala kecil-menengah berkisar antara **Rp 2.500.000 hingga Rp 15.000.000**, tergantung jumlah screen, riset pengguna, dan kompleksitas interaksi prototipe.
+
+### Mengapa harga UI/UX design bisa sangat berbeda antar freelancer dan agency?
+Freelancer biasanya hanya fokus pada aspek visual per screen. Agency profesional menyertakan user research, information architecture, interactive prototyping, design system, serta spesifikasi dev handoff agar developer dapat mengeksekusi kode tanpa rework.
+
+### Berapa lama proses pengerjaan desain UI/UX?
+Untuk landing page atau 5–10 screen aplikasi biasanya membutuhkan waktu **1–2 minggu**. Untuk aplikasi kompleks dengan 20–40 screen beserta design system memakan waktu **3–6 minggu**.
 
 ---
 
