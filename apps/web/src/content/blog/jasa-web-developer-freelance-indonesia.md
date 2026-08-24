@@ -123,5 +123,5 @@ Pilihan antara freelance vs agency tergantung pada ukuran project, budget, risk 
 
 **Konsultasi gratis:**
 - WhatsApp: [+62 819-9990-0306](https://wa.me/6281999900306)
-- Email: support@ekalliptus.com
+- Email: salam@ekalliptus.com
 - [Order online](/order)

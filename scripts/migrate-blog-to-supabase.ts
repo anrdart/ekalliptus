@@ -81,7 +81,8 @@ function slugify(input: string): string {
 
   // 3) Prepare file list — auto-detect all .md files
   const { readdirSync } = await import('fs')
-  const files = readdirSync(postsDir).filter((f: string) => f.endsWith('.md'))
+  const safeFilenameRe = /^[a-z0-9-]+\.md$/i
+  const files = readdirSync(postsDir).filter((f: string) => safeFilenameRe.test(f))
 
   // 4) Markdown -> HTML conversion and mapping frontmatter -> insert payload
   const results: { slug: string; ok: boolean; error?: string }[] = []
@@ -90,7 +91,10 @@ function slugify(input: string): string {
 
   for (const fname of files) {
     try {
-      const mdPath = path.resolve(postsDir, fname)
+      const sanitizedName = path.basename(fname)
+      if (!safeFilenameRe.test(sanitizedName)) continue
+      const mdPath = path.resolve(postsDir, sanitizedName)
+      if (!mdPath.startsWith(postsDir + path.sep)) continue
       const raw = readFileSync(mdPath, 'utf8')
       let front: Frontmatter = {}
       let body = ''

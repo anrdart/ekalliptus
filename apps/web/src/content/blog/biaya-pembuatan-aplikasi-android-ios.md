@@ -276,7 +276,7 @@ Dapatkan estimasi biaya yang spesifik untuk kebutuhan bisnis Anda. **Konsultasi 
 
 ### Hubungi Kami Sekarang:
 - **WhatsApp:** 0819-9990-0306
-- **Email:** support@ekalliptus.com
+- **Email:** salam@ekalliptus.com
 - **Location:** Tegal, Indonesia
 
 ### Dapatkan Juga:

@@ -199,7 +199,7 @@ Jangan biarkan bisnis Anda tertinggal di era digital. Konsultasikan kebutuhan we
 
 **Hubungi Kami Sekarang:**
 - **WhatsApp:** 0819-9990-0306
-- **Email:** support@ekalliptus.com
+- **Email:** salam@ekalliptus.com
 - **Location:** Tegal, Jawa Tengah
 
 **Atau isi form order di website ini untuk konsultasi gratis dan dapatkan proposal custom sesuai kebutuhan bisnis Anda.**
