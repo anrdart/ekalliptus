@@ -31,7 +31,7 @@ export const POST: APIRoute = async ({ request }) => {
       })
     }
 
-    const supabase = getSupabase(true)
+    const supabase = getSupabase()
 
     if (!supabase) {
       return new Response(JSON.stringify({ error: 'Service unavailable' }), {

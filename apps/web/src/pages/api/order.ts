@@ -5,9 +5,26 @@ import { createLead } from '@ekalliptus/core'
 import { normalizeWhatsapp, isValidWhatsapp } from '../../utils/whatsapp'
 
 const VALID_SERVICES = ['web', 'mobile', 'maintenance']
+const rateLimitMap = new Map<string, { count: number; resetAt: number }>()
+
+function isRateLimited(ip: string): boolean {
+  const now = Date.now()
+  const entry = rateLimitMap.get(ip)
+  if (!entry || now > entry.resetAt) {
+    rateLimitMap.set(ip, { count: 1, resetAt: now + 60000 })
+    return false
+  }
+  entry.count++
+  return entry.count > 10
+}
 
 export const POST: APIRoute = async ({ request }) => {
   try {
+    const clientIp = request.headers.get('cf-connecting-ip') || request.headers.get('x-forwarded-for') || 'unknown'
+    if (isRateLimited(clientIp)) {
+      return json({ success: false, error: 'Terlalu banyak permintaan. Silakan tunggu 1 menit.' }, 429)
+    }
+
     const body = await request.json()
     const { service_type, customer_name, whatsapp, description } = body
 

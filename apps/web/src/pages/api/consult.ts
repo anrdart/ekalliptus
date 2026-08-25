@@ -71,6 +71,17 @@ function isRateLimited(ip: string): boolean {
   return entry.count > 15
 }
 
+function isAllowedOrigin(originOrReferer: string): boolean {
+  if (!originOrReferer) return false
+  try {
+    const url = new URL(originOrReferer)
+    const host = url.hostname.toLowerCase()
+    return host === 'ekalliptus.com' || host.endsWith('.ekalliptus.com') || host === 'localhost' || host === '127.0.0.1'
+  } catch {
+    return false
+  }
+}
+
 export const POST: APIRoute = async ({ request }) => {
   try {
     const ZAI_API_KEY = readEnv('ZAI_API_KEY') || ''
@@ -82,7 +93,7 @@ export const POST: APIRoute = async ({ request }) => {
     const clientIp = request.headers.get('cf-connecting-ip') || request.headers.get('x-forwarded-for') || 'unknown'
     const token = request.headers.get('x-consult-token') || ''
 
-    if (!origin.includes('ekalliptus.com') && !referer.includes('ekalliptus.com') && !origin.includes('localhost') && !referer.includes('localhost')) {
+    if (!isAllowedOrigin(origin) && !isAllowedOrigin(referer)) {
       return new Response(JSON.stringify({
         error: 'Forbidden'
       }), {

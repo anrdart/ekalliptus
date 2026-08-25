@@ -198,13 +198,15 @@ export type BlogPostFlat = BlogPost
 
 const BLOG_METADATA = 'id,slug,locale,title,description,body_html,publish_date,update_date,category,tags,author,image,image_alt,featured,seo_meta_title,seo_meta_description,seo_noindex,status,created_at,updated_at'
 
-export async function fetchPublishedPosts(locale?: string): Promise<QueryResult<BlogPost[]>> {
+export async function fetchPublishedPosts(locale?: string, limit?: number): Promise<QueryResult<BlogPost[]>> {
   const supabase = getSupabase()
   if (!supabase) return { status: 'error', error: 'Supabase client not initialized' }
 
   let builder = supabase.from('blog_posts').select(BLOG_METADATA).eq('status', 'published').eq('seo_noindex', false)
   if (locale) builder = builder.eq('locale', locale)
-  const { data, error } = await builder.order('publish_date', { ascending: false })
+  builder = builder.order('publish_date', { ascending: false })
+  if (typeof limit === 'number' && limit > 0) builder = builder.limit(limit)
+  const { data, error } = await builder
   if (error) return { status: 'error', error: error.message }
   return { status: 'ok', data: excludeNoindex((data ?? []).map(mapBlogPost)) }
 }

@@ -135,19 +135,22 @@ export const POST: APIRoute = async ({ request }) => {
 
     if (supabaseUrl && supabaseAnonKey) {
       try {
-        await fetch(`${supabaseUrl}/functions/v1/notify-admin`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${supabaseAnonKey}`
-          },
-          body: JSON.stringify({
-            type: 'consultation_handoff',
-            message,
-            session_id: sessionId,
-            timestamp: new Date().toISOString()
+        const parsed = new URL(supabaseUrl)
+        if (parsed.protocol === 'https:' && parsed.hostname.endsWith('.supabase.co')) {
+          await fetch(`${parsed.origin}/functions/v1/notify-admin`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${supabaseAnonKey}`
+            },
+            body: JSON.stringify({
+              type: 'consultation_handoff',
+              message,
+              session_id: sessionId,
+              timestamp: new Date().toISOString()
+            })
           })
-        })
+        }
       } catch {
         // notification is best effort
       }

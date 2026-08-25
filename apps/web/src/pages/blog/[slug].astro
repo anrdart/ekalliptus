@@ -95,7 +95,7 @@ const processedHtml = (post.body_html || '').replace(headingIdRe, (match, tag, a
   return `<${tag}${attrs} id="${id}">${inner}</${tag}>`
 })
 
-const relatedResult = await fetchPublishedPosts('id')
+const relatedResult = await fetchPublishedPosts('id', 6)
 const related = relatedResult.status === 'ok' ? relatedPosts(postData, relatedResult.data) : []
 
 const processedTocHeadings: Array<{ depth: number; slug: string; text: string }> = []
