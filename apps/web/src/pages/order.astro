@@ -210,23 +210,17 @@ const dir = getDir(locale)
     whatsapp: string
     description: string
   }): string {
-    // Emojis via \u escapes — immune to toolchain encoding mangling.
-    const pray = '\u{1F64F}'
-    const clipboard = '\u{1F4CB}'
-    const person = '\u{1F464}'
-    const memo = '\u{1F4DD}'
-    const bullet = '\u2022'
-    return `Halo Ekalliptus, saya ingin konsultasi order ${pray}
+    return `Halo Ekalliptus, saya ingin konsultasi order.
 
-${clipboard} *Detail Order*
-${bullet} Order ID: ${data.orderId.slice(0, 8).toUpperCase()}
-${bullet} Layanan: ${SERVICE_LABELS[data.serviceType] || data.serviceType}
+*Detail Order*
+- Order ID: ${data.orderId.slice(0, 8).toUpperCase()}
+- Layanan: ${SERVICE_LABELS[data.serviceType] || data.serviceType}
 
-${person} *Data Saya*
-${bullet} Nama: ${data.customerName}
-${bullet} WhatsApp: ${data.whatsapp}
+*Data Saya*
+- Nama: ${data.customerName}
+- WhatsApp: ${data.whatsapp}
 
-${memo} *Deskripsi Project*
+*Deskripsi Project*
 ${data.description}
 
 Mohon info detail & penawaran. Terima kasih!`
