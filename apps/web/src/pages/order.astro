@@ -27,6 +27,49 @@ const dir = getDir(locale)
     }
     .step-dot { transition: background-color .3s ease, transform .3s ease; }
     .step-dot.active { background: hsl(var(--primary)); transform: scale(1.15); }
+
+    /* Toast dialog */
+    .toast-backdrop {
+      position: fixed; inset: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: center;
+      background: hsl(var(--background) / 0.7);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      opacity: 0; transition: opacity .25s ease;
+    }
+    .toast-backdrop.open { opacity: 1; }
+    .toast-enter { animation: toastIn .35s cubic-bezier(.34,1.56,.64,1) both; }
+    .toast-leave { animation: toastOut .2s ease both; }
+    @keyframes toastIn {
+      from { opacity: 0; transform: translateY(24px) scale(.92); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    @keyframes toastOut {
+      from { opacity: 1; transform: translateY(0) scale(1); }
+      to   { opacity: 0; transform: translateY(16px) scale(.95); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .toast-enter, .toast-leave { animation-duration: .01ms !important; }
+      .toast-backdrop { transition-duration: .01ms !important; }
+    }
+
+    /* Inline field validation */
+    .field-error { border-color: hsl(var(--destructive)) !important; }
+    .field-error:focus { --tw-ring-color: hsl(var(--destructive) / 0.5); }
+    .error-msg {
+      display: none; margin-top: .4rem;
+      font-size: .8rem; color: hsl(var(--destructive));
+    }
+    .error-msg.show { display: block; animation: errSlide .25s ease both; }
+    @keyframes errSlide {
+      from { opacity: 0; transform: translateY(-4px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    /* Success icon pulse */
+    #order-toast.success #toast-icon-success { animation: pulsePop .45s cubic-bezier(.34,1.56,.64,1) both; }
+    @keyframes pulsePop {
+      0% { transform: scale(0); } 70% { transform: scale(1.15); } 100% { transform: scale(1); }
+    }
   </style>
 
   <main class="relative z-0 flex min-h-screen flex-col pt-20 sm:pt-16 md:pt-20">
@@ -112,6 +155,27 @@ const dir = getDir(locale)
         </form>
       </div>
     </div>
+
+    <!-- Toast dialog (validation errors / status) -->
+    <div id="order-toast-backdrop" class="toast-backdrop hidden" aria-hidden="true">
+      <div id="order-toast" role="alertdialog" aria-modal="true" aria-labelledby="order-toast-title" aria-describedby="order-toast-msg"
+        class="glass-panel rounded-2xl mx-4 max-w-sm w-full p-5 shadow-2xl toast-enter">
+        <div class="flex items-start gap-3">
+          <div id="order-toast-icon" class="flex-shrink-0 h-10 w-10 rounded-full flex items-center justify-center bg-destructive/15 text-destructive">
+            <svg id="toast-icon-error" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
+            <svg id="toast-icon-success" class="hidden" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          </div>
+          <div class="min-w-0 flex-1">
+            <p id="order-toast-title" class="font-semibold text-foreground text-sm">Perhatian</p>
+            <p id="order-toast-msg" class="text-muted-foreground text-sm mt-1 leading-relaxed break-words"></p>
+          </div>
+        </div>
+        <button id="order-toast-close" type="button"
+          class="mt-4 w-full rounded-lg border border-border bg-card/40 px-4 py-2.5 text-sm font-semibold text-foreground transition hover:bg-card/60 min-h-[44px]">
+          OK, Saya Mengerti
+        </button>
+      </div>
+    </div>
   </main>
 </Layout>
 
@@ -144,17 +208,23 @@ const dir = getDir(locale)
     whatsapp: string
     description: string
   }): string {
-    return `Halo Ekalliptus, saya ingin konsultasi order 🙏
+    // Emojis via \u escapes — immune to toolchain encoding mangling.
+    const pray = '\u{1F64F}'
+    const clipboard = '\u{1F4CB}'
+    const person = '\u{1F464}'
+    const memo = '\u{1F4DD}'
+    const bullet = '\u2022'
+    return `Halo Ekalliptus, saya ingin konsultasi order ${pray}
 
-📋 *Detail Order:*
-• Order ID: ${data.orderId.slice(0, 8).toUpperCase()}
-• Layanan: ${SERVICE_LABELS[data.serviceType] || data.serviceType}
+${clipboard} *Detail Order*
+${bullet} Order ID: ${data.orderId.slice(0, 8).toUpperCase()}
+${bullet} Layanan: ${SERVICE_LABELS[data.serviceType] || data.serviceType}
 
-👤 *Data Saya:*
-• Nama: ${data.customerName}
-• WhatsApp: ${data.whatsapp}
+${person} *Data Saya*
+${bullet} Nama: ${data.customerName}
+${bullet} WhatsApp: ${data.whatsapp}
 
-📝 *Deskripsi Project:*
+${memo} *Deskripsi Project*
 ${data.description}
 
 Mohon info detail & penawaran. Terima kasih!`
@@ -168,6 +238,105 @@ Mohon info detail & penawaran. Terima kasih!`
   function setStep(n: number) {
     stepDots.forEach(d => d.classList.toggle('active', Number(d.getAttribute('data-step')) <= n))
   }
+
+  // ---- Toast dialog ----
+  const toastBackdrop = document.getElementById('order-toast-backdrop')!
+  const toastEl = document.getElementById('order-toast')!
+  const toastTitle = document.getElementById('order-toast-title')!
+  const toastMsg = document.getElementById('order-toast-msg')!
+  const iconError = document.getElementById('toast-icon-error')!
+  const iconSuccess = document.getElementById('toast-icon-success')!
+  let toastDismissTimer: ReturnType<typeof setTimeout> | null = null
+
+  function showToast(opts: { type: 'error' | 'success'; title: string; message: string }) {
+    if (toastDismissTimer) { clearTimeout(toastDismissTimer); toastDismissTimer = null }
+    toastEl.classList.remove('success', 'toast-leave')
+    void toastEl.offsetWidth // restart entry animation
+    toastEl.classList.add('toast-enter')
+
+    toastTitle.textContent = opts.title
+    toastMsg.textContent = opts.message
+    const isError = opts.type === 'error'
+    iconError.classList.toggle('hidden', !isError)
+    iconSuccess.classList.toggle('hidden', isError)
+    toastEl.classList.toggle('success', !isError)
+    toastBackdrop.classList.remove('hidden')
+    requestAnimationFrame(() => toastBackdrop.classList.add('open'))
+  }
+
+  function hideToast() {
+    toastBackdrop.classList.remove('open')
+    toastEl.classList.remove('toast-enter')
+    toastEl.classList.add('toast-leave')
+    toastDismissTimer = setTimeout(() => {
+      toastBackdrop.classList.add('hidden')
+      toastEl.classList.remove('toast-leave')
+      if (toastDismissTimer) { clearTimeout(toastDismissTimer); toastDismissTimer = null }
+    }, 220)
+  }
+
+  document.getElementById('order-toast-close')?.addEventListener('click', hideToast)
+  toastBackdrop.addEventListener('click', (e) => {
+    if (e.target === toastBackdrop) hideToast()
+  })
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !toastBackdrop.classList.contains('hidden')) hideToast()
+  })
+
+  // ---- Inline field validation ----
+  const nameInput = document.getElementById('order-name') as HTMLInputElement
+  const waInput = document.getElementById('order-whatsapp') as HTMLInputElement
+  const descInput = document.getElementById('order-description') as HTMLTextAreaElement
+
+  function markFieldError(el: HTMLElement, msg: string | null) {
+    // Each field is followed by its <p class="error-msg"> sibling.
+    const errorEl = el.parentElement?.querySelector('.error-msg') as HTMLElement | null
+    el.classList.toggle('field-error', !!msg)
+    if (errorEl) {
+      errorEl.textContent = msg || ''
+      errorEl.classList.toggle('show', !!msg)
+    }
+  }
+
+  nameInput.insertAdjacentHTML('afterend', '<p class="error-msg"></p>')
+  waInput.insertAdjacentHTML('afterend', '<p class="error-msg"></p>')
+  descInput.insertAdjacentHTML('afterend', '<p class="error-msg"></p>')
+
+  function validateName(silent = false): boolean {
+    const v = nameInput.value.trim()
+    const ok = v.length >= 2
+    if (!silent) markFieldError(nameInput, ok ? null : 'Nama minimal 2 karakter.')
+    return ok
+  }
+  function validateWhatsapp(silent = false): boolean {
+    const v = waInput.value.trim()
+    if (!v) { if (!silent) markFieldError(waInput, 'Nomor WhatsApp wajib diisi.'); return false }
+    const ok = isValidWhatsapp(v)
+    if (!silent) markFieldError(waInput, ok ? null : 'Masukkan nomor WhatsApp yang valid (9–15 digit).')
+    return ok
+  }
+  function validateDescription(silent = false): boolean {
+    const v = descInput.value.trim()
+    const ok = v.length >= 10
+    if (!silent) markFieldError(descInput, ok ? null : 'Deskripsi minimal 10 karakter agar kami memahami kebutuhan Anda.')
+    return ok
+  }
+
+  ;[nameInput, waInput, descInput].forEach(el => {
+    el.addEventListener('blur', () => {
+      if (!(el as HTMLInputElement).value.trim()) return
+      if (el === nameInput) validateName()
+      else if (el === waInput) validateWhatsapp()
+      else validateDescription()
+    })
+    el.addEventListener('input', () => {
+      if ((el as HTMLInputElement).classList.contains('field-error')) {
+        if (el === nameInput) validateName()
+        else if (el === waInput) validateWhatsapp()
+        else validateDescription()
+      }
+    })
+  })
 
   serviceBtns.forEach(btn => {
     btn.addEventListener('click', () => {
@@ -185,17 +354,27 @@ Mohon info detail & penawaran. Terima kasih!`
   document.getElementById('order-form')?.addEventListener('submit', async (e) => {
     e.preventDefault()
 
-    const form = e.target as HTMLFormElement
-    const formData = new FormData(form)
-    const customerName = (formData.get('name') as string).trim()
-    const whatsapp = (formData.get('whatsapp') as string).trim()
-    const description = (formData.get('description') as string).trim()
+    // First invalid field wins — scroll it into view + show inline error.
+    const nameOk = validateName()
+    const waOk = validateWhatsapp()
+    const descOk = validateDescription()
 
-    // Client validation mirroring the API.
-    if (!selectedService) { alert('Pilih layanan terlebih dahulu'); return }
-    if (customerName.length < 2) { alert('Nama minimal 2 karakter'); return }
-    if (description.length < 10) { alert('Deskripsi minimal 10 karakter'); return }
-    if (!isValidWhatsapp(whatsapp)) { alert('Nomor WhatsApp tidak valid'); return }
+    if (!selectedService) {
+      showToast({ type: 'error', title: 'Layanan belum dipilih', message: 'Silakan pilih jenis layanan di bagian atas form terlebih dahulu.' })
+      serviceBtns[0]?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+      return
+    }
+    if (!nameOk || !waOk || !descOk) {
+      const firstInvalid = !nameOk ? nameInput : !waOk ? waInput : descInput
+      showToast({
+        type: 'error',
+        title: 'Form belum lengkap',
+        message: 'Beberapa kolom masih perlu diperbaiki. Periksa kolom yang ditandai merah.'
+      })
+      firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' })
+      firstInvalid.focus({ preventScroll: true })
+      return
+    }
 
     setStep(3)
     submitBtn.disabled = true
@@ -207,15 +386,19 @@ Mohon info detail & penawaran. Terima kasih!`
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           service_type: selectedService,
-          customer_name: customerName,
-          whatsapp: normalizeWhatsapp(whatsapp),
-          description
+          customer_name: (nameInput.value).trim(),
+          whatsapp: normalizeWhatsapp(waInput.value),
+          description: (descInput.value).trim()
         })
       })
 
       if (!response.ok) {
         const err = await response.json().catch(() => ({ error: 'Unknown error' }))
-        alert('Gagal membuat order: ' + (err.error || 'Silakan coba lagi'))
+        showToast({
+          type: 'error',
+          title: response.status === 429 ? 'Terlalu sering mengirim' : 'Gagal membuat order',
+          message: err.error || 'Silakan coba lagi beberapa saat.'
+        })
         setStep(2)
         return
       }
@@ -223,15 +406,23 @@ Mohon info detail & penawaran. Terima kasih!`
       const result = await response.json()
       const { orderId, serviceType } = result.data
 
-      const message = buildWhatsAppMessage({ orderId, serviceType, customerName, whatsapp, description })
-      // Brief success micro-animation before leaving the page.
-      submitBtn.textContent = '✓ Terkirim! Mengarahkan...'
+      const message = buildWhatsAppMessage({
+        orderId, serviceType,
+        customerName: (nameInput.value).trim(),
+        whatsapp: waInput.value.trim(),
+        description: (descInput.value).trim()
+      })
+      showToast({
+        type: 'success',
+        title: 'Order berhasil dibuat!',
+        message: 'Anda akan diarahkan ke WhatsApp untuk konfirmasi...'
+      })
       setTimeout(() => {
         window.location.href = `https://wa.me/${WA_BUSINESS_NUMBER}?text=${encodeURIComponent(message)}`
-      }, 500)
+      }, 900)
     } catch (error) {
       console.error('Order error:', error)
-      alert('Terjadi kesalahan. Silakan coba lagi.')
+      showToast({ type: 'error', title: 'Koneksi bermasalah', message: 'Terjadi kesalahan jaringan. Silakan coba lagi.' })
       setStep(2)
     } finally {
       submitBtn.disabled = false
