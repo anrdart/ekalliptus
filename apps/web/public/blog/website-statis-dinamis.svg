@@ -1,0 +1,29 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0c1222;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#1a2332;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0f172a;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#a855f7;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ec4899;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <line x1="600" y1="140" x2="600" y2="490" stroke="#334155" stroke-width="2" stroke-dasharray="8 8"/>
+  <rect x="180" y="230" width="320" height="170" rx="12" fill="#0f172a" stroke="#3b82f6" stroke-width="2"/>
+  <text x="340" y="270" text-anchor="middle" font-family="monospace" font-size="20" fill="#3b82f6" font-weight="bold">STATIS</text>
+  <rect x="210" y="295" width="260" height="8" rx="4" fill="#3b82f6" opacity="0.4"/>
+  <rect x="210" y="315" width="200" height="8" rx="4" fill="#3b82f6" opacity="0.3"/>
+  <rect x="210" y="335" width="230" height="8" rx="4" fill="#3b82f6" opacity="0.3"/>
+  <rect x="700" y="230" width="320" height="170" rx="12" fill="#0f172a" stroke="#ec4899" stroke-width="2"/>
+  <text x="860" y="270" text-anchor="middle" font-family="monospace" font-size="20" fill="#ec4899" font-weight="bold">DINAMIS</text>
+  <rect x="730" y="295" width="260" height="8" rx="4" fill="#ec4899" opacity="0.5"/>
+  <circle cx="745" cy="330" r="7" fill="#ec4899" opacity="0.7"/>
+  <rect x="760" y="324" width="180" height="8" rx="4" fill="#ec4899" opacity="0.35"/>
+  <circle cx="745" cy="355" r="7" fill="#ec4899" opacity="0.7"/>
+  <rect x="760" y="349" width="150" height="8" rx="4" fill="#ec4899" opacity="0.35"/>
+  <circle cx="745" cy="380" r="7" fill="#ec4899" opacity="0.7"/>
+  <rect x="760" y="374" width="200" height="8" rx="4" fill="#ec4899" opacity="0.35"/>
+</svg>

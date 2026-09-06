@@ -8,7 +8,7 @@ tags: ['landing page', 'jasa landing page', 'pembuatan landing page', 'landing p
 author: 'Tim Ekalliptus'
 locale: 'id'
 featured: false
-image: '/blog/jasa-website-tegal.svg'
+image: '/blog/jasa-landing-page.svg'
 imageAlt: 'Jasa pembuatan landing page profesional oleh Ekalliptus Digital'
 seo:
   metaTitle: 'Jasa Pembuatan Landing Page Indonesia | Tingkatkan Konversi Penjualan'

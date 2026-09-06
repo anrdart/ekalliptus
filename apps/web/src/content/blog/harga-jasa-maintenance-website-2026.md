@@ -8,7 +8,7 @@ tags: ['maintenance website', 'harga maintenance website', 'jasa maintenance web
 author: 'Tim Ekalliptus'
 locale: 'id'
 featured: false
-image: '/blog/website-maintenance-rutin.svg'
+image: '/blog/harga-maintenance-website.svg'
 imageAlt: 'Ilustrasi jasa maintenance website bulanan oleh Ekalliptus Digital'
 seo:
   metaTitle: 'Harga Jasa Maintenance Website 2026 | Biaya Bulanan Update, Backup, Security'

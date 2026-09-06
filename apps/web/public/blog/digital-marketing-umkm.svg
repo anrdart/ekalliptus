@@ -1,0 +1,23 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0c1222;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#1a2332;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0f172a;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#a855f7;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ec4899;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <polyline points="180,420 320,360 460,390 600,290 740,320 880,220 1020,240" fill="none" stroke="url(#accent)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  <polyline points="180,420 320,360 460,390 600,290 740,320 880,220 1020,240 1020,470 180,470" fill="url(#accent)" opacity="0.08"/>
+  <circle cx="600" cy="290" r="8" fill="#ec4899"/>
+  <circle cx="880" cy="220" r="8" fill="#ec4899"/>
+  <path d="M 950 380 L 1010 350 L 1010 410 Z" fill="#a855f7" opacity="0.9"/>
+  <path d="M 940 380 Q 920 365 905 380 Q 920 395 940 380" fill="#a855f7" opacity="0.7"/>
+  <line x1="1010" y1="350" x2="1035" y2="330" stroke="#a855f7" stroke-width="4" stroke-linecap="round"/>
+  <line x1="1010" y1="380" x2="1040" y2="375" stroke="#a855f7" stroke-width="4" stroke-linecap="round"/>
+  <line x1="1010" y1="410" x2="1035" y2="430" stroke="#a855f7" stroke-width="4" stroke-linecap="round"/>
+</svg>

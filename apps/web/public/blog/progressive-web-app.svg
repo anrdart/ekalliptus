@@ -1,0 +1,27 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0c1222;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#1a2332;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0f172a;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#a855f7;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ec4899;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect x="480" y="110" width="240" height="410" rx="28" fill="#0f172a" stroke="#a855f7" stroke-width="2.5"/>
+  <circle cx="600" cy="128" r="7" fill="#334155"/>
+  <rect x="500" y="150" width="200" height="60" rx="8" fill="url(#accent)" opacity="0.85"/>
+  <text x="600" y="187" text-anchor="middle" font-family="sans-serif" font-size="22" font-weight="bold" fill="#ffffff">PWA</text>
+  <rect x="500" y="225" width="95" height="70" rx="8" fill="#1e3a5f" opacity="0.7"/>
+  <rect x="605" y="225" width="95" height="70" rx="8" fill="#2d1b4e" opacity="0.7"/>
+  <rect x="500" y="310" width="200" height="10" rx="5" fill="#a855f7" opacity="0.5"/>
+  <rect x="500" y="332" width="150" height="10" rx="5" fill="#64748b" opacity="0.4"/>
+  <rect x="500" y="360" width="170" height="10" rx="5" fill="#64748b" opacity="0.35"/>
+  <rect x="500" y="415" width="200" height="44" rx="22" fill="#a855f7" opacity="0.9"/>
+  <text x="600" y="443" text-anchor="middle" font-family="sans-serif" font-size="17" font-weight="bold" fill="#ffffff">Install</text>
+  <path d="M 760 180 A 90 90 0 1 1 760 350" fill="none" stroke="#ec4899" stroke-width="4" stroke-dasharray="10 8" opacity="0.8"/>
+  <polygon points="752,335 775,355 745,362" fill="#ec4899" opacity="0.9"/>
+</svg>
