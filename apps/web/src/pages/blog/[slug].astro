@@ -95,6 +95,9 @@ const processedHtml = (post.body_html || '').replace(headingIdRe, (match, tag, a
   return `<${tag}${attrs} id="${id}">${inner}</${tag}>`
 })
 
+// Wrap tables in a scroll container so wide comparison tables stay usable on mobile.
+const tableWrappedHtml = processedHtml.replace(/<table[\s\S]*?<\/table>/g, (m) => `<div class="table-wrap">${m}</div>`)
+
 const relatedResult = await fetchPublishedPosts('id', 6)
 const related = relatedResult.status === 'ok' ? relatedPosts(postData, relatedResult.data) : []
 
@@ -183,7 +186,7 @@ while ((tocMatch = tocRe.exec(processedHtml)) !== null) {
             <span aria-hidden="true">•</span>
             <div class="flex items-center gap-2">
               <Clock class="h-4 w-4" />
-              <span>{Math.ceil((post.body_html?.length || 0) / 1500)} min read</span>
+              <span>{Math.max(1, Math.ceil((post.body_html || '').replace(/<[^>]*>/g, '').trim().split(/\s+/).length / 200))} menit baca</span>
             </div>
           </div>
         </div>
@@ -232,7 +235,7 @@ while ((tocMatch = tocRe.exec(processedHtml)) !== null) {
           </aside>
         )}
 
-        <article class="col-span-12 lg:col-span-9 prose prose-lg prose-invert max-w-none" set:html={processedHtml}></article>
+        <article class="col-span-12 lg:col-span-9 prose prose-lg prose-invert max-w-none" set:html={tableWrappedHtml}></article>
       </div>
     </section>
 
@@ -348,6 +351,26 @@ while ((tocMatch = tocRe.exec(processedHtml)) !== null) {
           if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' })
         })
       })
+
+      // Scroll-spy: highlight the TOC entry for the section currently in view.
+      if (tocLinks.length > 0 && 'IntersectionObserver' in window) {
+        const headingEls = Array.from(document.querySelectorAll('.prose h2[id], .prose h3[id]'))
+        const linkForId = new Map<string, HTMLElement>()
+        tocLinks.forEach(l => {
+          const id = l.getAttribute('href')?.slice(1)
+          if (id) linkForId.set(id, l as HTMLElement)
+        })
+        let activeId: string | null = null
+        const spy = new IntersectionObserver((entries) => {
+          for (const entry of entries) {
+            if (entry.isIntersecting) {
+              activeId = entry.target.id
+            }
+          }
+          tocLinks.forEach(l => l.classList.toggle('toc-active', l.getAttribute('href') === `#${activeId}`))
+        }, { rootMargin: '-15% 0px -70% 0px' })
+        headingEls.forEach(h => spy.observe(h))
+      }
 
       // WhatsApp greeting popup
       const waGreeting = document.getElementById('wa-greeting')
