@@ -10,13 +10,13 @@ featured: true
 image: '/blog/digital-marketing-umkm.svg'
 imageAlt: 'Strategi Digital Marketing untuk UMKM 2026'
 seo:
-  metaTitle: 'Strategi Digital Marketing UMKM 2026 | Panduan Lengkap'
+  metaTitle: 'Strategi Digital Marketing UMKM 2026 dengan Budget Terbatas'
   metaDescription: 'Panduan digital marketing untuk UMKM Indonesia 2026: SEO, social media, Google Ads, content marketing. Strategi efektif dengan budget terbatas.'
 ---
 
 Indonesia memiliki lebih dari **64 juta UMKM** yang berkontribusi terhadap 61% PDB nasional menurut data Kementerian Koperasi dan UKM. Namun, baru sekitar **20% yang sudah go digital** — artinya jutaan UMKM masih kehilangan potensi pasar online yang besar.
 
-**Digital marketing** bukan lagi pilihan, melainkan keharusan untuk bertahan dan berkembang di era digital. Kabar baiknya, digital marketing tidak harus mahal. Dengan strategi yang tepat, UMKM bisa bersaing dengan bisnis besar menggunakan **budget terbatas**.
+Untuk 20 persen UMKM yang sudah go digital, digital marketing adalah kanal penjualan utama dengan **budget** yang bisa diatur dari kecil. Strategi berikut disusun berdasarkan prioritas dampak, bukan tren.
 
 ## Mengapa Digital Marketing Penting untuk UMKM?
 

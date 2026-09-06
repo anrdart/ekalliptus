@@ -11,7 +11,7 @@ featured: false
 image: '/blog/perbedaan-wireframe-mockup-prototype.svg'
 imageAlt: 'Perbedaan Wireframe Mockup dan Prototype Desain UI UX'
 seo:
-  metaTitle: 'Perbedaan Wireframe, Mockup, Prototype UI/UX: Panduan Lengkap'
+  metaTitle: 'Perbedaan Wireframe, Mockup & Prototype UI/UX'
   metaDescription: 'Kenali perbedaan mendasar wireframe, mockup, dan prototype dalam desain UI/UX. Panduan tahapan desain aplikasi sebelum masuk ke proses coding.'
 ---
 

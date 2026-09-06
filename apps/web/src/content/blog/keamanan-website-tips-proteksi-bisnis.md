@@ -47,7 +47,7 @@ Pastikan semua halaman menggunakan HTTPS, bukan hanya halaman login atau checkou
 
 ### 2. Update CMS dan Plugin Secara Rutin
 
-**83% website WordPress yang diretas** menggunakan versi CMS atau plugin yang outdated menurut data Sucuri. Update bukan sekadar fitur baru — update keamanan (security patches) menutup celah yang sudah diketahui oleh hacker.
+**83% website WordPress yang diretas** menggunakan versi CMS atau plugin yang outdated menurut data Sucuri. Sebagian besar update adalah security patches yang menutup celah yang sudah diketahui publik — termasuk oleh hacker.
 
 Best practice:
 - Aktifkan **auto-update** untuk minor version dan security patches

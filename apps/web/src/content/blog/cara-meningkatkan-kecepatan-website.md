@@ -16,7 +16,7 @@ seo:
 
 **Kecepatan website** adalah salah satu faktor paling krusial dalam kesuksesan bisnis online. Data dari Google menunjukkan bahwa **53% pengguna mobile meninggalkan website** yang membutuhkan lebih dari 3 detik untuk loading. Lebih dari itu, setiap **1 detik keterlambatan** dalam loading time mengurangi konversi hingga 7% menurut riset Akamai.
 
-Website yang lambat bukan hanya membuat pengunjung frustrasi — Google juga secara aktif menurunkan ranking website yang performanya buruk. Dalam artikel ini, Anda akan mempelajari **10 cara praktis** untuk meningkatkan kecepatan website.
+Website yang lambat membuat pengunjung frustrasi, dan Google secara aktif menurunkan ranking website dengan performa buruk. Sepuluh cara berikut diurutkan dari yang berdampak terbesar.
 
 ## Mengapa Kecepatan Website Penting?
 

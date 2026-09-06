@@ -10,11 +10,11 @@ featured: false
 image: '/blog/progressive-web-app.svg'
 imageAlt: 'Progressive Web App untuk Bisnis'
 seo:
-  metaTitle: 'Progressive Web App (PWA) | Panduan Lengkap untuk Bisnis'
+  metaTitle: 'Progressive Web App (PWA) untuk Bisnis: Kapan Layak Dibangun?'
   metaDescription: 'Apa itu PWA? Panduan lengkap Progressive Web App untuk bisnis: keuntungan, perbandingan vs native app, contoh sukses Starbucks, Twitter.'
 ---
 
-Di era mobile-first, bisnis menghadapi dilema: membangun native app yang mahal atau mengandalkan website yang kurang optimal di smartphone? **Progressive Web App (PWA)** hadir sebagai solusi tengah yang menggabungkan keunggulan keduanya.
+Membangun native app berarti bayar dua kali untuk dua platform; mengandalkan website biasa berarti pengalaman mobile yang lambat. **Progressive Web App (PWA)** menawarkan jalan tengah: satu codebase, pengalaman mendekati aplikasi native.
 
 PWA bukan teknologi baru — Google memperkenalkan konsep ini pada 2015 — tetapi adopsinya meledak dalam beberapa tahun terakhir. Perusahaan besar seperti Twitter, Starbucks, dan Pinterest telah membuktikan bahwa PWA bisa meningkatkan engagement dan konversi secara signifikan.
 

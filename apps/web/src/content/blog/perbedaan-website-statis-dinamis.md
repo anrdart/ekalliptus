@@ -16,7 +16,7 @@ seo:
 
 Saat hendak membangun website bisnis, salah satu keputusan pertama yang harus dibuat adalah: **website statis atau dinamis?** Keputusan ini mempengaruhi biaya, performa, keamanan, dan kemudahan maintenance website Anda ke depan.
 
-Artikel ini akan menjelaskan perbedaan keduanya secara mendalam, beserta panduan memilih yang tepat berdasarkan kebutuhan bisnis Anda.
+Perbedaan keduanya menentukan biaya, kecepatan akses, dan cara Anda mengelola konten — memilih salah satu tanpa memahami trade-off-nya sering berujung rebuild.
 
 ## Apa Itu Website Statis?
 
