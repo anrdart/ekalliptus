@@ -4,6 +4,18 @@ import { captureRuntimeEnv } from './lib/runtime-env'
 import { routePolicy } from './lib/locale-routing'
 
 export const onRequest = defineMiddleware(async (ctx, next) => {
+  const response = await handleRequest(ctx, next) ?? await next()
+  const secured = new Response(response.body, response)
+  secured.headers.set('X-Content-Type-Options', 'nosniff')
+  secured.headers.set('X-Frame-Options', 'DENY')
+  secured.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin')
+  secured.headers.set('Permissions-Policy', 'camera=(), microphone=(), geolocation=(), payment=(), usb=()')
+  secured.headers.set('Content-Security-Policy', "object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'")
+  if (ctx.url.pathname.startsWith('/api/')) secured.headers.set('Cache-Control', 'no-store')
+  return secured
+})
+
+const handleRequest = defineMiddleware(async (ctx, next) => {
   // Capture Cloudflare runtime env on EVERY request.
   // Public routes (webhook, order, etc.) need access to Supabase secrets.
   // Wrap in try/catch — Cloudflare bindings can be Proxies that throw on access.

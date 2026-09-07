@@ -1,4 +1,6 @@
 ---
+import { serializeJsonLd } from '../../../lib/article-html'
+import { blogPath } from '../../../lib/blog'
 import Layout from '../../../layouts/Layout.astro'
 import Navigation from '../../../components/Navigation.astro'
 import { fetchPostsByTag, normalizeBlogImage } from '../../../lib/supabase'
@@ -24,7 +26,7 @@ const collectionSchema = {
   name: `Artikel dengan tag "${tag}"`,
   url: canonical,
   description: `Daftar artikel di blog Ekalliptus Digital dengan tag ${tag}.`,
-  isPartOf: { '@type': 'Blog', name: 'Ekalliptus Digital Blog', url: `${siteUrl}/blog` }
+  isPartOf: { '@type': 'Blog', name: 'Ekalliptus Digital Blog', url: `${siteUrl}/id/blog` }
 }
 ---
 
@@ -35,7 +37,7 @@ const collectionSchema = {
   dir={dir}
 >
   <Fragment slot="head">
-    <script type="application/ld+json" set:html={JSON.stringify(collectionSchema)} />
+    <script type="application/ld+json" set:html={serializeJsonLd(collectionSchema)} />
   </Fragment>
 
   <Navigation t={(key: string) => t(key, locale)} currentLang={locale} />
@@ -70,7 +72,7 @@ const collectionSchema = {
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
           {posts.map((post: any) => (
             <article class="group rounded-2xl glass-panel bg-card/10 border border-border/20 overflow-hidden transition-all hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 hover:-translate-y-1">
-              <a href={`/blog/${post.slug}`} class="block aspect-video overflow-hidden bg-card/30">
+              <a href={blogPath(post.slug)} class="block aspect-video overflow-hidden bg-card/30">
                 <img src={normalizeBlogImage(post.image)} alt={post.image_alt || post.title} width="1200" height="630" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" decoding="async" onerror="this.onerror=null;this.src='/blog/placeholder.svg'" />
               </a>
               <div class="p-5 sm:p-6">
@@ -78,7 +80,7 @@ const collectionSchema = {
                   {post.category}
                 </span>
                 <h2 class="text-lg sm:text-xl font-semibold text-foreground mt-3 mb-2 group-hover:text-primary transition-colors leading-snug">
-                  <a href={`/blog/${post.slug}`}>{post.title}</a>
+                  <a href={blogPath(post.slug)}>{post.title}</a>
                 </h2>
                 <p class="text-sm text-muted-foreground mb-4 line-clamp-2">{post.description}</p>
                 <div class="flex items-center justify-between text-xs text-muted-foreground pt-3 border-t border-border/10">

@@ -348,6 +348,7 @@ Mohon info detail & penawaran. Terima kasih!`
 
   document.getElementById('order-form')?.addEventListener('submit', async (e) => {
     e.preventDefault()
+    if (submitBtn.disabled) return
 
     // First invalid field wins — scroll it into view + show inline error.
     const nameOk = validateName()
@@ -373,7 +374,9 @@ Mohon info detail & penawaran. Terima kasih!`
 
     setStep(3)
     submitBtn.disabled = true
-    submitBtn.textContent = 'Menghubungkan ke WhatsApp...'
+    submitBtn.textContent = 'Menyimpan permintaan...'
+    submitBtn.setAttribute('aria-busy', 'true')
+    submitBtn.classList.add('async-pending')
 
     try {
       const response = await fetch('/api/order', {
@@ -420,6 +423,8 @@ Mohon info detail & penawaran. Terima kasih!`
       showToast({ type: 'error', title: 'Koneksi bermasalah', message: 'Terjadi kesalahan jaringan. Silakan coba lagi.' })
       setStep(2)
     } finally {
+      submitBtn.removeAttribute('aria-busy')
+      submitBtn.classList.remove('async-pending')
       submitBtn.disabled = false
       submitBtn.innerHTML = originalLabel
     }

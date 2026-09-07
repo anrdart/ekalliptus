@@ -6,8 +6,10 @@
 
 /* Base prose typography (prose-lg equivalent) */
 .prose {
-  color: hsl(var(--foreground) / 0.85);
-  font-size: 1.0625rem;
+  color: hsl(var(--foreground));
+  font-family: Georgia, 'Times New Roman', serif;
+  overflow-wrap: anywhere;
+  font-size: 1.125rem;
   line-height: 1.8;
   max-width: 68ch;
 }

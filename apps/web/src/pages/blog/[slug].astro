@@ -11,6 +11,7 @@ import { waLink } from '../../lib/constants'
 import { Calendar, User, Tag, ArrowLeft, Clock, List } from 'lucide-astro'
 import { t } from '../../i18n'
 import { resolveAuthor } from '../../data/authors'
+import { sanitizeArticleHtml, serializeJsonLd } from '../../lib/article-html'
 
 export const prerender = false
 
@@ -42,7 +43,7 @@ const post = {
       noindex: postData.seo_noindex ?? null
     }
   },
-  body_html: postData.body_html
+  body_html: sanitizeArticleHtml(postData.body_html)
 }
 
 const siteUrl = 'https://ekalliptus.com'
@@ -69,8 +70,8 @@ const blogPostSchema = {
   url: canonical,
   datePublished: post.data.publishDate.toISOString(),
   dateModified: (post.data.updateDate || post.data.publishDate).toISOString(),
-  author: { '@id': author.id },
-  publisher: { '@id': author.id },
+  author: { '@type': 'Organization', '@id': author.id, name: author.name, url: author.url },
+  publisher: { '@type': 'Organization', '@id': author.id, name: author.name, url: author.url },
   mainEntityOfPage: { '@type': 'WebPage', '@id': canonical },
   inLanguage: locale,
   wordCount: (post.body_html || '').replace(/<[^>]*>/g, '').trim().split(/\s+/).length,
@@ -81,8 +82,8 @@ const breadcrumbSchema = {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
   itemListElement: [
-    { '@type': 'ListItem', position: 1, name: 'Home', item: siteUrl },
-    { '@type': 'ListItem', position: 2, name: 'Blog', item: `${siteUrl}/blog` },
+    { '@type': 'ListItem', position: 1, name: 'Home', item: `${siteUrl}/id` },
+    { '@type': 'ListItem', position: 2, name: 'Blog', item: `${siteUrl}/id/blog` },
     { '@type': 'ListItem', position: 3, name: post.data.title, item: canonical }
   ]
 }
@@ -105,8 +106,19 @@ const processedTocHeadings: Array<{ depth: number; slug: string; text: string }>
 const tocRe = /<(h[2-4])\s[^>]*id="([^"]+)"[^>]*>([\s\S]*?)<\/\1>/gi
 let tocMatch: RegExpExecArray | null
 while ((tocMatch = tocRe.exec(processedHtml)) !== null) {
-  const text = tocMatch[3].replace(/<[^>]*>/g, '').trim()
-  processedTocHeadings.push({ depth: parseInt(tocMatch[1]), slug: tocMatch[2], text })
+  const text = tocMatch[3]
+    .replace(/<[^>]*>/g, '')
+    .replace(/&#(\d+);/g, (_, n) => Number(n) <= 0x10ffff ? String.fromCodePoint(Number(n)) : '�')
+    .replace(/&#x([0-9a-f]+);/gi, (_, n) => parseInt(n, 16) <= 0x10ffff ? String.fromCodePoint(parseInt(n, 16)) : '�')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&apos;/g, "'")
+    .replace(/&amp;/g, '&')
+    .replace(/\s+/g, ' ')
+    .trim()
+  processedTocHeadings.push({ depth: Number(tocMatch[1].slice(1)), slug: tocMatch[2], text })
 }
 ---
 <Layout
@@ -124,15 +136,15 @@ while ((tocMatch = tocRe.exec(processedHtml)) !== null) {
   adsense
 >
   <Fragment slot="head">
-    <script type="application/ld+json" set:html={JSON.stringify(blogPostSchema)}></script>
-    <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)}></script>
+    <script type="application/ld+json" set:html={serializeJsonLd(blogPostSchema)}></script>
+    <script type="application/ld+json" set:html={serializeJsonLd(breadcrumbSchema)}></script>
   </Fragment>
   <div id="reading-progress-bar" class="fixed top-0 left-0 h-1 bg-primary z-[100] transition-all duration-150" style="width:0%"></div>
   <Navigation t={(key: string) => t(key, locale)} currentLang={locale} />
 
-  <main class="container mx-auto px-4 pt-24 pb-6">
+  <main class="article-page container mx-auto px-4 pt-24 pb-6">
     <!-- Article Header -->
-    <section class="px-4 py-6 sm:py-8 md:py-10">
+    <section class="article-header px-4 py-6 sm:py-8 md:py-10">
       <div class="mx-auto max-w-5xl">
         <!-- Breadcrumb -->
         <nav class="text-sm mb-3" aria-label="Breadcrumb">
@@ -159,11 +171,11 @@ while ((tocMatch = tocRe.exec(processedHtml)) !== null) {
         )}
 
         <!-- Meta info card -->
-        <div class="glass-panel p-4 mb-6">
+        <div class="article-meta p-4 mb-6">
           <div class="flex items-center gap-4 text-xs text-muted-foreground">
             <div class="flex items-center gap-2">
               <User class="h-4 w-4" />
-              <span>{post.data.author}</span>
+              <a href={author.url}>{author.name}</a>
             </div>
             <span aria-hidden="true">•</span>
             <div class="flex items-center gap-2">
@@ -214,13 +226,13 @@ while ((tocMatch = tocRe.exec(processedHtml)) !== null) {
 
     <!-- Main content with TOC sidebar and article body -->
     <section class="px-4 pb-12">
-      <div class="mx-auto max-w-6xl grid grid-cols-12 gap-8">
+      <div class="article-layout mx-auto max-w-6xl grid grid-cols-12 gap-8">
         <!-- Desktop TOC + Sidebar Ad -->
         {processedTocHeadings.length > 0 && (
-          <aside class="hidden lg:block col-span-3 w-64">
+          <aside class="article-sidebar hidden lg:block col-span-3">
             <div class="sticky top-32 space-y-6">
               <div class="glass-panel p-4">
-                <nav aria-label="Table of contents">
+                <nav aria-label="Table of contents"><h2 class="toc-title">Dalam artikel ini</h2>
                   <ul class="space-y-2">
                     {processedTocHeadings.map((h) => (
                       <li>
@@ -282,23 +294,16 @@ while ((tocMatch = tocRe.exec(processedHtml)) !== null) {
       <a href="/id/blog" class="text-sm font-semibold text-primary hover:text-primary/80">← {t('blog.backToBlog', locale) || 'Back to Blog'}</a>
     </section>
 
-    <!-- Mobile TOC floating button & panel -->
-    <button id="mobile-toc-toggle" class="fixed bottom-20 left-4 rounded-full px-4 py-2 glass-panel shadow"> <List class="h-5 w-5" /> </button>
-    <div id="mobile-toc-panel" class="hidden fixed bottom-14 left-4 right-4 bg-card border border-border rounded-xl p-3 shadow-lg overflow-auto max-h-60">
-      <nav aria-label="Table of contents mobile">
-        <ul class="space-y-2">
-          {processedTocHeadings.map(h => (
-            <li><a href={`#${h.slug}`} class="toc-link">{h.text}</a></li>
-          ))}
-        </ul>
-      </nav>
-    </div>
+    {processedTocHeadings.length > 0 && <details class="mobile-toc lg:hidden">
+      <summary><List size={18} aria-hidden="true" /> Dalam artikel ini</summary>
+      <nav aria-label="Daftar isi">{processedTocHeadings.map(h => <a href={`#${h.slug}`} class="toc-link">{h.text}</a>)}</nav>
+    </details>}
 
     <!-- Floating WhatsApp CTA with greeting -->
     <div id="wa-floating" class="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-2">
       <div id="wa-greeting" class="wa-greeting bg-white text-gray-800 rounded-xl rounded-br-sm px-4 py-3 shadow-lg text-sm max-w-[260px] leading-relaxed">
         <button id="wa-greeting-close" class="absolute -top-2 -right-2 bg-gray-200 hover:bg-gray-300 rounded-full w-5 h-5 flex items-center justify-center text-xs text-gray-600" aria-label="Tutup">&times;</button>
-        <p class="font-semibold text-green-600 mb-1">Halo! 👋</p>
+        <p class="font-semibold text-green-600 mb-1">Halo!</p>
         <p>Ada yang bisa kami bantu? Konsultasi gratis seputar kebutuhan digital Anda.</p>
       </div>
       <a href={waLink('Halo Ekalliptus, saya baru membaca artikel di blog dan ingin konsultasi lebih lanjut.')} target="_blank" rel="noopener noreferrer" class="rounded-full bg-green-500 hover:bg-green-600 text-white p-3.5 shadow-lg transition-all hover:scale-110" aria-label="Chat via WhatsApp">
@@ -326,41 +331,24 @@ while ((tocMatch = tocRe.exec(processedHtml)) !== null) {
       const progressBar = document.getElementById('reading-progress-bar')
       const onScroll = () => {
         const max = document.documentElement.scrollHeight - window.innerHeight
-        const px = Math.max(0, Math.min(100, (window.scrollY / max) * 100))
+        const px = Math.max(0, Math.min(100, (window.scrollY / Math.max(1, max)) * 100))
         if (progressBar) progressBar.style.width = px + '%'
       }
       window.addEventListener('scroll', onScroll, { passive: true })
       onScroll()
 
-      const mobileToggle = document.getElementById('mobile-toc-toggle')
-      const mobilePanel = document.getElementById('mobile-toc-panel')
-      if (mobileToggle && mobilePanel) {
-        let open = false
-        mobileToggle.addEventListener('click', () => {
-          open = !open
-          mobilePanel.style.display = open ? 'block' : 'none'
-        })
-      }
-
       const tocLinks = document.querySelectorAll('.toc-link')
-      tocLinks.forEach(link => {
-        link.addEventListener('click', (e) => {
-          e.preventDefault()
-          const id = link.getAttribute('href')?.slice(1)
-          const target = id ? document.getElementById(id) : null
-          if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' })
-        })
-      })
+      tocLinks.forEach(link => link.addEventListener('click', () => document.querySelector('.mobile-toc')?.removeAttribute('open')))
 
       // Scroll-spy: highlight the TOC entry for the section currently in view.
       if (tocLinks.length > 0 && 'IntersectionObserver' in window) {
         const headingEls = Array.from(document.querySelectorAll('.prose h2[id], .prose h3[id]'))
-        const linkForId = new Map<string, HTMLElement>()
+        const linkForId = new Map()
         tocLinks.forEach(l => {
           const id = l.getAttribute('href')?.slice(1)
-          if (id) linkForId.set(id, l as HTMLElement)
+          if (id) linkForId.set(id, l)
         })
-        let activeId: string | null = null
+        let activeId = null
         const spy = new IntersectionObserver((entries) => {
           for (const entry of entries) {
             if (entry.isIntersecting) {
@@ -398,7 +386,7 @@ while ((tocMatch = tocRe.exec(processedHtml)) !== null) {
       window.addEventListener('scroll', function() {
         var max = document.documentElement.scrollHeight - window.innerHeight;
         if (max <= 0) return;
-        var pct = (window.scrollY / max) * 100;
+        var pct = (window.scrollY / Math.max(1, max)) * 100;
         for (var i = 0; i < _scrollThresholds.length; i++) {
           var threshold = _scrollThresholds[i];
           if (pct >= threshold && _scrollMilestone < threshold) {

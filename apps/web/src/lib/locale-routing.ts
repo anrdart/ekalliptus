@@ -10,7 +10,7 @@ const translatedRoutes = new Set([
 const bypassExact = new Set(['/robots.txt', '/sitemap.xml', '/sitemap-index.xml', '/sitemap-pages.xml', '/blog/rss.xml', '/blog/feed.json', '/blog/sitemap.xml'])
 const assetExtension = /\.[a-z0-9]{2,8}$/i
 
-export const indexablePages = [...translatedRoutes].map(path => localizedPath(path, 'id'))
+export const indexablePages = [...translatedRoutes, '/blog'].map(path => localizedPath(path, 'id'))
 
 function splitSuffix(path: string) {
   const index = path.search(/[?#]/)

@@ -24,13 +24,13 @@ const serviceItems = [
 ]
 
 const languages = [
-  { code: 'id', name: 'Bahasa Indonesia', flag: '🇮🇩', nativeName: 'Indonesia' },
-  { code: 'en', name: 'English', flag: '🇺🇸', nativeName: 'English' },
-  { code: 'ja', name: '日本語', flag: '🇯🇵', nativeName: '日本語' },
-  { code: 'ko', name: '한국어', flag: '🇰🇷', nativeName: '한국어' },
-  { code: 'ru', name: 'Русский', flag: '🇷🇺', nativeName: 'Русский' },
-  { code: 'ar', name: 'العربية', flag: '🇸🇦', nativeName: 'العربية' },
-  { code: 'tr', name: 'Türkçe', flag: '🇹🇷', nativeName: 'Türkçe' }
+  { code: 'id', name: 'Bahasa Indonesia', flag: '/flags/id.svg', nativeName: 'Indonesia' },
+  { code: 'en', name: 'English', flag: '/flags/us.svg', nativeName: 'English' },
+  { code: 'ja', name: '日本語', flag: '/flags/jp.svg', nativeName: '日本語' },
+  { code: 'ko', name: '한국어', flag: '/flags/kr.svg', nativeName: '한국어' },
+  { code: 'ru', name: 'Русский', flag: '/flags/ru.svg', nativeName: 'Русский' },
+  { code: 'ar', name: 'العربية', flag: '/flags/sa.svg', nativeName: 'العربية' },
+  { code: 'tr', name: 'Türkçe', flag: '/flags/tr.svg', nativeName: 'Türkçe' }
 ]
 
 const currentLanguage = languages.find(lang => lang.code === currentLang) || languages[0]
@@ -40,25 +40,16 @@ const publicPath = (path: string) => localizedPath(path, currentLang as Locale)
 const isHomePage = currentPath === publicPath('/')
 ---
 
-<header class="pointer-events-none fixed left-1/2 top-0 z-40 w-full max-w-md sm:max-w-4xl -translate-x-1/2 px-2 sm:px-6 lg:px-8 pt-2 sm:pt-3 safe-top">
+<header class="site-header fixed inset-x-0 top-0 z-40 safe-top">
   <nav
     id="main-nav"
-    class="pointer-events-auto flex items-center justify-between rounded-full px-2.5 sm:px-3.5 py-1 transition-all duration-300 glass-nav"
+    class="site-navigation flex items-center justify-between"
   >
     <a
       href={publicPath("/")}
       class="cursor-interactive flex items-center rounded-full px-1 py-0.5 transition text-foreground"
     >
-      <img
-        src="/logo_mobile.webp"
-        alt="Ekalliptus Digital Logo"
-        width="48"
-        height="32"
-        class="h-[44px] sm:h-[48px] w-auto transition-opacity hover:opacity-90 invert dark:invert-0"
-        loading="eager"
-        fetchpriority="high"
-        decoding="async"
-      />
+      <img src="/logo_mobile.webp" alt="Ekalliptus Digital" width="200" height="133" class="h-[44px] sm:h-[48px] w-auto transition-opacity hover:opacity-90 invert dark:invert-0" loading="eager" fetchpriority="high" decoding="async" />
     </a>
 
     <div class="hidden items-center gap-0.5 md:flex" id="desktop-nav">
@@ -72,7 +63,7 @@ const isHomePage = currentPath === publicPath('/')
             >
               {t(`nav.${item.key}`)}
             </button>
-            <div class="absolute left-1/2 top-full -translate-x-1/2 mt-2 w-60 rounded-2xl glass-panel border border-border/20 p-2 opacity-0 invisible -translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-300 z-50">
+            <div class="absolute left-1/2 top-full -translate-x-1/2 mt-2 w-60 rounded-2xl glass-panel border border-border/20 p-2 opacity-0 invisible -translate-y-2 group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100 group-focus-within:translate-y-0 group-hover:visible group-hover:translate-y-0 transition-all duration-300 z-50">
               {serviceItems.map((s) => (
                 <a
                   href={publicPath(s.href)}
@@ -124,7 +115,7 @@ const isHomePage = currentPath === publicPath('/')
         class="cursor-interactive hidden items-center gap-1.5 rounded-full px-2.5 py-1.5 text-sm font-medium transition hover:bg-card/20 md:flex"
         aria-label="Change language"
       >
-        <span class="text-sm">{currentLanguage.flag}</span>
+        <img src={currentLanguage.flag} alt="" width="20" height="15" class="shrink-0" />
         <span class="hidden lg:inline text-xs">{currentLanguage.nativeName}</span>
         <Languages class="h-3.5 w-3.5" />
       </button>
@@ -220,7 +211,7 @@ const isHomePage = currentPath === publicPath('/')
           ]}
           data-active={lang.code === currentLang}
         >
-          <span class="text-base">{lang.flag}</span>
+          <img src={lang.flag} alt="" width="24" height="18" class="shrink-0" />
           <span class="text-xs truncate">{lang.name}</span>
         </a>
       ))}
@@ -256,7 +247,7 @@ const isHomePage = currentPath === publicPath('/')
         {t('nav.selectLanguage') || 'Select Language'}
       </h3>
       <button
-        id="close-lang-modal"
+        id="close-lang-modal" aria-label={t('nav.closeModal')}
         class="h-8 w-8 rounded-full flex items-center justify-center cursor-interactive hover:bg-card/20"
       >
         <X class="h-4 w-4" />
@@ -274,9 +265,7 @@ const isHomePage = currentPath === publicPath('/')
           ]}
           data-active={lang.code === currentLang}
         >
-          <span class="text-3xl group-hover:scale-110 transition-transform duration-300">
-            {lang.flag}
-          </span>
+          <img src={lang.flag} alt="" width="40" height="30" class="shrink-0 group-hover:scale-110 transition-transform duration-300" />
           <div class="flex flex-col items-center">
             <span class="text-sm font-medium leading-tight">{lang.nativeName}</span>
             <span class="text-xs text-muted-foreground leading-tight">{lang.name}</span>
@@ -309,6 +298,15 @@ const isHomePage = currentPath === publicPath('/')
   
   let menuOpen = false
   let langModalOpen = false
+  mobileToggle?.setAttribute('aria-controls', 'mobile-menu')
+  langToggle?.setAttribute('aria-controls', 'language-modal')
+  for (const [panel, toggle] of [[mobileMenu, mobileToggle], [langModal, langToggle]]) {
+    if (!panel || !toggle) continue
+    toggle.setAttribute('aria-expanded', 'false')
+    new MutationObserver(() => {
+      toggle.setAttribute('aria-expanded', String(!panel.classList.contains('hidden')))
+    }).observe(panel, { attributes: true, attributeFilter: ['class'] })
+  }
   
   if (mobileToggle && mobileMenu && mobileBackdrop) {
     mobileToggle.addEventListener('click', () => {
@@ -408,7 +406,7 @@ const isHomePage = currentPath === publicPath('/')
   if (themeToggle) themeToggle.addEventListener('click', toggleTheme)
   if (mobileThemeToggle) mobileThemeToggle.addEventListener('click', toggleTheme)
   
-  var savedTheme = localStorage.getItem('ekal-theme') || 'dark'
+  var savedTheme = localStorage.getItem('ekal-theme') || 'light'
   updateThemeIcons(savedTheme === 'dark')
   
   var scrolled = false
@@ -460,126 +458,4 @@ const isHomePage = currentPath === publicPath('/')
     }
   })
 
-  // Liquid morph blob: track cursor position on each service link
-  document.querySelectorAll('.service-link').forEach((link) => {
-    const el = link
-    el.addEventListener('pointerenter', (e) => {
-      const rect = el.getBoundingClientRect()
-      el.style.setProperty('--mx', `${e.clientX - rect.left}px`)
-      el.style.setProperty('--my', `${e.clientY - rect.top}px`)
-    })
-    el.addEventListener('pointermove', (e) => {
-      const rect = el.getBoundingClientRect()
-      el.style.setProperty('--mx', `${e.clientX - rect.left}px`)
-      el.style.setProperty('--my', `${e.clientY - rect.top}px`)
-    })
-    el.addEventListener('pointerdown', (e) => {
-      const rect = el.getBoundingClientRect()
-      el.style.setProperty('--mx', `${e.clientX - rect.left}px`)
-      el.style.setProperty('--my', `${e.clientY - rect.top}px`)
-      el.classList.add('is-pressed')
-      setTimeout(() => el.classList.remove('is-pressed'), 500)
-    })
-  })
 </script>
-
-<style>
-  .service-link {
-    --mx: 50%;
-    --my: 50%;
-    isolation: isolate;
-  }
-
-  .service-link > span {
-    transition:
-      transform 0.45s cubic-bezier(0.34, 1.3, 0.64, 1),
-      letter-spacing 0.5s ease;
-    display: inline-block;
-  }
-
-  .service-link:hover > span {
-    transform: translateX(4px);
-    letter-spacing: 0.015em;
-  }
-
-  .service-link::before {
-    content: '';
-    position: absolute;
-    left: var(--mx);
-    top: var(--my);
-    width: 14px;
-    height: 14px;
-    margin-left: -7px;
-    margin-top: -7px;
-    background: radial-gradient(
-      circle,
-      hsl(var(--primary) / 0.7) 0%,
-      hsl(var(--primary) / 0.45) 40%,
-      hsl(var(--primary) / 0.2) 70%,
-      transparent 100%
-    );
-    border-radius: 60% 40% 55% 45% / 50% 60% 40% 50%;
-    transform: scale(0);
-    opacity: 0;
-    filter: blur(0.5px);
-    transition:
-      transform 0.5s cubic-bezier(0.34, 1.4, 0.64, 1),
-      opacity 0.25s ease,
-      filter 0.4s ease;
-    z-index: -1;
-    animation: liquid-morph 5s ease-in-out infinite;
-    animation-play-state: paused;
-    pointer-events: none;
-    will-change: transform, opacity;
-  }
-
-  .service-link:hover::before {
-    transform: scale(45);
-    opacity: 1;
-    filter: blur(0);
-    animation-play-state: running;
-  }
-
-  .service-link.is-pressed::before {
-    transform: scale(60);
-    transition:
-      transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1),
-      opacity 0.2s ease;
-  }
-
-  .service-link:hover {
-    color: hsl(var(--foreground));
-    text-shadow: 0 0 12px hsl(var(--primary) / 0.4);
-  }
-
-  @keyframes liquid-morph {
-    0%, 100% {
-      border-radius: 60% 40% 55% 45% / 50% 60% 40% 50%;
-    }
-    25% {
-      border-radius: 45% 55% 40% 60% / 60% 45% 55% 40%;
-    }
-    50% {
-      border-radius: 50% 50% 60% 40% / 40% 55% 45% 60%;
-    }
-    75% {
-      border-radius: 55% 45% 50% 50% / 55% 40% 60% 45%;
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .service-link::before,
-    .service-link > span {
-      transition: opacity 0.2s ease;
-      animation: none;
-    }
-    .service-link:hover > span {
-      transform: none;
-      letter-spacing: normal;
-    }
-    .service-link:hover::before {
-      transform: scale(40);
-      opacity: 0.5;
-    }
-  }
-</style>

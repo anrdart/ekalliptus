@@ -3,40 +3,25 @@ import { getSupabase } from '../../../lib/supabase'
 import type { ConsultationMessageInsert } from '../../../types/database'
 import { createLead } from '@ekalliptus/core'
 
-const CONSULT_TOKEN = 'ekalliptus-consult-2026'
+import { apiJson, readPublicJson, validText, validSession } from '../../../lib/public-api'
 
-function isAuthorized(request: Request): boolean {
-  const token = request.headers.get('x-consult-token')
-  return token === CONSULT_TOKEN
-}
-
-export const POST: APIRoute = async ({ request }) => {
+export const POST: APIRoute = async ({ request, cookies }) => {
   try {
-    if (!isAuthorized(request)) {
-      return new Response(JSON.stringify({ error: 'Unauthorized' }), {
-        status: 401,
-        headers: { 'Content-Type': 'application/json' }
-      })
+    const body = await readPublicJson(request)
+    if (body instanceof Response) return body
+    const { message, visitor_name } = body
+    const session_id = cookies.get('consult-session')?.value
+    if (!validSession(session_id)) return apiJson({ error: 'Start a consultation first' }, 403)
+    if (!validText(message, 1, 2000) || (visitor_name !== undefined && !validText(visitor_name, 1, 120))) {
+      return apiJson({ error: 'Invalid message' }, 400)
     }
 
-    const body = await request.json()
-    const { session_id, message, visitor_name } = body
-
-    if (!session_id || !message) {
-      return new Response(JSON.stringify({
-        error: 'session_id and message are required'
-      }), {
-        status: 400,
-        headers: { 'Content-Type': 'application/json' }
-      })
-    }
-
-    const supabase = getSupabase()
+    const supabase = getSupabase(true)
 
     if (!supabase) {
       return new Response(JSON.stringify({ error: 'Service unavailable' }), {
         status: 503,
-        headers: { 'Content-Type': 'application/json' }
+        headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' }
       })
     }
 
@@ -65,7 +50,7 @@ export const POST: APIRoute = async ({ request }) => {
       if (insertError || !newConsultation) {
         return new Response(JSON.stringify({ error: 'Failed to create consultation' }), {
           status: 500,
-          headers: { 'Content-Type': 'application/json' }
+          headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' }
         })
       }
 
@@ -100,6 +85,7 @@ export const POST: APIRoute = async ({ request }) => {
 
       if (msgError) {
         console.error('Failed to insert message:', msgError.message)
+        return apiJson({ error: 'Failed to save message' }, 503)
       }
     } else {
       const messageRecord: ConsultationMessageInsert = {
@@ -116,6 +102,7 @@ export const POST: APIRoute = async ({ request }) => {
 
       if (msgError) {
         console.error('Failed to insert message:', msgError.message)
+        return apiJson({ error: 'Failed to save message' }, 503)
       }
 
       const { error: updateError } = await supabase
@@ -135,13 +122,13 @@ export const POST: APIRoute = async ({ request }) => {
 
     return new Response(JSON.stringify({ success: true }), {
       status: 200,
-      headers: { 'Content-Type': 'application/json' }
+      headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' }
     })
   } catch (error) {
     console.error('Consult send API error:', error)
     return new Response(JSON.stringify({ error: 'Internal server error' }), {
       status: 500,
-      headers: { 'Content-Type': 'application/json' }
+      headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' }
     })
   }
 }

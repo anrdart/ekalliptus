@@ -1,125 +1,23 @@
 ---
-import ServiceCard from './ServiceCard.astro'
-import { ArrowRight, Sparkles } from 'lucide-astro'
-
-interface Props {
-  t: (key: string) => string
-}
-
+import { ArrowUpRight, Globe, Smartphone, ShieldCheck } from 'lucide-astro'
+interface Props { t: (key: string) => string }
 const { t } = Astro.props
-
 const services = [
-  { key: 'websiteDevelopment', icon: 'Globe', href: '/services/website' },
-  { key: 'mobileAppDevelopment', icon: 'Smartphone', href: '/services/mobile-app' },
-  { key: 'websiteMaintenance', icon: 'Wrench', href: '/services/maintenance' },
+  { key: 'websiteDevelopment', icon: Globe, href: '/services/website' },
+  { key: 'mobileAppDevelopment', icon: Smartphone, href: '/services/mobile-app' },
+  { key: 'websiteMaintenance', icon: ShieldCheck, href: '/services/maintenance' },
 ]
-
-function getFeatures(key: string): string[] {
-  const features: string[] = []
-  for (let i = 0; i < 10; i++) {
-    const feature = t(`services.cards.${key}.features[${i}]`)
-    if (feature && !feature.includes(`features[${i}]`)) {
-      features.push(feature)
-    } else {
-      break
-    }
-  }
-  return features
-}
 ---
-
-<section id="services" class="content-vis relative px-4 py-20 sm:py-24">
-  <div class="relative z-10 mx-auto max-w-6xl">
-    <div class="mx-auto mb-12 max-w-3xl text-center sm:mb-16">
-      <span class="text-xs font-semibold uppercase tracking-[0.35em] text-primary">{t('home.services.eyebrow')}</span>
-      <h2 class="mt-3 text-3xl font-bold text-foreground sm:text-4xl md:text-5xl">{t('home.services.title')}</h2>
-      <p class="mt-4 text-base text-muted-foreground sm:text-lg">{t('home.services.subtitle')}</p>
-    </div>
-
-    <!-- Bento grid: large feature tile + service cards -->
-    <div class="grid grid-cols-1 gap-4 sm:gap-5 lg:grid-cols-3">
-      <!-- Feature tile (spans 2 cols on lg) -->
-      <a
-        href="/order"
-        data-track="order"
-        class="bento-reveal group relative flex flex-col justify-between overflow-hidden rounded-3xl p-7 opacity-0 translate-y-8 transition-all duration-500 sm:p-9 lg:col-span-2 lg:row-span-1 cursor-interactive"
-      >
-        <div class="bg-primary absolute inset-0 opacity-95"></div>
-        <div class="bg-grid absolute inset-0 opacity-20"></div>
-        <div class="relative z-10">
-          <span class="inline-flex items-center gap-2 rounded-full bg-white/15 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-white backdrop-blur">
-            <Sparkles class="h-3.5 w-3.5" />
-            {t('home.services.eyebrow')}
-          </span>
-          <h3 class="mt-5 max-w-md text-2xl font-bold leading-tight text-white sm:text-3xl">
-            {t('home.services.featureTitle')}
-          </h3>
-          <p class="mt-3 max-w-md text-sm leading-relaxed text-white/85 sm:text-base">
-            {t('home.services.featureDesc')}
-          </p>
-        </div>
-        <span class="relative z-10 mt-6 inline-flex items-center gap-2 text-sm font-semibold text-white">
-          {t('home.services.featureCta')}
-          <ArrowRight class="h-4 w-4 transition-transform group-hover:translate-x-1" />
-        </span>
+<section id="services" class="studio-services scroll-mt-24">
+  <div class="services-heading"><h2>{t('home.services.title')}</h2><p>{t('home.services.subtitle')}</p></div>
+  <div class="service-rows">
+    {services.map(({ key, icon: Icon, href }) => (
+      <a href={href} class="service-row">
+        <span class="service-symbol"><Icon size={30} aria-hidden="true" /></span>
+        <h3>{t(`services.cards.${key}.title`)}</h3>
+        <div><p>{t(`services.cards.${key}.description`)}</p><ul>{Array.from({ length: 4 }, (_, i) => <li>{t(`services.cards.${key}.features[${i}]`)}</li>)}</ul></div>
+        <ArrowUpRight class="service-arrow" aria-hidden="true" />
       </a>
-
-      <!-- First service card fills the remaining column on lg -->
-      <ServiceCard
-        icon={services[0].icon}
-        title={t(`services.cards.${services[0].key}.title`)}
-        description={t(`services.cards.${services[0].key}.description`)}
-        features={getFeatures(services[0].key)}
-        category={t(`services.cards.${services[0].key}.category`)}
-        delay={80}
-        href={services[0].href}
-        cta={t('home.services.learnMore')}
-      />
-
-      <!-- Remaining 3 service cards -->
-      {
-        services.slice(1).map((service, index) => (
-          <ServiceCard
-            icon={service.icon}
-            title={t(`services.cards.${service.key}.title`)}
-            description={t(`services.cards.${service.key}.description`)}
-            features={getFeatures(service.key)}
-            category={t(`services.cards.${service.key}.category`)}
-            delay={(index + 2) * 80}
-            href={service.href}
-            cta={t('home.services.learnMore')}
-          />
-        ))
-      }
-    </div>
-
-    <div class="mt-10 text-center">
-      <a
-        href="/order"
-        class="inline-flex items-center gap-2 text-sm font-semibold text-primary transition hover:gap-3 cursor-interactive"
-      >
-        {t('home.services.viewAll')}
-        <ArrowRight class="h-4 w-4" />
-      </a>
-    </div>
+    ))}
   </div>
 </section>
-
-<script>
-  const tiles = document.querySelectorAll('.bento-reveal')
-  if (tiles.length) {
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.remove('opacity-0', 'translate-y-8')
-            entry.target.classList.add('opacity-100', 'translate-y-0')
-            io.unobserve(entry.target)
-          }
-        })
-      },
-      { threshold: 0.15 }
-    )
-    tiles.forEach((t) => io.observe(t))
-  }
-</script>

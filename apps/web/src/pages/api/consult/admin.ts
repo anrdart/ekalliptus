@@ -3,24 +3,23 @@ import { getSupabase } from '../../../lib/supabase'
 import type { ConsultationMessageInsert } from '../../../types/database'
 import { createLead } from '@ekalliptus/core'
 import { readEnv } from '../../../lib/runtime-env'
+import { apiJson, readPublicJson, validText, validSession } from '../../../lib/public-api'
 
-export const POST: APIRoute = async ({ request }) => {
+export const POST: APIRoute = async ({ request, cookies }) => {
   try {
-    const body = await request.json()
-    const { message, history, session_id, visitor_name } = body
-
-    if (!message) {
-      return new Response(JSON.stringify({
-        error: 'Message is required'
-      }), {
-        status: 400,
-        headers: { 'Content-Type': 'application/json' }
-      })
-    }
-
+    const body = await readPublicJson(request)
+    if (body instanceof Response) return body
+    const { message, history, visitor_name } = body
+    if (!validText(message, 1, 2000) || (visitor_name !== undefined && !validText(visitor_name, 1, 120)) ||
+      (history !== undefined && (!Array.isArray(history) || history.length > 10 || history.some(entry =>
+        !entry || !['user', 'assistant'].includes(entry.role) || !validText(entry.content, 1, 2000)))) ||
+      (body.whatsapp !== undefined && !validText(body.whatsapp, 6, 32)) ||
+      (body.email !== undefined && !validText(body.email, 3, 254))) return apiJson({ error: 'Invalid consultation' }, 400)
     const supabase = getSupabase(true)
-
-    const sessionId = session_id || crypto.randomUUID()
+    if (!supabase) return apiJson({ error: 'Service unavailable' }, 503)
+    const existingSession = cookies.get('consult-session')?.value
+    const sessionId = validSession(existingSession) ? existingSession : crypto.randomUUID()
+    cookies.set('consult-session', sessionId, { httpOnly: true, secure: new URL(request.url).protocol === 'https:', sameSite: 'strict', path: '/api/consult', maxAge: 86400 })
 
     if (supabase) {
       try {
@@ -40,10 +39,11 @@ export const POST: APIRoute = async ({ request }) => {
           .select()
           .single()
 
-        if (!consultError && consultation) {
+        if (consultError || !consultation) return apiJson({ error: 'Failed to create consultation' }, 503)
+        if (consultation) {
           // Auto-create lead from consultation handoff (non-blocking, with dedup by whatsapp)
           try {
-            const whatsapp = body.whatsapp || null
+            const whatsapp = typeof body.whatsapp === 'string' ? body.whatsapp : null
             let shouldCreate = true
             if (whatsapp) {
               const { data: existing } = await supabase!
@@ -58,7 +58,7 @@ export const POST: APIRoute = async ({ request }) => {
               await createLead({
                 name: visitorName !== 'Pengunjung' ? visitorName : 'Visitor',
                 whatsapp: whatsapp,
-                email: body.email || null,
+                email: typeof body.email === 'string' ? body.email : null,
                 service_interest: null,
                 stage: 'contacted',
                 source: 'consultation',
@@ -99,13 +99,13 @@ export const POST: APIRoute = async ({ request }) => {
           }
 
           if (messagesToInsert.length > 0) {
-            await supabase
-              .from('consultation_messages')
-              .insert(messagesToInsert)
+            const { error } = await supabase.from('consultation_messages').insert(messagesToInsert)
+            if (error) return apiJson({ error: 'Failed to save messages' }, 503)
           }
         }
       } catch (err) {
         console.error('Failed to create consultation:', err)
+        return apiJson({ error: 'Failed to create consultation' }, 503)
       }
 
       try {
@@ -139,6 +139,7 @@ export const POST: APIRoute = async ({ request }) => {
         if (parsed.protocol === 'https:' && parsed.hostname.endsWith('.supabase.co')) {
           await fetch(`${parsed.origin}/functions/v1/notify-admin`, {
             method: 'POST',
+            signal: AbortSignal.timeout(5000),
             headers: {
               'Content-Type': 'application/json',
               'Authorization': `Bearer ${supabaseAnonKey}`
@@ -161,15 +162,15 @@ export const POST: APIRoute = async ({ request }) => {
       session_id: sessionId
     }), {
       status: 200,
-      headers: { 'Content-Type': 'application/json' }
+      headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' }
     })
   } catch (error) {
     console.error('Admin consult API error:', error)
     return new Response(JSON.stringify({
-      success: true
+      success: false
     }), {
-      status: 200,
-      headers: { 'Content-Type': 'application/json' }
+      status: 500,
+      headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' }
     })
   }
 }

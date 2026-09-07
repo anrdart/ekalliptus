@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import type { BlogRow } from '../lib/blog'
+import { initCategoryFilter } from '../lib/blog-category-filter'
 import {
   blogPath,
   cdata,
@@ -20,6 +21,24 @@ const row = (overrides: Partial<BlogRow> = {}): BlogRow => ({
   status: 'published', created_at: '2026-01-01T00:00:00Z', updated_at: '2026-01-01T00:00:00Z', ...overrides,
 })
 const post = (overrides: Partial<BlogRow> = {}) => mapBlogPost(row(overrides))
+
+describe('blog category interaction', () => {
+  it('keeps selection accessible and rapid filtering synchronous', () => {
+    document.body.innerHTML = '<button class="category-btn" data-category="all" aria-pressed="true"></button><button class="category-btn" data-category="Web" aria-pressed="false"></button><article class="blog-card" data-category="Web"></article><article class="blog-card" data-category="App"></article><div class="ad-in-feed"></div>'
+    initCategoryFilter(document)
+    const buttons = document.querySelectorAll<HTMLButtonElement>('button')
+    const cards = document.querySelectorAll<HTMLElement>('article')
+    buttons[1].click()
+    expect(buttons[1].getAttribute('aria-pressed')).toBe('true')
+    expect(cards[0].hidden).toBe(false)
+    expect(cards[1].hidden).toBe(true)
+    buttons[0].click()
+    expect([...cards].every(card => !card.hidden)).toBe(true)
+    expect(buttons[1].getAttribute('aria-pressed')).toBe('false')
+    expect(document.querySelector<HTMLElement>('.ad-in-feed')!.hidden).toBe(false)
+    document.body.innerHTML = ''
+  })
+})
 
 describe('blog query semantics', () => {
   it('distinguishes success, absence, and failures', () => {

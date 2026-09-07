@@ -1,71 +1,26 @@
 ---
-import { ArrowRight, Play } from 'lucide-astro'
-
-interface Props {
-  t: (key: string) => string
-}
-
+import { ArrowUpRight, Globe, Smartphone, ShieldCheck } from 'lucide-astro'
+interface Props { t: (key: string) => string }
 const { t } = Astro.props
 ---
 
-<section
-  id="home"
-  class="relative flex min-h-[calc(100svh-5rem)] items-center overflow-hidden px-4 scroll-mt-20 lg:scroll-mt-32 bg-background"
->
-  <div class="relative z-10 mx-auto flex w-full max-w-5xl flex-col items-center gap-8 py-12 sm:py-16">
-    <div class="hero-content w-full text-center">
-      <!-- Eyebrow badge -->
-      <span
-        class="glass-pill mb-6 inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-medium text-foreground/80 sm:text-sm"
-      >
-        <span class="relative flex h-2 w-2">
-          <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-75"></span>
-          <span class="relative inline-flex h-2 w-2 rounded-full bg-primary"></span>
-        </span>
-        {t('home.hero.badge')}
-      </span>
-
-      <!-- Oversized headline -->
-      <h1
-        class="mx-auto max-w-4xl font-bold tracking-tight text-foreground"
-        style="font-size: clamp(2.25rem, 7vw, 4.5rem); line-height: 1.05;"
-      >
-        {t('home.hero.titleLead')}{' '}
-        <span class="text-primary">{t('home.hero.titleAccent')}</span>{' '}
-        {t('home.hero.titleTail')}
-      </h1>
-
-      <p class="mx-auto mt-6 max-w-2xl px-2 text-base leading-relaxed text-foreground/70 sm:text-lg md:text-xl">
-        {t('home.hero.subtitle')}
-      </p>
-
-      <!-- CTAs -->
-      <div class="mt-8 flex flex-col items-stretch gap-3 sm:mt-10 sm:flex-row sm:items-center sm:justify-center sm:gap-4">
-        <a
-          href="/order"
-          data-track="order"
-          class="group glow-brand inline-flex min-h-[52px] items-center justify-center gap-3 rounded-full bg-primary px-8 py-4 text-sm font-semibold uppercase tracking-wide text-primary-foreground transition-all duration-300 hover:bg-primary/90 hover:shadow-lg hover:shadow-primary/30 active:scale-[0.98] sm:text-base cursor-interactive"
-        >
-          {t('home.hero.ctaPrimary')}
-          <ArrowRight class="h-5 w-5 transition-transform group-hover:translate-x-1" />
-        </a>
-
-        <a
-          href="#services"
-          class="nav-link group inline-flex min-h-[52px] items-center justify-center gap-2 rounded-full border border-border/40 bg-card/20 px-6 py-4 text-sm font-semibold text-foreground/80 backdrop-blur transition hover:border-border/60 hover:bg-card/30 active:bg-card/40 sm:text-base cursor-interactive"
-          data-hash="#services"
-        >
-          <Play class="h-4 w-4" />
-          {t('home.hero.ctaSecondary')}
-        </a>
-      </div>
+<section id="home" class="studio-hero scroll-mt-24">
+  <div class="hero-copy">
+    <p class="hero-location">Ekalliptus Digital / Indonesia</p>
+    <h1>{t('home.hero.titleLead')} {t('home.hero.titleAccent')} {t('home.hero.titleTail')}</h1>
+    <p class="hero-description">{t('home.hero.subtitle')}</p>
+    <div class="hero-actions">
+      <a href="/order" data-track="order" class="studio-button">{t('home.hero.ctaPrimary')}<ArrowUpRight aria-hidden="true" size={20} /></a>
+      <a href="#services" class="studio-link">{t('home.hero.ctaSecondary')}</a>
     </div>
   </div>
-
-  <!-- Scroll cue -->
-  <div class="pointer-events-none absolute bottom-6 left-1/2 -translate-x-1/2 animate-bounce text-muted-foreground/50">
-    <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-    </svg>
+  <div class="studio-composition">
+    <div class="composition-caption">{t('home.hero.badge')}</div>
+    <a href="/services/website" class="web-object">
+      <div class="object-toolbar"><span></span><span></span><span></span><Globe size={18} aria-hidden="true" /></div>
+      <div class="object-content"><img src="/logo_mobile.webp" alt="Ekalliptus Digital" width="200" height="133" class="object-brand" decoding="async" /><div class="object-shapes" aria-hidden="true"><i></i><i></i><i></i></div><strong>{t('services.cards.websiteDevelopment.title')}</strong><ArrowUpRight aria-hidden="true" /></div>
+    </a>
+    <a href="/services/mobile-app" class="mobile-object"><span class="phone-speaker" aria-hidden="true"></span><Smartphone size={30} aria-hidden="true" /><strong>{t('services.cards.mobileAppDevelopment.title')}</strong><span class="phone-tiles" aria-hidden="true"><i></i><i></i><i></i><i></i></span><ArrowUpRight aria-hidden="true" /></a>
+    <a href="/services/maintenance" class="maintenance-object"><ShieldCheck size={24} aria-hidden="true" /><span>{t('services.cards.websiteMaintenance.title')}</span><ArrowUpRight size={18} aria-hidden="true" /></a>
   </div>
 </section>

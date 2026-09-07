@@ -1,4 +1,5 @@
 ---
+import { serializeJsonLd } from '../lib/article-html'
 import Layout from '../layouts/Layout.astro'
 import Navigation from '../components/Navigation.astro'
 import { fetchPublishedPosts, normalizeBlogImage } from '../lib/supabase'
@@ -61,7 +62,7 @@ const blogSchema = {
   blogPost: mappedPosts.slice(0, 10).map(post => ({
     '@type': 'BlogPosting',
     headline: post.data.title,
-    url: `${siteUrl}/blog/${post.id}`,
+    url: new URL(blogPath(post.id), siteUrl).toString(),
     datePublished: post.data.publishDate.toISOString(),
     dateModified: post.data.updateDate ? post.data.updateDate.toISOString() : post.data.publishDate.toISOString(),
     author: { '@id': `${siteUrl}#organization` },
@@ -75,18 +76,18 @@ const blogSchema = {
   description={t('blog.metaDescription', locale)}
   lang={locale}
   dir={dir}
-  image="/blog-og.png"
+  image="/og-image.webp"
   imageAlt="Ekalliptus Digital Blog"
   adsense
 >
-  <script type="application/ld+json" set:html={JSON.stringify(blogSchema)} />
+  <script type="application/ld+json" set:html={serializeJsonLd(blogSchema)} />
 
   <Navigation t={(key: string) => t(key, locale)} currentLang={locale} />
 
-  <main class="relative z-0 flex min-h-screen flex-col pt-14 sm:pt-16 md:pt-20">
+  <main class="blog-index relative z-0 flex min-h-screen flex-col pt-14 sm:pt-16 md:pt-20">
     <div class="relative flex flex-col pb-16">
       <!-- Hero Section -->
-      <section class="px-4 py-12 sm:py-16 md:py-20">
+      <section class="blog-masthead px-4 py-12 sm:py-16 md:py-20">
         <div class="mx-auto max-w-5xl text-center">
           <div class="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 sm:px-5 py-2 text-[0.6rem] sm:text-[0.65rem] font-semibold uppercase tracking-[0.5em] sm:tracking-[0.6em] text-primary mb-6">
             <Clock class="h-3.5 w-3.5 sm:h-4 sm:w-4" />
@@ -104,14 +105,14 @@ const blogSchema = {
           <!-- Category Filter -->
           <div class="flex flex-wrap justify-center gap-2 sm:gap-3 mb-6">
             <button
-              data-category="all"
-              class="category-btn active rounded-full px-4 py-2 text-xs font-medium transition-all bg-primary text-primary-foreground hover:bg-primary/90"
+              data-category="all" aria-pressed="true"
+              class="category-btn rounded-full px-4 py-2 text-xs font-medium transition-all bg-primary text-primary-foreground hover:bg-primary/90"
             >
               Semua
             </button>
             {categories.map(category => (
               <button
-                data-category={category}
+                data-category={category} aria-pressed="false"
                 class="category-btn rounded-full px-4 py-2 text-xs font-medium transition-all bg-card/30 text-foreground hover:bg-card/50 border border-border/20"
               >
                 {category}
@@ -145,7 +146,7 @@ const blogSchema = {
       {featuredPost && (
         <section class="px-4 pb-8">
           <div class="mx-auto max-w-6xl">
-            <article class="blog-card group rounded-2xl glass-panel neon-border overflow-hidden transition-all hover:border-primary/40" data-category={featuredPost.data.category}>
+            <article class="featured-story blog-card group rounded-2xl glass-panel neon-border overflow-hidden transition-all hover:border-primary/40" data-category={featuredPost.data.category}>
               <div class="flex flex-col lg:flex-row">
                 {featuredPost.data.image && (
                   <a href={blogPath(featuredPost.id)} class="block lg:w-1/2 aspect-video lg:aspect-auto overflow-hidden">
@@ -306,38 +307,9 @@ const blogSchema = {
   </script>
 
   <!-- Category Filter Script -->
-  <script define:vars={{ isHomePage: false }}>
-    const categoryBtns = document.querySelectorAll('.category-btn')
-    const cards = document.querySelectorAll('.blog-card')
-
-    categoryBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        categoryBtns.forEach(b => {
-          b.classList.remove('bg-primary', 'text-primary-foreground')
-          b.classList.add('bg-card/30', 'text-foreground')
-        })
-        btn.classList.remove('bg-card/30', 'text-foreground')
-        btn.classList.add('bg-primary', 'text-primary-foreground')
-
-        const category = btn.dataset.category
-        cards.forEach(card => {
-          if (category === 'all' || card.dataset.category === category) {
-            card.style.display = ''
-            card.style.opacity = '0'
-            card.style.transform = 'translateY(8px)'
-            requestAnimationFrame(() => {
-              card.style.transition = 'opacity 0.3s ease, transform 0.3s ease'
-              card.style.opacity = '1'
-              card.style.transform = 'translateY(0)'
-            })
-          } else {
-            card.style.opacity = '0'
-            card.style.transform = 'translateY(8px)'
-            setTimeout(() => { card.style.display = 'none' }, 300)
-          }
-        })
-      })
-    })
+  <script>
+    import { initCategoryFilter } from '../lib/blog-category-filter'
+    initCategoryFilter(document)
   </script>
 </Layout>
 

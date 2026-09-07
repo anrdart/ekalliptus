@@ -1,44 +1,29 @@
 import type { APIRoute } from 'astro'
-import { createOrder } from '../../lib/supabase'
+import { getSupabase } from '../../lib/supabase'
 import { SERVICE_TYPE_MAP } from '../../utils/pricing'
 import { createLead } from '@ekalliptus/core'
 import { normalizeWhatsapp, isValidWhatsapp } from '../../utils/whatsapp'
+import { apiJson as json, readPublicJson, validText } from '../../lib/public-api'
 
 const VALID_SERVICES = ['web', 'mobile', 'maintenance']
-const rateLimitMap = new Map<string, { count: number; resetAt: number }>()
-
-function isRateLimited(ip: string): boolean {
-  const now = Date.now()
-  const entry = rateLimitMap.get(ip)
-  if (!entry || now > entry.resetAt) {
-    rateLimitMap.set(ip, { count: 1, resetAt: now + 60000 })
-    return false
-  }
-  entry.count++
-  return entry.count > 10
-}
-
 export const POST: APIRoute = async ({ request }) => {
   try {
-    const clientIp = request.headers.get('cf-connecting-ip') || request.headers.get('x-forwarded-for') || 'unknown'
-    if (isRateLimited(clientIp)) {
-      return json({ success: false, error: 'Terlalu banyak permintaan. Silakan tunggu 1 menit.' }, 429)
-    }
-
-    const body = await request.json()
+    const body = await readPublicJson(request)
+    if (body instanceof Response) return body
     const { service_type, customer_name, whatsapp, description } = body
 
     // --- Validation ---
-    if (typeof customer_name !== 'string' || customer_name.trim().length < 2) {
+    if (!validText(customer_name, 2, 120)) {
       return json({ success: false, error: 'Nama tidak valid' }, 400)
     }
-    if (typeof description !== 'string' || description.trim().length < 10) {
+    if (!validText(description, 10, 5000)) {
       return json({ success: false, error: 'Deskripsi terlalu pendek (min 10 karakter)' }, 400)
     }
-    if (!service_type || !VALID_SERVICES.includes(service_type)) {
+    if (typeof service_type !== 'string' || !VALID_SERVICES.includes(service_type)) {
       return json({ success: false, error: 'Layanan tidak valid' }, 400)
     }
-    const wa = normalizeWhatsapp(String(whatsapp || ''))
+    if (!validText(whatsapp, 6, 32)) return json({ success: false, error: 'Nomor WhatsApp tidak valid' }, 400)
+    const wa = normalizeWhatsapp(whatsapp)
     if (!isValidWhatsapp(wa)) {
       return json({ success: false, error: 'Nomor WhatsApp tidak valid' }, 400)
     }
@@ -61,11 +46,13 @@ export const POST: APIRoute = async ({ request }) => {
       delivery_method: 'pickup' as const
     }
 
-    const { data: order, error } = await createOrder(orderData)
+    const supabase = getSupabase(true)
+    if (!supabase) return json({ success: false, error: 'Layanan sementara tidak tersedia. Hubungi WhatsApp.' }, 503)
+    const { data: order, error } = await supabase.from('orders').insert(orderData).select('id').single()
 
     if (error || !order) {
       console.error('Order creation error:', error)
-      return json({ success: false, error: error?.message || 'Gagal membuat order' }, 500)
+      return json({ success: false, error: 'Gagal membuat order' }, 500)
     }
 
     // Best-effort CRM lead (never block the order on lead failure).
@@ -92,11 +79,4 @@ export const POST: APIRoute = async ({ request }) => {
     console.error('API error:', error)
     return json({ success: false, error: 'Internal server error' }, 500)
   }
-}
-
-function json(body: unknown, status: number): Response {
-  return new Response(JSON.stringify(body), {
-    status,
-    headers: { 'Content-Type': 'application/json' }
-  })
 }

@@ -18,8 +18,8 @@ describe('structured data invariants', () => {
 
   it('uses organization ids and native absolute image resolution for posts', () => {
     const post = source('../pages/blog/[slug].astro')
-    expect(post).toContain("author: { '@id': author.id }")
-    expect(post).toContain("publisher: { '@id': author.id }")
+    expect(post).toContain("author: { '@type': 'Organization', '@id': author.id, name: author.name, url: author.url }")
+    expect(post).toContain("publisher: { '@type': 'Organization', '@id': author.id, name: author.name, url: author.url }")
     expect(post).toContain('new URL(ogImage, siteUrl).toString()')
     expect(post).not.toContain("'@type': 'Person'")
   })

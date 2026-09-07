@@ -24,22 +24,15 @@ const steps = [
     </div>
 
     <ol class="relative grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 lg:gap-4">
-      <!-- connecting line on desktop -->
-      <div
-        class="bg-primary pointer-events-none absolute left-0 right-0 top-7 hidden h-0.5 opacity-30 lg:block"
-        aria-hidden="true"
-      >
-      </div>
-
       {
         steps.map((step, i) => (
-          <li class="bento-reveal relative opacity-0 translate-y-8 transition-all duration-500" style={`transition-delay: ${i * 90}ms`}>
+          <li class="relative">
             <div class="flex items-center gap-3 lg:flex-col lg:items-start">
               <div class="relative z-10 inline-flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-2xl bg-background ring-1 ring-border">
                 <div class="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10">
                   <step.icon class="h-5 w-5 text-primary" />
                 </div>
-                <span class="bg-primary absolute -right-1 -top-1 inline-flex h-6 w-6 items-center justify-center rounded-full text-xs font-bold text-white shadow">
+                <span class="bg-primary absolute -right-1 -top-1 inline-flex h-6 w-6 items-center justify-center rounded-full text-xs font-bold text-primary-foreground">
                   {i + 1}
                 </span>
               </div>
@@ -52,22 +45,3 @@ const steps = [
     </ol>
   </div>
 </section>
-
-<script>
-  const items = document.querySelectorAll('#process .bento-reveal')
-  if (items.length) {
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.remove('opacity-0', 'translate-y-8')
-            entry.target.classList.add('opacity-100', 'translate-y-0')
-            io.unobserve(entry.target)
-          }
-        })
-      },
-      { threshold: 0.2 }
-    )
-    items.forEach((el) => io.observe(el))
-  }
-</script>
